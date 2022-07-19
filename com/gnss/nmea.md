@@ -36,6 +36,25 @@ Manage GNSS
         "frame_end":"disable|hex|ascii|mac", //  <包后缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
         "frame_end_string":"",    // <包后缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包后缀>为enable时必填
 
+        "id":"",
+        "user":"",
+        "vcode":"",
+
+        "mqtt_id":"设备ID号",
+        "mqtt_username":"管理帐号",
+        "mqtt_password":"密码",
+        "mqtt_interval":"mqtt interval",
+        "mqtt_keepalive":"mqtt keepalive",
+        "mqtt_publish":"mqtt publish topic",
+        "mqtt_publish_qos":"mqtt publish qos",
+        "mqtt_subscribe":
+        {
+            "subscribe topic":"topic qos",
+            "subscribe topic2":"topic2 qos",
+            "subscribe topic3":"topic3 qos",
+            // "subscribe topic":"topic qos"     How many subscribe topic need setting save how many properties
+        }
+
     },
     "client2":
     {

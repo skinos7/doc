@@ -165,8 +165,9 @@ Management LTE modem
                                              // ready for ready to connect to internet, hint signal/network/simcard all ok
                                              // connect for connect to the internet
                                              // reset for reset the modem
-        "imei":"IMEI numer",
-        "imsi":"IMSI number",
+        "mversion":"Modem version",     // [ string ]
+        "imei":"IMEI numer",            // [ string ]
+        "imsi":"IMSI number",           // [ string ]
         "iccid":"ICCID number",         // [ number, nosim, pin, puk ]
                                                 // number for iccid
                                                 // nosim for cannot found the simcard
@@ -178,7 +179,7 @@ Management LTE modem
                                                 // noreg for cannot register to opeartor
                                                 // unreg for cannot register to opeartor
                                                 // dereg for register to operator be refused
-        "netera":"technology Generation",// [ 2g, 3g, 4g, 5g ]
+        "netera":"technology Generation",// [ 2G, 3G, 4G, 5G ], Optional
         "nettype":"network type",        // The format varies depending on the module
                                          // 2G usually shows GSM, GPRS, EDGE, CDMA
                                          // 3G usually shows WCDMA, EVDO, TDSCDMA, HSPA, HSDPA, HSUPA
@@ -192,7 +193,7 @@ Management LTE modem
         "rsrq":"RSRQ value",             // Optional, The format varies depending on the module
         "sinr":"sinr value",             // Optional, The format varies depending on the module 
         "band":"current band",           // Optional, The format varies depending on the module
-        "pcid":"Physical Cell ID",       // [ number ]
+        "pcid":"Physical Cell ID",       // [ number ], Optional
 
         "operator":"operator name",      // [ string ]
         "operator_advise":               // Recommended profile for PLMN
