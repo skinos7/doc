@@ -10,43 +10,30 @@ Manage GNSS
     // UART configure
     "status":"UART status",                                      // [ enable, disable ]
 
-    // serial configure
+    // serial configure, don't use
     "speed":"Baud rate",            // [ 9600, 19200, 38400, 57600, 76800, 115200, 230400 ]
     "flow":"flow control",          // [ disable, hard, soft ], disable is disable, hard is hardware flow control, soft is software flow control
     "parity":"parity type",         // [ disable, even, odd ]
     "databit":"data bit",           // [ 5, 6, 7, 8 ]
     "stopbit":"stop bit",           // [ 1, 2 ]
 
-    "client":
+    // Client configure
+    "client":                       // MQTT client
     {
         "status":"client status",               // [ disable, enable ]
-        "proto":"client protocol",              // [ tcp, udp ]
+        "proto":"client protocol",              // [ tcp, udp, mqtt ]
         "server":"server address",              // [ string ]
         "port":"server port",                   // [ number ]
 
-        "login":"register packet",                // [ disable, hex, ascii, mac ]
-                                                            // disable for disable register packet
-                                                            // hex for hex string
-                                                            // ascii for ascii string
-                                                            // mac for hex device mac
-        "login_string":"register packet context", // [ string ], such as 414243 when sending ABC when "login" is hex
+        "interval":"send interval",             // [ number ], the unit is second, default is one second
 
-        "frame_start":"disable|hex|ascii|mac",     // <包前缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-        "frame_start_string":"",  //  <包前缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包前缀>为enable时必填
-        "frame_end":"disable|hex|ascii|mac", //  <包后缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-        "frame_end_string":"",    // <包后缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包后缀>为enable时必填
-
-        "id":"",
-        "user":"",
-        "vcode":"",
-
-        "mqtt_id":"设备ID号",
-        "mqtt_username":"管理帐号",
-        "mqtt_password":"密码",
-        "mqtt_interval":"mqtt interval",
-        "mqtt_keepalive":"mqtt keepalive",
-        "mqtt_publish":"mqtt publish topic",
-        "mqtt_publish_qos":"mqtt publish qos",
+        "mqtt_id":"device identify",            // [ string ]
+        "mqtt_username":"mqtt username",        // [ string ]
+        "mqtt_password":"mqtt password",        // [ string ]
+        "mqtt_interval":"mqtt interval",        // [ nubmer ]
+        "mqtt_keepalive":"mqtt keepalive",      // [ number ]
+        "mqtt_publish":"mqtt publish topic",    // [ string ]
+        "mqtt_publish_qos":"mqtt publish qos",  // [ number ]
         "mqtt_subscribe":
         {
             "subscribe topic":"topic qos",
@@ -56,64 +43,76 @@ Manage GNSS
         }
 
     },
-    "client2":
+    "client2":                      // TCP/UDP client
     {
         "status":"client status",               // [ disable, enable ]
         "proto":"client protocol",              // [ tcp, udp ]
         "server":"server address",              // [ string ]
         "port":"server port",                   // [ number ]
 
-        "login":"register packet",                // [ disable, hex, ascii, mac ]
+        "id":"custom the nmea $PAHYR",                   // [ string ]
+        "user":"custom the username at nmea $PAHYR",     // [ string ]
+        "vcode":"custom the vocde at nmea $PAHYR",       // [ string ]
+        "interval":"send interval",                      // [ number ], default is one second
+        "content":"sends the specified header",          // [ ZDA, GGA, GLL, VTG, GSA, GSV, RMC, GST ], multiple heads are divided by a semicolon
+
+        "login":"register packet",                     // [ disable, hex, ascii, mac ]
                                                             // disable for disable register packet
                                                             // hex for hex string
                                                             // ascii for ascii string
                                                             // mac for hex device mac
-        "login_string":"register packet context", // [ string ], such as 414243 when sending ABC when "login" is hex
+        "login_string":"register packet context",      // [ string ], such as 414243 when sending ABC when "login" is hex
 
-        "frame_start":"disable|hex|ascii|mac",     // <包前缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-        "frame_start_string":"",  //  <包前缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包前缀>为enable时必填
-        "frame_end":"disable|hex|ascii|mac", //  <包后缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-        "frame_end_string":"",    // <包后缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包后缀>为enable时必填
-
-    },
-    "client3":
-    {
-        "status":"client status",               // [ disable, enable ]
-        "proto":"client protocol",              // [ tcp, udp ]
-        "server":"server address",              // [ string ]
-        "port":"server port",                   // [ number ]
-
-        "login":"register packet",                // [ disable, hex, ascii, mac ]
-                                                            // disable for disable register packet
+        "frame_start":"packet prefix",                 // [ disable, hex, ascii, mac ]
+                                                            // disable for disable packet prefix
                                                             // hex for hex string
                                                             // ascii for ascii string
                                                             // mac for hex device mac
-        "login_string":"register packet context", // [ string ], such as 414243 when sending ABC when "login" is hex
-
-        "frame_start":"disable|hex|ascii|mac",     // <包前缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-        "frame_start_string":"",  //  <包前缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包前缀>为enable时必填
-        "frame_end":"disable|hex|ascii|mac", //  <包后缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-        "frame_end_string":"",    // <包后缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包后缀>为enable时必填
+        "frame_start_string":"packet prefix context",  // [ string ], such as 414243 when sending ABC when "frame_start" is hex
+        
+        "frame_end":"packet suffix",                   // [ disable, hex, ascii, mac ]
+                                                            // disable for disable packet suffix
+                                                            // hex for hex string
+                                                            // ascii for ascii string
+                                                            // mac for hex device mac
+        "frame_end_string":"packet suffix context"     // [ string ], such as 414243 when sending ABC when "frame_end" is hex
 
     },
+
+    // Server configure
     "server":
     {
-        "status":"disable",
-        "proto":"tcp",
-        "port":"",
-        "limit":"",
+        "status":"server status",                        // [ disable, enable ]
+        "proto":"service tcp",                           // [ tcp, udp ] 
+        "port":"service port",                           // [ number ]
+        "limit":"concurrence client",                    // [ number ]
+        "id":"custom the nmea $PAHYR",                   // [ string ]
+        "user":"custom the username at nmea $PAHYR",     // [ string ]
+        "vcode":"custom the vocde at nmea $PAHYR",       // [ string ]
+        "interval":"send interval",                      // [ number ], default is one second
+        "content":"sends the specified header",          // [ ZDA, GGA, GLL, VTG, GSA, GSV, RMC, GST ], multiple heads are divided by a semicolon
 
-        "login":"register packet",                // [ disable, hex, ascii, mac ]
+        "login":"register packet",                     // [ disable, hex, ascii, mac ]
                                                             // disable for disable register packet
                                                             // hex for hex string
                                                             // ascii for ascii string
                                                             // mac for hex device mac
-        "login_string":"register packet context", // [ string ], such as 414243 when sending ABC when "login" is hex
+        "login_string":"register packet context",      // [ string ], such as 414243 when sending ABC when "login" is hex
 
-        "frame_start":"disable|hex|ascii|mac",     // <包前缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-        "frame_start_string":"",  //  <包前缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包前缀>为enable时必填
-        "frame_end":"disable|hex|ascii|mac", //  <包后缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-        "frame_end_string":"",    // <包后缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包后缀>为enable时必填
+        "frame_start":"packet prefix",                 // [ disable, hex, ascii, mac ]
+                                                            // disable for disable packet prefix
+                                                            // hex for hex string
+                                                            // ascii for ascii string
+                                                            // mac for hex device mac
+        "frame_start_string":"packet prefix context",  // [ string ], such as 414243 when sending ABC when "frame_start" is hex
+        
+        "frame_end":"packet suffix",                   // [ disable, hex, ascii, mac ]
+                                                            // disable for disable packet suffix
+                                                            // hex for hex string
+                                                            // ascii for ascii string
+                                                            // mac for hex device mac
+        "frame_end_string":"packet suffix context"     // [ string ], such as 414243 when sending ABC when "frame_end" is hex
+
     }
 
 }

@@ -15,7 +15,7 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
     // UART configure
     "status":"UART status",                                      // [ enable, disable ]
     "convert":"Whether to enable hardware function conversion",  // [ disable, enable ] 
-    "concom":"UART application components",                         // [ uart@dtu, uart@nmea, uart@hetui, uart@modbus ]
+    "concom":"UART application components",                      // [ uart@dtu, uart@nmea, uart@hetui, uart@modbus ]
                                                                         // uart@dtu is DTU mode
                                                                         // uart@nmea is GPS mode
                                                                         // uart@hetui is He command mode
@@ -33,13 +33,13 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
     // This function is used to periodically send data to the serial port to activate the mechanism. After this function is enabled, data is periodically sent to the serial port. This function is valid in DTU mode
     "active":"active packet send to serial",                       // [ disable, enable, idle, timing ], disable for disable, enable for active once, idle for idle Specifies the time to send, timing for interval specifies the time to send
     "active_interval":"Activate packet sending interval",          // [ number ], the unit is second, vaild when "active" is idle or timing
-    "active_string":"Contents of activation package",           // [ Hex data ], such as 414243 when sending ABC
+    "active_string":"Contents of activation package",              // [ Hex data ], such as 414243 when sending ABC
 
     // Serial port reading parameter
     "frame_maxsize":"frame max size",                         // [ number ], frame byte
     "frame_interval":"frame interval",                        // [ number ], the unit is ms
 
-    // Modbus configure vaild when concom is uart@modbus
+    // Modbus configure vaild when "concom" is uart@modbus
     "modbus":
     {
         "port":"modbus port",
@@ -50,39 +50,23 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
         "wait":"Time to wait for a response"                      // the unit is ms
     },
  
+    // DTU configure vaild when "concom" is uart@dtu
     "dtu":
     {
-        "client":
+        "client":                       // MQTT client
         {
             "status":"client status",               // [ disable, enable ]
             "proto":"client protocol",              // [ tcp, udp, mqtt ]
             "server":"server address",              // [ string ]
             "port":"server port",                   // [ number ]
-
-            "login":"register packet",                // [ disable, hex, ascii, mac ]
-                                                            // disable for disable register packet
-                                                            // hex for hex string
-                                                            // ascii for ascii string
-                                                            // mac for hex device mac
-            "login_string":"register packet context", // [ string ], such as 414243 when sending ABC when "login" is hex
-
-            // 用于向网络端（客户端或服务器）定时发送数据来保持网络连接的机制， 开启后将定时向其它的网络端定时发送数据
-            "keeplive":"disable",            //<保活包> 分为disable(禁用), idle(空闲时发送), timing(定时发送)
-            "keeplive_interval":"30",        // <保活包发送间隔> 以秒为单位
-            "keeplive_string":"",            // <保活包内容>  十六进制的数据, 如发送ABC时填写414243
-
-            "frame_start":"disable|hex|ascii|mac",     // <包前缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-            "frame_start_string":"",  //  <包前缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包前缀>为enable时必填
-            "frame_end":"disable|hex|ascii|mac", //  <包后缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-            "frame_end_string":"",    // <包后缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包后缀>为enable时必填
-
-            "mqtt_id":"设备ID号",
-            "mqtt_username":"管理帐号",
-            "mqtt_password":"密码",
-            "mqtt_interval":"mqtt interval",
-            "mqtt_keepalive":"mqtt keepalive",
-            "mqtt_publish":"mqtt publish topic",
-            "mqtt_publish_qos":"mqtt publish qos",
+    
+            "mqtt_id":"device identify",            // [ string ]
+            "mqtt_username":"mqtt username",        // [ string ]
+            "mqtt_password":"mqtt password",        // [ string ]
+            "mqtt_interval":"mqtt interval",        // [ nubmer ]
+            "mqtt_keepalive":"mqtt keepalive",      // [ number ]
+            "mqtt_publish":"mqtt publish topic",    // [ string ]
+            "mqtt_publish_qos":"mqtt publish qos",  // [ number ]
             "mqtt_subscribe":
             {
                 "subscribe topic":"topic qos",
@@ -90,31 +74,78 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
                 "subscribe topic3":"topic3 qos",
                 // "subscribe topic":"topic qos"     How many subscribe topic need setting save how many properties
             }
-
         },
-        "server":
+        "client2":                      // TCP/UDP client
         {
-            "status":"disable",
-            "proto":"tcp",
-            "port":"",
-            "limit":"",
+            "status":"client status",               // [ disable, enable ]
+            "proto":"client protocol",              // [ tcp, udp ]
+            "server":"server address",              // [ string ]
+            "port":"server port",                   // [ number ]
+    
+    
+            "login":"register packet",                     // [ disable, hex, ascii, mac ]
+                                                                // disable for disable register packet
+                                                                // hex for hex string
+                                                                // ascii for ascii string
+                                                                // mac for hex device mac
+            "login_string":"register packet context",      // [ string ], such as 414243 when sending ABC when "login" is hex
 
-            "login":"register packet",                // [ disable, hex, ascii, mac ]
-                                                            // disable for disable register packet
-                                                            // hex for hex string
-                                                            // ascii for ascii string
-                                                            // mac for hex device mac
-            "login_string":"register packet context", // [ string ], such as 414243 when sending ABC when "login" is hex
+            "keeplive":"keeplive packet",                  // [ disable, idle, timing ]
+            "keeplive_interval":"keeplive interval",       // [ number ], the unit is second
+            "keeplive_string":"keeplive packet content",   // [ hex string ]
+    
+            "frame_start":"packet prefix",                 // [ disable, hex, ascii, mac ]
+                                                                // disable for disable packet prefix
+                                                                // hex for hex string
+                                                                // ascii for ascii string
+                                                                // mac for hex device mac
+            "frame_start_string":"packet prefix context",  // [ string ], such as 414243 when sending ABC when "frame_start" is hex
+            
+            "frame_end":"packet suffix",                   // [ disable, hex, ascii, mac ]
+                                                                // disable for disable packet suffix
+                                                                // hex for hex string
+                                                                // ascii for ascii string
+                                                                // mac for hex device mac
+            "frame_end_string":"packet suffix context"     // [ string ], such as 414243 when sending ABC when "frame_end" is hex
+        },
+        
+        "server":                      // TCP/UDP server
+        {
+            "status":"server status",                        // [ disable, enable ]
+            "proto":"service tcp",                           // [ tcp, udp ] 
+            "port":"service port",                           // [ number ]
+            "limit":"concurrence client",                    // [ number ]
+            "id":"custom the nmea $PAHYR",                   // [ string ]
+            "user":"custom the username at nmea $PAHYR",     // [ string ]
+            "vcode":"custom the vocde at nmea $PAHYR",       // [ string ]
+            "interval":"send interval",                      // [ number ], default is one second
+            "content":"sends the specified header",          // [ ZDA, GGA, GLL, VTG, GSA, GSV, RMC, GST ], multiple heads are divided by a semicolon
+    
+            "login":"register packet",                     // [ disable, hex, ascii, mac ]
+                                                                // disable for disable register packet
+                                                                // hex for hex string
+                                                                // ascii for ascii string
+                                                                // mac for hex device mac
+            "login_string":"register packet context",      // [ string ], such as 414243 when sending ABC when "login" is hex
 
-            // 用于向网络端（客户端或服务器）定时发送数据来保持网络连接的机制， 开启后将定时向其它的网络端定时发送数据
-            "keeplive":"disable",            //<保活包> 分为disable(禁用), idle(空闲时发送), timing(定时发送)
-            "keeplive_interval":"30",        // <保活包发送间隔> 以秒为单位
-            "keeplive_string":"",         // <保活包内容>  十六进制的数据, 如发送ABC时填写414243
-
-            "frame_start":"disable|hex|ascii|mac",     // <包前缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-            "frame_start_string":"",  //  <包前缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包前缀>为enable时必填
-            "frame_end":"disable|hex|ascii|mac", //  <包后缀> 分为disable(禁用), hex为十六制, ascii为字符式, mac使用十六制进的mac地址为包后缀
-            "frame_end_string":"",    // <包后缀内容>  十六进制的数据, 如发送ABC时填写414243 , 为<包后缀>为enable时必填
+            "keeplive":"keeplive packet",                  // [ disable, idle, timing ]
+            "keeplive_interval":"keeplive interval",       // [ number ], the unit is second
+            "keeplive_string":"keeplive packet content",   // [ hex string ]
+    
+            "frame_start":"packet prefix",                 // [ disable, hex, ascii, mac ]
+                                                                // disable for disable packet prefix
+                                                                // hex for hex string
+                                                                // ascii for ascii string
+                                                                // mac for hex device mac
+            "frame_start_string":"packet prefix context",  // [ string ], such as 414243 when sending ABC when "frame_start" is hex
+            
+            "frame_end":"packet suffix",                   // [ disable, hex, ascii, mac ]
+                                                                // disable for disable packet suffix
+                                                                // hex for hex string
+                                                                // ascii for ascii string
+                                                                // mac for hex device mac
+            "frame_end_string":"packet suffix context"     // [ string ], such as 414243 when sending ABC when "frame_end" is hex
+    
         }
     }
 

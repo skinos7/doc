@@ -104,6 +104,17 @@ Management LTE modem
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
     }
+
+    // SMS
+    "sms":"SMS function enable or disable",
+    "sms_cfg":
+    {
+        "center":"SMS center number",                             // [ number ]
+        "he":"enable or disable the he command",                  // [ disable, enable ]
+        "he_peer":"set number to send the he command",            // [ number ]
+        "he_prefix":"set prefix at the he command"                // [ string ]
+    }
+
 }
 // Examples
 {
