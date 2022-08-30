@@ -56,7 +56,6 @@ Management LTE modem
     "bsim_cfg":                                               // settings of backup simcard save here, the json be used when "bsim" value is enable
     {
         "mode":"Specify the simcard",                                                    // [ auto, bsim, msim ], bsim for backup simcard, msim for main simcard
-        "plmn_failed":"Check the network failed how many times to switch the simcard",   // [ number ]
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
         "failover":"backup simcard usage duration",                                      // [ number ], the unit is second
@@ -100,7 +99,6 @@ Management LTE modem
     "ssim_cfg":                                                    // settings of soft backup simcard save here, the json be used when "ssim" value is enable
     {
         "mode":"Specify the operator",                                                   // [ signal, plmn ], signal for test and use the The best signal operator, 46000 for china mobile, 46001 china union, 46003 for china telecom
-        "plmn_failed":"Check the network failed how many times to switch the simcard",   // [ number ]
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
     }
@@ -111,8 +109,8 @@ Management LTE modem
     {
         "center":"SMS center number",                             // [ number ]
         "he":"enable or disable the he command",                  // [ disable, enable ]
-        "he_peer":"set number to send the he command",            // [ number ]
-        "he_prefix":"set prefix at the he command"                // [ string ]
+        "he_contact":"set a contact to send the he command",      // [ number ]
+        "he_prefix":"set a prefix at the he command"              // [ string ]
     }
 
 }
