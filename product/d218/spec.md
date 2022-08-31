@@ -232,11 +232,6 @@
 
 
 
-## 升级包下载
-[ftp://ftp.wmdevice.com/d218/](ftp://ftp.wmdevice.com/d218/)
-
-
-
 ## 其它资料
 
 [快速安装说明](./setup.md)
