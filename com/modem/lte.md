@@ -16,8 +16,7 @@ Management LTE modem
     "lock_pin":"simcard pin",                  // [ string ]
     "lock_nettype":"network type",             // [ 2g, 3g, 4g, nsa, sa ]
     "lock_band":"lock band",                   // The format varies depending on the module
-    "lock_arfcn":"lock arfcn",                 // The format varies depending on the module
-    "lock_cellid":"lock cell id",              // The format varies depending on the module
+    "lock_cell":"lock cell",                   // The format varies depending on the module
     "gnss":"gps function",                     // [ disable, enable ]
 
     // dial attributes
@@ -66,8 +65,7 @@ Management LTE modem
         "lock_pin":"simcard pin",                  // [ string ]
         "lock_netmode":"network type",             // [ 2g, 3g, 4g, nsa, sa ]
         "lock_band":"lock band",                   // The format varies depending on the module
-        "lock_arfcn":"lock arfcn",                 // The format varies depending on the module
-        "lock_cellid":"lock cell id",              // The format varies depending on the module
+        "lock_cell":"lock cell",                   // The format varies depending on the module
 
         // backup profile attributes
         "profile":"custom the profile",            // [ disable, enable ]
