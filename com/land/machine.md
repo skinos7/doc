@@ -20,6 +20,7 @@ Management equipment basic infomation
                                                        // dmisp: Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
                                                        // mix: custom mix connection from multiple internet connection
                                                      
+    "copyright":"show the logo by designer",         // [ disable, enable  ]
     "name":"equipment name",                         // <string>
     "mac":"equipment MAC address",                   // < MAC address >
     "macid":"equipment MAC identify or serial id",   // < string >
