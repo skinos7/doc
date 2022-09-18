@@ -6,7 +6,7 @@ Manage system date
 
 #### Configuration( clock@date )
 
-```json
+```shell
 /* Attributes introduction */
 {
     "timezone":"time zone",                             /* [ -12 to 12 ], West 12 to East 12 */
