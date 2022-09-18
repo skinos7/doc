@@ -112,50 +112,58 @@ Management LTE modem
     }
 
 }
-// Examples
+```
+Examples, show all the lte modem configure
+```shell
+modem@lte
 {
  
-    "lock_imei":"enable",              // The IMEI detected for the first time will be locked
-    "lock_imsi":"460015356123463",     // the simcard imsi must be 460015356123463
+    "lock_imei":"enable",              # The IMEI detected for the first time will be locked
+    "lock_imsi":"460015356123463",     # the simcard imsi must be 460015356123463
 
-    "gnss":"enable",                   // enbale the GPS function
+    "gnss":"enable",                   # enbale the GPS function
 
-    "profile":"enable",                // custom the profile
+    "profile":"enable",                # custom the profile
     "profile_cfg":
     {
-        "dial":"*99#",                     // dial number is *99#
-        "cid":"1",                         // dial CID is 1
-        "type":"ipv4v6",                   // ip address type is ipv4 and ipv6
-        "apn":"internet",                  // APN is internet
-        "user":"card",                     // username is card
-        "passwd":"card",                   // password is card
-        "cids":"enable",                   // enable the settings for multi-CID
-        "cids_cfg":                               // settings of multi-CID save here, the json be used when "cids" value is enable
+        "dial":"*99#",                     # dial number is *99#
+        "cid":"1",                         # dial CID is 1
+        "type":"ipv4v6",                   # ip address type is ipv4 and ipv6
+        "apn":"internet",                  # APN is internet
+        "user":"card",                     # username is card
+        "passwd":"card",                   # password is card
+        "cids":"enable",                   # enable the settings for multi-CID
+        "cids_cfg":                               # settings of multi-CID save here, the json be used when "cids" value is enable
         {
-            "2":                                      // CID2 profile
+            "2":                                      # CID2 profile
             {
-                "type":"ipv4v6",                         // CID2 ip address type is ipv4 and ipv6
-                "apn":"internet2",                       // CID2 APN is internet2
-                "user":"card",                           // CID2 username is card
-                "passwd":"card",                         // CID2 password is card
+                "type":"ipv4v6",                         # CID2 ip address type is ipv4 and ipv6
+                "apn":"internet2",                       # CID2 APN is internet2
+                "user":"card",                           # CID2 username is card
+                "passwd":"card",                         # CID2 password is card
             },
-            "3":                                      // CID3 profile
+            "3":                                      # CID3 profile
             {
-                "type":"ipv4v6",                        // CID3 ip address type is ipv4 and ipv6
-                "apn":"internet3",                      // CID3 APN is internet3
-                "user":"card",                          // CID3 username is card
-                "passwd":"card",                        // CID3 password is card
+                "type":"ipv4v6",                        # CID3 ip address type is ipv4 and ipv6
+                "apn":"internet3",                      # CID3 APN is internet3
+                "user":"card",                          # CID3 username is card
+                "passwd":"card",                        # CID3 password is card
             },
-            "4":                                      // CID4 profile
+            "4":                                      # CID4 profile
             {
-                "type":"ipv4v6",                        // CID4 ip address type is ipv4 and ipv6
-                "apn":"internet4",                      // CID4 APN is internet4
-                "user":"card",                          // CID4 username is card
-                "passwd":"card",                        // CID4 password is card
+                "type":"ipv4v6",                        # CID4 ip address type is ipv4 and ipv6
+                "apn":"internet4",                      # CID4 APN is internet4
+                "user":"card",                          # CID4 username is card
+                "passwd":"card",                        # CID4 password is card
             }                        
         }
     }
 }
+```  
+Examples, enable the GNSS for lte modem
+```shell
+modem@lte:gnss=enable
+true
 ```  
 
 #### **Methods**

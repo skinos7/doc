@@ -29,15 +29,23 @@ Management equipment basic infomation
     "cfgversion":"equipent configure version",       // [ string ]
     "gpversion":"equipent group configure version",  // [ string ]    
 }
-// Examples
+```
+Examples, show all configure
+```shell
+land@machine
 {
-    "mode":"nmisp",                              // equipment operator mode Next LTE/NR Mobile Internet Service Provider connection
-    "name":"ASHYELF-12AAD0",                     // equipment name is ASHYELF-12AAD0
-    "mac":"00:03:7F:12:AA:D0",                   // equipment MAC is 88:12:4E:20:46:B0
-    "macid":"00037F12AAD0",                      // equipment serial id is 88124E2046B0
-    "language":"cn",                             // equipent language is chinese
-    "cfgversion":"1"                             // equipent configure version is 1(hint modify one times)
+    "mode":"nmisp",                              # equipment operator mode Next LTE/NR Mobile Internet Service Provider connection
+    "name":"ASHYELF-12AAD0",                     # equipment name is ASHYELF-12AAD0
+    "mac":"00:03:7F:12:AA:D0",                   # equipment MAC is 88:12:4E:20:46:B0
+    "macid":"00037F12AAD0",                      # equipment serial id is 88124E2046B0
+    "language":"cn",                             # equipent language is chinese
+    "cfgversion":"1"                             # equipent configure version is 1(hint modify one times)
 }
+```  
+Examples, modify the machine name
+```shell
+land@machine:name=NewMachineName
+true
 ```  
 
 #### **Methods**
@@ -451,14 +459,17 @@ Management equipment basic infomation
     "cfgversion":"设备配置版本",                     // [ 字符串 ]
     "gpversion":"设备组配置版本",                    // [ 字符串 ]    
 }
-// 示例
+```
+示例, 显示所有配置
+```shell
+land@machine
 {
-    "mode":"nmisp",                              // 设备工作模式为4G/5G网关
-    "name":"ASHYELF-12AAD0",                     // 设备名称为ASHYELF-12AAD0
-    "mac":"00:03:7F:12:AA:D0",                   // 设备MAC为00:03:7F:12:AA:D0
-    "macid":"00037F12AAD0",                      // 设备序列号为00037F12AAD0
-    "language":"cn",                             // 设备语言为中文
-    "cfgversion":"1"                             // 设备配置版本(1暗示配置被修改过1次)
+    "mode":"nmisp",                              # 设备工作模式为4G/5G网关
+    "name":"ASHYELF-12AAD0",                     # 设备名称为ASHYELF-12AAD0
+    "mac":"00:03:7F:12:AA:D0",                   # 设备MAC为00:03:7F:12:AA:D0
+    "macid":"00037F12AAD0",                      # 设备序列号为00037F12AAD0
+    "language":"cn",                             # 设备语言为中文
+    "cfgversion":"1"                             # 设备配置版本(1暗示配置被修改过1次)
 }
 
 ```  
