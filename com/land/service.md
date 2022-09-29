@@ -12,33 +12,30 @@ Administration of equipment service task
 
 #### **Methods**
 
-+ `register[ service name, [delay], component name, method name ]` **add service**, If the service already exists, delete it and then add it, *succeed return ttrue, failed return tfalse, error return terror*
++ `run[ [delay], service name, component name, method name, [parameter list] ]` **add service**, If the service already exists, delete it and then add it, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, add wui@admin.service to run
-    land@service.register[ wui@admin, , wui@admin, service ]
+    land@service.run[ , wui@admin, wui@admin, service ]
     ttrue
     # examples, add tui@ssh.service to run delay 5 second
-    land@service.register[ sshserver, 5, tui@ssh, service ]
+    land@service.run[ 5000000, sshserver, tui@ssh, service ]
     ttrue    
     ```
 
-+ `start[ service name, [delay], component name, method name ]` **add service**, Only start is if the service already exists, Add if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
++ `delete[ service name ]` **delete service**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, add wui@admin.service to run
-    land@service.start[ wui@admin, , wui@admin, service ]
-    ttrue
-    # examples, add tui@ssh.service to run delay 5 second
-    land@service.start[ sshserver, 5, tui@ssh, service ]
-    ttrue    
+    # examples, stop and delete the service wui@admin
+    land@service.unregister[ wui@admin ]
+    ttrue   
     ```
 
-+ `reset[ service name, [delay], [component name], [method name] ]` **reset service**, Only reset is if the service already exists, Add if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
++ `start[ service name, component name, method name ]` **add service**, Only start is if the service already exists, Add  register it if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, add wui@admin.service to run
-    land@service.reset[ wui@admin, , wui@admin, service ]
+    land@service.start[ wui@admin, wui@admin, service ]
     ttrue
-    # examples, add tui@ssh.service to run delay 5 second
-    land@service.reset[ sshserver, 5000000, tui@ssh, service ]
+    # examples, add tui@ssh.service to run
+    land@service.start[ sshserver, tui@ssh, service ]
     ttrue    
     ```
 
@@ -49,6 +46,16 @@ Administration of equipment service task
     ttrue   
     ```
 
++ `reset[ service name, [component name], [method name] ]` **reset service**, Only reset is if the service already exists, Add register it if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, add wui@admin.service to run
+    land@service.reset[ wui@admin, wui@admin, service ]
+    ttrue
+    # examples, add tui@ssh.service to run
+    land@service.reset[ sshserver, tui@ssh, service ]
+    ttrue    
+    ```
+
 + `off[ service name ]` **off control service**, then the system don't restart the service when the service exitd, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, off control the service wui@admin
@@ -56,12 +63,6 @@ Administration of equipment service task
     ttrue   
     ```
 
-+ `unregister[ service name ]` **delete service**, *succeed return ttrue, failed return tfalse, error return terror*
-    ```shell
-    # examples, stop and delete the service wui@admin
-    land@service.unregister[ wui@admin ]
-    ttrue   
-    ```
 
 + `pid[ service name ]` **get the service pid**, *succeed return pid, failed return NULL, error return terror*
     ```shell
@@ -81,7 +82,7 @@ Administration of equipment service task
         "op":"method name",                                            // [ string ]
         "1":"first parameter",                                         // [ string or talk ]
         "2":"second parameter",                                        // [ string or talk ]
-        "2":"third parameter",                                         // [ string or talk ]
+        "3":"third parameter",                                         // [ string or talk ]
         "pid":"pid number",                                            // [ number ]
         "last_start":"the system uptime when the service last start"   // [ number ]
     }    
