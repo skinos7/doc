@@ -684,8 +684,8 @@ dimmalex@ubuntu18:~/tiger7$
     function load_comcfg()
     {
         // 从系统获取组件配置的调用
-        he.load( [ comname ] ).then( function(v){                     //  comname为组件名, 是一个字符串, 如在telecom4g的示例中被定义为verify@telecom4g
-            // 将获取到的配置赋值给存放组件配置的变量
+        he.load( [ comname ] ).then( function(v){
+            // 将获到的配置赋值给存放组件配置的变量
             comcfg = v[0];
             if ( !comcfg )
             {
@@ -694,7 +694,7 @@ dimmalex@ubuntu18:~/tiger7$
             // 将组件配置状态填入状态选项
             $('#status').prop( 'checked', able2boole(comcfg.status) );
             // 将组件配置属性值填入属性输入框中
-            $('#property').val( comcfg.property );
+            $('#remote').val( comcfg.remote );
             // 为状态选项绑定函数处理, 实现点选时界面隐藏或显示属性输入框
             $('#status').unbind('change').change(function () {
                 // 如果选中
@@ -733,7 +733,7 @@ dimmalex@ubuntu18:~/tiger7$
         if ( comcfg.status == "enable" )
         {
             // 从属性输入框中得到组件属性值
-            comcfg.property = $('#property').val();
+            comcfg.remote = $('#remote').val();
         }
         // 比较拷贝确定组件配置是否有被修改
         if ( ocompare( comcfg, comcfgcopy ) )
@@ -743,7 +743,7 @@ dimmalex@ubuntu18:~/tiger7$
             return;
         }
         // 向系统保存并应用组件配置的调用
-        he.save( [ comname+"="+JSON.stringify(comcfg) ] ).then( function(){     // comname为组件名, 是一个字符串, 如在telecom4g的示例中被定义为verify@telecom4g； comcfg为JSON对象, 保存有组件完整的配置
+        he.save( [ comname+"="+JSON.stringify(comcfg) ] ).then( function(){
             // 提示应用成功
             page.hint2succeed( $.i18n('Modify successfully') );
             // 刷新界面内容
