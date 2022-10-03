@@ -18,4 +18,5 @@
 
 
 #### 示例
-参见**操作项目配置**中的 [参考config_sget, config_sgets, config_get_string, config_gets_string, config_sgets_string及config_sset, config_ssets, config_set_string, config_sset_string, config_ssets_string的实现, 理解针对obj_t及attr_t的操作](./project_config.md#参考configsget-configsgets-configgetstring-configgetsstring-configsgetsstring及configsset-configssets-configsetstring-configssetstring-configssetsstring的实现-理解针对objt及attrt的操作)
+参见**操作项目配置**中的 [参考config_sget, config_sgets, config_get_string, config_gets_string, config_sgets_string及config_sset, config_ssets, config_set_string, config_sset_string, config_ssets_string的实现, 理解针对obj_t及attr_t的操作](./project_config.md#%E5%8F%82%E8%80%83config_sget-config_sgets-config_get_string-config_gets_string-config_sgets_string%E5%8F%8Aconfig_sset-config_ssets-config_set_string-config_sset_string-config_ssets_string%E7%9A%84%E5%AE%9E%E7%8E%B0-%E7%90%86%E8%A7%A3%E9%92%88%E5%AF%B9obj_t%E5%8F%8Aattr_t%E7%9A%84%E6%93%8D%E4%BD%9C)
+
