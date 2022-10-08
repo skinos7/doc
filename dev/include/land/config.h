@@ -13,9 +13,9 @@
 
 /**
  * @brief set the value of configuration of the object
- * @param[in] com a pointer of object
- * @param[in] value a pointer of json
- * @param[in] attr a pointer of attr
+ * @param[in] com a object or string description for object
+ * @param[in] value a json or string
+ * @param[in] attr a attribute or string description for attribute
  * @return the operation is succeed or failed
  *		@retval ttrue for succeed
  *		@retval tfalse for failed, and errno code will be sets
@@ -30,10 +30,10 @@ boole config_ssets_string( const char *com, const char *value, const char *attr,
 
 
 /**
- * @brief get the configuration of the object
- * @param[in] com a pointer of object or string
- * @param[in] attr a pointer of attr or string
- * @return a pointer of json for value
+ * @brief get the configuration of the object(dynamic allocation)
+ * @param[in] com a object or string description for object
+ * @param[in] attr a attribute or string description for attribute
+ * @return json
  *		@retval json for succeed
  *		@retval NULL for failed, the errno code will be sets
  *  	@retval TALK_EINVAL for invaild options, the errno code will be sets
@@ -47,9 +47,9 @@ talk_t      config_sgets( const char *com, const char *attr, ... );
  * @brief get the configuration attribute value of the object
  * @param[out] buffer buffer the string will be store here
  * @param[in] buflen size of buffer
- * @param[in] com a pointer of object or string
- * @param[in] attr a pointer of attr or string
- * @return a pointer of string for value
+ * @param[in] com a object or string description for object
+ * @param[in] attr a attribute or string description for attribute
+ * @return string
  *		@retval string for succeed
  * 		@retval NULL for none configure attribute, and errno code be zero
  * 		@retval NULL for failed, and errno code will be sets
@@ -61,13 +61,23 @@ const char *config_sgets_string( char *buffer, int buflen, const char *com, cons
 
 
 /**
- * @brief get the configuration list of the object or all system
+ * @brief get the configuration list of the object or all system(dynamic allocation)
  * @param[in] project project name
  * @return a pointer of json for config list
  *		@retval json for succeed
  *		@retval <TALK_ECODEMAX for failed, and errno code will be sets
  */
 talk_t config_list(   const char *project );
+/**
+ * @brief get the configure pathname
+ * @param[out] buffer buffer the configure pathname will be store here
+ * @param[in] buflen size of buffer
+ * @param[in] project project name
+ * @param[in] oscformat configure file
+ * @return configure pathname
+ *		@retval string for succeed
+ *		@retval NULL for failed, and errno code will be sets
+ */
 const char *config_path(    char *buffer, int buflen, const char *project, const char *oscformat, ... );
 
 

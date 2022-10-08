@@ -542,6 +542,15 @@ boole route_switch( const char *dest, const char *mask, const char *metric, talk
  *		@retval <0 for error
  */
 boole routes_info( const char *tid, const char *destname, const char *mask, char *gateway, char *netdev );
+/**
+ * @brief get the default route infomation
+ * @param[out] gateway
+ * @param[out] netdev
+ * @return rule exist or not
+ *		@retval true for exist
+ *		@retval false for not exist
+ */
+boole gateway_info( char *gateway, char *netdev );
 
 
 

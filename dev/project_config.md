@@ -41,6 +41,11 @@ SkinOS中对于配置的存储有专门的机制, 所有的配置信息都是以
 ```
 
 
+## API头文件中的介绍
+
+[land/config.h](./include/land/config.h)
+
+
 ## 项目配置操作API分类
 
 ##### 获取项目配置

@@ -12,18 +12,6 @@
 #define CONNECT_PID_FILE  PROJECT_VAR_DIR"/.connect.pid"
 #define CONNECT_UNIX_FILE PROJECT_VAR_DIR"/.connect.unix"
 
-#define MAIN_TABLE_NAME "main"
-#define MAIN_TABLE_ID 254
-#define MAIN_TABLE_PREF 32766
-
-#define IFNAME_TABLE_PREF 35000
-
-#define RULE_TABLE_PREF 40000
-
-#define DEFAULT_TABLE_NAME "default"
-#define DEFAULT_TABLE_ID 253
-#define DEFAULT_TABLE_PREF 50000
-
 
 
 void static_ip_enable( const char *device, talk_t cfg );

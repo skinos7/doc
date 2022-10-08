@@ -12,7 +12,7 @@ Administration of equipment service task
 
 #### **Methods**
 
-+ `run[ [delay], service name, component name, method name, [parameter list] ]` **add service**, If the service already exists, delete it and then add it, *succeed return ttrue, failed return tfalse, error return terror*
++ `run[ [delay], service name, component name, method name, [parameter list] ]` **add service**, register and start a service, if the service already exists, delete it and then add it, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, add wui@admin.service to run
     land@service.run[ , wui@admin, wui@admin, service ]
@@ -29,7 +29,7 @@ Administration of equipment service task
     ttrue   
     ```
 
-+ `start[ service name, component name, method name ]` **add service**, Only start is if the service already exists, Add  register it if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
++ `start[ service name, component name, method name ]` **add service**, Only start is if the service already exists, register and start it if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, add wui@admin.service to run
     land@service.start[ wui@admin, wui@admin, service ]
@@ -46,7 +46,7 @@ Administration of equipment service task
     ttrue   
     ```
 
-+ `reset[ service name, [component name], [method name] ]` **reset service**, Only reset is if the service already exists, Add register it if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
++ `reset[ service name, [component name], [method name] ]` **reset service**, Only reset is if the service already exists, register and start it if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, add wui@admin.service to run
     land@service.reset[ wui@admin, wui@admin, service ]
@@ -56,7 +56,7 @@ Administration of equipment service task
     ttrue    
     ```
 
-+ `off[ service name ]` **off control service**, then the system don't restart the service when the service exitd, *succeed return ttrue, failed return tfalse, error return terror*
++ `off[ service name ]` **off control service**, then the system don't restart the service when the service exitd any way, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, off control the service wui@admin
     land@service.off[ wui@admin ]

@@ -54,102 +54,102 @@ typedef param_struct* param_t;
 
 
 /**
- * @brief create a structure of parameter depend on string of options description
- * @param[in] options string description for options
- * @return a pointer of parameter
- * 		@retval param for succeed
+ * @brief create a structure of parameter from string of options description(dynamic allocation)
+ * @param[in] string description for options, copy to use
+ * @return parameter
+ * 		@retval parameter for succeed
  *  	@retval NULL for error, errno will be sets
  */
-param_t     param_create( const char *options );
+param_t     param_create( const char *a );
 /**
- * @brief create a structure of parameter from json description
- * @param[in] talk 1/2/3/4 attr will be dup as the options
- * @return a pointer of parameter
- * 		@retval param for succeed
+ * @brief create a structure of parameter from json description(dynamic allocation)
+ * @param[in] json 1/2/3/4 attr will be dup as the options, dup to use
+ * @return parameter
+ * 		@retval parameter for succeed
  *  	@retval NULL for error, errno will be sets
  */
 param_t     param_build( talk_t json );
 /**
- * @brief create a structure of parameter related json
- * @param[out] param a pointer of paramter, calloc a new paramter when this is NULL
- * @param[in] json the talk will be first and only option
- * @return a pointer of parameter
- * 		@retval param for succeed
+ * @brief create a structure of parameter on json
+ * @param[out] parameter, calloc a new paramter when this is NULL
+ * @param[in] json will be first and only option
+ * @return parameter
+ * 		@retval parameter for succeed
  *  	@retval NULL for error, errno will be sets
  */
-param_t     param_import( param_t param, talk_t json );
+param_t     param_import( param_t parameter, talk_t json );
 /**
- * @brief create a structure of parameter related json
- * @param[out] param a pointer of paramter, calloc a new paramter when this is NULL
- * @param[in] json the talk will be first option
- * @param[in] json2 the talk will be second option
- * @return a pointer of parameter
- * 		@retval param for succeed
+ * @brief create a structure of parameter on json
+ * @param[out] parameter, calloc a new paramter when this is NULL
+ * @param[in] json will be first option
+ * @param[in] json2 will be second option
+ * @return parameter
+ * 		@retval parameter for succeed
  *  	@retval NULL for error, errno will be sets
  */
-param_t     param_import2( param_t param, talk_t json, talk_t json2 );
+param_t     param_import2( param_t parameter, talk_t json, talk_t json2 );
 /**
  * @brief adjust param beginning location, increase starting location
- * @param[in] param pointer of parameter
+ * @param[in] parameter
  * @param[in] number increase few starting location
  * @return opertion succeed or failed
  *		@retval 0 for succeed
  *		@retval negative for failed, the errno code will be sets
  */
-boole       param_shift( param_t param, int number );
+boole       param_shift( param_t parameter, int number );
 /**
  * @brief adjust param beginning location, decrease starting location
- * @param[in] param pointer of parameter
+ * @param[in] parameter
  * @param[in] number decrease few starting location
  * @return opertion succeed or failed
  *		@retval 0 for succeed
  *		@retval negative for failed, the errno code will be sets
  */
-boole       param_unshift( param_t param, int number );
+boole       param_unshift( param_t parameter, int number );
 /**
  * @brief free a parameter
- * @param[in] param pointer of parameter
+ * @param[in] parameter
  * @return none
  */
-void        param_free( param_t param );
+void        param_free( param_t parameter );
 
 
 
 /**
  * @brief get how many options in parameter
- * @param[in] param a pinter of parameter
+ * @param[in] parameter
  * @return number of options
  * 		@retval positive or zeore for succeed
  *  	@retval negative for error, errno will be sets
  */
-int         param_size( param_t param );
+int         param_size( param_t parameter );
 /**
- * @brief get string option of required from parameter
- * @param[in] param a pinter of parameter
+ * @brief get string option of required from parameter, this value is also not available when the parameter is released
+ * @param[in] parameter
  * @param[in] serial serial number( It starts 1 ), -1 will for get the last option
  * @return string option
  * 		@retval string succeed
  *  	@retval NULL error, errno will be sets
  */
-const char *param_string( param_t param, int serial );
+const char *param_string( param_t parameter, int serial );
 
 /**
- * @brief get talk option of required from parameter
- * @param[in] param a pinter of parameter
+ * @brief get talk option of required from parameter, this value is also not available when the parameter is released
+ * @param[in] parameter
  * @param[in] serial serial number( It starts 1 ), -1 will for get the last option
  * @return talk option
  * 		@retval talk succeed
  *  	@retval NULL error, errno will be sets
  */
-talk_t      param_talk( param_t param, int serial );
+talk_t      param_talk( param_t parameter, int serial );
 /**
- * @brief get string of the options description with parameter
- * @param[in] param a pinter of parameter
+ * @brief get string of the options description with parameter, this value is also not available when the parameter is released
+ * @param[in] parameter
  * @return string of the options description
  * 		@retval string for succeed
  *  	@retval NULL for error, errno will be sets
  */
-const char *param_combine( param_t param );
+const char *param_combine( param_t parameter );
 
 
 

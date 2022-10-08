@@ -55,25 +55,25 @@
 - **调用其它组件接口**
 	组件接口是组件向外提供的功能接口, 允许其它的组件或程序调用
 	每个组件都基于其所属的项目名加上@加上组件名称来命名, 如mytest@mycom表示为mytest项目下的mycom组件
-	通过com_call等系列函数可以调用组件接口, 具体见 [调用组件接口](./项目及组件开发介绍-调用组件接口.md)
+	通过ccall/scall等系列函数可以调用组件接口, 具体见 [调用组件接口](./call_component.md)
 - **管理其它组件配置**
 	组件配置也是组件向外提供的配置, 允许其它的组件或程序操作配置
-	通过com_get/com_set等系列函数可以管理组件配置, 具体见 [管理组件配置](./项目及组件开发介绍-管理组件配置.md)
+	通过cget/cset等系列函数可以管理组件配置, 具体见 [管理组件配置](./component_config.md)
 - **操作系统服务**
 	系统中存在一些一直运行的函数, 称之为系统服务, 可以将组件的后台服务函数注册为系统服务使其保持一直运行
-	通过serv_开头的系统服务类函数来注册注销系统服务, 具体更多介绍见 [操作系统服务](./项目及组件开发介绍-操作系统服务.md)
+	通过sstart/sdelete/sstop/srun等系列函数来注册注销停止系统服务, 具体更多介绍见 [操作系统服务](./system_service.md)
 - **运行可执行程序**
-	通过project_bin_path()函数来获取项目的可执行程序的路径
+	通过project_exe_path()函数来获取项目的可执行程序的路径
 	通过shell(), system()等来运行可执行程序
 - **操作全局寄存器**
 	全局寄存器用于存放所有程序可以实时操作交互的变量, 相当于Linux的内存共享
-	通过reg_get/reg_set等系统函数可以读写全局寄存器, 具体更多介绍见 [操作全局寄存器](./项目及组件开发介绍-操作全局寄存器.md)
+	通过reg_get/reg_set等系统函数可以读写全局寄存器, 具体更多介绍见 [操作全局寄存器](./register.md)
 - **记录日志**
 	通过debug/info/warn/fault等系统函数实现向日志系统记录日志, 具体更多介绍见
 - **记录事件**
-	通过land@event组件的trigger接口记录事件信息, 具体更多介绍见 [操作系统日志](./项目及组件开发介绍-操作系统日志.md)
+	通过land@event组件的trigger接口记录事件信息, 具体更多介绍见 [系统日志](./syslog.md)
 - **获取项目信息**
-	通过如project_path()函数来获取项目所在的位置, 具体更多介绍见 [获取项目信息](./项目及组件开发介绍-获取项目信息.md)
+	通过如project_path()函数来获取项目所在的位置, 具体更多介绍见 [获取项目信息](./project_info.md)
 
 ------
 
@@ -101,7 +101,7 @@ dimmalex@ubuntu18:~/tiger7$ ls ./project/verify/
 Makefile  prj.json
 dimmalex@ubuntu18:~/tiger7$
 ```
-其中**prj.json**为项目配置文件, 对于其它更详细的介绍可见[ FPK包管理 ](https://gitee.com/tiger7/doc/blob/master/com/land/fpk.md)中有关prj.inf文件的介绍
+其中**prj.json**为项目配置文件, 对于其它更详细的介绍可见[ FPK包管理 ](../com/land/fpk.md)中有关prj.inf文件的介绍
 **Makefile**为对应产品开发环境的编译说明文件, 它会跟据产品开发环境的不同而不同
 
 
@@ -845,7 +845,7 @@ dimmalex@ubuntu18:~/tiger7$ make menuconfig
 ## 调试组件
 
 #### 1. 命令行调试组件接口
-通过HE终端可以直接调用的到组件的接口, HE终端相关的格式及命令介绍见[终端HE指令使用说明](../com/tui/he_command.md)
+通过HE终端可以直接调用的到组件的接口, HE终端相关的格式及命令介绍见[终端HE指令使用说明](../use/he_command.md)
 
 - 示例: 调用组件_setup函数的接口
 

@@ -68,11 +68,11 @@ boole  com_unregister( const char *target );
 
 /**
  * @brief call a component method
- * @param[in] com a pointer of object structure of component
+ * @param[in] com a object or string description for object
  * @param[in] method name of method function
- * @param[in] param a pointer of parameter structure
- * @return a pointer of json
- *		@retval json for peer succeed
+ * @param[in] parameter a pointer of parameter structure
+ * @return json
+ *		@retval json for peer succeed, return json must free after used
  *		@retval NULL for peer return
  *		@retval ttrue for peer return
  *		@retval tfalse for peer return
@@ -86,13 +86,14 @@ boole  com_unregister( const char *target );
  *  	@retval TALK_EFORK for calling of fork faild, the errno code will be sets
  *  	@retval TALK_EJSON for calling of peer component return wrong data, the errno code will be ENOMSG
  */
-void         *ccall( obj_t com, const char *method, param_t param );
-void         *scall( const char *com, const char *method, param_t param );
+void         *ccall( obj_t com, const char *method, param_t parameter );
+void         *scall( const char *com, const char *method, param_t parameter );
 /**
- * @brief call a component method use parameter of talk
- * @param[in] com a pointer of object structure of component
+ * @brief call a component method use parameter of talk type
+ * @param[in] com a object or string description for object
  * @param[in] method name of method function
- * @param[in] json a pointer of talk structure for parameter
+ * @param[in] json a pointer of talk structure for first option
+ * @param[in] jsons a pointer of talk structure for second option
  * @return return the component method's return when succeed or error return when call failed
  * 		@retval same the ccall
  */
@@ -102,33 +103,33 @@ void         *scallt( const char *com, const char *method, talk_t json );
 void         *scall2t( const char *com, const char *method, talk_t json, talk_t json2  );
 /**
  * @brief call a component method use parameter of string
- * @param[in] com a pointer of object structure of component
+ * @param[in] com a object or string description for object
  * @param[in] method name of method function
- * @param[in] paramormat string for parameter
+ * @param[in] paramformat string for parameter description
  * @return return the component method's return when succeed or error return when call failed
  * 		@retval same the ccall
  */
-void         *ccalls( obj_t com, const char *method, const char *paramormat, ... );
-void         *scalls( const char *com, const char *method, const char *paramormat, ... );
+void         *ccalls( obj_t com, const char *method, const char *paramformat, ... );
+void         *scalls( const char *com, const char *method, const char *paramformat, ... );
 /**
  * @brief call a component method, get the string return
  * @param[out] buffer buffer the string will be store here
  * @param[in] buflen size of buffer
- * @param[in] com a pointer of object structure of component
+ * @param[in] com a object or string description for object
  * @param[in] method name of method function
- * @param[in] param a pointer of parameter structure
+ * @param[in] parameter a pointer of parameter structure
  * @return return the component method's return when succeed or NULL return when call failed
  * 		@retval string for component method's return succeed
  * 		@retval NULL for component none return
  * 		@retval NULL for call failed, and errno code will be sets
  */
-const char   *ccall_string( char *buffer, int buflen, obj_t com, const char *method, param_t param );
-const char   *scall_string( char *buffer, int buflen, const char *com, const char *method, param_t param );
+const char   *ccall_string( char *buffer, int buflen, obj_t com, const char *method, param_t parameter );
+const char   *scall_string( char *buffer, int buflen, const char *com, const char *method, param_t parameter );
 /**
  * @brief call a component method use parameter of talk, get the string return
  * @param[out] buffer buffer the string will be store here
  * @param[in] buflen size of buffer
- * @param[in] com a pointer of object structure of component
+ * @param[in] com a object or string description for object
  * @param[in] method name of method function
  * @param[in] json a pointer of talk structure for parameter
  * @return return the component method's return when succeed or NULL return when call failed
@@ -142,24 +143,24 @@ const char   *scallt_string( char *buffer, int buflen, const char *com, const ch
  * @brief call a component method use parameter of string, get the string return
  * @param[out] buffer buffer the string will be store here
  * @param[in] buflen size of buffer
- * @param[in] com a pointer of object structure of component
+ * @param[in] com a object or string description for object
  * @param[in] method name of method function
- * @param[in] paramormat string for parameter
+ * @param[in] paramformat string for parameter description
  * @return return the component method's return when succeed or NULL return when call failed
  * 		@retval string for component method's return succeed
  * 		@retval NULL for component none return
  * 		@retval NULL for call failed, and errno code will be sets
  */
-const char   *ccalls_string( char *buffer, int buflen, obj_t com, const char *method, const char *paramormat, ... );
-const char   *scalls_string( char *buffer, int buflen, const char *com, const char *method, const char *paramormat, ... );
+const char   *ccalls_string( char *buffer, int buflen, obj_t com, const char *method, const char *paramformat, ... );
+const char   *scalls_string( char *buffer, int buflen, const char *com, const char *method, const char *paramformat, ... );
 
 
 
 /**
  * @brief set a component configure with json value
- * @param[in] com a pointer of object or string of object
- * @param[in] value this value will sets
- * @param[in] attr a pointer of attr or string of attr description
+ * @param[in] com a object or string description for object
+ * @param[in] value a json
+ * @param[in] attr a attribute or string description for attribute
  * @return return the operation is succeed or failed
  * 		@retval true for succeed
  *  	@retval false for failed, and errno code will be sets
@@ -170,9 +171,9 @@ boole sset( const char *com, talk_t value, attr_t attr );
 boole ssets( const char *com, talk_t value, const char *attr, ... );
 /**
  * @brief set a component configure with string value
- * @param[in] com a pointer of object or string of object
- * @param[in] value this value will sets
- * @param[in] attr a pointer of attr or string of attr description
+ * @param[in] com a object or string description for object
+ * @param[in] value string
+ * @param[in] attr a attribute or string description for attribute
  * @return return the operation is succeed or failed
  * 		@retval true for succeed
  *  	@retval false for failed, and errno code will be sets
@@ -185,9 +186,9 @@ boole ssets_string( const char *com, const char *value, const char *attr, ... );
 
 
 /**
- * @brief get a component configure value in json
- * @param[in] com a pointer of object or string of object
- * @param[in] attr a pointer of attr or string of attr description
+ * @brief get a component configure value in json(dynamic allocation)
+ * @param[in] com a object or string description for object
+ * @param[in] attr a attribute or string description for attribute
  * @return return the component configure
  * 		@retval talk for component configure
  * 		@retval NULL for none component configure
@@ -204,8 +205,8 @@ void          *sgets( const char *com, const char *attr, ... );
  * @brief get a component configure value in string
  * @param[out] buffer buffer the string will be store here
  * @param[in] buflen size of buffer
- * @param[in] com a pointer of object or string of object
- * @param[in] attr a pointer of attr or string of attr description
+ * @param[in] com a object or string description for object
+ * @param[in] attr a attribute or string description for attribute
  * @return return the component configure
  * 		@retval string for get component configure succeed
  * 		@retval NULL for none component configure

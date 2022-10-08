@@ -99,7 +99,7 @@ Management LTE modem
         "mode":"Specify the operator",                                                   // [ signal, plmn ], signal for test and use the The best signal operator, 46000 for china mobile, 46001 china union, 46003 for china telecom
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
-    }
+    },
 
     // SMS
     "sms":"SMS function enable or disable",
