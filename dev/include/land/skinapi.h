@@ -12,7 +12,7 @@
 
 
 /// machine api
-#define machine_restart( delay )   scalls( MACHINE_COM, "restart", "%d", delay )
+#define machine_restart( delay, key )   scalls( MACHINE_COM, "restart", "%d,%s", delay, key?:"" )
 
 
 
