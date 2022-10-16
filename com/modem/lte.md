@@ -174,11 +174,12 @@ true
     ```json
     // Attributes introduction of talk by the method return
     {
-        "state":"Current state",        // [ setup, register, ready, connect, reset ]
+        "state":"Current state",        // [ setup, register, ready, connecting, connected reset ]
                                              // setup for setup the modem
                                              // register for register the network
                                              // ready for ready to connect to internet, hint signal/network/simcard all ok
-                                             // connect for connect to the internet
+                                             // connecting for connect to the internet
+                                             // connected for connect internet succeed
                                              // reset for reset the modem
         "mversion":"Modem version",     // [ string ]
         "imei":"IMEI numer",            // [ string ]

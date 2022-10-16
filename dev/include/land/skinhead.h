@@ -120,6 +120,8 @@ typedef int boole;
 #define WAN2_COM "ifname@wan2"
 #define WISP_COM "ifname@wisp"
 #define WISP2_COM "ifname@wisp2"
+#define WNIC_COM "ifname@nic"
+#define WNIC2_COM "ifname@nic2"
 #define KEEPLIVE_COM "network@keeplive"
 #define BRIDGE_COM "network@bridge"
 #define BRIDGE_NAME "bridge"
@@ -141,8 +143,6 @@ typedef int boole;
 #define ASSID_COM "wifi@assid"
 #define ASSID2_COM "wifi@assid2"
 
-
-
 /** modem management component */
 #define MODEM_PROJECT "modem"             // modem project
 #define MODEMDRV_PROJECT "modemdrv"       // modem driver project( include usb driver or pci driver )
@@ -152,7 +152,12 @@ typedef int boole;
 #define LTE_COM "modem@lte"               // modem object
 #define LTE2_COM "modem@lte2"             // modem object
 
-
+/** netcard management component */
+#define NETCARD_PROJECT "netcard"                // network inetface card(NIC) project
+#define NETCARDDRV_PROJECT "netcarddrv"          // network inetface card(NIC) driver project( include usb driver or pci driver )
+#define NETCARD_COM "netcard@device"             // network inetface card(NIC) management
+#define NIC_COM "netcard@nic"                    // network inetface card(NIC) object
+#define NIC2_COM "netcard@nic2"                  // network inetface card(NIC) object
 
 /** uart management component */
 #define UART_PROJECT "uart"                // uart project
