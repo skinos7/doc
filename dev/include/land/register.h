@@ -21,11 +21,15 @@ typedef struct register_file_st
 	// link node for add to linker
     link_struct link;
 
+	// register object
+    char object[NAME_MAX];
+
 	// register file pathname
     char path[PATH_MAX];
 
 	// file handler
     int fd;
+    int flags;
 
 	// mmap to the memory
     char *mem;
@@ -63,16 +67,18 @@ typedef register_var_struct* register_var_t;
 
 
 // adv function
-register_file_t register_open( const char *com, int value_number, int total_size, int mode );
-void            register_close( register_file_t reg );
+register_file_t register_open( const char *object, int flags, int mode, int value_number, int total_size );
+void			register_close( register_file_t h );
 register_var_t  register_search( register_file_t h, const char *name );
-register_var_t  register_get( const char *com, const char *name );
+void           *register_value_set( register_file_t h, const char *name, const void *v, int size, int max_size );
+void           *register_value_pointer( register_file_t h, const char *name );
+int             register_value_size( register_file_t h, const char *name );
 
 
 
 /**
  * @brief set a register variable
- * @param[in] com compoent name, NULL for system default( land )
+ * @param[in] com compoent name, cannot be NULL
  * @param[in] name value name
  * @param[in] v value pointer
  * @param[in] size value size in byte
@@ -81,7 +87,16 @@ register_var_t  register_get( const char *com, const char *name );
  * 		@retval pointer for succeed
  *  	@retval NULL for error, errno will be set
  */
-void		   *register_set( const char *com, const char *name, const void *v, int size, int max_size );
+void           *register_set( const char *com, const char *name, const void *v, int size, int max_size );
+/**
+ * @brief get a register variable pointer for write
+ * @param[in] com compoent name, cannot be NULL
+ * @param[in] name value name
+ * @return pointer of value
+ * 		@retval pointer for succeed
+ *  	@retval NULL for error, errno will be set
+ */
+void           *register_pointer( const char *com, const char *name );
 /**
  * @brief set a register variable value and buffer the pointer of register value
  * @param[in] com compoent name, NULL for system default( land )
@@ -92,17 +107,13 @@ void		   *register_set( const char *com, const char *name, const void *v, int si
  */
 #define         int2register( com, name, pointer, value ) \
 	do{ \
-		if( pointer == NULL ) \
-			pointer = (int *)register_set( com, name, &value, sizeof(value), 0 ); \
-		else \
-			*pointer = value; \
+		if( pointer == NULL ) pointer = (int *)register_set( com, name, &value, sizeof(value), 0 ); \
+		else *pointer = value; \
 	}while(0)
 #define         boole2register( com, name, pointer, value ) \
 	do{ \
-		if( pointer == NULL ) \
-			pointer = (boole *)register_set( com, name, &value, sizeof(value), 0 ); \
-		else \
-			*pointer = value; \
+		if( pointer == NULL ) pointer = (boole *)register_set( com, name, &value, sizeof(value), 0 ); \
+		else *pointer = value; \
 	}while(0)
 #define         string2register( com, name, pointer, value, max_size ) \
 	do{ \
@@ -115,7 +126,7 @@ void		   *register_set( const char *com, const char *name, const void *v, int si
 			} \
 			else \
 			{ \
-				len = 1; \
+				len = 0; \
 			} \
 			pointer = (char *)register_set( com, name, value, len, max_size ); \
 		} \
@@ -132,28 +143,27 @@ void		   *register_set( const char *com, const char *name, const void *v, int si
 			} \
 		} \
 	}while(0)
+
+
+
 /**
- * @brief set a system default( land ) register variable value and buffer the pointer of register value
+ * @brief get a register variable size
+ * @param[in] com compoent name, NULL for system default( land )
  * @param[in] name value name
- * @param[out] register value pointer store here
- * @param[in] value value for register
- * @return none
+ * @return value size
+ * 		@retval value size for succeed
+ *  	@retval -1 for error, errno will be set
  */
-#define int2reg( name, pointer, value )                     int2register( NULL, name, pointer, value )
-#define boole2reg( name, pointer, value )                   boole2register( NULL, name, pointer, value )
-#define string2reg( name, pointer, value, max_size )        string2register( NULL, name, pointer, value, max_size )
-
-
-
+int             register_size( const char *com, const char *name );
 /**
- * @brief get a register variable value pointer
+ * @brief get a register variable pointer for read only
  * @param[in] com compoent name, NULL for system default( land )
  * @param[in] name value name
  * @return pointer of value
  * 		@retval pointer for succeed
  *  	@retval NULL for error, errno will be set
  */
-void		   *register_pointer( const char *com, const char *name );
+const void	   *register_value( const char *com, const char *name );
 /**
  * @brief get a register variable value and buffer the pointer of register value
  * @param[in] com compoent name, NULL for system default( land )
@@ -165,54 +175,22 @@ void		   *register_pointer( const char *com, const char *name );
  */
 #define         register2int( com, name, pointer, value, defvalue ) \
 	do{ \
-		if( pointer == NULL ) \
-			pointer = (int *)register_pointer( com, name ); \
-		if ( pointer != NULL ) \
-			value = *pointer; \
-		else \
-			value = defvalue; \
+		if ( pointer == NULL ) pointer = (const int *)register_value( com, name ); \
+		if ( pointer != NULL ) value = *pointer; \
+		else value = defvalue; \
 	}while(0)
 #define         register2boole( com, name, pointer, value, defvalue ) \
 	do{ \
-		if( pointer == NULL ) \
-			pointer = (boole *)register_pointer( com, name ); \
-		if ( pointer != NULL ) \
-			value = *pointer; \
-		else \
-			value = defvalue; \
+		if ( pointer == NULL ) pointer = (const boole *)register_value( com, name ); \
+		if ( pointer != NULL ) value = *pointer; \
+		else value = defvalue; \
 	}while(0)
 #define         register2string( com, name, pointer, value, defvalue ) \
 	do{ \
-		if( pointer == NULL ) \
-			pointer = (char *)register_pointer( com, name ); \
-		if ( pointer != NULL ) \
-			value = pointer; \
-		else \
-			value = defvalue; \
+		if ( pointer == NULL ) pointer = (const char *)register_value( com, name ); \
+		if ( pointer != NULL ) value = pointer; \
+		else value = defvalue; \
 	}while(0)
-/**
- * @brief get a system default( land ) register variable value and buffer the pointer of register value
- * @param[in] name value name
- * @param[out] register value pointer store here
- * @param[out] value value store here
- * @param[in] defvalue default value for register
- * @return none
- */
-#define reg2int( name, pointer, value, defvalue )      register2int( LAND_PROJECT, name, pointer, value, defvalue )
-#define reg2boole( name, pointer, value, defvalue )    register2boole( LAND_PROJECT, name, pointer, value, defvalue )
-#define reg2string( name, pointer, value, defvalue )   register2string( LAND_PROJECT, name, pointer, value, defvalue )
-
-
-
-/**
- * @brief get a register variable value size
- * @param[in] com compoent name, NULL for system default( land )
- * @param[in] name value name
- * @return size of value
- * 		@retval positive or zeore for succeed
- *  	@retval negative for error, errno will be sets
- */
-int             register_size( const char *com, const char *name );
 
 
 
