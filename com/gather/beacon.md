@@ -44,7 +44,7 @@ gather@beacon
 Examples, disable the beacon
 ```shell
 gather@beacon:status=disable
-true
+ttrue
 ```  
 
 #### **Methods**

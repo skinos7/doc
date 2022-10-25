@@ -67,6 +67,35 @@ boole routes_switch2( const char *tid, const char *dest, const char *mask, const
  *		@retval false for failed
  */
 boole routes_create_ifname( int tid, talk_t ifnamest );
+/**
+ * @brief set the extern tx queue
+ * @param[in] object extern object
+ * @param[in] netdev interface name
+ * @param[in] len queue length
+ * @return succeed or failed
+ *		@retval true for succeed
+ *		@retval false for failed
+ */
+boole txqueue_set_ifname( const char *object, const char *netdev, const char *len  );
+/**
+ * @brief set the extern path mtu
+ * @param[in] object extern object
+ * @param[in] netdev interface name
+ * @return succeed or failed
+ *		@retval true for succeed
+ *		@retval false for failed
+ */
+boole pmtu_adjust_ifname( const char *object, const char *netdev  );
+/**
+ * @brief set the extern ttl
+ * @param[in] object extern object
+ * @param[in] netdev interface name
+ * @param[in] ttl
+ * @return succeed or failed
+ *		@retval true for succeed
+ *		@retval false for failed
+ */
+boole ttl_set_ifname( const char *object, const char *netdev, const char *ttl );
 
 
 
