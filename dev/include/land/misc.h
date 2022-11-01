@@ -172,6 +172,13 @@ const char *date_desc( char *buffer, int buflen );
  */
 void date_set( time_t seconds, const char* zone );
 /**
+ * @brief adjust the current date by zone
+ * @param[in] seconds current UTC second
+ * @param[in] zone zone
+ * @return time by zone
+ */
+time_t date_adjust( time_t seconds, const char* zone );
+/**
  * @brief get the mtd device by partition name
  * @param[in] partition partition
  * @param[out] mtd mtd char device
