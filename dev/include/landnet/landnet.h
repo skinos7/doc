@@ -134,6 +134,24 @@ boole shunts_fix_ifname( boole force, const char *ifname );
  *		@retval false for failed
  */
 boole shunts_balancing_2ifname( boole force, const char *ifname, const char *ifname2 );
+/**
+ * @brief add fix some host to ifname
+ * @param[in] condition
+ * @param[in] ifname
+ * @return succeed or failed
+ *		@retval true for succeed
+ *		@retval false for failed
+ */
+boole shunts_bind_add( const char *condition, const char *ifname );
+/**
+ * @brief delete fix some host to ifname
+ * @param[in] condition
+ * @param[in] ifname
+ * @return succeed or failed
+ *		@retval true for succeed
+ *		@retval false for failed
+ */
+boole shunts_bind_delete( const char *condition, const char *ifname );
 
 
 
