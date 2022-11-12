@@ -163,7 +163,7 @@ modem@lte
 Examples, enable the GNSS for lte modem
 ```shell
 modem@lte:gnss=enable
-true
+ttrue
 ```  
 
 #### **Methods**
@@ -264,13 +264,13 @@ true
     +CPIN: READY
 
     OK
-    true
+    ttrue
     # examples, talk to second modem AT command for network state
     modem@lte2.talk[at+creg?]
     +CREG: 2,1,"A538","1EB3FB7",2
 
     OK
-    true
+    ttrue
     ```
 
 + `siminfo[]` **get the modem simcard infomation**, *succeed return talk to describes simcard infomation, failed return NULL, error return terror*
