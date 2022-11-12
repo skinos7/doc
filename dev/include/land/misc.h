@@ -512,17 +512,20 @@ int netdev_flew( const char *card, unsigned long long *rx_bytes , unsigned long 
 #define DEFAULT_TABLE_NAME "default"
 #define DEFAULT_TABLE_ID 253
 #define DEFAULT_TABLE_PREF 50000
+#define EXTERN_METRIC "10"
+#define VPN_METRIC "5"
 /**
  * @brief get the route rule infomation
  * @param[in] destname dest of rule
  * @param[in] mask  mask of rule
+ * @param[in] metric  metric of rule, NULL for all metric
  * @param[out] gateway
  * @param[out] netdev
  * @return rule exist or not
  *		@retval true for exist
  *		@retval false for not exist
  */
-boole route_info( const char *destname, const char *mask, char *gateway, char *netdev );
+boole route_info( const char *destname, const char *mask, const char *metric, char *gateway, char *netdev );
 /**
  * @brief switch the extern route rule
  * @param[in] tid route id
@@ -541,6 +544,7 @@ boole route_switch( const char *dest, const char *mask, const char *metric, talk
  * @param[in] tid route id
  * @param[in] destname dest of rule
  * @param[in] mask  mask of rule
+ * @param[in] metric  metric of rule, NULL for all metric
  * @param[out] gateway
  * @param[out] netdev
  * @return match the rule number
@@ -548,7 +552,7 @@ boole route_switch( const char *dest, const char *mask, const char *metric, talk
  *		@retval 0 for not exist
  *		@retval <0 for error
  */
-boole routes_info( const char *tid, const char *destname, const char *mask, char *gateway, char *netdev );
+boole routes_info( const char *tid, const char *destname, const char *mask, const char *metric, char *gateway, char *netdev );
 /**
  * @brief get the default route infomation
  * @param[out] gateway

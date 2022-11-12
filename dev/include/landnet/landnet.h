@@ -32,6 +32,14 @@ talk_t automatic_client_connect( const char *ifname, const char *ifdev, const ch
 
 
 /**
+ * @brief switch the resolv config to ifname
+ * @param[in] ifname ifname
+ * @return succeed or failed
+ *		@retval true for succeed
+ *		@retval false for failed
+ */
+boole resolv_switch( const char *ifname );
+/**
  * @brief switch the extern route rule
  * @param[in] tid route id
  * @param[in] dest dest ip address
