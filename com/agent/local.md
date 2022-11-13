@@ -26,7 +26,7 @@ agent@local
 Examples, enable the JSON command accept
 ```shell
 agent@local:json=enable
-true
+ttrue
 ```  
 
 
@@ -56,6 +56,6 @@ agent@local
 示例, 启用JSON控制协议
 ```shell
 agent@local:json=enable
-true
+ttrue
 ```  
 

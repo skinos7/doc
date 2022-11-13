@@ -45,7 +45,7 @@ land@machine
 Examples, modify the machine name
 ```shell
 land@machine:name=NewMachineName
-true
+ttrue
 ```  
 
 #### **Methods**

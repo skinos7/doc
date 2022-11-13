@@ -48,7 +48,7 @@ agent@remote
 Examples, disable the accept remote management
 ```shell
 agent@remote:status=disable
-true
+ttrue
 ```  
 
 
@@ -105,6 +105,6 @@ agent@remote
 示例, 禁用远程管理
 ```shell
 agent@remote:status=disable
-true
+ttrue
 ```  
 
