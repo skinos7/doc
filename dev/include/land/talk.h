@@ -18,6 +18,8 @@
 #define JSON_BASE64_PREFIX '^'
 /// The beginning character of readable JSON string
 #define JSON_STRING_PREFIX '{'
+/// The operator options for patch
+#define JSON_PATCH_OPERATOR "~op"
 /// talk_st equal json_t
 typedef json_t talk_struct;
 
