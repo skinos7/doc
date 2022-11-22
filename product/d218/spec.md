@@ -77,6 +77,8 @@
 
 
 ## 模块实物图
+![avatar](./frame.jpg)
+ 
 ![avatar](./m_16.jpg) ![avatar](./m_17.jpg) ![avatar](./m_18.jpg) ![avatar](./m_19.jpg) 
 ![text](./m_16.jpg) ![text](./m_17.jpg) ![text](./m_18.jpg) ![text](./m_19.jpg) 
 
