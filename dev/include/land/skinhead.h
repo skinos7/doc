@@ -210,6 +210,7 @@ typedef int boole;
 #define PROJECT_SER_DIR PROJECT_VAR_DIR"/.ser"
 #define PROJECT_COM_DIR PROJECT_VAR_DIR"/.com"
 #define PROJECT_CFG_DIR PROJECT_VAR_DIR"/.cfg"
+#define PROJECT_CONF_DIR PROJECT_VAR_DIR"/.conf"
 #define PROJECT_INT_DIR PROJECT_MNT_DIR"/int"
 #define PROJECT_APP_DIR PROJECT_MNT_DIR"/int/prj"
 #define PROJECT_DEF_DIR PROJECT_MNT_DIR"/int/def"
