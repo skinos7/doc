@@ -20,6 +20,16 @@ manage IO
         // ... more io state init
     },
 
+    // IO SMS Configuration
+    "sms":
+    {
+        "status":"sms trigger status",          // [ disable, enable ]
+        "device":"LTE device name",             // [ modem@lte, modem@lte2, modem@lte3, ... ]
+        "contact":"contact number",             // [ phone number ]
+        "contact2":"contact number",            // [ phone number ]
+        "contact3":"contact number"             // [ phone number ]
+    }
+
     // first client, default is TCP/UDP client configure
     "client":
     {
