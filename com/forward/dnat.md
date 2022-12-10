@@ -1,26 +1,36 @@
 ***
-## 端口代理组件（forward@dnat） 
-此组件为管理端口代理，将互联网上的服务代理到本设备上，让局域网的应用直接访问本设备即可获取互联网上的服务
+## Management of destination NAT
+Management of destination NAT to proxy internet port for local network client
 
-#### **配置** 
+#### Configuration( forward@dnat )
+
 ```json
+// Attributes introduction 
 {
-    "rule1":     // 规则名, 可随意命名, 但必须在此文件中唯一
+    "rule name":                     // [ string ]
     {
-        "destip":"202.96.134.133",   //互联网地址， 即要代理的互联网地址
-        "destport":"28",             //互联网端口, 即要代理的端口
-        "protocol":"tcpudp",  //协议: tcp表示TCP，udp表示UDP，tcpudp表示TCP与UDP
-        "targetport":"22",        // 设备端口, 即设备上的端口， 空表示与destport相同
+        "destip":"internet server ip address",         // [ ip address ]
+        "destport":"internet server port",             // [ port ], supoprt single port and range of port(ex. 80-100)
+        "protocol":"protocol type",                    // [ tcp, udp, tcpudp ], tcpudp for tcp and udp
+        "targetport":"local proxy port"                // [ port ]
     }
-    "rule2":   // 规则名, 可随意命名, 但必须在此文件中唯一
-    {
-        "destip":"29.23.11.35",   // 互联网地址， 即要代理的互联网地址
-        "destport":"28-90",       // 互联网端口, 中间有-的表示从28到90之间所有的端口
-        "protocol":"tcpudp",  //协议: tcp表示TCP，udp表示UDP，tcpudp表示TCP与UDP
-        "targetport":"33-100", // 设备端口, 中间有-的表示从33到100之间所有的端口
-    }
-    // ….更多的规则
+
 }
-```  
+```
+
+Examples, show current all of dnat rule
+```shell
+forward@dnat
+{
+    "proxy1":                          # rule name is proxy1
+    {
+        "destip":"29.23.11.35",        # internet server ip is 29.23.11.35
+        "destport":"90",               # internet server port is start 28, end at 90 
+        "protocol":"tcpudp",           # proxy tcp and udp
+        "targetport":"100"             # proxy the server on port 100 at local interface
+    }
+}
+```
+
 
 

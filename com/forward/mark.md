@@ -1,36 +1,40 @@
 ***
-## 路由数据标记组件（forward@mark） 
-管理系统路由数据标记配置
+## Mark the packet（forward@mark） 
+mark the packet with a mark id
 
-#### **配置** 
+#### Configuration( forward@mark )
+
 ```json
-// 属性介绍
+// Attributes introduction
 {
-    "规则名":             // 路由数据标记规则名, 可随意命名, 但必须在此文件中唯一
+    "rule name ":                                                      // [ string ]
     {
-        "markid":"标记ID",         // 从1到4294967295, 100以内保留给系统使用, 自定义规则建议使用100以上
-
-        "src":"源地址",            // 源IP地址, 空表示所有源地址
-        "dest":"目的地址"          // 目的地址, 通常为内网地址
-        "protocol":"协议",         // tcp表示TCP, udp表示UDP, 空或其它表示所有, 在非tcp及udp时以下的srcport及destport无效
-        "srcport":"源端口",        // 源端口, 空表示所有源端口
-        "destport":"目的端口"      // 目的端口或端口段, 100-400表示100至400之间的所有端口,空表示所有端口
+        "markid":"mark the packet with this id",                       // [ 1-4294967295 ]
+                                                                            // Less than 100 is reserved for the system
+                                                                            // You are advised to use more than 100 for user-defined rules
+        "src":"select the packet use source ip address",               // [ ip address ]
+        "src":"select the packet use destination ip address",          // [ ip address ]
+        "protocol":"protocol type",                                    // [ all, tcp, udp, tcpudp ], all for all protocol, tcpudp for tcp and udp        
+        "srcport":"source port",                                       // [ port ], default is all source port
+        "destport":"destination port"                                  // [ port ], default is all destination port
     }
-    // ...               // 更多其它规则
+    // ... more rule
 }
+```
 
-// 示例
+Examples, show current all of mark rule
+```shell
 {
     
-    "myCustom1":    // 第一条规则
-    {
-        "markid":"300",               // 标记ID为101
-        "src":"192.168.8.250",        // 源地址为192.168.8.250
-        "dest":"202.94.22.38"         // 目的地址为202.94.22.38
+    "myCustom1":                       # rule name is myCustom1
+    {                                  # mark that source address is 192.168.8.250 and destination address is 202.94.22.38 packet 300
+        "markid":"300",
+        "src":"192.168.8.250",
+        "dest":"202.94.22.38"
     },
-    "youCustom":    // 第二条规则
-    {
-        "markid":"300",               // 标记ID为102
+    "youCustom":                       # rule name is youCustom
+    {                                  # mark that source address is 192.168.8.251 and tcp protocol source port is 1000-2000 and destination port is 80/8080 packet 301
+        "markid":"301",               // 标记ID为102
         "src":"192.168.8.251",        // 源地址为192.168.8.251
         "protocol":"tcp",             // 协议为TCP
         "srcport":"1000-2000"         // 源端口为1000至2000之间
@@ -38,29 +42,3 @@
     }
 }
 ```  
-
-
-#### **接口** 
-
-+ `add[ 规则名, 标识ID, [源地址], [目的地址], [协议], [源端口], [目的端口] ]` 添加包标记规则
-
->*以上参数中：规则名、标识ID不能为空, 其它参数可为空*
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `delete[ 规则名 ]` 删除包标记规则
-
->*删除时必须给出规络名
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `status` 查看当前包标记规则
-
->*调用失败时返回NULL, 调用成功返回如下JSON：*
-
-```json
-        {
-            暂时与配置相同
-        }
-```
-

@@ -106,16 +106,27 @@ void syslog_string( unsigned int flags, const char *filename, int line, const ch
 /* 系统底层警告的事件信息, 并附带errno变量的值*/
 #define awarning( ... )      syslog_string( (SYSLOG_ARCH|SYSLOG_WARN|SYSLOG_ERRNO), (__FILE__), ( __LINE__ ), __VA_ARGS__ )
 
-/* 网络交互调试最细节信息 */
+/* 管理交互调试最细节信息 */
 #define gverbose( ... )      syslog_string( (SYSLOG_GATHER|SYSLOG_VERBOSE), (__FILE__), (__LINE__), __VA_ARGS__ )
-/* 网络交互调试信息 */
+/* 管理交互调试信息 */
 #define gdebug( ... )        syslog_string( (SYSLOG_GATHER|SYSLOG_DEBUG), (__FILE__), (__LINE__), __VA_ARGS__ )
-/* 网络交互提示信息 */
+/* 管理交互提示信息 */
 #define ginfo( ... )         syslog_string( (SYSLOG_GATHER|SYSLOG_INFO), (__FILE__), (__LINE__), __VA_ARGS__ )
-/* 网络交互警告信息 */
+/* 管理交互警告信息 */
 #define gwarn( ... )         syslog_string( (SYSLOG_GATHER|SYSLOG_WARN), (__FILE__), (__LINE__), __VA_ARGS__ )
-/* 网络交互警告的事件信息, 并附带errno变量的值*/
+/* 管理交互警告的事件信息, 并附带errno变量的值*/
 #define gwarning( ... )      syslog_string( (SYSLOG_GATHER|SYSLOG_WARN|SYSLOG_ERRNO), (__FILE__), ( __LINE__ ), __VA_ARGS__ )
+
+/* 网络交互调试最细节信息 */
+#define nverbose( ... )      syslog_string( (SYSLOG_NETWORK|SYSLOG_VERBOSE), (__FILE__), (__LINE__), __VA_ARGS__ )
+/* 网络交互调试信息 */
+#define ndebug( ... )        syslog_string( (SYSLOG_NETWORK|SYSLOG_DEBUG), (__FILE__), (__LINE__), __VA_ARGS__ )
+/* 网络交互提示信息 */
+#define ninfo( ... )         syslog_string( (SYSLOG_NETWORK|SYSLOG_INFO), (__FILE__), (__LINE__), __VA_ARGS__ )
+/* 网络交互警告信息 */
+#define nwarn( ... )         syslog_string( (SYSLOG_NETWORK|SYSLOG_WARN), (__FILE__), (__LINE__), __VA_ARGS__ )
+/* 网络交互警告的事件信息, 并附带errno变量的值*/
+#define nwarning( ... )      syslog_string( (SYSLOG_NETWORK|SYSLOG_WARN|SYSLOG_ERRNO), (__FILE__), ( __LINE__ ), __VA_ARGS__ )
 
 /* 模块交互调试最细节信息 */
 #define mverbose( ... )      syslog_string( (SYSLOG_MODEM|SYSLOG_VERBOSE), (__FILE__), (__LINE__), __VA_ARGS__ )

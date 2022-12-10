@@ -1,77 +1,61 @@
 ***
-## 策略路由组件（forward@rule） 
-管理系统策略路由
+## Policy based routing
+Management of policy based routing
 
-#### **配置** 
+#### Configuration( forward@rule )
+
 ```json
-// 属性介绍
+// Attributes introduction 
 {
-    "规则名":             // 策略路由规则名, 可随意命名, 但必须在此文件中唯一
+    "rule name ":                                                      // [ string ]
     {
-        // 使用包标记选译
-        "markid":"标记ID",         // 从1到4294967295, 100以内保留给系统使用, 自定义规则建议使用100以上
-
-        // 使用源地址选择
-        "srcifname":"源接口",      // 如ifname@lan等接口名
-        "src":"源地址",            // IP地址
-        "srcmask":"源子网掩码",    // 子网掩码
+        "markid":"select the packet use markid",                       // [ 1-4294967295 ]
+                                                                            // Less than 100 is reserved for the system
+                                                                            // You are advised to use more than 100 for user-defined rules
+        "srcifname":"select the packet use source interface",          // [ string ], For example ifname@lan
+        "src":"select the packet use source ip address",               // [ ip address ]
+        "srcmask":"select the packet use source mask of ip address",   // [ netmask ]
         
-        // 指定路由表
-        "tid":"路由表ID",          // 为0到255, 0为local表, 253为default表, 254为main表, 255为local表, 100以内保留给系统使用, 自定义规则建议使用100以上(并避开253,254,255)
-        "pref":"优先级",           // 为0到4294967295, 0为local表的优先级, 32766为main表的优先级, 50000为default表的优先级, 不指定默认为40000
+        "tid":"which route table to go to",                            // [ 0-255 ]
+                                                                            // 0 for local table
+                                                                            // 253 for default table
+                                                                            // 254 for main table
+                                                                            // 255 for local table
+                                                                            // Less than 100 is reserved for the system
+                                                                            // You are advised to use more than 100 for user-defined rules(And avoid 253,254,255)
+        "pref":"rule's priority",                                      // [ 0-4294967295 ], The smaller, the higher
+                                                                            // 0 for local table priority
+                                                                            // 32766 for main table priority
+                                                                            // 50000 for default table priority
+                                                                            // default is 40000
 
-        // 未实现
-        "nat":"NAT地址",       // 未实现
-        "action":"处理方式",   // prohibit表示回复禁用, reject表示拒绝, unreachable表示回复不可达, 未实现
-        "cid":"Class ID"       // 未实现
+        "nat":"NAT address",           // Not Implemented
+        "action":"processing mode",    // Not Implemented, [ prohibit, reject, unreachable]
+        "cid":"Class ID"               // Not Implemented
 
     }
-    // ...               // 更多其它规则
+    // ...more rule
 }
+```
 
-// 示例
+Examples, show current all of policy rule
+```shell
+forward@rule
 {
-    
-    "myCustom1":    // 第一条规则
-    {
-        "srcifname":"ifname@lan",      // 源接口为ifname@lan
-        "src":"1.1.1.1",               // 源地址为1.1.1.1
-        "srcmask":"255.255.255.255", // 源子网掩码位255.255.255.0
+    "myCustom1":                       # rule name is myCustom1
+    {                                  # packet from ifname@lan and source address is 1.1.1.1/255.255.255.255 route to route table 101, priority is 38000
+        "srcifname":"ifname@lan",
+        "src":"1.1.1.1",
+        "srcmask":"255.255.255.255",
 
-        "tid":"101",                   // 走101的路由表ID
-        "pref":"38000"                 // 优先级为38000
+        "tid":"101",
+        "pref":"38000"
     },
-    "youCustom":    // 第二条规则
-    {
-        "srcifname":"ifname@lan",      // 源接口为ifname@lan
-        "markid":"300",                // 标记ID为100
-
-        "tid":"102"                    // 走102的路由表ID
+    "youCustom":                       # rule name is youCustom
+    {                                  # packet from ifname@lan and markid is 300 route to route table 102, default priority is 40000
+        "srcifname":"ifname@lan",
+        "markid":"300",
+        "tid":"102"
     }
 }
 ```  
-
-
-#### **接口** 
-
-+ `add[ 规则名, [源网络地址], [掩码], [源接口], [标记ID], 路由表ID, [优先级] ]` 添加路由策略规则
-
->*以上参数中：规则名、路由表ID不能为空, 源网络地址与源接口及标记ID三者不能都为空, 其它参数可为空*   
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `delete[ 规则名 ]` 删除路由策略规则
-
->*删除指定的策略路由时必须给出规络名
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `status` 查看当前策略路由表
-
->*调用失败时返回NULL, 调用成功返回如下JSON：*
-```json
-        {
-            暂时与配置相同
-        }
-```
-

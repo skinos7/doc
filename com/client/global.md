@@ -1,99 +1,111 @@
 ***
-## 默认客户端管理组件（client@global） 
-此组件为客户端全局配置, 设置后, 所有客户端都将会应用此设置
+## Management of global access
+Management of global local interface name client access
 
-#### **配置(client@global)** 
+#### Configuration( client@global )
+
 ```json
+// Attributes introduction 
 {
-    "ifname@lan":                  // 客户端MAC
+    "interface name":                   // [ ifname@lan, ifname@lan2, ifname@lan3, ... ]
     {
-        // 禁止上网相关
-        "internet":"disable",  // disable为禁止联网, enable为允许上网, timer为定时上网
-        "internet_timer": // 定时上网相关的时间规则, 当internet设置为timer时以下定义的时间允许上网
+        // access internet privilege
+        "internet":"disable or enable or regular internet access",  // [ enable, disable ,timer ], timer for regular internet access
+        "internet_timer":                                           // regular internet access rule, valid when "internet" be "timer"
         {
-            "rule1":
+            "rule name":                                                 // [ string ], user can custom the rule name
             {
-                "datestart":"",  // 启始时间，YYYY[-MM[-DD[Thh[:mm[:ss]]]]]
-                "datestop":"",   // 结束时间，YYYY[-MM[-DD[Thh[:mm[:ss]]]]]
-                "timestart":"",  // 每天开始时间: 在启始时间与结束时间内, 每天允许上网的开始时间，hh:mm[:ss], 例如，11:22:33
-                "timestop":"",   // 每天结束时间: 在启始时间与结束时间内, 每天允许上网的结束时间，11:22:33；若指定了开始时间，没指定结束时间，则结束时间为23:59:59
-                "weekdays":"1,2" // 每周的星期号: 在启始时间与结束时间内, 允许上网的星期号, 0-6表示星期日、一、二、三、四、五、六, 可同时多个以逗号间隔
-            },
-            "rule2":   // 1月份内每周日及周六的9点半到11点半可以上网
-            {
-                "datestart": "2017-1-1T00:00:00",
-                "datestop": "2017-2-1T00:00:00",
-                "timestart": "9:30:00",
-                "timestop": "11:30:00",
-                "weekdays": "0,6"
-            },
-            "rule3":   // 2月份内每天的9点半到11点半可以上网
-            {
-                "datestart": "2017-2-1T00:00:00",
-                "datestop": "2017-3-1T00:00:00",
-                "timestart": "9:30:00",
-                "timestop": "11:30:00"
+                "source":"local source address",                         // [ string ]:
+                                                                                  // single IP: 192.168.8.222
+                                                                                  // multiple IP: 192.168.8.2,192.168.8.3,192.168.8.4
+                                                                                  // range of IP: 192.168.8.2-192.168.8.4
+                                                                                  // signal MAC: 00:23:43:13:34:40
+                "datestart":"starting date",                             // [ string ], format is YYYY-MM-DD
+                "datestop":"ending date",                                // [ string ], format is YYYY-MM-DD
+                "timestart":"start time of day",                         // [ string ], format is hh-mm-ss
+                "timestop":"end time of day",                            // [ string ], format is hh-mm-ss
+                "weekdays":"designated week number"                      // [ string ], format is w1,w2,w3, 0 for Sunday
             }
-            //...更多规则
+            // more rule
         },
 
-        // 访问控制相关
-        "acl":"enable",     // enable为启用访问控制, disable为禁用
-        "acl_rule":         // acl为enable时以下规则有效
+        // access control list
+        "acl":"enable or disable",                                  // [ disable, enable ]
+        "acl_rule":                                                 // access control list, valid when "acl" be "enable"
         {
-            "rule1_xxx":
+            "rule name":                                                 // [ string ], user can custom the rule name
             {
-                "action":"", // drop为丢弃, accept为接受, return为跳出之后的规则
-                "type":"ip", // ip表示控制访问的IP地址及端口, dns表示为域名, app表示为某些应用(以后扩展用,暂不支持)
-                "proto":"",  // 协议, 可以是: tcp,udp,all, type为ip时有效
-                "dest":"",   // 目的地址, 可以是:
-                                      // IP: 202.96.11.32
-                                      // 多个IP: 2.3.1.2,4.34.2.1,72.32,192.1
-                                      // IP范围: 202.96.132.11-202.96.132.20
-                                      // 域名: www.baidu.com
-                "destport":"",  // 目的端口，可以是：123;234-456，需proto为tcp或udp且type为ip时有效
-                "datestart":"",  // 启始时间，YYYY[-MM[-DD[Thh[:mm[:ss]]]]]
-                "datestop":"",   // 结束时间，YYYY[-MM[-DD[Thh[:mm[:ss]]]]]
-                "timestart":"",  // 每天开始时间: 在启始时间与结束时间内, 每天生效的开始时间，hh:mm[:ss], 例如，11:22:33
-                "timestop":"",   // 每天结束时间: 在启始时间与结束时间内, 每天生效的结束时间，11:22:33；若指定了开始时间，没指定结束时间，则结束时间为23:59:59
-                "weekdays":"1,2" // 每周的星期号: 在启始时间与结束时间内, 生效的星期号, 0-6表示星期日、一、二、三、四、五、六, 可同时多个以逗号间隔
-            },
-            "rule2":      // 典型所IP及端口访问规则
-            {
-                "action":"drop",        // drop为丢弃
-                "type":"ip",            // type为IP
-                "dest": "202.22.12.40", // 指定IP
-                "proto": "tcp",         // 协议, 只有为tcp或udp时destport才有效
-                "destport":"800"        // 目的端口, 需proto为tcp或udp且type为ip时有效
-            },
-            "rule3":      // 典型的IP访问规则
-            {
-                "action":"drop",        // drop为丢弃, accept为接受
-                "type":"ip",            // type为ip表示限制IP
-                "dest": "192.168.22.3"  // 指定IP, 如为空为无此结点表示所有IP
-            },
-            "rule4":      // 典型的DNS访问规则
-            {
-                "action":"drop",        // drop为丢弃
-                "type":"dns",           // type为DNS
-                "dest": "www.qq.com"    // 指定DNS
-            },
-            "rule5":      // 曲型的APP应用访问规则
-            {
-                "action":"drop",    // drop为丢弃, accept为接受
-                "type":"app",       // type为app表示为某些应用(以后扩展用)
-                "dest": "qq"        // 指定策略
-            },
-            //...更多规则
+                "action":"drop or accept or return",                     // [ drop, accept, return ], drop for forbid, accept for pass, return for don't match it with after rule
+                "source":"local source address",                         // [ string ]:
+                                                                                  // single IP: 192.168.8.222
+                                                                                  // multiple IP: 192.168.8.2,192.168.8.3,192.168.8.4
+                                                                                  // range of IP: 192.168.8.2-192.168.8.4
+                                                                                  // signal MAC: 00:23:43:13:34:40
+                "proto":"protocol type",                                 // [ domain, key, tcp, udp, all ]
+                "dest":"internet destination address",                   // [ string ]:
+                                                                                  // single IP: 202.96.11.32
+                                                                                  // multiple IP: 2.3.1.2,4.34.2.1,72.32,192.1
+                                                                                  // range of IP: 202.96.132.11-202.96.132.20
+                                                                                  // domain: www.baidu.com
+                                                                                  // key: baidu
+                "destport":"internet destination port",                  // [ number ]: valid when "proto" be "tcp" or "udp"
+                                                                                  // single port: 8080
+                                                                                  // multiple port: 80,8000,8080
+                                                                                  // range of port: 80-800
+                "key":"keyword",                                         // [ string ], valid when "proto" be "tcp" or "udp" or "all"
+
+                "datestart":"starting date",                             // [ string ], format is YYYY-MM-DD
+                "datestop":"ending date",                                // [ string ], format is YYYY-MM-DD
+                "timestart":"start time of day",                         // [ string ], format is hh-mm-ss
+                "timestop":"end time of day",                            // [ string ], format is hh-mm-ss
+                "weekdays":"designated week number"                      // [ string ], format is w1,w2,w3, 0 for Sunday
+            }
+            // more rule
         },
 
-        // 互联网访问速率控制相关, 出口带宽, 设置了出口带宽后终端相关的流量控制才生效
-        "tc_set":
+        // limit send packet rate
+        "limit":"enable or disable",                                  // [ disable, enable ]
+        "limit_rule":                                                 // limit send packet rate control list, valid when "limit" be "enable"
         {
-            "unit":"mbit",                  // 流量单位
-            "uprate":"",                    // 上行速率, 单位为 mbit
-            "downrate":""                   // 下行速率, 单位为 mbit
+            "rule name":                                                 // [ string ], user can custom the rule name
+            {
+                "source":"local source address",                         // [ string ]:
+                                                                                  // single IP: 192.168.8.222
+                                                                                  // multiple IP: 192.168.8.2,192.168.8.3,192.168.8.4
+                                                                                  // range of IP: 192.168.8.2-192.168.8.4
+                                                                                  // signal MAC: 00:23:43:13:34:40
+                "dest":"internet destination address",                   // [ string ]:
+                                                                                  // single IP: 202.96.11.32
+                                                                                  // multiple IP: 2.3.1.2,4.34.2.1,72.32,192.1
+                                                                                  // range of IP: 202.96.132.11-202.96.132.20
+                "proto":"protocol type",                                 // [ tcp, udp, all ]                                
+                "destport":"internet destination port",                  // [ number ]: valid when "proto" be "tcp" or "udp"
+                                                                                  // single port: 8080
+                                                                                  // multiple port: 80,8000,8080
+                                                                                  // range of port: 80-800
+
+                "limit":"Packets sent per second",                       // [ number ]
+                "burst":"Burst packets per second"                       // [ number ]
+            }
+            // more rule
+        },
+
+        // limit send packet rate
+        "filter":"disable or accept all packet or drop all packet",      // [ disable, accept, drop ]
+        "filter_rule":                                                   // filter network bridge packet, valid when "filter" be "enable"
+        {
+            "rule name":                                                 // [ string ], user can custom the rule name
+            {
+                "action":"drop or accept",                               // [ drop, accept ], drop for forbid, accept for pass
+                "source":"local source address",                         // [ string ], only support single IP
+                "dest":"internet destination address",                   // [ string ], only support single IP
+
+                "proto":"protocol type",                                 // [ tcp, udp, all ]                                
+                "destport":"internet destination port"                   // [ number ], valid when "proto" be "tcp" or "udp", only support single port: 8080
+            }
+            // more rule
         }
+
     }
 }
 ```

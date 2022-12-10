@@ -180,6 +180,8 @@ typedef int boole;
 #define STATION_DEFAULT_COM "client@default"
 #define STATION_DHCPS_COM "client@dhcps"
 #define STATION_ACL_COM "client@acl"
+#define STATION_LIMIT_COM "client@limit"
+#define STATION_FILTER_COM "client@filter"
 #define STATION_TC_COM "client@tc"
 
 

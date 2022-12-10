@@ -1,42 +1,67 @@
 ***
-## 客户端管理组件（client@station） 
-此组件为管理单独的每个客户端
+## Management of client access
+Management of specified client access
 
-#### **配置(client@station)** 
+#### Configuration( client@station )
+
 ```json
+// Attributes introduction 
 {
-    "64:00:6A:47:66:F3":                  // 客户端MAC
+    "client MAC address":                  // [ MAC address ]
     {
-        "ifname":"ifname@lan",             // 指定客户端所在的接口, 省略默认为LAN
-        // 指定主机名
-        "name":"myhost",
-        // DHCP绑定相关
-        "bindip":"192.168.8.250",          // 绑定的IP地址
-        "lease":"22333",                   // 单独指定租期
-        // 禁止上网相关
-        "internet":"timer",  // disable为禁止联网, enable为允许上网, timer为定时上网
-        "internet_timer": // 定时上网相关的时间规则, 当internet设置为timer时以下定义的时间允许上网
+        "ifname":"specify on interface name",                 // [ string ], defdault the ifname@lan
+        "name":"specify hostname",                            // [ string ]
+        "bindip":"specify ip address on dhcp assignment",     // [ string ]
+        "lease":"specify lease on dhcp assignment",           // [ number ]
+
+        // access internet privilege
+        "internet":"disable or enable or regular internet access",  // [ enable, disable ,timer ], timer for regular internet access
+        "internet_timer":                                           // regular internet access rule, valid when "internet" be "timer"
         {
-            // 参见 client@global 配置中的internet_timer节点的说明
+            "rule name",                                                 // [ string ], user can custom the rule name
+            {
+                "datestart":"starting date",                             // [ string ], format is YYYY-MM-DD
+                "datestop":"ending date",                                // [ string ], format is YYYY-MM-DD
+                "timestart":"start time of day",                         // [ string ], format is hh-mm-ss
+                "timestop":"end time of day",                            // [ string ], format is hh-mm-ss
+                "weekdays":"designated week number"                      // [ string ], format is w1,w2,w3, 0 for Sunday
+            }
+            // more rule
         },
-        // 互联网访问控制相关
-        "acl":"enable",     // enable为启用访问控制, disable为禁用
-        "acl_rule":         // acl为enable时以下规则有效
+
+        // access control list
+        "acl":"enable or disable",                                  // [ disable, enable ]
+        "acl_rule":                                                 // access control list, valid when "acl" be "enable"
         {
-            // 参见 client@global 配置中中的acl_rule节点的说明
-        },
-        // 互联网访问速率控制相关
-        "tc":"enable",     // enable为启用限速, disable为禁用, 出口带宽设置后才生效
-        "tc_set":          // tc为enable时以下内容有效
-        {
-            "uprate":"",                    // 上行速率, 单位为 mbit
-            "downrate":""                   // 下行速率, 单位为 mbit
+            "rule name",                                                 // [ string ], user can custom the rule name
+            {
+                "action":"drop or accetp or return",                     // [ drop, accept, return ], drop for forbid, accept for pass, return for don't match it with after rule
+                "type":"rule type",                                      // [ ip, dns, key, app ], ip for internet ip/port, dns for domain, key for keyword, app for applications
+                "proto":"protocol type",                                 // [ tcp, udp, all ], valid when "type" be "ip"
+                "dest":"internet destination address",                   // [ string ]:
+                                                                                  // single IP: 202.96.11.32
+                                                                                  // multiple IP: 2.3.1.2,4.34.2.1,72.32,192.1
+                                                                                  // range of IP: 202.96.132.11-202.96.132.20
+                                                                                  // domain: www.baidu.com
+                                                                                  // key: huawei
+                "datestart":"starting date",                             // [ string ], format is YYYY-MM-DD
+                "datestop":"ending date",                                // [ string ], format is YYYY-MM-DD
+                "timestart":"start time of day",                         // [ string ], format is hh-mm-ss
+                "timestop":"end time of day",                            // [ string ], format is hh-mm-ss
+                "weekdays":"designated week number"                      // [ string ], format is w1,w2,w3, 0 for Sunday
+            }
+            // more rule
         }
-    },
-    "AC:C1:EE:3A:3D:E0":                  // MAC
-    {
-        // ...
+
+        // bandwidth control
+        "tc":"enable or disable bandwidth control",                  // [ disable, enable ]
+        "tc_set":                                                    // bandwidth control settings, valid when "tc" be "enable"
+        {
+            "uprate":"upload rate limit",                            // [ number ], the unit is mbit
+            "downrate":"download rate limit"                         // [ number ], the unit is mbit
+        }
     }
+    // more mac rule
 }
 
 ``` 
