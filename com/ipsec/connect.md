@@ -1,10 +1,10 @@
 ***
-## Management of IPSEC client
-Management of IPSEC client
+## Management of IPSEC connection
+Management of IPSEC connection
 
-#### Configuration( ipsec@client )
-**ipsec@client** is first ipsec client
-**ipsec@client2** is second ipsec client
+#### Configuration( ipsec@connect )
+**ipsec@connect** is first ipsec connection
+**ipsec@connect2** is second ipsec connection
 
 ```json
 // Attributes introduction 

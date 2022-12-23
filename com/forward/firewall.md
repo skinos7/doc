@@ -10,12 +10,14 @@
         "status":"enable",  // 防火墙功能启用(enable)或禁用(disable)
         "default":"drop",    // 默认规则, drop表示禁用访问, accept表示允许访问
         "input_icmp_through":"enable",  // 允许ICMP的访问, 为空或无表示禁止放行, enable表示允许通过
+        "input_espah_through":"enable",   // 允许IPSEC的ESP/AH的访问, 为空或无表示禁止放行, enable表示允许通过
         "input_telnet_through":"enable",  // 允许Telnet的访问, 为空或无表示禁止放行, enable表示允许通过
         "input_ssh_through":"enable",  // 允许SSH的访问, 为空或无表示禁止放行, enable表示允许通过
         "input_wui_through":"enable",  // 允许WEB的访问, 为空或无表示禁止放行, enable表示允许通过
 
         "nat_through":"enable",  // 默认自动放开NAT映射中的规则的访问, 为空或无表示启用, disable表示禁用自动放开
         "forward_icmp_through":"enable",  // 放开ICMP的通行, 为空或无表示禁止放行, enable表示允许通过
+        "forward_espah_through":"enable", // 放开IPEC的ESP/AH的通行, 为空或无表示禁止放行, enable表示允许通过
 
         "rule":
         {
