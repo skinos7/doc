@@ -19,10 +19,22 @@ Management LTE modem
     "lock_cell":"lock cell",                   // The format varies depending on the module
     "gnss":"gps function",                     // [ disable, enable ]
 
-    // dial attributes
-    "need_simcard":"SIMcard must be detected",        // [ enable, disable ]
-    "need_plmn":"must register to plmn",              // [ enable, disable ]
-    "need_signal":"Signal must be effectivity",       // [ enable, disable ]
+    // simcard dial attributes
+    "need_simcard":"SIMcard must be detected",                                                 // [ enable, disable ]
+    "simcard_failed_threshold":"first failed to reset time",                                   // [ number ]
+    "simcard_failed_threshold2":"second failed to reset time",                                 // [ number ]
+    "simcard_failed_threshold3":"third failed to reset time",                                  // [ number ]
+    "simcard_failed_everytime":"every failed to reset time",                                   // [ number ]
+    
+    // signal dial attributes
+    "need_plmn":"must register to plmn",                                                       // [ enable, disable ]
+    "need_signal":"Signal must be effectivity",                                                // [ enable, disable ]
+    "signal_failed_threshold":"first failed to reset time",                                    // [ number ]
+    "signal_failed_threshold2":"second failed to reset time",                                  // [ number ]
+    "signal_failed_threshold3":"third failed to reset time",                                   // [ number ]
+    "signal_failed_everytime":"every failed to reset time",                                    // [ number ]
+
+    // watch attributes
     "watch_interval":"How often do query the modem",  // [ number ], the unit in second
 
     // profile attributes

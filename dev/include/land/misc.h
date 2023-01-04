@@ -168,9 +168,11 @@ const char *date_desc( char *buffer, int buflen );
  * @brief set the current date
  * @param[in] seconds current UTC second
  * @param[in] zone zone
- * @return none
+ * @return operation succeed or failed
+ * 		@retval true for succeed
+ *  	@retval false for failed, the errno code will be sets
  */
-void date_set( time_t seconds, const char* zone );
+boole date_set( time_t seconds, const char* zone );
 /**
  * @brief adjust the current date by zone
  * @param[in] seconds current UTC second

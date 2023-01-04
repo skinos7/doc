@@ -98,13 +98,15 @@ typedef int boole;
 #define JOINT_COM "land@joint"
 /** auth management component */
 #define AUTH_COM "land@auth"
+/** date management component */
+#define DATE_COM "clock@date"
 
 /** telnet management component */
 #define TELNETD_COM "tui@telnet"
 /** ssh management component */
 #define SSHD_COM "tui@ssh"
 /** web ui management component */
-#define WUI_PROJECT "wui"
+#define WEBS_PROJECT "webs"
 #define WUI_COM "wui@admin"
 
 
@@ -199,7 +201,7 @@ typedef int boole;
 	#define PROJECT_VAR_DIR "/var/skin"
 	#define PROJECT_LIB_DIR "/usr/local/lib"
 	#define PROJECT_CMD_DIR "/usr/local/bin"
-	#define PROJECT_MNT_DIR "/mnt"
+	#define PROJECT_MNT_DIR PROJECT_VAR_DIR"/mnt"
 #else
 	#define PROJECT_TMP_DIR "/tmp"
 	#define PROJECT_VAR_DIR "/var"
