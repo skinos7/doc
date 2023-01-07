@@ -1,187 +1,150 @@
 ***
-## OPENVPN客户端管理组件
-此组件为管理OpenVPN客户端
+## Management of OPENVPN Client
+Management of OPENVPN client
 
-#### **配置(openvpnc@vpn)** 
+#### Configuration( ovpn@client )
+**ovpn@client** is first ipsec connection
+**ovpn@client2** is second ipsec connection
 
 ```json
-// 属性介绍
+// Attributes introduction 
 {
-    "status":"是否启用openvpn服务器",     // disable表示禁用, enable或为空表示启用
-    "topology":"拓扑",                    // 拓扑结构，p2p为点对点, subnet为子网
+    // common attributes
+    "status":"client status",                      // [ disable, enable ]
 
-    // 通用的openvpn配置
-    "dev":"设备类型",                    // 接口类型, 分为tun与tap
-    "proto":"协议",                      // 协议, 分为tcp或udp
-    "port":"端口",                        // 默认为1194
-    "cipher":"加密方式",                  // 可以为 DES-CFB, DES-CBC, RC2-CBC, RC2-CFB, RC2-OFB, DES-EDE-CBC, DES-EDE3-CBC, DES-OFB, 
-                                          //        DES-EDE-CFB, DES-EDE3-CFB, DES-EDE-OFB, DES-EDE3-OFB, DESX-CBC, BF-CBC, BF-CFB, BF-OFB,
-                                          //        CAST5-CBC, CAST5-CFB, CAST5-OFB, RC2-40-CBC, RC2-64-CBC, AES-128-CBC, AES-128-OFB,
-                                          //        AES-128-CFB, AES-192-CBC, AES-192-OFB, AES-192-CFB, AES-256-CBC, AES-256-OFB, AES-256-CFB,
-                                          //        AES-128-CFB1, AES-192-CFB1, AES-256-CFB1, AES-128-CFB8, AES-192-CFB8, AES-256-CFB8,
-                                          //        DES-CFB1, DES-CFB8, DES-EDE3-CFB1, DES-EDE3-CFB8, SEED-CBC, SEED-OFB, SEED-CFB
-    "comp_lzo":"压缩方式",                // disable表示禁用, yes表示启用, no表示不启用, adaptive表示自适应
-    "interval":"保活包间隔",              // 秒为单位
-    "timeout":"保活包超时时间",           // 秒为单位
-    "options":"openvpn的其它选项",       // 多个选项以分号分隔
-    "auth":"认证类型",                   // none为无, static为静态密钥, certificate为证书, username为用户密码
-    "username":"用户名",                 // 认证类型为用户密码时有效
-    "password":"密码",                   // 认证类型为用户密码时有效
-    "hmac": "HMAC签名检查",              // disable为禁用, tls-auth为开启, 2.3版本不支持tls-crypt
-    "peer":"服务器地址",                  // 可以为IP地址或域名
+    "extern":"extern ifname",                      // [ ifname@wan, ifname@lte, ... ], default is defdault gateway
+    "peer":"openvpn server address",               // [ string ]
+    "proto":"protocol type",                       // [ tcp, udp ]
+    "port":"server port",                          // [ nubmer ], default is 1194
+    "dev":"netdev type",                           // [ tun, tap ], tun is tunnel, tap is bridge to ifname@lan
+    "topology":"topological structure",            // [ p2p, subnet ]
+    "localip":"tunnel local address",              // [ ip address ], vailed when "topology" is "p2p"
+    "remoteip":"tunnel peer address"               // [ ip address ], vailed when "topology" is "p2p"
 
-    // 路由相关, dev为tun时有效
-    "masq":"IP伪装",                      // 启用为enable, 禁用为disable, 也叫IP共享, 即将所有从此连接出的数据的源地址通过NAT转换为本连接的地址
-    "defaultroute":"默认路由",             // 是否将此连接设置为默认出口, enable为是, disable为否, disable时route_table生效
-    "route_table":                        // 自定义上线时添加以下路由到此连接, 默认路由(defaultroute)为disable有效
+    // seucre attributes
+    "cipher":"cipher type",                        // [ DES-CFB, DES-CBC, RC2-CBC, RC2-CFB, RC2-OFB, DES-EDE-CBC, DES-EDE3-CBC, DES-OFB, 
+                                                   //   DES-EDE-CFB, DES-EDE3-CFB, DES-EDE-OFB, DES-EDE3-OFB, DESX-CBC, BF-CBC, BF-CFB, BF-OFB,
+                                                   //   CAST5-CBC, CAST5-CFB, CAST5-OFB, RC2-40-CBC, RC2-64-CBC, AES-128-CBC, AES-128-OFB,
+                                                   //   AES-128-CFB, AES-192-CBC, AES-192-OFB, AES-192-CFB, AES-256-CBC, AES-256-OFB, AES-256-CFB,
+                                                   //   AES-128-CFB1, AES-192-CFB1, AES-256-CFB1, AES-128-CFB8, AES-192-CFB8, AES-256-CFB8,
+                                                   //   DES-CFB1, DES-CFB8, DES-EDE3-CFB1, DES-EDE3-CFB8, SEED-CBC, SEED-OFB, SEED-CFB ]
+    "comp_lzo":"lzo compress mode",                // [ disable, yes, no, adaptive ]
+    "hmac": "HMAC signature check",                // [ disable, tls-auth, tls-crypt ], version2.3 don't supoort "tls-crypt", "tls-auth" and "tls-crypt" need client.tlskey
+    "auth":"authentication type",                  // [ none, static, certificate, username ]
+                                                   //    none: is disable
+                                                   //    static: use static key, need client.statickey
+                                                   //    certificate: use CA certificate, need client.ca/client.crt/client.key
+                                                   //    username: use username and password, need client.ca
+    "username":"user name",                        // [ string ], vaild when "auth" is "username"
+    "password":"user password",                    // [ string ], vaild when "auth" is "username"
+
+    // keeplive attributes
+    "interval":"keeplive packet echo interval",    // [ number ], the unit is second
+    "timeout":"keeplive packet timeout",           // [ number ], the unit is second
+    "options":"openvpn original options",          // [ string ], multiple options are separated by semicolons
+
+    // route attributes, vaild when "dev" is "tun"
+    "masq":"share interface address to access",    // [ disable, enable ]
+    "defaultroute":"set it default route",         // [ disable, enable ]
+    "route_table":                                 // you can custom the route rule on this connect, vaild when "defaultroute" is "disable"
     {
-        "route1":                           // 路由项名称
+        "route rule name":                         // [ string ]
         {
-            "target":"目标地址",            // 可以为一个网段或一个IP地址
-            "mask":"目标地址掩码",
+            "target":"destination address",           // [ string ], ip address or network
+            "mask":"destination network mask"      // [ string ]
         },
-        "route2":                           // 路由项2名称
-        {
-            "target":"目标地址",            // 可以为一个网段或一个IP地址
-            "mask":"目标地址掩码",
-        }
-        // ...更多路由项
+        // ...more route rule
     }
-    "custom_dns":"disable ",         // 自定义DNS主机地址, 值为enable表示忽略对端分配的DNS, 使用下面配置的DNS主机
-    "dns":"202.96.134.133",          // 自定义DNS主机地址: 合法的IP地址或为空
-    "dns2":"192.168.1.254",          // 自定义备用DNS主机地址: 合法的IP地址或为空
-
-    // 点对点客户端模式下配置, topology为p2p
-    "localip":"本地隧道地址",            // 点对点模式下有效
-    "remoteip":"对端隧道地址"           // 点对点模式下有效
-
-    // 子网客户端模式下配置, topology为subnet
-    // 暂无
-
-}
-// 示例
-{
-    "status":"enable",                 // 启用
-    "topology":"subnet",               // 拓扑结构为子网
-    "dev":"tun",                       // 接口类型为tun
-    "proto":"udp",                     // 协议使用udp
-    "port":"1194",                     // 端口为1194
-    "comp_lzo":"disable",              // 禁用lzo压缩
-    "interval":"10",                   // 保活包间隔为10秒
-    "timeout":"120",                   // 保活包超时时间为120秒
-    "auth":"certificate",              // 使用证书认证
-    "hmac": "disable",                 // 禁用HMAC签名检查
-    "peer":"dimmalex.wicp.net",        // 服务器地址为dimmalex.wicp.net
-
-    "masq":"enable",                   // 开启IP伪装
-    "defaultroute":"disable",           // 不将此连接设置为默认路由
-    "route_table":
-    {
-        "route1":                           // 将目的地址为10.1.1.0/24网段的数据路由到此连接
-        {
-            "target":"10.1.1.0",
-            "mask":"255.255.255.0"
-        },
-        "route2":                           // 将目的地址为10.1.2.0/24网段的数据路由到此连接
-        {
-            "target":"10.1.2.0",
-            "mask":"255.255.255.0"
-        }
-    }
+    "custom_dns":"Custom DNS",                                 // [ disable, enable ]
+    "dns":"Custom DNS1",                                       // [ IP address ], This is valid when "custom_dns" is "enable"
+    "dns2":"Custom DNS2"                                       // [ IP address ], This is valid when "custom_dns" is "enable"
 }
 
 ```
 
 
-#### **接口** 
+#### **Methods**
 
-+ `setup[]` 启动Openvpn客户端连接
++ `setup[]` **setup the openvpn client**, *succeed return ttrue, failed return tfalse, error return terror*
 
->*修改成功返回ttrue, 修改失败返回tfalse*
++ `shut[]` **shutdown the openvpn client**, *succeed return ttrue, failed return tfalse, error return terror*
 
-+ `shut[]` 断开Openvpn客户端连接
-
->*添加成功返回ttrue, 添加失败返回tfalse*
-
-+ `device[]` 显示连接对应的网络设备
-
->*修改成功返回字符串, 修改失败返回NULL*
-
-+ `clear_ca[]` 清除CA证书
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `clear_cert[]` 清除Openvpn客户端证书
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `clear_key[]` 清除Openvpn客户端密钥
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `clear_tlskey[]` 清除TLS认证密钥
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `clear_statickey[]` 清除静态密钥
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `list_key[]` 列出Openvpn客户端所有的证书及密钥
-
->*成功返回如下JSON, 失败返回NULL*
-
-```json
++ `status[]` **get the openvpn client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
     {
-        "cacrt":"/etc/.cfg/openvpnc/vpn.cacrt",         // CA证书位置 
-        "crt":"/etc/.cfg/openvpnc/vpn.crt",             // 客户端证书
-        "key":"/etc/.cfg/openvpnc/vpn.key",             // 客户端密钥
-        "statickey":"/etc/.cfg/openvpnc/vpn.statickey", // 静态密钥
-        "tlskey":"/etc/.cfg/openvpnc/vpn.tlskey"        // TLS认证密钥
+        "status":"Current status",        // [ uping, down, up ]
+                                             // uping for connecting
+                                             // down for the network is down
+                                             // up for the network is connect succeed
+        "netdev":"netdev name",         // [ string ]
+        "gw":"gateway ip address",      // [ ip address ]
+        "dns":"dns ip address",         // [ ip address ]
+        "dns2":"dns2 ip address",       // [ ip address ]
+        "ip":"ip address",              // [ ip address ]
+        "mask":"network mask",          // [ ip address ]
+        "livetime":"online time",       // hour:minute:second:day
+        "rx_bytes":"send bytes",        // [ number ]
+        "rx_packets":"send packets",    // [ number ]
+        "tx_bytes":"receive bytes",     // [ number ]
+        "tx_packets":"receive packets", // [ number ]
     }
-```
-
-+ `status[]` 显示连接的状态
-
->*成功返回如下JSON, 失败返回NULL*
-
-```json
+    ```
+    ```shell
+    # examples, get the first openvpn client infomation
+    ovpn@client.status
     {
-        "status":"up",                        // up表示已连接, down表示未连接, uping表示连接中
-        "ip":"10.99.4.192",                   // IP地址
-        "dstip":"192.168.100.1",              // <对端IP地址>
-        "mask":"255.255.255.128",             // 子网掩码
-        "gw":"10.99.4.193",                   // 网关
-        "dns":"211.136.17.107",               // DNS
-        "dns2":"211.136.20.203",              // DNS
-        "mac":"76:C7:8C:05:39:F3",            // MAC地址
-        "rx_bytes":"6864",                    // 收包字节
-        "rx_packets":"65",                    // 收包数
-        "tx_bytes":"7296",                    // 发包字节
-        "tx_packets":"74",                    // 发包数
-        "livetime":"00:04:37:0"              // 在线时长 时:分:秒:天
+        "status":"up",                     # connect is succeed
+        "netdev":"tun0",                   # netdev is tun0
+        "ip":"192.168.10.1",               # ip address is 192.168.1.1
+        "mask":"255.255.255.0",            # network mask is 255.255.255.0
+        "gw":"192.168.10.254",             # gateway is 192.168.10.254
+        "dns":"114.114.114.114",           # dns is 114.114.114.114
+        "livetime":"01:15:50:0",           # already online 1 hour and 15 minute and 50 second
+        "rx_bytes":"1256",                 # receive 1256 bytes
+        "rx_packets":"4",                  # receive 4 packets
+        "tx_bytes":"1320",                 # send 1320 bytes
+        "tx_packets":"4"                   # send 4 packets
     }
-```
+    ```
 
++ `netdev[]` **get the openvpn client netdev**, *succeed return netdev, failed return NULL, error return terror*
+    ```shell
+    # examples, get the first openvpn client netdev
+    ovpn@client.netdev
+    tun0
+    ```
 
-#### **配置示例** 
++ `clear_ca[]` **delete openvpn client CA certificate**, *succeed return ttrue, failed return tfalse, error return terror*
 
-```
-    // 客户端配置例子
-    client
-    dev tun
-    proto udp
-    remote 1.0.0.8 1194
-    resolv-retry infinite
-    nobind
-    persist-key
-    persist-tun
-    ca ca.crt
-    cert client.crt
-    key client.key
-    cipher AES-256-CBC
-    script-security 2
-    up /prj/openvpnd/up.sh
-```
++ `clear_cert[]` **delete openvpn client certificate**, *succeed return ttrue, failed return tfalse, error return terror*
 
++ `clear_key[]` **delete openvpn client private key**, *succeed return ttrue, failed return tfalse, error return terror*
+
++ `clear_statickey[]` **delete openvpn client static key**, *succeed return ttrue, failed return tfalse, error return terror*
+
++ `clear_tlskey[]` **delete openvpn client TLS key**, *succeed return ttrue, failed return tfalse, error return terror*
+
++ `list_key[]` **list openvpn client all key file**, *succeed return talk to describes infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "ca":"CA certificate file pathname",
+        "crt":"client certificate file pathname",
+        "key":"private key file pathname",
+        "statickey":"static key file pathname",
+        "tlskey":"TLS key file pathname"
+    }
+    ```
+    ```shell
+    # examples, list first openvpn client all key file
+    ovpn@client.list_key
+    {
+        "ca":"/var/.cfg/ovpn/client.cacrt",            // CA certificate
+        "crt":"/var/.cfg/ovpn/client.crt",             // client certificate
+        "key":"/var/.cfg/ovpn/client.key",             // private key
+        "statickey":"/var/.cfg/ovpn/client.statickey", // static key
+        "tlskey":"/var/.cfg/ovpn/client.tlskey"        // TLS key
+    }
+    ```
 

@@ -89,6 +89,16 @@ param_t     param_import( param_t parameter, talk_t json );
  */
 param_t     param_import2( param_t parameter, talk_t json, talk_t json2 );
 /**
+ * @brief create a structure of parameter and add the option
+ * @param[out] parameter, calloc a new paramter when this is NULL
+ * @param[in] option will add to the parameter end
+ * @return parameter
+ * 		@retval parameter for succeed
+ *  	@retval NULL for error, errno will be sets
+ */
+param_t 	param_increase( param_t param, const char *option );
+param_t 	param_add( param_t param, const talk_t option );
+/**
  * @brief adjust param beginning location, increase starting location
  * @param[in] parameter
  * @param[in] number increase few starting location
