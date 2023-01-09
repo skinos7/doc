@@ -3,8 +3,8 @@
 Management of OPENVPN client
 
 #### Configuration( ovpn@client )
-**ovpn@client** is first ipsec connection
-**ovpn@client2** is second ipsec connection
+**ovpn@client** is first openvpn client
+**ovpn@client2** is second openvpn client
 
 ```json
 // Attributes introduction 
@@ -13,13 +13,13 @@ Management of OPENVPN client
     "status":"client status",                      // [ disable, enable ]
 
     "extern":"extern ifname",                      // [ ifname@wan, ifname@lte, ... ], default is defdault gateway
-    "peer":"openvpn server address",               // [ string ]
+    "server":"openvpn server address",             // [ string ]
     "proto":"protocol type",                       // [ tcp, udp ]
     "port":"server port",                          // [ nubmer ], default is 1194
     "dev":"netdev type",                           // [ tun, tap ], tun is tunnel, tap is bridge to ifname@lan
     "topology":"topological structure",            // [ p2p, subnet ]
     "localip":"tunnel local address",              // [ ip address ], vailed when "topology" is "p2p"
-    "remoteip":"tunnel peer address"               // [ ip address ], vailed when "topology" is "p2p"
+    "remoteip":"tunnel peer address",              // [ ip address ], vailed when "topology" is "p2p"
 
     // seucre attributes
     "cipher":"cipher type",                        // [ DES-CFB, DES-CBC, RC2-CBC, RC2-CFB, RC2-OFB, DES-EDE-CBC, DES-EDE3-CBC, DES-OFB, 
@@ -33,8 +33,8 @@ Management of OPENVPN client
     "auth":"authentication type",                  // [ none, static, certificate, username ]
                                                    //    none: is disable
                                                    //    static: use static key, need client.statickey
-                                                   //    certificate: use CA certificate, need client.ca/client.crt/client.key
-                                                   //    username: use username and password, need client.ca
+                                                   //    certificate: use CA certificate, need client.cacrt/client.crt/client.key
+                                                   //    username: use username and password, need client.cacrt
     "username":"user name",                        // [ string ], vaild when "auth" is "username"
     "password":"user password",                    // [ string ], vaild when "auth" is "username"
 
@@ -52,9 +52,9 @@ Management of OPENVPN client
         {
             "target":"destination address",           // [ string ], ip address or network
             "mask":"destination network mask"      // [ string ]
-        },
+        }
         // ...more route rule
-    }
+    },
     "custom_dns":"Custom DNS",                                 // [ disable, enable ]
     "dns":"Custom DNS1",                                       // [ IP address ], This is valid when "custom_dns" is "enable"
     "dns2":"Custom DNS2"                                       // [ IP address ], This is valid when "custom_dns" is "enable"

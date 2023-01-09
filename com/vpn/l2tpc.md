@@ -1,88 +1,110 @@
 ***
-## L2TP客户端管理组件（vpn@l2tpc） 
-此组件为管理L2TP客户端:
+## Management of L2TP Client
+Management of L2TP client
 
-#### **配置(ifname@l2tpc)** 
+#### Configuration( vpn@l2tpc )
+**vpn@l2tpc** is first l2tp client
+**vpn@l2tpc2** is second l2tp client
+
 ```json
+// Attributes introduction 
 {
-    "status":"disable",// 是否启用L2TP客户端, disable表示禁用, enable或为空表示启用
-    "server":"www.vpnserver.com",           // 对端<服务器地址>
-    "port":"1701",                         // 对端<端口>
-    "masq":"enable",                      // 是否<IP伪装>: 启用为enable, 禁用为disable
-    "username":"XXXX",                    // <L2TP用户名>
-    "password":"xxxx",                    // <L2TP密码>
-    "authmode":"chap",                    // 认证模式, simple, chap, disable
-    "secret":"112232",                    // 密钥
-    "ppp":                   // 拨号模式为PPP时有关ppp的详细设置
+    // common attributes
+    "status":"client status",                      // [ disable, enable ]
+
+    "extern":"extern ifname",                      // [ ifname@wan, ifname@lte, ... ], default is defdault gateway
+    "server":"l2tp server address",                // [ string ]
+    "port":"server port",                          // [ nubmer ], default is 1701
+
+    // seucre attributes
+    "username":"user name",                        // [ string ]
+    "password":"user password",                    // [ string ]
+    "authmode":"authentication type",              // [ disable, simple, chap ]
+    "secret":"tunnel secret key",                  // [ string ], vaild when "authmode" is "chap"
+
+    // ppp attributes
+    "ppp":
     {
-        "username":"XXXX",                    // <PPP用户名>
-        "password":"xxxx",                    // <PPP密码>
-        "lcp_echo_interval":"10",        // PPP的LCP心跳包的间隔, 以秒为单位
-        "lcp_echo_failure":"12",         // PPP的LCP心跳包的最大失败次数, 通俗的说就是当心跳包在发这么多次后无回应就认为链路不可用
-        "mtu":"1492",                     // 属于高级选项, PPP的最大传输单元(MTU)大小
-        "mss":"1412",                     // 属于高级选项, PPP的最大分段(MSS)大小
-        "custom_dns":"disable ",         // 自定义DNS主机地址, 值为enable表示忽略对端分配的DNS, 使用下面配置的DNS主机
-        "dns":"202.96.134.133",          // 自定义DNS主机地址: 合法的IP地址或为空
-        "dns2":"192.168.1.254",          // 自定义备用DNS主机地址: 合法的IP地址或为空
-        "custom_ip":"enable|disable",      // 属于高级选项, 自定义PPP本对端地址, 值为enable表示使用下面配置的本对端地址
-        "localip":"192.168.22.120",        // 属于高级选项, 本端地址, custom_ip为enable时有效
-        "remoteip":"192.168.22.1",         // 属性高级选项, 对端地址, custom_ip为enable时有效
-        "pppopt":"debug;mppe",             // 属于高级选项, PPP的选项, 多选项时以分号(;)分隔
-        "txqueuelen":"1000"           // 发送队列
+        "mtu":"Maximum transmission unit",               // [ number ], The unit is in bytes
+        "mss":"TCP Maximum Segment Size",                // [ number ], The unit is in bytes
+        "lcp_echo_interval":"LCP echo interval",         // [ number ], The unit is in seconds
+        "lcp_echo_failure":"LCP echo failure times",     // [ number ]
+        "custom_dns":"Custom DNS",                       // [ disable, enable ]
+        "dns":"Custom DNS1",                             // [ IP address ], This is valid when custom_dns is [ enable ]
+        "dns2":"Custom DNS2",                            // [ IP address ], This is valid when custom_dns is [ enable ]
+        "txqueuelen":"tx queue len",
+        "custom_ip":"custom the ppp interface ip",       // [ disable, enable ]
+        "localip":"ppp interface local ip",              // [ ip address ], vaild when "custom_ip" is "enable"
+        "remoteip":"ppp interface remote ip",            // [ ip address ], vaild when "custom_ip" is "enable"
+        "pppopt":"ppp original options"                  // [ string ], multiple options are separated by semicolons
     },
-    "defaultroute":"enable",                // 是否添加<默认路由>, 默认路由为disable时route_table生效
-    "route_table":                        // 自定义上线时添加的路由, 默认路由(defaultroute)为disable有效
+
+    // route attributes
+    "masq":"share interface address to access",    // [ disable, enable ]
+    "defaultroute":"set it default route",         // [ disable, enable ]
+    "route_table":                                 // you can custom the route rule on this connect, vaild when "defaultroute" is "disable"
     {
-        "route1":                           // 路由项名称
+        "route rule name":                         // [ string ]
         {
-            "target":"1.1.1.0",            // 目标地址
-            "mask":"255.255.255.0",       // 目标地址掩码
-        },
-        "route2":                           // 路由项名称
-        {
-            "target":"1.1.1.0",                   // 目标地址
-            "mask":"255.255.255.0",       // 目标地址掩码
+            "target":"destination address",           // [ string ], ip address or network
+            "mask":"destination network mask"      // [ string ]
         }
+        // ...more route rule
     }
 }
 
 ```
 
 
-#### **接口** 
+#### **Methods**
 
-+ `setup[]` 启动L2TP客户端连接
++ `setup[]` **setup the l2tp client**, *succeed return ttrue, failed return tfalse, error return terror*
 
->*修改成功返回ttrue, 修改失败返回tfalse*
++ `shut[]` **shutdown the l2tp client**, *succeed return ttrue, failed return tfalse, error return terror*
 
-+ `shut[]` 断开L2TP客户端连接
-
->*添加成功返回ttrue, 添加失败返回tfalse*
-
-+ `device[]` 显示连接对应的网络设备
-
->*修改成功返回字符串, 修改失败返回tfalse*
-
-+ `status[]` 显示连接的状态
-
->*成功返回如下JSON, 失败返回NULL*
-
-```json
++ `status[]` **get the l2tp client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
     {
-        "status":"up",                        // up表示已连接, down表示未连接, uping表示连接中
-        "ip":"10.99.4.192",                   // IP地址
-        "dstip":"192.168.100.1",              // <对端IP地址>
-        "mask":"255.255.255.128",             // 子网掩码
-        "gw":"10.99.4.193",                   // 网关
-        "dns":"211.136.17.107",               // DNS
-        "dns2":"211.136.20.203",              // DNS
-        "mac":"76:C7:8C:05:39:F3",            // MAC地址
-        "rx_bytes":"6864",                    // 收包字节
-        "rx_packets":"65",                    // 收包数
-        "tx_bytes":"7296",                    // 发包字节
-        "tx_packets":"74",                    // 发包数
-        "livetime":"00:04:37:0",              // 在线时长 时:分:秒:天
-        "keeplive":"244",                     // 链路时延, 单位为ms, 只有开启ICMP链接监测才有此项信息
+        "status":"Current status",        // [ uping, down, up ]
+                                             // uping for connecting
+                                             // down for the network is down
+                                             // up for the network is connect succeed
+        "netdev":"netdev name",         // [ string ]
+        "gw":"gateway ip address",      // [ ip address ]
+        "dns":"dns ip address",         // [ ip address ]
+        "dns2":"dns2 ip address",       // [ ip address ]
+        "ip":"ip address",              // [ ip address ]
+        "mask":"network mask",          // [ ip address ]
+        "livetime":"online time",       // hour:minute:second:day
+        "rx_bytes":"send bytes",        // [ number ]
+        "rx_packets":"send packets",    // [ number ]
+        "tx_bytes":"receive bytes",     // [ number ]
+        "tx_packets":"receive packets", // [ number ]
     }
-```
+    ```
+    ```shell
+    # examples, get the first l2tp client infomation
+    vpn@l2tpc.status
+    {
+        "status":"up",                     # connect is succeed
+        "netdev":"ppp0",                   # netdev is ppp0
+        "ip":"192.168.10.1",               # ip address is 192.168.1.1
+        "mask":"255.255.255.0",            # network mask is 255.255.255.0
+        "gw":"192.168.10.254",             # gateway is 192.168.10.254
+        "dns":"114.114.114.114",           # dns is 114.114.114.114
+        "livetime":"01:15:50:0",           # already online 1 hour and 15 minute and 50 second
+        "rx_bytes":"1256",                 # receive 1256 bytes
+        "rx_packets":"4",                  # receive 4 packets
+        "tx_bytes":"1320",                 # send 1320 bytes
+        "tx_packets":"4"                   # send 4 packets
+    }
+    ```
+
++ `netdev[]` **get the l2tp client netdev**, *succeed return netdev, failed return NULL, error return terror*
+    ```shell
+    # examples, get the first l2tp client netdev
+    vpn@l2tpc.netdev
+    ppp0
+    ```
 
