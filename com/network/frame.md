@@ -384,3 +384,81 @@ The network framework defines a three-tier concept to manage network interfaces:
         "signal":"4"
     }    
     ```
+
+
+
++ `main[]` **new session immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples
+    network@frame.main
+    ttrue
+    ```
+
++ `back[]` **new session immediately uses the backup connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples
+    network@frame.back
+    ttrue
+    ```
+
++ `back[]` **new session immediately load balance on main and back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples
+    network@frame.back
+    ttrue
+    ```
+
++ `manual[]` **disable automatic load balance, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples
+    network@frame.manual
+    ttrue
+    ```
+
++ `auto[]` **enable automatic load balance, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples
+    network@frame.auto
+    ttrue
+    ```
+
+
+
++ `src_main[ source ip address ]` **set new session of source ip address immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, the source ip 192.168.8.222 new session route to main connection
+    network@frame.src_main[ 192.168.8.222 ]
+    ttrue
+    ```
++ `dest_main[ dest ip address ]` **set new session of dest ip address immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, the dest ip 114.114.114.114 new session route to main connection
+    network@frame.dest_main[ 114.114.114.114 ]
+    ttrue
+    ```
+
++ `src_back[ source ip address ]` **set new session of source ip address immediately uses the back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, the source ip 192.168.8.111 new session route to back connection
+    network@frame.src_back[ 192.168.8.111 ]
+    ttrue
+    ```
++ `dest_main[ dest ip address ]` **set new session of dest ip address immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, the dest ip 114.114.115.115 new session route to back connection
+    network@frame.dest_back[ 114.114.115.115 ]
+    ttrue
+    ```
+
++ `src_both[ source ip address ]` **set new session of source ip address load balance on main and back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, the source ip 192.168.8.123 new session load balance on main and back connection
+    network@frame.src_both[ 192.168.8.123 ]
+    ttrue
++ `dest_both[ dest ip address ]` **set new session of dest ip address load balance on main and back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, the dest ip 8.8.8.8 new session load balance on main and back connection
+    network@frame.dest_both[ 8.8.8.8 ]
+    ttrue
+
+
