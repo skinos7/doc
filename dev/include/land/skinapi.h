@@ -30,6 +30,7 @@
 /// joint api
 #define joint_register( joint, call )   scalls( JOINT_COM, "register", "%s,%s", joint, call )
 #define joint_calls( joint, string )    scalls( JOINT_COM, "call", "%s,%s", joint, string?:"" )
+#define joint_call2s( joint, string, string2 )    scalls( JOINT_COM, "call", "%s,%s,%s", joint, string?:"", string2?:"" )
 #define joint_callt( joint, json ) do \
 		{ \
 			param_t ptmp; \
