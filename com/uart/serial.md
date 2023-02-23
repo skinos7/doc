@@ -147,8 +147,12 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
             "frame_end_string":"packet suffix context"     // [ string ], such as 414243 when sending ABC when "frame_end" is hex
     
         }
-    }
+    },
 
+    "alientek":
+    {
+        "server":"POST server page"
+    }
 
 }
 

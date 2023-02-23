@@ -27,7 +27,7 @@ Management equipment basic infomation
     "language":"equipment language",                 // [ cn, en, jp, ... ], language code in two letter
     // other attributes
     "cfgversion":"equipent configure version",       // [ string ]
-    "gpversion":"equipent group configure version",  // [ string ]    
+    "gpversion":"equipent group configure version"   // [ string ]
 }
 ```
 Examples, show all configure
