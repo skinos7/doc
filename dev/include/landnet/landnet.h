@@ -94,16 +94,6 @@ boole txqueue_set_ifname( const char *object, const char *netdev, const char *le
  *		@retval false for failed
  */
 boole pmtu_adjust_ifname( const char *object, const char *netdev  );
-/**
- * @brief set the extern ttl
- * @param[in] object extern object
- * @param[in] netdev interface name
- * @param[in] ttl
- * @return succeed or failed
- *		@retval true for succeed
- *		@retval false for failed
- */
-boole ttl_set_ifname( const char *object, const char *netdev, const char *ttl );
 
 
 

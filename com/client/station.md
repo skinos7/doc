@@ -15,7 +15,7 @@ Management of specified client access
         "lease":"specify lease on dhcp assignment",           // [ number ]
 
         // access internet privilege
-        "internet":"disable or enable or regular internet access",  // [ enable, disable ,timer ], timer for regular internet access
+        "internet":"disable or enable or regular internet access",  // [ "enable", "disable", "timer" ], timer for regular internet access
         "internet_timer":                                           // regular internet access rule, valid when "internet" be "timer"
         {
             "rule name",                                                 // [ string ], user can custom the rule name
@@ -30,7 +30,7 @@ Management of specified client access
         },
 
         // access control list
-        "acl":"enable or disable",                                  // [ disable, enable ]
+        "acl":"enable or disable access control list",                   // [ "disable", "enable" ]
         "acl_rule":                                                 // access control list, valid when "acl" be "enable"
         {
             "rule name",                                                 // [ string ], user can custom the rule name

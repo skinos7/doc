@@ -5,7 +5,8 @@ connect to remote server and accept administrative command from the that
 #### Configuration( agent@remote )
 ```json
 {
-    "status":"enable or disable to connect the remote",    // [ disable, enable ]
+    "status":"enable or disable to connect the remote",    // [ "disable", "enable" ]
+    "id":"identify for device",                            // [ string ]
     "user":"username for device",                          // [ string ]
     "vcode":"vcode for device",                            // [ string ]
     "remote":"remote server address",                      // [ string ]
@@ -18,8 +19,8 @@ connect to remote server and accept administrative command from the that
         "interval":"report interval",                       // [number ], the unit is second
         "status":                                           // There are which statuses are being reported
         {
-            "he command":"",                                // [ string ]: ""
-            "he command2":""                                // [ string ]: ""
+            "he command":"",                                // [ string ]: "",  string is he command
+            "he command2":""                                // [ string ]: "",  string is he command
             // "...":""
         }
     }
@@ -29,10 +30,10 @@ Examples, show all the configure
 ```shell
 agent@remote
 {
-    "status":"enable",                                      #  Accept remote management is enable
+    "status":"enable",                                      # Accept remote management is enable
     "remote":"http://http.wmdevice.com:10101/dev",          # remote server is http://http.wmdevice.com:10101/dev
     "con_timeout":"20",                                     # connect timeout is 20 seccond
-    "talk_timeout":"40",                                    # talk timeout is 40 seccond
+    "talk_timeout":"40",                                    # post json timeout is 40 seccond
     "report":
     {
         "interval":"30",                                    # report interval is 30 second
@@ -59,21 +60,22 @@ ttrue
 ```json
 // 属性介绍
 {
-    "status":"是否连接云服务器",    // [ disable, enable ], enable为开启, disable或其它表示关闭
-    "user":"管理帐号",             // [ 字符串 ], 指明设备属性哪一个管理帐号
-    "vcode":"验证码",              // [ 字符串 ], 当所属帐号要求被管理设备必须给出正确的验证码时设置
+    "status":"是否连接云服务器",    // [ "disable", "enable" ], enable为开启, disable或其它表示关闭
+    "id":"设备ID",                  // [ 字符串 ], 指明设备唯一的标识
+    "user":"管理帐号",              // [ 字符串 ], 指明设备属性哪一个管理帐号
+    "vcode":"验证码",               // [ 字符串 ], 当所属帐号要求被管理设备必须给出正确的验证码时设置
     "remote":"云服务器地址",        // [ 字符串 ]
     "remote2":"备用云服务器地址",   // [ 字符串 ]
     "remote3":"备用云服务器地址2",  // [ 字符串 ]
     "con_timeout":"连接最大超时",   // [ 数字 ], 秒为单位
     "talk_timeout":"交互最大超时",  // [ 数字 ], 秒为单位 
-    "report":                      // 初始上报行为配置
+    "report":                       // 初始上报行为配置
     {
         "interval":"上报间隔",      // 秒为单位
-        "status":                  // 要求上报的状态
+        "status":                   // 要求上报的状态
         {
-            "he指令1":"",
-            "he指令2":""
+            "he指令1":"",           // [ 字符串 ]:"",
+            "he指令2":""            // [ 字符串 ]:""
             // "更多he指令":""
         }
     }
@@ -90,7 +92,7 @@ agent@remote
     "remote2":"http://device2.wmdevice.com:10101/dev",  # <备用云服务器地址>
     "remote3":"http://device3.wmdevice.com:10101/dev",  # <备用云服务器地址2>
     "con_timeout":"20",                                 # 连接最大超时为20秒
-    "talk_timeout":"40",                                # 交互最大超时为40秒
+    "talk_timeout":"40",                                # POST JSON最大超时为40秒
     "report":                      # 初始上报行为配置
     {
         "interval":"30",           # 上报间隔为30秒
