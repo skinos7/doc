@@ -7,13 +7,17 @@ Management of global local interface name client access
 ```json
 // Attributes introduction 
 {
-    "interface name":                   // [ ifname@lan, ifname@lan2, ifname@lan3, ... ]
+    "interface name":       // [ "ifname@lan", "ifname@lan2", "ifname@lan3", ... ], above rules set at this interface name
     {
         // access internet privilege
-        "internet":"disable or enable or regular internet access",  // [ enable, disable ,timer ], timer for regular internet access
+        "internet":"disable or enable or regular internet access",  // [ "enable", "disable" ,"timer" ]
+                                                                            // timer for regular internet access
+                                                                            // disable for forbid internet access
+                                                                            // enable for allow internet access
+                                                                            // no settings for do nothing
         "internet_timer":                                           // regular internet access rule, valid when "internet" be "timer"
         {
-            "rule name":                                                 // [ string ], user can custom the rule name
+            "rule name":                                                 // [ string ], user can custom the rule name, match this rule can acess
             {
                 "source":"local source address",                         // [ string ]:
                                                                                   // single IP: 192.168.8.222

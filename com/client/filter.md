@@ -1,49 +1,72 @@
 ***
-## 网桥过滤组件（forward@filter） 
-管理本地LAN口上的网桥模式上的过滤规则
+## filter network bridge packet
+filter the packet on local network bridge
 
-#### **配置** 
+#### Configuration( client@filter )
 ```json
 {
-    "ifname@lan":      // 本地网口的过滤
+    "interface name":       // [ "ifname@lan", "ifname@lan2", "ifname@lan3", ... ], the ifname must be network birdge, above filter rules set at this interface name
     {
-        "status":"enable",  // 过滤功能启用(enable)或禁用(disable)
-        "default":"accept",   // 默认规则, drop表示禁用访问, accept表示允许访问
+        "status":"filter function state",        // [ "disable", "enable" ]
+        "default":"default action for packet",   // [ "drop", "accept" ]
+
+        // custom filter rule in rule json
         "rule":
         {
-            "test1":
+            "rule name ":                      // [ string ]
             {
-                "src":"21.221.128.110":  // 源地址, 通常为外网IP地址或IP地址段或MAC地址, 空表示所有IP地址
-                "protocol":"all":    // tcp表示TCP， udp表UDP， all所有协议
-                "dest":"192.168.8.250"   // 目的地址, 通常为内网地址
-                "destport":"100-400"  // 目的端口或端口段, 100-400表示100至400之间的所有端口,空表示所有端口
-                "action":"accept"     // 禁止或允许访问, drop表示禁止, accept表示允许
+                "action":"drop or accetp or return",      // [ drop, accept, return ], drop for forbid, accept for pass, return for don't match it with after rule
+                "src":"source address":                   // [ ip/mac address ]:
+                                                                // space for all ip address
+                                                                // single IP: 202.96.11.32
+                                                                // mac: 00:03:7F:23:b3:40
+                "protocol":"packet protocol",            // [ "tcp", "udp", "all" ]
+                "dest":"dest address",                   // [ ip/mac address ]
+                                                                // space for all ip address
+                                                                // single IP: 202.96.11.32
+                                                                // mac: 00:03:7F:23:b3:40
+                "destport":"dest port"                   // [ port ]:
+                                                                // space for all port
+                                                                // single port: 8000
             }
-            "test2":
+            // more rule
+        }
+    }
+    // more local interfade name
+}
+```  
+Examples, show all the configure
+```shell
+client@filter
+{
+    "ifname@lan":                             // ifname@lan bridge filter settings
+    {
+        "status":"enable",                        // filter function is enable
+        "rule":                                   // filter rule list
+        {
+            "xradar":                                 // filter rule name is xradar, source ip address is 192.168.0.200 will be drop
             {
-                "src":"202.96.122.111-202.96.122.128":  // 源地址, 通常为外网的IP地址或IP地址段或MAC地址, 表示从202.96.122.111到202.96.122.128
-                "protocol":"tcp":        // tcp表示TCP， udp表UDP， all所有协议
-                "dest":"192.168.8.250-192.168.8.253"    // 目的地址, 通常为内网地址
-                "destport":"500,400"      // 目的端口或端口段, 500,400表示500和400两个端口
-                "action":"accept"      // 禁止或允许访问, drop表示禁止, accept表示允许
+                "src":"192.168.0.200",
+                "action":"drop"
+            },
+            "xradar2":                                // filter rule name is xradar2, source ip address is 192.168.2.200 will be drop
+            {
+                "src":"192.168.2.200",
+                "action":"drop"
+            },
+            "xcan":                                   // filter rule name is xcan, dest ip address is 192.168.4.200 will be drop
+            {
+                "dest":"192.168.4.200",
+                "action":"drop"
             }
         }
-    },
-    "ifname@lan2":   // 本地网口2
-    {
     }
 }
 ```  
-
-
-#### **接口** 
-
-+ `setup[]` 初始化此组件
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `shut[]` 禁用此组件功能
-
->*成功返回ttrue, 失败返回tfalse*
+Examples, disable the filter function of ifname@lan
+```shell
+client@filter:ifname@lan/status=disable
+ttrue
+```  
 
 
