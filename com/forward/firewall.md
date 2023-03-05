@@ -1,9 +1,10 @@
 ***
-## 防火墙组件（forward@firewall） 
-管理防火墙用于访止外网设备对内网的访问, 此功能只会在路由模式(即网关,4G,无线互联网,宽带路由器等)下工作
+## Management of firewall
+Management of firewall to control access from extern inteface( internet)
 
-#### **配置** 
+#### Configuration( forward@firewall )
 ```json
+// Attributes introduction 
 {
     "ifname@wan":      // 有线网口的防火墙，只有在 网关 或 混合 工作模式下才可以查看及设置
     {

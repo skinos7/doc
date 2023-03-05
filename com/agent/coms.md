@@ -1,6 +1,6 @@
 ***
 ## Manage remotely manageable components
-list remotely manageable components
+all remotely manageable components name save in here
 
 #### Configuration( agent@coms )
 ```json

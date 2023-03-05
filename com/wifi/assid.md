@@ -86,25 +86,25 @@ ttrue
 ```
 Example, modify the first 5.8G SSID secure mode to WPAPSK and change the wpa key to 88888888
 ```shell
-wifi@nssid:secure=wpapsk            # modify the secure mode to WPAPSK
+wifi@assid:secure=wpapsk            # modify the secure mode to WPAPSK
 ttrue
-wifi@nssid:wpa_encrypt=tkipaes      # modify the WAP encrypt to auto
+wifi@assid:wpa_encrypt=tkipaes      # modify the WAP encrypt to auto
 ttrue
-wifi@nssid:wpa_key=88888888         # modify the WPA encrypt key is 88888888
+wifi@assid:wpa_key=88888888         # modify the WPA encrypt key is 88888888
 ttrue
 # You can also use one command to complete the operation of the above three command
-wifi@nssid|{"secure":"wpapsk", "wpa_encrypt":"tkipaes", "wpa_key":"88888888"}
+wifi@assid|{"secure":"wpapsk", "wpa_encrypt":"tkipaes", "wpa_key":"88888888"}
 ttrue
 ```
 Example, disable the second 5.8G SSID
 ```shell
-wifi@nssid2:status=disable
+wifi@assid2:status=disable
 ttrue
 ```
 
 #### **Methods**
-**wifi@nssid** is first 5.8G SSID
-**wifi@nssid2** is second 5.8G SSID
+**wifi@assid** is first 5.8G SSID
+**wifi@assid2** is second 5.8G SSID
 
 + `status[]` **get the SSID infomation**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
     ```json
@@ -134,7 +134,7 @@ ttrue
     ```
     ```shell
     # examples, get the first 5.8G SSID status
-    wifi@nssid.status
+    wifi@assid.status
     {
         "state":"up",
         "secure":"wpapskwpa2psk",
@@ -168,37 +168,37 @@ ttrue
     }
     ```
     ```shell
-    # examples, get the first SSID's client list
-    wifi@nssid.list
+    # examples, get the first 5.8G SSID's client list
+    wifi@assid.list
     {
         "78:11:DC:92:D3:9E":                  // client 1
         {
             "apidx":"0",
             "livetime":"14:53:17:2",
             "rssi":"-52",
-            "ifdev":"wifi@nssid"
+            "ifdev":"wifi@assid"
         },
         "88:C3:97:75:1B:C0":                 // client 2
         {
             "apidx":"0",
             "livetime":"14:53:14:2",
             "rssi":"-52",
-            "ifdev":"wifi@nssid"
+            "ifdev":"wifi@assid"
         },
         "40:31:3C:4D:78:35":                 // client 3
         {
             "apidx":"0",
             "livetime":"14:52:22:2",
             "rssi":"-61",
-            "ifdev":"wifi@nssid"
+            "ifdev":"wifi@assid"
         }
     }
     ```
 
 + `stabeat[ MAC address ]` disconnect the client, *succeed return tttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, disconnect the client 00:03:7F:13:BD:30
-    wifi@nssid.stabeat[ 00:03:7F:13:BD:30 ]
+    # examples, disconnect the client 00:03:7F:13:BD:30 from first 5.8G SSID
+    wifi@assid.stabeat[ 00:03:7F:13:BD:30 ]
     ttrue
     ```
 
