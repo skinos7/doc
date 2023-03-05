@@ -867,7 +867,7 @@ enable
 
 
 
-##### 25. 示例-设置新策略路由, 指定源地址为192.168.2.12走第一个LTE
+##### 26. 示例-设置新策略路由, 指定源地址为192.168.2.12走第一个LTE
 - 策略路由在组件forward@rule中, 添加策略路由通过add接口操作(在HE终端中的命令行为forward@rule.add), 点击[策略路由组件](../com/forward/rule.md)查看接口add相关介绍
 ```json
 {
@@ -892,7 +892,7 @@ enable
     "cmd1":"ttrue"
 }
 ```
-##### 26. 示例-设置新策略路由, 指定所有数据走第二个LTE
+##### 27. 示例-设置新策略路由, 指定所有数据走第二个LTE
 - 策略路由在组件forward@rule中, 添加策略路由通过add接口操作(在HE终端中的命令行为forward@rule.add), 点击[策略路由组件](../com/forward/rule.md)查看接口add相关介绍
 ```json
 {
@@ -917,7 +917,7 @@ enable
     "cmd1":"ttrue"
 }
 ```
-##### 27. 示例-删除原设置的名为video的策略路由规则
+##### 28. 示例-删除原设置的名为video的策略路由规则
 - 策略路由在组件forward@rule中, 删除策略路由通过delete接口操作(在HE终端中的命令行为forward@rule.delete), 点击[策略路由组件](../com/forward/rule.md)查看接口delete相关介绍
 ```json
 {
@@ -936,7 +936,7 @@ enable
     "cmd1":"ttrue"
 }
 ```
-##### 28. 示例-同时设置两条策略路由, 指定源地址为192.168.2.12走第一个LTE, 并指定其它所有数据走第二个LTE
+##### 29. 示例-同时设置两条策略路由, 指定源地址为192.168.2.12走第一个LTE, 并指定其它所有数据走第二个LTE
 - 策略路由在组件forward@rule中, 添加策略路由通过add接口操作(在HE终端中的命令行为forward@rule.add), 点击[策略路由组件](../com/forward/rule.md)查看接口add相关介绍
 ```json
 {
@@ -974,7 +974,7 @@ enable
     "cmd2":"ttrue"
 }
 ```
-##### 29. 示例-删除原设置的名为senser及名为video的策略路由规则
+##### 30. 示例-删除原设置的名为senser及名为video的策略路由规则
 - 策略路由在组件forward@rule中, 删除策略路由通过delete接口操作(在HE终端中的命令行为forward@rule.delete), 点击[策略路由组件](../com/forward/rule.md)查看接口delete相关介绍
 ```json
 {
