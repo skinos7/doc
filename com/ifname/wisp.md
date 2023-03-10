@@ -294,7 +294,7 @@ ttrue
     }
     ```
 
-+ `chlist[]` **use the WISP scan the surrounding AP**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `aplist[]` **use the WISP scan the surrounding AP**, *succeed return talk to describes infomation, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
