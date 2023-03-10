@@ -3,7 +3,6 @@
 Management of global local interface name client access
 
 #### Configuration( client@global )
-
 ```json
 // Attributes introduction 
 {
@@ -68,7 +67,7 @@ Management of global local interface name client access
                 "datestop":"ending date",                                // [ string ], format is YYYY-MM-DD
                 "timestart":"start time of day",                         // [ string ], format is hh-mm-ss
                 "timestop":"end time of day",                            // [ string ], format is hh-mm-ss
-                "weekdays":"designated week number"                      // [ string ], format is w1,w2,w3, 0 for Sunday
+                "weekdays":"designated week number"                      // [ string ], format is 1,2,3,..., 0 for Sunday
             }
             // ... more rule
         },

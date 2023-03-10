@@ -1,16 +1,14 @@
-
 ***
 ## DDNS client agent Management
 manage ddns client
 
 #### Configuration( ddns@scripts )
-
 ```json
 // Attributes introduction 
 {
     "client":
     {
-        "status":"client status",                                   // [ disable, enable ]
+        "status":"client status",                                   // [ "disable", "enable" ]
         "extern":"extern ifname",                                   // [ string ]
         "isp":"internet service provicserver address",              // [ string ]
         "domain":"domain name",                                     // [ string ]
@@ -21,7 +19,7 @@ manage ddns client
     },
     "client2":
     {
-        "status":"client status",                                   // [ disable, enable ]
+        "status":"client status",                                   // [ "disable", "enable" ]
         "extern":"extern ifname",                                   // [ string ]
         "isp":"internet service provicserver address",              // [ string ]
         "domain":"domain name",                                     // [ string ]

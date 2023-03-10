@@ -1,4 +1,3 @@
-
 ***
 ## Upgrading Components in Batches on lcoal network
 upgrade the Skinos system on local network
@@ -8,14 +7,14 @@ upgrade the Skinos system on local network
 ```json
 // Attributes introduction
 {
-    "status":"enable or disable the function",                                    // [ disable, enable ]
+    "status":"enable or disable the function",                                    // [ "disable", "enable" ]
 
     "root":"directory for storing the upgrade package",                           // [ string ], default is /mnt
     "upgrade":"upgrade configuration file in the upgrade package directory",      // [ string ], default is upgrade.txt
 
     "device":"specifies device for TFTP upgrade at bootloader",                  // [ string ], default is local_device register of land
     "ip":"specifies the IP address used for the TFTP upgrade at bootloader",     // [ IP address ], default is 10.10.10.3
-    "mask":"specifies the IP netmask used for the TFTP upgrade at bootloader",   // [ IP netmask ], default is 255.255.255.0
+    "mask":"specifies the IP netmask used for the TFTP upgrade at bootloader",   // [ network mask ], default is 255.255.255.0
 
     // will save to upgrade.txt, and pass to device that need upgrade
     "config":
@@ -24,7 +23,7 @@ upgrade the Skinos system on local network
         "cmodel":"upgrade custom model",                 // [ string ], defualt is no modify 
         "language":"upgrade language",                   // [ string ], defualt is no modify, cn is chinese, en is engish
         "datecode":"upgrade datecode",                   // [ string ], defualt is no modify
-        "default":"default the configure after upgrade", // [ disable, enable ]
+        "default":"default the configure after upgrade", // [ "disable", "enable" ]
         "product_test":"test the device after upgrade",  // [ string ], test option can togather, ex: 4g;5g;nic;reset
                                                                         // 4g for test the LTE
                                                                         // 5g for test the LTE2
@@ -71,8 +70,6 @@ gather@upgrade:status=enable
 ttrue
 ```  
 
-
-
 #### **Methods**
 
 + `list[]` **list all the found firmware**, *succeed return talk to describes, failed return NULL, error return terror*
@@ -116,7 +113,6 @@ ttrue
         }
     }  
     ```
-
 
 + `switch[ firmware filename ]` **switch the firmware to upgrade auto**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell

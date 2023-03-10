@@ -1,22 +1,20 @@
-
 ***
 ## Manage skinos device at local network
 Manage skonos device at the local network
 
 #### Configuration( gather@beacon )
-
 ```json
 // Attributes introduction
 {
-    "status":"beacon for search device",        // [ disable, enable ]
+    "status":"beacon for search device",        // [ "disable", "enable" ]
     "port":"beacon udp port",                   // [ nubmer ]
     "interval":"beacon interval",               // [ nubmer ], the unit is second
     "group":"search group name",                // [ string ], default is group of "default"
     "ip":"beacon network ip",                   // [ IP address ], default is 192.168.200.1
-    "mask":"beacon network netmask",            // [ Network ], default is 255.255.255.0
-    "dhcps":                                    // Assign IP addresses and some infomation to found devices
+    "mask":"beacon network netmask",            // [ network mask ], default is 255.255.255.0
+    "dhcps":                                                 // Assign IP addresses and some infomation to found devices
     {
-        "status":"Assign IP addresses to found devices",              // [ disable, enable ]
+        "status":"Assign IP addresses to found devices",              // [ "disable", "enable" ]
         "startip":"IP addresses pool start",                          // [ IP address ], default is 192.168.200.2
         "endip":"IP address poll end",                                // [ IP address ], default is 192.168.200.254
         "gw":"Assign gateway to found devices",                       // [ IP address ]

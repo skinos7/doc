@@ -1,55 +1,87 @@
 ***
 ## Management of firewall
-Management of firewall to control access from extern inteface( internet)
+Management of firewall to control access from extern inteface( internet )
 
 #### Configuration( forward@firewall )
 ```json
 // Attributes introduction 
 {
-    "ifname@wan":      // 有线网口的防火墙，只有在 网关 或 混合 工作模式下才可以查看及设置
+    "extern interface name":       // [ "ifname@lte", "ifname@lte2", "ifname@wan", ... ], above rules set at this interface name
     {
-        "status":"enable",  // 防火墙功能启用(enable)或禁用(disable)
-        "default":"drop",    // 默认规则, drop表示禁用访问, accept表示允许访问
-        "input_icmp_through":"enable",  // 允许ICMP的访问, 为空或无表示禁止放行, enable表示允许通过
-        "input_espah_through":"enable",   // 允许IPSEC的ESP/AH的访问, 为空或无表示禁止放行, enable表示允许通过
-        "input_telnet_through":"enable",  // 允许Telnet的访问, 为空或无表示禁止放行, enable表示允许通过
-        "input_ssh_through":"enable",  // 允许SSH的访问, 为空或无表示禁止放行, enable表示允许通过
-        "input_wui_through":"enable",  // 允许WEB的访问, 为空或无表示禁止放行, enable表示允许通过
+        "status":"disable or enable or firewall",           // [ "enable", "disable" ]
+        "default":"action for default access",              // [ "drop", "accept" ]
+        "input_icmp_through":"ICMP protocol access",        // [ "disable", "enable" ]
+        "input_espah_through":"ESP/AH protocol access",     // [ "disable", "enable" ]
+        "input_telnet_through":"telnet access",             // [ "disable", "enable" ]
+        "input_ssh_through":"SSH access",                   // [ "disable", "enable" ]
+        "input_wui_through":"WEB Server access",            // [ "disable", "enable" ]
 
-        "nat_through":"enable",  // 默认自动放开NAT映射中的规则的访问, 为空或无表示启用, disable表示禁用自动放开
-        "forward_icmp_through":"enable",  // 放开ICMP的通行, 为空或无表示禁止放行, enable表示允许通过
-        "forward_espah_through":"enable", // 放开IPEC的ESP/AH的通行, 为空或无表示禁止放行, enable表示允许通过
+        "nat_through":"NAT rule settings at forward@nat  passthrough auto",    // [ "disable", "enable" ]
+        "forward_icmp_through":"ICMP protocol passthrough",                    // [ "disable", "enable" ]
+        "forward_espah_through":"ESP/AH protocol passthrough",                 // [ "disable", "enable" ]
 
-        "rule":
+        "rule":                              // firewall rule settings
         {
-            "test1":
+            "rule name":                                   // [ string ]:{}
             {
-                "src":"21.221.128.110":  // 源地址, 通常为外网IP地址或IP地址段或MAC地址, 空表示所有IP地址
-                "protocol":"all":    // tcp表示TCP， udp表UDP， all所有协议
-                "dest":"192.168.8.250"   // 目的地址, 通常为内网地址
-                "destport":"100-400"  // 目的端口或端口段, 100-400表示100至400之间的所有端口,空表示所有端口
-                "action":"accept"     // 禁止或允许访问, drop表示禁止, accept表示允许
+                "action":"drop or accept or return",                     // [ "drop", "accept", "return" ], "drop" for forbid, "accept" for pass, "return" for don't match it with after rule
+                "src":"source address",                                  // [ string ]:
+                                                                                  // single IP: 192.168.8.222
+                                                                                  // multiple IP: 192.168.8.2,192.168.8.3,192.168.8.4
+                                                                                  // range of IP: 192.168.8.2-192.168.8.4
+                                                                                  // signal MAC: 00:23:43:13:34:40
+                                                                                  // space for all ip address
+                "protocol":"protocol type",                              // [ "tcp", "udp", "all" ]
+                "dest":"destination address",                            // [ string ]:
+                                                                                  // single IP: 202.96.11.32
+                                                                                  // multiple IP: 2.3.1.2,4.34.2.1,72.32,192.1
+                                                                                  // range of IP: 202.96.132.11-202.96.132.20
+                                                                                  // space for all ip address
+
+                "destport":"destination port"                           // [ number ]: valid when "proto" be "tcp" or "udp"
+                                                                                  // single port: 8080
+                                                                                  // multiple port: 80,8000,8080
+                                                                                  // range of port: 80-800
+                                                                                  // space for all port
             }
-            "test2":
-            {
-                "src":"202.96.122.111-202.96.122.128":  // 源地址, 通常为外网的IP地址或IP地址段或MAC地址, 表示从202.96.122.111到202.96.122.128
-                "protocol":"tcp":        // tcp表示TCP， udp表UDP， all所有协议
-                "dest":"192.168.8.250-192.168.8.253"    // 目的地址, 通常为内网地址
-                "destport":"500,400"      // 目的端口或端口段, 500,400表示500和400两个端口
-                "action":"accept"      // 禁止或允许访问, drop表示禁止, accept表示允许
-            }
+            // ... more rule
         }
     }
-    "ifname@lte":   // 4G的防火墙，只有在 4G 或 混合 工作模式下才可以查看及设置
-    {
-    }
-    "ifname@wisp":   // 无线互联网的防火墙，只有在 无线互联网 或 混合 工作模式下才可以查看及设置
-    {
-    }
-    "vpn@pptpc":    //PPTP客户端的防火墙，只有在开启了PPTP客户端才可以查看及设置
-    {
-    }
+    // ... more extern interface
 }
 ```  
-
+Examples, show current all of firewall settings
+```shell
+forward@firewall
+{
+    "ifname@lte":                 // first LTE firewall settings
+    {
+        "status":"enable",             // enable the firewall
+        "default":"drop",              // default action is drop
+        "rule":
+        {
+            "pcweb":                        // rule named "pcweb", accept dest 192.168.8.222 and destport TCP 80 access
+            {
+                "action":"accept",
+                "dest":"192.168.8.222",
+                "protocol":"tcp",
+                "destport":"80"
+            }
+        }
+    },
+    "ifname@lte2":              // second LTE firewall settings
+    {
+        "status":"disable",           // disable the firewall
+        "default":"drop",
+        "rule":
+        {
+        }
+    }
+}
+```
+Examples, enable the second LTE firewall
+```shell
+forward@firewall:ifname@lte2/status=enable
+ttrue
+```
 

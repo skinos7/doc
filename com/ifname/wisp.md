@@ -267,6 +267,98 @@ ttrue
     ifname@wan.ifdev
     wifi@nsta
     ```
+
++ `chlist[]` **get the WISP channal list**, *succeed return talk to describes infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "channel number":{},       // [ number ]:{}
+        // ... more channel
+    }
+    ```
+    ```shell
+    # examples, get the first WISP channel list
+    ifname@wisp.chlist
+    {
+        "1":{},        # channel 1
+        "2":{},        # channel 2
+        "3":{},        # channel 3
+        "4":{},        # channel 4
+        "5":{},        # channel 5
+        "6":{},        # channel 6
+        "7":{},        # channel 7
+        "8":{},        # channel 8
+        "9":{},        # channel 9
+        "10":{},       # channel 10
+        "11":{}        # channel 11
+    }
+    ```
+
++ `chlist[]` **use the WISP scan the surrounding AP**, *succeed return talk to describes infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "AP BSSID":                                   // [ mac address ]
+        {
+            "ssid":"SSID name",                           // [ string ]
+            "channel":"channel number",                   // [ number ], 0-165, 0 for auto
+            "secure":"mode of security",                  // [ "disable", "wpapsk", "wpa2psk", "wpapskwpa2psk" ]
+                                                                 // [ disable ] for no securiyt
+                                                                 // [ wpapsk ]  for WPAPSK
+                                                                 // [ wpa2psk ]  for WPA2PSK
+                                                                 // [ wpapskwpa2psk ] for WPA Mix
+            "wpa_encrypt":"WAP encrypt",                  // [ "aes", "tkip", "tkipaes" ]
+                                                                 // [ aes ] for AES
+                                                                 // [ tkip ] for TKIP
+                                                                 // [ tkipaes ] for auto
+            "sig":"signal level(%)",                      // [ number ]
+            "signal":"signal level[0-4]",                 // [ "0", "1", "2", "3", "4" ]
+            "chext":"extern channel",                     // [ "none", "below", "above" ]
+            "mode":"wireless system"                      // [ string ]
+        },
+        // ... more AP
+    }
+    ```
+    ```shell
+    # examples, get the surrounding AP from first WISP scan
+    ifname@wisp.aplist
+    {
+        "80:EA:07:15:0E:E6":                    # first AP by scanning
+        {
+            "ssid":"1411",                                 # frist AP SSID
+            "channel":"6",                                 # first AP channel
+            "secure":"wpapskwpa2psk",                      # secure mode is WPA mix
+            "wpa_encrypt":"aes",                           # encrypt type is AES
+            "sig":"70",                                    # signal is 70%
+            "signal":"3",                                  # signal level is 3, range is 0-4
+            "chext":"below",                               # extern channel is below
+            "mode":"11b/g/n"
+        },
+        "B4:82:C5:80:22:41":                    # second AP by scanning
+        {
+            "ssid":"dimmalex-work",
+            "channel":"11",
+            "secure":"wpapskwpa2psk",
+            "wpa_encrypt":"aes",
+            "sig":"52",
+            "signal":"3",
+            "chext":"none",
+            "mode":"11b/g/n"
+        },
+        "8C:74:A0:D6:68:B0":                    # third AP by scanning
+        {
+            "ssid":"CMCC-ktfK",
+            "channel":"11",
+            "secure":"wpapskwpa2psk",
+            "wpa_encrypt":"aes",
+            "sig":"0",
+            "signal":"0",
+            "chext":"none",
+            "mode":"11b/g/n"
+        }
+    }
+    ```
+
 + `shut[]` **shutdown the WISP network**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, shutdown the frist WISP network

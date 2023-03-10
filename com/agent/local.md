@@ -38,10 +38,10 @@ ttrue
 // 属性介绍
 {
     "broadcast":"是否监听来自局域网的管理",    // [ "disable", "enable" ], enable为开启, disable或其它表示关闭
-    "broadcast_port":"监听UDP端口",            // [ 数字 ], 默认为22222
-    "broadcast_group":"所属组",                // [ 字符串 ], 默认为default
-    "json":"是否启动JSON控制协议",             // [ "disable", "enable" ], enable为开启, disable或其它为关闭(不建议默认开启, 除非局域网为安全信任区域)
-    "json_port":"JSON控制协议TCP端口"          // [ 数字 ], 默认为22220
+    "broadcast_port":"监听UDP端口",         // [ 数字 ], 默认为22222
+    "broadcast_group":"所属组",             // [ 字符串 ], 默认为default
+    "json":"是否启动JSON控制协议",            // [ "disable", "enable" ], enable为开启, disable或其它为关闭(不建议默认开启, 除非局域网为安全信任区域)
+    "json_port":"JSON控制协议TCP端口"        // [ 数字 ], 默认为22220
 }
 ```
 示例, 显示所有的配置
