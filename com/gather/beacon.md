@@ -51,16 +51,11 @@ ttrue
     ```json
     // Attributes introduction of talk by the method return
     {
-        "MAC Address":
+        "MAC Address":              [ mac address ]:{}
         {
-            "ip":"IP Address",
-            "time":"found time"
-        },
-        "MAC Address2":
-        {
-            "ip":"IP Address",
-            "time":"found time"
-        },
+            "ip":"IP Address",           [ ip address ]
+            "time":"found time"          [ number ] UTC count nubmer
+        }
         // ... more device
     }    
     ```
@@ -70,33 +65,33 @@ ttrue
     {
         "88124E200030":              # device is 88:12:4E:20:00:30
         {
-            "time":"1608637542",     # found device at UTC 1608637542
-            "ip":"192.168.200.2"     # device ip is 192.168.200.2
+            "time":"1608637542",        # found device at UTC 1608637542
+            "ip":"192.168.200.2"        # device ip is 192.168.200.2
         },
         "00037F12CC70":              # device is 00:03:7F:12:CC:70
         {
-            "time":"1608637542",     # found device at UTC 1608637542
-            "ip":"192.168.200.3"     # device ip is 192.168.200.3
+            "time":"1608637542",        # found device at UTC 1608637542
+            "ip":"192.168.200.3"        # device ip is 192.168.200.3
         }
     }  
     ```
 
-+ `peer[ [MAC/IP] ]` **set speak device**, *succeed return ttrue, failed return tfalse, error return terror, no paramter return current device*
++ `peer[ [MAC/IP] ]` **set talk device**, *succeed return ttrue, failed return tfalse, error return terror, no paramter return current device*
     ```shell
-    # examples, set 88124E231210 to speak
+    # examples, set 88124E231210 to talk
     gather@beacon.peer[ 88124E231210 ]
     true
-    # examples, show current speak device
+    # examples, show current talk device
     gather@beacon.peer
     88124E231210    
     ```
 
 + `talk[ [MAC/IP], {talk he command}, [timeout] ]` **talk to other skinos device**, *succeed return talk, failed return NULL, error return terror*
     ```json
-    // Attributes introduction of talk he command need pass to method
+    // Attributes introduction of talk he command that need delivery to this interface
     {
-        "command identify":"he command in string style",
-        "command identify2":
+        "command identify":"he command in string style",   // [ string ]: [ string ]
+        "command identify2":                               // [ string ]: [ json ]
         {
             json style
         }
@@ -109,7 +104,7 @@ ttrue
             json style for command return
         },
         "command identify2":"string style for command return"
-       // ...more command return
+        // ...more command return
     }
     ```
     Examples, talk to 172.32.0.3 for machine configure and machine.status and time zone

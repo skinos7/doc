@@ -49,7 +49,7 @@ It is generated automatically when the project is created, you can learn his for
     "name":"project(FPK) name",                    // [ string ]
     "intro":"project(FPK) introduction",           // [ string ]
     "desc":"detailed description of the project",  // [ string ]
-    "type":"project(FPK) type",                    // [ root ], root indicates that the root permission is required
+    "type":"project(FPK) type",                    // [ "root" ], root indicates that the root permission is required
     "version":"project(FPK) version",              // [ string ]
     "author":"project(FPK) author",                // [ string ]
 

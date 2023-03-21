@@ -10,9 +10,9 @@ Management of OPENVPN client
 // Attributes introduction 
 {
     // common attributes
-    "status":"client status",                      // [ disable, enable ]
+    "status":"client status",                      // [ "disable", "enable" ]
 
-    "extern":"extern ifname",                      // [ ifname@wan, ifname@lte, ... ], default is defdault gateway
+    "extern":"extern ifname",                      // [ "ifname@wan", "ifname@lte", ... ], default is defdault gateway
     "server":"openvpn server address",             // [ string ]
     "proto":"protocol type",                       // [ tcp, udp ]
     "port":"server port",                          // [ nubmer ], default is 1194

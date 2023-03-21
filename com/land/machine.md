@@ -9,22 +9,21 @@ Management equipment basic infomation
 // Attributes introduction 
 {
     // main attributes
-    "mode":"equipment operator mode",                // < ap, wisp, nwisp, gateway, dgateway, misp, nmisp, dmisp, mix >
-                                                       // ap: access point
-                                                       // wisp: 2.4G Wireless Internet Service Provider connection
-                                                       // nwisp: 5.8G Wireless Internet Service Provider connection( need the board support 5.8G wirless baseband)
-                                                       // gateway: wire WAN gateway
-                                                       // dgateway: Dual wire WAN gateway
-                                                       // misp: LTE Mobile Internet Service Provider connection( need the board support LTE baseband)
-                                                       // nmisp: Next LTE/NR Mobile Internet Service Provider connection( need the board support LTE/NR baseband)
-                                                       // dmisp: Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
-                                                       // mix: custom mix connection from multiple internet connection
+    "mode":"equipment operator mode",                // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
+                                                       // "ap": access point
+                                                       // "wisp": 2.4G Wireless Internet Service Provider connection
+                                                       // "nwisp": 5.8G Wireless Internet Service Provider connection( need the board support 5.8G wirless baseband)
+                                                       // "gateway": wire WAN gateway
+                                                       // "dgateway": Dual wire WAN gateway
+                                                       // "misp": LTE Mobile Internet Service Provider connection( need the board support LTE baseband)
+                                                       // "nmisp": Next LTE/NR Mobile Internet Service Provider connection( need the board support LTE/NR baseband)
+                                                       // "dmisp": Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
+                                                       // "mix": custom mix connection from multiple internet connection
                                                      
-    "copyright":"show the logo by designer",         // [ disable, enable  ]
     "name":"equipment name",                         // <string>
-    "mac":"equipment MAC address",                   // < MAC address >
+    "mac":"equipment MAC address",                   // < mac address >
     "macid":"equipment MAC identify or serial id",   // < string >
-    "language":"equipment language",                 // [ cn, en, jp, ... ], language code in two letter
+    "language":"equipment language",                 // [ "cn", "en", "jp", ... ], language code in two letter
     // other attributes
     "cfgversion":"equipent configure version",       // [ string ]
     "gpversion":"equipent group configure version"   // [ string ]
@@ -126,24 +125,24 @@ ttrue
     ```json
     // Attributes introduction of talk by the method return
     {
-        "mode":"equipment operator mode",               // < ap, wisp, nwisp, gateway, dgateway, misp, nmisp, dmisp, mix >
-                                                          // ap: access point
-                                                          // wisp: 2.4G Wireless Internet Service Provider connection
-                                                          // nwisp: 5.8G Wireless Internet Service Provider connection( need the board support 5.8G wirless baseband)
-                                                          // gateway: wire WAN gateway
-                                                          // dgateway: Dual wire WAN gateway
-                                                          // misp: LTE Mobile Internet Service Provider connection( need the board support LTE baseband)
-                                                          // nmisp: Next LTE/NR Mobile Internet Service Provider connection( need the board support LTE/NR baseband)
-                                                          // dmisp: Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
-                                                          // mix: custom mix connection from multiple internet connection
+        "mode":"equipment operator mode",              // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
+                                                         // "ap": access point
+                                                         // "wisp": 2.4G Wireless Internet Service Provider connection
+                                                         // "nwisp": 5.8G Wireless Internet Service Provider connection( need the board support 5.8G wirless baseband)
+                                                         // "gateway": wire WAN gateway
+                                                         // "dgateway": Dual wire WAN gateway
+                                                         // "misp": LTE Mobile Internet Service Provider connection( need the board support LTE baseband)
+                                                         // "nmisp": Next LTE/NR Mobile Internet Service Provider connection( need the board support LTE/NR baseband)
+                                                         // "dmisp": Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
+                                                         // "mix": custom mix connection from multiple internet connection
         "name":"equipment name",
         "platform":"equipment platform identify",
         "hardware":"equipment hardware identify",
         "custom":"equipment custom identify",
         "scope":"equipment scope identify",
         "version":"equipment version",
-        "livetime":"system running time",               // hour:minute:second:day
-        "current":"current date",                       // hour:minute:second:month:day:year
+        "livetime":"system running time",                // hour:minute:second:day
+        "current":"current date",                        // hour:minute:second:month:day:year
         "mac":"equipment MAC address",
         "macid":"equipment MAC identify or serial id",
         "model":"equipment model",
@@ -440,21 +439,21 @@ ttrue
 // 属性介绍
 {
     // 主要的属性
-    "mode":"设备工作模式",                           // < ap, wisp, nwisp, gateway, dgateway, misp, nmisp, dmisp, mix >
-                                                       // ap: 热点
-                                                       // wisp: 2.4G无线连网
-                                                       // nwisp: 5.8G无线连网
-                                                       // gateway: 有线宽带
-                                                       // dgateway: 双(WAN)有线宽带
-                                                       // misp: 4G网关
-                                                       // nmisp: 4G/5G网关
-                                                       // dmisp: 双4G/5G网关
-                                                       // mix: 可自定义的混合连网
+    "mode":"设备工作模式",                           // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
+                                                       // "ap": 热点
+                                                       // "wisp": 2.4G无线连网
+                                                       // "nwisp": 5.8G无线连网
+                                                       // "gateway": 有线宽带
+                                                       // "dgateway": 双(WAN)有线宽带
+                                                       // "misp": 4G网关
+                                                       // "nmisp": 4G/5G网关
+                                                       // "dmisp": 双4G/5G网关
+                                                       // "mix": 可自定义的混合连网
                                                      
     "name":"设备名称",                              // <字符串>
     "mac":"设备MAC地址",                            // <MAC地址>
     "macid":"设备序列号",                           // <字符串>
-    "language":"设备语言",                          // [ cn, en, jp, ... ], 两个小写字母表示的国家代号
+    "language":"设备语言",                          // [ "cn", "en", "jp", ... ], 两个小写字母表示的国家代号
     // 其它属性
     "cfgversion":"设备配置版本",                     // [ 字符串 ]
     "gpversion":"设备组配置版本",                    // [ 字符串 ]    

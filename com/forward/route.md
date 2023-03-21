@@ -1,121 +1,116 @@
 ***
-## 静态路由组件（forward@route） 
-管理系统静态路由表
+## Route table management
+Management of routes table
 
-#### **配置** 
+#### Configuration( forward@route )
 ```json
-// 属性介绍
+// Attributes introduction 
 {
-    "规则名":             // 路由规则名, 可随意命名, 但必须在此文件中唯一
+    "rule name":        // [ string ], user can custom the rule name
     {
-        "target":"目标网络地址",   // IP地址
-        "mask":"目标网络地址掩码", // 子网掩码
-        "gw":"网关地址",           // 即下一跳地址
-        "metric":"指定跳数",       // 可选
-        "ifname":"出口接口",       // 可选, 如ifname@wan
+        "target":"select the packet use source ip address",            // [ ip address, network ]
+        "mask":"select the packet use source mask of ip address",      // [ netmask ], necessary when "target" be network
+        "gw":"gateway ip address",                                     // [ ip address ]
+        "metric":"route hop",                                          // [ number ]
+        "ifname":"select the packet output interface",                 // [ "ifname@lan", "ifname@lan2", "ifname@wan", "ifname@lte", ... ], interface name
     }
-    // ...               // 更多其它规则
+    // ... more rule
 }
-
-// 示例
+```
+Examples, show current all of route rule
+```shell
+forward@route
 {
-    "myCustomRoute1":    // 第一条规则
-    {
-        "target":"192.168.0.0",  // 目标网络地址为192.168.0.0
-        "mask":"255.255.255.0",  // 目标网络地址掩码为255.255.255.0
-        "gw":"192.168.8.2",      // 下一跳地址为192.168.8.2
-        "metric":"2",            // 指定跳数
-        "ifname":"ifname@wan",   // 出口接口为ifname@wan
+    "myCustomRule1":    # first rule name is "myCustomRule1"
+    {                      # make dest 192.168.1.0/255.255.255.0 to ifname@wan's 192.168.8.22, mark the metric be 2
+        "target":"192.168.1.0",
+        "mask":"255.255.255.0",
+        "gw":"192.168.8.22",
+        "metric":"2",
+        "ifname":"ifname@wan"
     }
-    "youCustomRoute":    // 第二条规则
-    {
-        "gw":"192.168.8.2",      // 网关地址为192.168.8.2
-        "ifname":"ifname@lan",   // 出口接口为ifname@lan
+    "youCustomRule":    # second rule name is "youCustomRule"
+    {                      # make all access to ifname@lan's 192.168.9.22
+        "gw":"192.168.9.22",
+        "ifname":"ifname@lan"
     }
 }
 ```  
 
 
-#### **接口** 
+#### **Methods**
 
-+ `add[ 规则名, 目标网络地址, 掩码, 网关地址, 网络接口名, 跳数 ]` 添加路由规则
-
->*以上参数中：规则名、目标网络地址、掩码不能为空, 其它参数可为空*   
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `delete[ 规则名, [目标网络地址], [掩码], [网关地址], [网络接口名], [跳数] ]` 删除路由规则
-
->*当删除指定的规则名对应的路由规格时只需给出规则名即可*   
-
->*当删除指定的路由规则时则必须给出对应的目标网络地址及掩码*   
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `status` 查看当前路由表
-
->*调用失败时返回NULL, 调用成功返回如下JSON：*
-
-```json
-        // 属性介绍
++ `status[]` **get the current route rule**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "rule name":        // [ string ], user custom the rule name, the system rule start with "~"
         {
-            "规则名":             // 用户添加的规则
-            {
-                "target":"目标网络地址",   // IP地址
-                "mask":"目标网络地址掩码", // 子网掩码
-                "gw":"网关地址",           // 即下一跳地址
-                "metric":"指定跳数",       // 可选
-                "ifname":"出口接口",       // 可选, 如ifname@wan
-                "device":"网络接口",
-                "flags":"标识",
-                "metric":"跳数",
-                "ref":"关系数",
-                "use":"使用数",
-                "status":"状态"            // 路由规则的状态, up为启动, down或其它为未启用
-            },
-            "~开头的规则名":   // 系统规则, 由系统自动产生的, 系统自动产生的规格名以~开头
-            {
-                "target":"127.0.0.1",     // 目标网络地址或IP地址
-                "mask":"255.255.255.0",   // 目标网络地址掩码
-                "gw":"",                  // 网关地址, 即下一跳地址
-                "ifnameid":"",            // 路由规则的接口
-                "device":"lo",            // 路由规则的接口设备
-                "flags":"",               // 标识
-                "metric":"",              // 跳数
-                "ref":"",                 // 关系数
-                "use":""                  // 使用数
-                "status":"状态"           // 路由规则的状态
-            }
-            // 更多规则...
+            "target":"select the packet use source ip address",            // [ ip address, network ]
+            "mask":"select the packet use source mask of ip address",      // [ netmask ], necessary when "target" be network
+            "gw":"gateway ip address",                                     // [ ip address ]
+            "metric":"route hop",                                          // [ number ]
+            "ifname":"select the packet output interface",                 // [ "ifname@lan", "ifname@lan2", ... ], interface name
+            "netdev":"network device",                                     // [ string ]
+            "flags":"rule flags",                                          // [ string ]
+            "metric":"route hop",                                          // [ number ]
+            "ref":"reference number",                                      // [ nubmer ]
+            "use":"use number",                                            // [ number ]
+            "status":"rule state"                                          // [ "up", "down" ], "up" for enable, "down" for disable
         }
-        // 示例
+        // ... more rule
+    }
+    ```
+    ```shell
+    # examples, get the current route rule
+    forward@route
+    {
+        "myCustomRoute1":             // this is user add rule named "myCustomRoute1"
         {
-            "myCustomRoute1":             // 用户添加的规则
-            {
-                "target":"192.168.0.0",  // 目标网络地址为192.168.0.0
-                "mask":"255.255.255.0",  // 目标网络地址掩码为255.255.255.0
-                "gw":"192.168.8.2",      // 下一跳地址为192.168.8.2
-                "metric":"2",            // 指定跳数
-                "ifname":"ifname@wan",   // 出口接口为ifname@wan
-                "device":"eth0.2",
-                "flags":"1",
-                "metric":"2",
-                "ref":"0",
-                "use":"0",
-                "status":"up"            // 路由规则已启用
-            },
-            "~auto1":   // 系统规则
-            {
-                "target":"127.0.0.1",
-                "mask":"255.255.255.0",
-                "gw":"0.0.0.0",
-                "device":"lo",
-                "flags":"1",
-                "metric":"0",
-                "ref":"0",
-                "use":"0",
-                "status":"up"            // 路由规则已启用
-            }
+            "target":"192.168.0.0",
+            "mask":"255.255.255.0",
+            "gw":"192.168.8.2",
+            "metric":"2",
+            "ifname":"ifname@wan",
+            "device":"eth0.2",
+            "flags":"1",
+            "metric":"2",
+            "ref":"0",
+            "use":"0",
+            "status":"up"
+        },
+        "~auto1":                    // this is system rule
+        {
+            "target":"127.0.0.1",
+            "mask":"255.255.255.0",
+            "gw":"0.0.0.0",
+            "device":"lo",
+            "flags":"1",
+            "metric":"0",
+            "ref":"0",
+            "use":"0",
+            "status":"up"
         }
-```
+    }
+    ```
+
++ `add[ name, [target], [mask], [gateway], [ifname], [metric] ]` **add route rule**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, add a rule named office1, make that address 192.168.2.12 route to ifname@lan's 192.168.9.40
+    forward@route.add[ office1, 192.168.2.12, 255.255.255.0, 192.168.9.40, ifname@lan, ]
+    ttrue
+    # examples, add a rule named office2, make that all ddress route to ifname@lan's 192.168.9.41
+    forward@route.add[ office2, , , 192.168.9.41, ifname@lan, ]
+    ttrue
+    ```
+
++ `delete[ name ]` **delete route rule**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, delete the custom route named office2
+    forward@route.delete[ office2 ]
+    ttrue
+    # examples, delete the custom route named office1
+    forward@route.delete[ office1 ]
+    ttrue
+    ```
 

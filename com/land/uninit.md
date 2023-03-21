@@ -26,7 +26,7 @@ There are multiple shutdown levels at shutdown process, each of which can regist
 ```json
 // Attributes introduction 
 {
-    "shutdown item name":                             // [ string ]
+    "shutdown item name":                             // [ string ], you can custom the name
     {
         "level":"shutdown levels",                      // [ string ]
         "call":"specify component or program"           // [ string ]

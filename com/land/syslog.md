@@ -9,37 +9,37 @@ Management syslog
 ```json
 // Attributes introduction 
 {
-    "status":"syslog status",          // [ disable, enable, tui, file, both]
-                                            // enable for syslog
-                                            // disable for no log
-                                            // tui for output to terminal
-                                            // both for output to terminal and syslog
-                                            // file for output to file
-    "trace":"record code information", // [ disable, enable ]
-    "level":"log level",               // [ verbose, debug, info, warn, fault ]
-                                            // verbose for debug business data 
-                                            // debug for debug code
-                                            // info for normal infomation
-                                            // warn for warnningr infomation
-                                            // fault for error infomation
-    "type":"Type of logs",             // [ default, land, arch, joint, service, gather, network, modem ]
-                                            // default for default type, to which all logs of unspecified type are classified
-                                            // land for skinos frame log
-                                            // arch for skinos arch project log
-                                            // joint for joint event log
-                                            // service for service log
-                                            // gather for remote control log
-                                            // network for network frame log
-                                            // modem for lte/nr log
+    "status":"syslog status",          // [ "disable", "enable", "tui", "file", "both" ]
+                                            // "enable" for syslog
+                                            // "disable" for no log
+                                            // "tui" for output to terminal
+                                            // "both" for output to terminal and syslog
+                                            // "file" for output to file
+    "trace":"record code information", // [ "disable", "enable" ]
+    "level":"log level",               // [ "verbose", "debug", "info", "warn", "fault" ]
+                                            // "verbose for debug business data 
+                                            // "debug for debug code
+                                            // "info for normal infomation
+                                            // "warn for warnningr infomation
+                                            // "fault for error infomation
+    "type":"Type of logs",             // [ "default", "land", "arch", "joint", "service", "gather", "network", "modem" ]
+                                            // "default" for default type, to which all logs of unspecified type are classified
+                                            // "land" for skinos frame log
+                                            // "arch" for skinos arch project log
+                                            // "joint" for joint event log
+                                            // "service" for service log
+                                            // "gather" for remote control log
+                                            // "network" for network frame log
+                                            // "modem" for lte/nr log
                                             // Separate multiple options with ;
 
-    "klog":"kernel log status",         // [ disable, enable ]
+    "klog":"kernel log status",         // [ "disable", "enable" ]
     "size":"log size",                  // [ number ], The unit is kbyte. logs will be overwritten when they exceed the size of the recording pool
-    "location":"location of logs",      // [ memory, interval, storage, sda ]
-                                            // memory for stored in the memory and will be lost upon restart
-                                            // int for stored in the internal flash. Strong columns are not recommended in the internal program area, which may cause corruption  
-                                            // storage for stored in external storage
-                                            // sda for sda starts with a specified mount disk
+    "location":"location of logs",      // [ "memory", "interval", "storage", "sda" ]
+                                            // "memory" for stored in the memory and will be lost upon restart
+                                            // "int" for stored in the internal flash. Strong columns are not recommended in the internal program area, which may cause corruption  
+                                            // "storage" for stored in external storage
+                                            // "sda" for sda starts with a specified mount disk
                                             // stored in xxxx-syslog.txt file in the root directory when "location" is internal, storage, starts with sda
 
     "remote":"Remote Log server",     // [ string ], If this parameter is left blank, the remote log server is disabled
@@ -131,37 +131,37 @@ Management syslog
 ```json
 // 属性介绍
 {
-    "status":"日志的状态",         // [ disable, enable, tui, file, both ]
-                                        // enable为启用
-                                        // disable或其它为禁用
-                                        // tui为终端打印
-                                        // both为同时开启syslog及终端打印
-                                        // file为输出到一个指定的文件, 此状态下location应为一个路径
-    "trace":"是否记录代码信息",    // [ disable, enable ]
-    "level":"日志级别",            // [ info, debug, verbose, warn, fault ]
-                                        // ault为错误
-                                        // warn为警告
-                                        // info为通知
-                                        // debug为调试
-                                        // verbose为详细
-    "type":"记录的日志的类型",     // [ default, land, arch, joint, service, gather, network, modem ]
-                                        // default为默认类型, 所有未指定类型的日志都归类于此类
-                                        // land为skinos核心日志
-                                        // arch为skinos硬件架构日志
-                                        // service为服务相关的日志
-                                        // joint为事件相关的日志
-                                        // gather为远程管理相关的日志
-                                        // network为网络相关的日志
-                                        // modem为LTE/NR模块相关的日志
+    "status":"日志的状态",         // [ "disable", "enable", "tui", "file", "both" ]
+                                        // "enable"为启用
+                                        // "disable"或其它为禁用
+                                        // "tui"为终端打印
+                                        // "both"为同时开启syslog及终端打印
+                                        // "file"为输出到一个指定的文件, 此状态下location应为一个路径
+    "trace":"是否记录代码信息",    // [ "disable", "enable" ]
+    "level":"日志级别",            // [ "info", "debug", "verbose", "warn", "fault" ]
+                                        // "fault"为错误
+                                        // "warn"为警告
+                                        // "info"为通知
+                                        // "debug"为调试
+                                        // "verbose"为详细
+    "type":"记录的日志的类型",     // [ "default", "land", "arch", "joint", "service", "gather", "network", "modem" ]
+                                        // "default"为默认类型, 所有未指定类型的日志都归类于此类
+                                        // "land"为skinos核心日志
+                                        // "arch"为skinos硬件架构日志
+                                        // "service"为服务相关的日志
+                                        // "joint"为事件相关的日志
+                                        // "gather"为远程管理相关的日志
+                                        // "network"为网络相关的日志
+                                        // "modem"为LTE/NR模块相关的日志
                                         // 此处支持多选, 多个类型间以;号分隔即可
-    "klog":"klog的状态",           // [ disable, enable ]
+    "klog":"klog的状态",           // [ "disable", "enable" ]
     "size":"记录池大小",           // [ number ], k为单位, 超过记录池的大小后日志会被覆盖
-    "location":"记录日志的位置",   // [ memory, interval, storage, sda ]
-                                        // memory为记录在内存中, 重启即丢失
-                                        // int为记录在内部程序区, 强列不建议存于内部程序区, 可能导致内部程序区损坏
-                                        // storage为外部存储区
-                                        // sda开头则表示指定的某个挂载盘
-                                        // 当为internal或storage或sda的挂载盘时, 会在根目录下以xxxx-syslog.txt文件中记录日志
+    "location":"记录日志的位置",   // [ "memory", "interval", "storage", "sda" ]
+                                        // "memory"为记录在内存中, 重启即丢失
+                                        // "int"为记录在内部程序区, 强列不建议存于内部程序区, 可能导致内部程序区损坏
+                                        // "storage"为外部存储区
+                                        // "sda"开头则表示指定的某个挂载盘
+                                        // 当为"internal"或"storage"或"sda"的挂载盘时, 会在根目录下以xxxx-syslog.txt文件中记录日志
     "remote":"远程日志服务器",     // [ string ], 空表示不开启远程日志服务器
     "port":"远程日志端口"          // [ number], 默认为514
 }

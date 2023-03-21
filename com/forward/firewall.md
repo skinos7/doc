@@ -22,7 +22,7 @@ Management of firewall to control access from extern inteface( internet )
 
         "rule":                              // firewall rule settings
         {
-            "rule name":                                   // [ string ]:{}
+            "rule name":                                   // [ string ], user can custom the rule name
             {
                 "action":"drop or accept or return",                     // [ "drop", "accept", "return" ], "drop" for forbid, "accept" for pass, "return" for don't match it with after rule
                 "src":"source address",                                  // [ string ]:

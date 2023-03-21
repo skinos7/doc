@@ -12,17 +12,20 @@ The network framework defines a three-tier concept to manage network interfaces:
 ```json
 // Attribute introduction
 {
-    "mode":"network opeartion mode",         // [ default, gateway, wisp, misp, nmisp, dmsip, mix ]
-                                                // defualt is same the ap/bridge/repeator mode
-                                                // wisp is wireless connect to internet
-                                                // misp is LTE connect to internet
-                                                // nmisp is NR/LTE connect to internet
-                                                // dmisp is LTE and NR/LTE connect to internet
-                                                // mix is multiple-connect to internet
-
+    "mode":"equipment operator mode",                // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
+                                                       // "ap": access point
+                                                       // "wisp": 2.4G Wireless Internet Service Provider connection
+                                                       // "nwisp": 5.8G Wireless Internet Service Provider connection( need the board support 5.8G wirless baseband)
+                                                       // "gateway": wire WAN gateway
+                                                       // "dgateway": Dual wire WAN gateway
+                                                       // "misp": LTE Mobile Internet Service Provider connection( need the board support LTE baseband)
+                                                       // "nmisp": Next LTE/NR Mobile Internet Service Provider connection( need the board support LTE/NR baseband)
+                                                       // "dmisp": Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
+                                                       // "mix": custom mix connection from multiple internet connection
+    
     "local":                            // local connections list
     {
-        "ifname object":                        // [ string ]
+        "ifname object":                        // [ "ifname@lan", "ifname@lan2", ... ]
         {
             "concom":"connection component",        // [ string ]
             "ifdev":"ifdev object"                  // [ string ]
@@ -31,7 +34,7 @@ The network framework defines a three-tier concept to manage network interfaces:
     },
     "extern":                            // external connections list
     {
-        "ifname object":                        // [ string ]
+        "ifname object":                        // [ "ifname@wan", "ifname@wan2", "ifname@lte", "ifname@lte2", "ifname@wisp", "ifname@wisp2", ... ]
         {
             "concom":"connection component",       // [ string ]
             "ifdev":"ifdev object"                 // [ string ]
@@ -42,13 +45,20 @@ The network framework defines a three-tier concept to manage network interfaces:
     // This configuration is available only in the case of multiple external connections. It indicates how external connections cooperate when multiple external connections coexist
     "connect":
     {
-        "type":"Multiple link connect type",                          // [ hot, dhdc ], hot for backup, dhdc for load balancing 
+        "type":"Multiple link connect type",                          // [ "hot", "dhdc" ], "hot" for backup, "dhdc" for load balancing 
         "concom":"Multiple link connection management components",    // [ string ], You can customize the data scheduling component to implement more personalized requirements
 
-        "main":"ifname object of extern",          // [ string ], When type is hot, it is the main connection. When type is dbdc, it is one of the external network connections 
-        "back":"ifname object of extern",          // [ string ], When type is hot, it is the backup connection. When type is dbdc, it is one of the external network connections 
-        "king":"ifname object of extern",          // [ string ], When type is hot, the value is ignored. If the type is dbdc, all the default route data is forwarded by the connection as soon as the connection goes online
-        "reserve":"ifname object of extern",       // [ string ], When type is hot, the value is ignored. If the type is dbdc, the connections only connect but on route data via it
+        // When type is hot, it is the main connection. When type is dbdc, it is one of the external network connections 
+        "main":"ifname object of extern",          // [ "ifname@wan", "ifname@wan2", "ifname@lte", "ifname@lte2", "ifname@wisp", "ifname@wisp2", ... ] 
+
+        // When type is hot, it is the backup connection. When type is dbdc, it is one of the external network connections 
+        "back":"ifname object of extern",          // [ "ifname@wan", "ifname@wan2", "ifname@lte", "ifname@lte2", "ifname@wisp", "ifname@wisp2", ... ]
+
+        // When type is hot, the value is ignored. If the type is dbdc, all the default route data is forwarded by the connection as soon as the connection goes online
+        "king":"ifname object of extern",          // [ "ifname@wan", "ifname@wan2", "ifname@lte", "ifname@lte2", "ifname@wisp", "ifname@wisp2", ... ]
+
+        // When type is hot, the value is ignored. If the type is dbdc, the connections only connect but on route data via it
+        "reserve":"ifname object of extern",       // [ "ifname@wan", "ifname@wan2", "ifname@lte", "ifname@lte2", "ifname@wisp", "ifname@wisp2", ... ]
 
         // Configure parameters of the delay switchover function, only in dbdc mode, the function can control the data via low delay connection
         "delay_count":"Statistical delay times of last",   // [ number ]

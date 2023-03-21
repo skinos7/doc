@@ -11,24 +11,24 @@ Management LTE modem
 // Attributes introduction 
 {
     // lock attributes
-    "lock_imei":"lock imei",                   // [ disable, enable, IMEI ], enable: The IMEI detected for the first time will be locked
-    "lock_imsi":"lock imsi",                   // [ disable, enable, IMEI ], enable will lock current imei
+    "lock_imei":"lock imei",                   // [ "disable", "enable", IMEI ], enable: The IMEI detected for the first time will be locked
+    "lock_imsi":"lock imsi",                   // [ "disable", "enable", IMEI ], enable will lock current imei
     "lock_pin":"simcard pin",                  // [ string ]
-    "lock_nettype":"network type",             // [ 2g, 3g, 4g, nsa, sa ]
+    "lock_nettype":"network type",             // [ "2g", "3g", "4g", "nsa", "sa" ]
     "lock_band":"lock band",                   // The format varies depending on the module
     "lock_cell":"lock cell",                   // The format varies depending on the module
-    "gnss":"gps function",                     // [ disable, enable ]
+    "gnss":"gps function",                     // [ "disable", "enable" ]
 
     // simcard dial attributes
-    "need_simcard":"SIMcard must be detected",                                                 // [ enable, disable ]
+    "need_simcard":"SIMcard must be detected",                                                 // [ "enable", "disable" ]
     "simcard_failed_threshold":"first failed to reset time",                                   // [ number ]
     "simcard_failed_threshold2":"second failed to reset time",                                 // [ number ]
     "simcard_failed_threshold3":"third failed to reset time",                                  // [ number ]
     "simcard_failed_everytime":"every failed to reset time",                                   // [ number ]
     
     // signal dial attributes
-    "need_plmn":"must register to plmn",                                                       // [ enable, disable ]
-    "need_signal":"Signal must be effectivity",                                                // [ enable, disable ]
+    "need_plmn":"must register to plmn",                                                       // [ "enable", "disable" ]
+    "need_signal":"Signal must be effectivity",                                                // [ "enable", "disable" ]
     "signal_failed_threshold":"first failed to reset time",                                    // [ number ]
     "signal_failed_threshold2":"second failed to reset time",                                  // [ number ]
     "signal_failed_threshold3":"third failed to reset time",                                   // [ number ]
@@ -38,22 +38,22 @@ Management LTE modem
     "watch_interval":"How often do query the modem",  // [ number ], the unit in second
 
     // profile attributes
-    "profile":"custom the profile",            // [ disable, enable ]
+    "profile":"custom the profile",            // [ "disable", "enable" ]
     "profile_cfg":                             // custom profile save here, the json be used when "profile" value is enable
     {
         "dial":"dial number",                     // [ number ]
         "cid":"dial CID",                         // [ number ], default is 1
-        "type":"ip address type",                 // [ ipv4, ipv6, ipv4v6 ]
-        "auth":"authentication method",           // [ pap, chap, papchap ]
+        "type":"ip address type",                 // [ "ipv4", "ipv6", "ipv4v6" ]
+        "auth":"authentication method",           // [ "pap", "chap", "papchap" ]
         "apn":"APN name",                         // [ string ]
         "user":"user name",                       // [ string ]
         "passwd":"user password",                 // [ string ]
-        "cids":"multi CID settings",              // [ disable, enable], enable for set multi-CID for modem
+        "cids":"multi CID settings",              // [ "disable", "enable" ], "enable" for set multi-CID for modem
         "cids_cfg":                               // settings of multi-CID save here, the json be used when "cids" value is enable
         {
             "CID number":                                 // [ number ]
             {
-                "type":"ip address type",                 // [ ipv4, ipv6, ipv4v6 ]
+                "type":"ip address type",                 // [ "ipv4", "ipv6", "ipv4v6" ]
                 "apn":"APN name",                         // [ string ]
                 "user":"user name",                       // [ string ]
                 "passwd":"user password",                 // [ string ]
@@ -63,38 +63,38 @@ Management LTE modem
     },
 
     // backup simcard configure
-    "bsim":"backup simcard function",                         // [ disable, enable ]
+    "bsim":"backup simcard function",                         // [ "disable", "enable" ]
     "bsim_cfg":                                               // settings of backup simcard save here, the json be used when "bsim" value is enable
     {
-        "mode":"Specify the simcard",                                                    // [ auto, bsim, msim ], bsim for backup simcard, msim for main simcard
+        "mode":"Specify the simcard",                                                    // [ "auto", "bsim", "msim" ], "bsim" for backup simcard, "msim" for main simcard
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
         "failover":"backup simcard usage duration",                                      // [ number ], the unit is second
 
         // backup simcard lock attributes
-        "lock_imei":"lock imei",                   // [ disable, enable, IMEI ], enable: The IMEI detected for the first time will be locked
-        "lock_imsi":"lock imsi",                   // [ disable, enable, IMEI ], enable will lock current imei
+        "lock_imei":"lock imei",                   // [ "disable", "enable", IMEI ], "enable": The IMEI detected for the first time will be locked
+        "lock_imsi":"lock imsi",                   // [ "disable", "enable", IMEI ], enable will lock current imei
         "lock_pin":"simcard pin",                  // [ string ]
-        "lock_netmode":"network type",             // [ 2g, 3g, 4g, nsa, sa ]
+        "lock_netmode":"network type",             // [ "2g", "3g", "4g", "nsa", "sa" ]
         "lock_band":"lock band",                   // The format varies depending on the module
         "lock_cell":"lock cell",                   // The format varies depending on the module
 
         // backup profile attributes
-        "profile":"custom the profile",            // [ disable, enable ]
+        "profile":"custom the profile",            // [ "disable", "enable" ]
         "profile_cfg":                             // custom profile save here, the json be used when "profile" value is enable
         {
             "dial":"dial number",                     // [ number ]
             "cid":"dial CID",                         // [ number ], default is 1
-            "type":"ip address type",                 // [ ipv4, ipv6, ipv4v6 ]
+            "type":"ip address type",                 // [ "ipv4", "ipv6", "ipv4v6" ]
             "apn":"APN name",                         // [ string ]
             "user":"user name",                       // [ string ]
             "passwd":"user password",                 // [ string ]
-            "cids":"multi CID settings",              // [ disable, enable], enable for set multi-CID for modem
+            "cids":"multi CID settings",              // [ "disable", "enable" ], enable for set multi-CID for modem
             "cids_cfg":                                   // settings of multi-CID save here, the json be used when "cids" value is enable
             {
                 "CID number":                                 // [ number ]
                 {
-                    "type":"ip address type",                 // [ ipv4, ipv6, ipv4v6 ]
+                    "type":"ip address type",                 // [ "ipv4", "ipv6", "ipv4v6" ]
                     "apn":"APN name",                         // [ string ]
                     "user":"user name",                       // [ string ]
                     "passwd":"user password",                 // [ string ]
@@ -105,10 +105,10 @@ Management LTE modem
     },
 
     // soft backup simcard configure
-    "ssim":"soft backup simcard function",                         // [ disable, enable ]
+    "ssim":"soft backup simcard function",                         // [ "disable", "enable" ]
     "ssim_cfg":                                                    // settings of soft backup simcard save here, the json be used when "ssim" value is enable
     {
-        "mode":"Specify the operator",                                                   // [ signal, plmn ], signal for test and use the The best signal operator, 46000 for china mobile, 46001 china union, 46003 for china telecom
+        "mode":"Specify the operator",                                                   // [ "signal", "plmn" ], "signal" for test and use the The best signal operator, "46000" for china mobile, "46001" china union, "46003" for china telecom
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
     },
@@ -118,7 +118,7 @@ Management LTE modem
     "sms_cfg":
     {
         "center":"SMS center number",                             // [ number ]
-        "he":"enable or disable the he command",                  // [ disable, enable ]
+        "he":"enable or disable the he command",                  // [ "disable", "enable" ]
         "he_contact":"set a contact to send the he command",      // [ number ]
         "he_prefix":"set a prefix at the he command"              // [ string ]
     }
@@ -186,35 +186,35 @@ ttrue
     ```json
     // Attributes introduction of talk by the method return
     {
-        "state":"Current state",        // [ setup, register, ready, connecting, connected reset ]
-                                             // setup for setup the modem
-                                             // register for register the network
-                                             // ready for ready to connect to internet, hint signal/network/simcard all ok
-                                             // connecting for connect to the internet
-                                             // connected for connect internet succeed
-                                             // reset for reset the modem
+        "state":"Current state",        // [ "setup", "register", "ready", "connecting", "connected", "reset" ]
+                                             // "setup" for setup the modem
+                                             // "register" for register the network
+                                             // "ready" for ready to connect to internet, hint signal/network/simcard all ok
+                                             // "connecting" for connect to the internet
+                                             // "connected" for connect internet succeed
+                                             // "reset" for reset the modem
         "mversion":"Modem version",     // [ string ]
         "imei":"IMEI numer",            // [ string ]
         "imsi":"IMSI number",           // [ string ]
-        "iccid":"ICCID number",         // [ number, nosim, pin, puk ]
+        "iccid":"ICCID number",         // [ number, "nosim", "pin", "puk" ]
                                                 // number for iccid
-                                                // nosim for cannot found the simcard
-                                                // pin for the simcard need PIN code
-                                                // puk for the simcard pin error
+                                                // "nosim" for cannot found the simcard
+                                                // "pin" for the simcard need PIN code
+                                                // "puk" for the simcard pin error
 
-        "plmn":"MCC and MNC",           // [ number, noreg, dereg ]
+        "plmn":"MCC and MNC",           // [ number, "noreg", "dereg" ]
                                                 // number for MCC and MNC
-                                                // noreg for cannot register to opeartor
-                                                // unreg for cannot register to opeartor
-                                                // dereg for register to operator be refused
-        "netera":"technology Generation",// [ 2G, 3G, 4G, 5G ], Optional
+                                                // "noreg" for cannot register to opeartor
+                                                // "unreg" for cannot register to opeartor
+                                                // "dereg" for register to operator be refused
+        "netera":"technology Generation",// [ "2G", "3G", "4G", "5G" ], Optional
         "nettype":"network type",        // The format varies depending on the module
                                          // 2G usually shows GSM, GPRS, EDGE, CDMA
                                          // 3G usually shows WCDMA, EVDO, TDSCDMA, HSPA, HSDPA, HSUPA
                                          // 4G usually shows LTE, FDD, TDD
 
         
-        "signal":"signal level",         // [ 0, 1, 2, 3 4 ], 0 for no signal, 1 for weakest signal , 4 for strongest signal
+        "signal":"signal level",         // [ "0", "1", "2", "3", "4" ], "0" for no signal, "1" for weakest signal , "4" for strongest signal
         "csq":"CSQ number",              // [ number ]
         "rssi":"signal intensity",       // [ number ], the unit is dBm
         "rsrp":"RSRP value",             // Optional, The format varies depending on the module
@@ -229,7 +229,7 @@ ttrue
             "name":"operator name",               
             "dial":"dial number",                     // [ number ]
             "cid":"dial CID",                         // [ number ], default is 1
-            "type":"ip address type",                 // [ ipv4, ipv6, ipv4v6 ]
+            "type":"ip address type",                 // [ "ipv4", "ipv6", "ipv4v6" ]
             "apn":"APN name",                         // [ string ]
             "user":"user name",                       // [ string ]
             "passwd":"user password"                  // [ string ]

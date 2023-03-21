@@ -8,7 +8,7 @@ Manage GNSS, nmea data can from UART, LTE
 // Attribute introduction
 {
     // UART configure
-    "status":"GNSS status",                                      // [ "enable", "disable" ]
+    "status":"GNSS status",         // [ "enable", "disable" ]
 
     // Client configure
     "client":                       // MQTT client example
@@ -75,8 +75,8 @@ Manage GNSS, nmea data can from UART, LTE
     {
         "step":"step of location",                  // [ "setup", "search", "located" ]
         "utc":"UTC date",                           // [ string ], format is hour:minute:second:month:day:year
-        "lon":"longitude",                          // [ float ]
-        "lat":"latitude",                           // [ float ]
+        "lon":"longitude",                          // [ float ], nmea format
+        "lat":"latitude",                           // [ float ], nmea format
         "longitude":"longitude",                    // [ float ]
         "latitude":"latitude",                      // [ float ]
         "speed":"speed",                            // [ float ]
@@ -85,7 +85,7 @@ Manage GNSS, nmea data can from UART, LTE
         "elv":"Either altitude height",             // [ float ], the unit is meter
         "inview":"Number of visible satellites",    // [ number ]
         "inuse":"Number of satellites in use"       // [ nubmer ]     
-    }    
+    }
     ```
     ```shell
     # examples, get the current date
@@ -95,11 +95,14 @@ Manage GNSS, nmea data can from UART, LTE
         "utc":"7:55:22:7:12:2021",                  # UTC
         "lon":"11356.56400",
         "lat":"2240.80119",
+        "longitude":"113.94273",                    # longitude is 113.94
+        "latitude":"22.68001",                      # latitude is 22.68
         "speed":"0.34",
         "elv":"77.90",
         "direction":"",
         "declination":"",
-    }  
+        "inuse":"8"                                 # 8 sat in use
+    }
     ```
 
 + `status[]` **get the nmea service status**, *succeed return talk to describes, failed return NULL, error return terror*

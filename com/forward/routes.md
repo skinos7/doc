@@ -1,66 +1,117 @@
 ***
-## 自定义路由表组件（forward@routes） 
-管理自定义路由表
+## Custom routes table management
+Management of custom routes table
 
-#### **配置** 
+#### Configuration( forward@routes )
 ```json
-// 属性介绍
+// Attributes introduction 
 {
-    "规则名":             // 路由规则名, 可随意命名, 但必须在此文件中唯一
+    "rule name":        // [ string ], user can custom the rule name
     {
-        "tid":"路由表ID",          // 为0到255, 0为local表, 253为default表, 254为main表, 255为local表, 100以内保留给系统使用, 自定义规则建议使用100以上(并避开253,254,255)
+        "tid":"which route table to go to",                            // [ number ], range of 0-255
+                                                                                // 0 for local table
+                                                                                // 253 for default table
+                                                                                // 254 for main table
+                                                                                // 255 for local table
+                                                                                // Less than 100 is reserved for the system
+                                                                                // You are advised to use more than 100 for user-defined rules(And avoid 253,254,255)
 
-        "target":"目标网络地址",   // IP地址
-        "mask":"目标网络地址掩码", // 子网掩码
-        "gw":"网关地址",           // 即下一跳地址
-        "metric":"指定跳数",       // 可选
-        "ifname":"出口接口",       // 可选, 如ifname@wan
+        "target":"select the packet use source ip address",            // [ ip address, network ]
+        "mask":"select the packet use source mask of ip address",      // [ netmask ], necessary when "target" be network
+        "gw":"gateway ip address",                                     // [ ip address ]
+        "metric":"route hop",                                          // [ number ]
+        "ifname":"select the packet output interface",                 // [ "ifname@lan", "ifname@lan2", ... ], interface name
     }
-    // ...               // 更多其它规则
+    // ... more rule
 }
-
-// 示例
+```
+Examples, show current all of custom routes rule
+```shell
+forward@routes
 {
-    "myCustomRule1":    // 第一条规则
-    {
-        "tid":"101",             // 路由表ID为101
-        "target":"192.168.0.0",  // 目标网络地址为192.168.0.0
-        "mask":"255.255.255.0",  // 目标网络地址掩码为255.255.255.0
-        "gw":"192.168.8.2",      // 下一跳地址为192.168.8.2
-        "metric":"2",            // 指定跳数
-        "ifname":"ifname@wan",   // 出口接口为ifname@wan
+    "myCustomRule1":    # first rule name is "myCustomRule1"
+    {                      # add the route rule to tid 101, make dest 192.168.0.0/255.255.255.0 to ifname@wan's 192.168.8.2, mark the metric be 2
+        "tid":"101",
+        "target":"192.168.0.0",
+        "mask":"255.255.255.0",
+        "gw":"192.168.8.2",
+        "metric":"2",
+        "ifname":"ifname@wan"
     }
-    "youCustomRule":    // 第二条规则
-    {
-        "tid":"101",             // 路由表ID
-        "gw":"192.168.8.2",      // 网关地址为192.168.8.2
-        "ifname":"ifname@lan",   // 出口接口为ifname@lan
+    "youCustomRule":    # second rule name is "youCustomRule"
+    {                      # add the route rule to tid 102, make all access to ifname@lan's 192.168.9.2
+        "tid":"102",
+        "gw":"192.168.9.2",
+        "ifname":"ifname@lan"
     }
 }
 ```  
 
 
-#### **接口** 
+#### **Methods**
 
-+ `add[ 规则名, 路由表ID, 目标网络地址, 掩码, [网关地址], [网络接口名], [跳数] ]` 添加路由规则
-
->*以上参数中：规则名、目标网络地址、掩码不能为空, 其它参数可为空*   
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `delete[ 规则名 ]` 删除路由规则
-
->*当删除指定的规则名对应的路由规则时只需给出规则名即可*   
-
->*成功返回ttrue, 失败返回tfalse*
-
-+ `status` 查看自定义路由表
-
->*调用失败时返回NULL, 调用成功返回如下JSON：*
-
-```json
++ `status[]` **get the current custom routes rule**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "rule name":        // [ string ], user custom the rule name
         {
-            暂时与配置相同
+            "tid":"which route table to go to",                            // [ number ], range of 0-255
+                                                                                    // 0 for local table
+                                                                                    // 253 for default table
+                                                                                    // 254 for main table
+                                                                                    // 255 for local table
+                                                                                    // Less than 100 is reserved for the system
+                                                                                    // You are advised to use more than 100 for user-defined rules(And avoid 253,254,255)
+    
+            "target":"select the packet use source ip address",            // [ ip address, network ]
+            "mask":"select the packet use source mask of ip address",      // [ netmask ], necessary when "target" be network
+            "gw":"gateway ip address",                                     // [ ip address ]
+            "metric":"route hop",                                          // [ number ]
+            "ifname":"select the packet output interface",                 // [ "ifname@lan", "ifname@lan2", ... ], interface name
         }
-```
+        // ... more rule
+    }
+    ```
+    ```shell
+    # examples, get the current custom routes rule
+    forward@routes
+    {
+        "myCustomRule1":    # first rule name is "myCustomRule1"
+        {                      # add the route rule to tid 101, make dest 192.168.0.0/255.255.255.0 to ifname@wan's 192.168.8.2, mark the metric be 2
+            "tid":"101",
+            "target":"192.168.0.0",
+            "mask":"255.255.255.0",
+            "gw":"192.168.8.2",
+            "metric":"2",
+            "ifname":"ifname@wan"
+        }
+        "youCustomRule":    # second rule name is "youCustomRule"
+        {                      # add the route rule to tid 102, make all access to ifname@lan's 192.168.9.2
+            "tid":"102",
+            "gw":"192.168.9.2",
+            "ifname":"ifname@lan"
+        }
+    }
+    ```
+
++ `add[ name, tid, [target], [mask], [gateway], [ifname], [metric] ]` **add custom routes rule**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, add a rule named office1 to table 105, make that address 192.168.2.12 route to ifname@lan's 192.168.9.40
+    forward@routes.add[ office1, 105, 192.168.2.12, 255.255.255.0, 192.168.9.40, ifname@lan, ]
+    ttrue
+    # examples, add a rule named office2 to table 105, make that all ddress route to ifname@lan's 192.168.9.41
+    forward@routes.add[ office2, 105, , , 192.168.9.41, ifname@lan, ]
+    ttrue
+    ```
+
++ `delete[ name ]` **delete custom routes table rule**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, delete the custom route named office2
+    forward@routes.delete[ office2 ]
+    ttrue
+    # examples, delete the custom route named office1
+    forward@routes.delete[ office1 ]
+    ttrue
+    ```
 

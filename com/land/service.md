@@ -76,7 +76,7 @@ Administration of equipment service task
     // Attributes introduction of talk by the method return
     {
         "name":"service name",                                         // [ string ]
-        "status":"service state",                                      // [ start, reset, off, stop, unregister, finish ]
+        "status":"service state",                                      // [ "start", "reset", "off", "stop", "unregister", "finish" ]
         "delay":"delay to run",                                        // [ number ], the unit in microsecond
         "com":"component name",                                        // [ string ]
         "op":"method name",                                            // [ string ]
@@ -108,7 +108,7 @@ Administration of equipment service task
         "service name":
         {
             "name":"service name",                                         // [ string ]
-            "status":"service state",                                      // [ start, reset, off, stop, unregister, finish ]
+            "status":"service state",                                      // [ "start", "reset", "off", "stop", "unregister", "finish" ]
             "delay":"delay to run",                                        // [ number ], the unit in microsecond
             "com":"component name",                                        // [ string ]
             "op":"method name",                                            // [ string ]

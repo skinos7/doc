@@ -12,13 +12,13 @@ Manage accounts and permissions, Modifying this configuration directly is not re
 {
     "user":        //  Account list, all accounts in the system are under this node
     {
-        "account name":                  // [ string ]
+        "account name":                  // [ string ], you can custom the username
         {
             "id":"account identify",     // [ number ]
             "key":"account key",         // [ string ]
             "group":                     // List of groups to which the account belongs
             {
-                "group name":"belongs state"  // [ string ]: [ disable,enable ]
+                "group name":"belongs state"  // [ string ]: [ "disable","enable" ], "enable" for belongs, "disable" for not
                 // "...":"..."                // How many groups belongs show how many properties
             },
             "domain":                    // List of domains to which the account belongs
@@ -39,7 +39,7 @@ Manage accounts and permissions, Modifying this configuration directly is not re
             "id":"group identify",     // [ number ]
             "domain":                  // List of all domain permissions under the group
             {
-                "domain name":"enable",    // [ string ]: [ disable, enable ]
+                "domain name":"enable state"  // [ string ]: [ "disable","enable" ]
                 // "...":"..."             // How many domain show how many properties
             }
         },
@@ -196,7 +196,7 @@ Manage accounts and permissions, Modifying this configuration directly is not re
     ```json
     // Attributes introduction of talk by the method return
     {
-        "domain name":"domain state"   // [ string ]:[ disable, enable ]
+        "domain name":"domain state"   // [ string ]:[ "disable", "enable" ]
         // "...":"..."                 // How many domain show how many properties
     }    
     ```
@@ -228,7 +228,7 @@ Manage accounts and permissions, Modifying this configuration directly is not re
             "key":"密钥",         // [ 字符串 ]
             "group":         // 帐号所属组列表
             {
-                "组名":"状态",    // [ 字符串 ]:[ disable, enable], enable为使能为此组成员, 其它为禁用
+                "组名":"状态",    // [ 字符串 ]:[ "disable", "enable" ], enable为使能为此组成员, 其它为禁用
                 // "...":"..."    // 可能的更多组
             },
             "domain":        // 针对帐号中域信息专用的存放节点
@@ -249,7 +249,7 @@ Manage accounts and permissions, Modifying this configuration directly is not re
             "id":"组ID",          // [ 数字 ]
             "domain":             // 组下所有的域权限列表
             {
-                "域名":"域名状态",  // [ 字符串 ]:[ disable, enable ], enable为使能为此域成员, 其它为禁用 
+                "域名":"域名状态",  // [ 字符串 ]:[ "disable", "enable" ], enable为使能为此域成员, 其它为禁用 
                 //  "...":"..."     // 可能的更多域
             }
         },

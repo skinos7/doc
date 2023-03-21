@@ -31,16 +31,16 @@ Management of NAT to PORT map from extern inteface to local network client
     // ... more extern interface name
 }
 ```  
-Examples, enable the second LTE firewall
+Examples, show all nat settings
 ```shell
 forward@nat
 {
     "ifname@wan":
     {
-        "mode":"dnat",                        // dnat mode
+        "mode":"dnat",                        # dnat mode
         "rule":
         {
-            "rdesktop":                          // map the ifname@wan 3389 to 192.168.31.230 TCP 3389
+            "rdesktop":                       # map the ifname@wan 3389 to 192.168.31.230 TCP 3389
             {
                 "targetport":"3389",
                 "protocol":"tcp",
@@ -53,7 +53,7 @@ forward@nat
     {
         "rule":
         {
-            "ssh":
+            "ssh":                           # map the ifname@lte 22 to 192.168.31.230 22
             {
                 "targetport":"22",
                 "protocol":"tcp",
@@ -62,17 +62,18 @@ forward@nat
             },
             "devport":
             {
-                "targetport":"10101",
+                "targetport":"10101",       # map the ifname@lte 10101 to 192.168.31.230
                 "protocol":"tcp",
                 "destip":"192.168.31.230",
                 "destport":""
             }
         },
         "dmzhost":""
-    }
+    },
     "ifname@lte2":
     {
-        "dmzhost":""
+        "dmzhost":"192.168.31.250"          # map the ifname@lte2 all protocol to 192.168.31.230
     }
 }
+```
 

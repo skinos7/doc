@@ -27,7 +27,7 @@ There are multiple boot levels at boot process, each of which can register boot 
 ```json
 // Attributes introduction 
 {
-    "startup item name":                             // [ string ]
+    "startup item name":                             // [ string ], you can custom the name
     {
         "level":"boot levels",                          // [ string ]
         "call":"specify component or program"           // [ string ]
@@ -133,7 +133,7 @@ There are multiple boot levels at boot process, each of which can register boot 
 ```json
 // 属性介绍
 {
-    "启动项名称":               // [ 字符串 ], 启动项名称必须在此配置中唯一
+    "启动项名称":               // [ 字符串 ], 名称可自定义, 启动项名称必须在此配置中唯一
     {
         "level":"启动级别",     // [ 字符串 ]
         "call":"调用接口"       // [ 字符串 ]

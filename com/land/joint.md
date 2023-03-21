@@ -16,7 +16,7 @@ There are multiple joint event cast when system some happened, each of which can
 ```json
 // Attributes introduction 
 {
-    "joint item name":                             // [ string ]
+    "joint item name":                             // [ string ], you can custom the name
     {
         "joint":"joint event name",                     // [ string ]
         "call":"specify component or program"           // [ string ]

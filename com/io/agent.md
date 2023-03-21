@@ -8,23 +8,23 @@ manage IO
 ```json
 // Attributes introduction 
 {
-    // IO Initial Configuration
+    // IO Initial Configuration, set the IO state at the system boot
     "init":
     {
-        "io number":"IO state"        // [ string ]: [ string ]
-                                        // io number can be g1, g2, g3, g4, g5, g6, g7, g8, ...
-                                        // IO state can be: 10 for output low
-                                        //                  11 for output high
-                                        //                  00 for input mode
-                                        //                  2-100-200 for output timer, 100ms high, 200ms low
+        "io number":"IO state"        // [ "g1", "g2", "g3", "g4", "g5", "g6", ... ]: [ "10", "11", "00", ... ]
+                                        // io number can be "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", ...
+                                        // IO state can be: "10" for output low
+                                        //                  "11" for output high
+                                        //                  "00" for input mode
+                                        //                  "2-100-200" for output timer, 100ms high, 200ms low
         // ... more io state init
     },
 
     // IO SMS Configuration
     "sms":
     {
-        "status":"sms trigger status",          // [ disable, enable ]
-        "device":"LTE device name",             // [ modem@lte, modem@lte2, modem@lte3, ... ]
+        "status":"sms trigger status",          // [ "disable", "enable" ]
+        "device":"LTE device name",             // [ "modem@lte", "modem@lte2", "modem@lte3", ... ]
         "contact":"contact number",             // [ phone number ]
         "contact2":"contact number",            // [ phone number ]
         "contact3":"contact number"             // [ phone number ]
@@ -33,8 +33,8 @@ manage IO
     // first client, default is TCP/UDP client configure
     "client":
     {
-        "status":"client status",               // [ disable, enable ]
-        "proto":"client protocol",              // [ tcp, udp ]
+        "status":"client status",               // [ "disable", "enable" ]
+        "proto":"client protocol",              // [ "tcp", "udp" ]
         "server":"server address",              // [ string ]
         "port":"server port",                   // [ number ]
         "interval":"connect failed interval",   // [ number ], the unit is second
@@ -46,8 +46,8 @@ manage IO
     // second client, default is MQTT Client configure
     "client2":                       // MQTT client
     {
-        "status":"client status",               // [ disable, enable ]
-        "proto":"client protocol",              // [ tcp, udp, mqtt ]
+        "status":"client status",               // [ "disable", "enable" ]
+        "proto":"client protocol",              // [ "tcp", "udp", "mqtt" ]
         "server":"server address",              // [ string ]
         "port":"server port",                   // [ number ]
 
@@ -143,7 +143,7 @@ ttrue
         // first client, default is TCP/UDP client status
         "client":
         {
-            "ip":"server IP",           // [ IP address ]
+            "ip":"server IP",           // [ ip address ]
             "connect":"connect state",  // [ ok ], If the value is ok, it indicates success
             "rx":"recvice byte",        // [ number ]
             "tx":"send byte"            // [ nubmer ]
@@ -151,7 +151,7 @@ ttrue
         // second client, default is MQTT client status
         "client2":
         {
-            "ip":"server IP",           // [ IP address ]
+            "ip":"server IP",           // [ ip address ]
             "connect":"connect state",  // [ ok ], If the value is ok, it indicates success
             "rx":"recvice byte",        // [ number ]
             "tx":"send byte"            // [ nubmer ]

@@ -18,6 +18,7 @@ Management of GRE tunnel
     "localip":"gre tunnel local address",        // [ ip address ]
     "remoteip":"gre tunnel remote address",      // [ ip address ]
     "ttl":"gre tunnel ttl",                      // [ number ]
+    "mtu":"gre tunnel MTU",                      // [ number ]
 
     // route attributes
     "masq":"share interface address to access",    // [ disable, enable ]
