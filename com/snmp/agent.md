@@ -21,12 +21,12 @@ Management equipment snmp agent
     "privacy":"privacy type",                    // [ DES, AES ], the v3 must be "privacy"
     "key":"privacy password",                    // [ string ], the v3 must be "privacy"
 
-    "custom":
+    "custom":                                    // custom the oid shell in here
     {
-        "oid name":                              // [ string ]
+        "oid name":                                  // [ string ], you can custom the rule name
         {
-            "oid":"OID pathname",                // [ string ]
-            "cmd":"execute the command at shell" // [ string ]
+            "oid":"OID pathname",                    // [ string ]
+            "cmd":"execute the command at shell"     // [ string ]
         }
     }
 

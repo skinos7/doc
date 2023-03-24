@@ -12,20 +12,20 @@ output:
 ## 简介
 
 ###### 3218为一款小巧的三网口工业用LTE路由器, 此路由器含有
- - **2G/3G/4G全网通频段接入**(*4G双天线*), **三个百兆以太网口(RJ45)**, **双串口**(*串口1为TTL电平可定制为RS232, 串口2支持RS485/TTL切换*)
- - **双SIM卡槽**, 双SIM卡自动切换及强制使用指定SIM卡槽
+ - **2G/3G/4G全网通频段接入**(*4G双天线*), **三个百兆以太网口(RJ45)**, **双串口**(*串口1为RS232, 串口2为RS485*)
+ - **双SIM卡槽**, 双SIM卡支持自动切换及强制使用指定SIM卡槽
  - **无线2.4G双天线**(*300M*)
  - **两路输入输出IO口**(*可选配置为I2C*)
- - **支持DC头供电或车载头供电**
+ - **支持DC头供电或带卡扣凤凰头供电**
  - **GPS北斗定位功能**
- - **短信远程管理**
+ - **短信功能**, 支持使用短信管理设备
 
 ###### 为支持工业级应用环境带有
- - **宽电压供电及车载头供电支持**, 支持9V到50V之间的电压供电, 并可用抗震车载头供电
+ - **宽电压供电及带卡扣凤凰头供电支持**, 支持9V到50V之间的电压供电
  - **宽温支持**, 支持低温-40度热启动, 高温75度长期工作
  - **硬件狗**
  - **防静电保护**
- - **3路独立电源设计**, 独立功能模块间相互监控, 出现异常可快速重置恢复
+ - **多路独立电源设计**, 独立功能模块间相互监控, 出现异常可快速重置恢复
 
 ###### 多种接入方式互联网
  - **3G/4G接入互联网**
@@ -36,19 +36,20 @@ output:
  - **2.4G无线接入与有线WAN口接入同时工作**, 冷备份, 热备份及负载均衡带宽叠加
  - **强制客户端(或应用)使用指定接入方式上网**, 允许在多种接入方式同时工作时强制客户端或应用分别使用不同的接入方式访问互联网
  - **定制更多智能接入方式**, 开放SDK编程环境提供示例及标准接口可客户自定制更多接入策略， 如定制三种接入方式同时工作， 自动根据现场情况或指定策略动态变换接入方式等
+ - **3G/4G桥模式支持**
 
 ###### 提供多种接口供其它设备连接到互联网
  - **以太网口(802.3u)**
  - **2.4G无线(802.11bgn)**
- - **串口(RS485/RS232/TTL)**
- - **IO口(3.3V输入输出)**
+ - **串口(RS485/RS232)**
+ - **IO口(3.3V输入输出)/I2C接口**
 
-###### 串口支持多种模式： 透传/Modbus/MQTT/指令模式/外接GPS北斗定位模块/自定义协议转换
+###### 串口支持多种模式： 透传/Modbus/MQTT/指令模式/HTTP POST/自定义协议转换
  - **串口透传** 支持自定义注册包/激活包/保活包, 自定义包前后缀, 服务器与客户端同时工作及多服务器, 流量统计
- - **Modbus/MQTT协议**, 可为PLC设备及实时物联网设备接入网络 
- - **串口GPS数据上报**, 串口支持外接GPS, 可解析其数据并上报
+ - **Modbus TCP/MQTT协议**, 可为PLC设备及实时物联网设备接入网络
+ - **HTTP POST协议**, 可将串口数据通过HTTP POST传送到指定的服务器
  - **支持串口指令模式**, 可通过串口指令管理控制设备
- - **两路串口同时工作**, 可选RS232及RS485, RS232及TTL, TTL及RS485, 双TTL四种组合
+ - **两路串口同时工作**, 默认为RS232+RS485, 可选支持RS232+RS232
  - **定制各种串口协议**, 开放SDK编程环境提供示例及标准接口可客户自定制更多串口协议
 
 ###### IO口支持实时控制及监控
@@ -90,14 +91,14 @@ output:
 |  参数   | 规格  |
 | :-----:| :---- |
 | **尺寸(mm)** | 尺寸: 98mm X 98mm X 28mm |
-| **4G参数(LTE)**  | 默认使用**移远EC20**或**SIMCOM7600CE双天线全网通模块**, 也可搭配客户指定的其它模块<br>**4G频段**: FDD LTE: B1/B3/B8 TDD LTE: B38/B39/B40/B41<br>**3G频段**: TDSCDMA: B34/B39  WCDMA: B1/B8<br>**2G频段**: CDMA 1x/EVDO: BC0  GSM: 900/1800<br>**带宽**: 1.4/3/5/10/15/20MHz LTE-FDD: Max 150Mbps (DL) Max 50Mbps (UL) LTE-TDD: Max 130Mbps (DL) Max 35Mbps (UL)<br>**灵敏度**<br>FDD B1: -97dBm (10M)<br>FDD B3: -95dBm (10M)<br>FDD B8: -94dBm (10M)<br>TDD B38: -97dBm (10M)<br>TDD B39: -97dBm (10M)<br>TDD B40: -97dBm (10M)<br>TDD B41: -96dBm (10M)<br>WCDMA B1: -111dBm<br>WCDMA B8: -110dBm<br>TDSCDMA B34: -109dBm<br>TDSCDMA B39: -109dBm<br>CDMA BC0: -109dBm<br>GSM 900: -109dBm<br>GSM 1800: -109dBm<br>**输出功率**<br>Class 3 (23dBm±2dB) for LTE FDD<br>Class 3 (23dBm±2dB) for LTE TDD<br>Class 2 (24dBm +1/-3dB) for TD-SCDMA<br>Class 3 (24dBm +1/-3dB) for WCDMA<br>Class 3 (24dBm±1dB) for CDMA BC0<br>Class E2 (27dBm ±3dB) for EDGE 900MHz<br>Class E2 (26dBm ±3dB) for EDGE 1800MHz<br>Class 4 (33dBm ±2dB) for GSM 900MHz<br>Class 1 (30dBm ±2dB) for GSM 1800MHz |
+| **4G参数(LTE)**  | 默认使用**移远EC20**双天线全网通模块**, 也可搭配客户指定的其它模块<br>**4G频段**: FDD LTE: B1/B3/B8 TDD LTE: B38/B39/B40/B41<br>**3G频段**: TDSCDMA: B34/B39  WCDMA: B1/B8<br>**2G频段**: CDMA 1x/EVDO: BC0  GSM: 900/1800<br>**带宽**: 1.4/3/5/10/15/20MHz LTE-FDD: Max 150Mbps (DL) Max 50Mbps (UL) LTE-TDD: Max 130Mbps (DL) Max 35Mbps (UL)<br>**灵敏度**<br>FDD B1: -97dBm (10M)<br>FDD B3: -95dBm (10M)<br>FDD B8: -94dBm (10M)<br>TDD B38: -97dBm (10M)<br>TDD B39: -97dBm (10M)<br>TDD B40: -97dBm (10M)<br>TDD B41: -96dBm (10M)<br>WCDMA B1: -111dBm<br>WCDMA B8: -110dBm<br>TDSCDMA B34: -109dBm<br>TDSCDMA B39: -109dBm<br>CDMA BC0: -109dBm<br>GSM 900: -109dBm<br>GSM 1800: -109dBm<br>**输出功率**<br>Class 3 (23dBm±2dB) for LTE FDD<br>Class 3 (23dBm±2dB) for LTE TDD<br>Class 2 (24dBm +1/-3dB) for TD-SCDMA<br>Class 3 (24dBm +1/-3dB) for WCDMA<br>Class 3 (24dBm±1dB) for CDMA BC0<br>Class E2 (27dBm ±3dB) for EDGE 900MHz<br>Class E2 (26dBm ±3dB) for EDGE 1800MHz<br>Class 4 (33dBm ±2dB) for GSM 900MHz<br>Class 1 (30dBm ±2dB) for GSM 1800MHz |
 | **2.4G参数(WIFI)**   | **标准**：IEEE802.11bgn 300Mbps(2T2R)<br>**发射功率**<br>11n HT40 MCS7: 15dBm<br>11b CCK: 18dBm<br>11G OFDM: 15dBm<br>**接收灵敏度**<br>300Mbps: -65dBm<br>54Mbps: -73dBm<br>11Mbps: -86dBm|
 | **WAN口** | RJ45 WAN接口(10/100Mbps自适应), 网关模式及混合模式为**WAN接口**, 其它模式下为**LAN接口**, 自带LINK指定灯  |
 | **LAN1口** | RJ45 LAN接口(10/100Mbps自适应), 自带LINK指定灯  |
 | **LAN2口** | RJ45 LAN接口(10/100Mbps自适应), 自带LINK指定灯  |
-| **串口1** | 8PIN凤凰头中的两PIN为串口接口, *默认**TTL电平**,可定制提供RS232电平串口*  |
-| **串口2** | 8PIN凤凰头中的两PIN为串口接口, *默认**RS485串口**, 可配置为TTL电平串口*   |
-| **车载供电口** | 2*2PIN(4.2mm间距)电源供电口(**供电范围为9-48V**)  |
+| **串口1** | 8PIN凤凰头中的两PIN为串口1接口, *默认**RS232**,可定制提供TTL电平串口*  |
+| **串口2** | 8PIN凤凰头中的两PIN为串口2接口, *默认**RS485串口**, 可定制为RS232电平串口* |
+| **凤凰头供电口** | 2*2PIN(4.2mm间距)电源供电口(**供电范围为9-48V**)  |
 | **DC头供电口** | 5.5*2.0mm DC电源供电口(**供电范围为9-48V**)  |
 | **WIFI天线接口(2个)** | WIFI2.4G SMA天线接口*2(外螺纹+孔)  |
 | **3G/4G天线接口(2个)** | 3G/4G SMA天线接口*2(外螺纹+孔) |
