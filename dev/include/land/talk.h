@@ -545,6 +545,17 @@ const char *json_string( talk_t json, const char *attr );
 int         json_number( talk_t json, const char *attr );
 #define     json_get_number json_number
 		/**
+		 * @brief get the value of axp in json, which value in double type
+		 * @param[in] json
+		 * @param[in] attr attribute name
+		 * @return double
+		 *		@retval double for succeed
+		 *		@retval 0 for value is 0
+		 *		@retval 0 for not found, the errno code will be sets
+		 */
+		double      json_floatpoint( talk_t json, const char *attr );
+		#define 	json_get_floatpoint json_floatpoint
+		/**
 		 * @brief get the value of axp in json, which value in pointer type
 		 * @param[in] json
 		 * @param[in] attr attribute name

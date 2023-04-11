@@ -244,6 +244,15 @@ int shell( const char *format, ... );
  */
 int execute( int timeout, boole silent, const char *format, ... );
 /**
+ * @brief kill the pid force
+ * @param[in] pid 
+ * @param[in] timeout for second
+ * @return return of operator
+ *		@retval true for succeed
+ *		@retval false for failed
+ */
+boole kill_pid( pid_t pid, int timeout );
+/**
  * @brief exeute the iptables with lock
  * @param[in] format shell command
  * @return value of command return
