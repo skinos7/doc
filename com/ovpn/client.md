@@ -11,13 +11,16 @@ Management of OPENVPN client
 {
     // common attributes
     "status":"client status",                      // [ "disable", "enable" ]
+    "extern":"extern ifname",                      // [ "disable", "", "ifname@wan", "ifname@lte", ... ],
+                                                                // "disable" or space for none
+                                                                // "" for is defdault gateway
+                                                                // "ifname@wan", "ifname@lte", ... for specified extern interface
 
-    "extern":"extern ifname",                      // [ "ifname@wan", "ifname@lte", ... ], default is defdault gateway
     "server":"openvpn server address",             // [ string ]
-    "proto":"protocol type",                       // [ tcp, udp ]
+    "proto":"protocol type",                       // [ "tcp", "udp" ]
     "port":"server port",                          // [ nubmer ], default is 1194
-    "dev":"netdev type",                           // [ tun, tap ], tun is tunnel, tap is bridge to ifname@lan
-    "topology":"topological structure",            // [ p2p, subnet ]
+    "dev":"netdev type",                           // [ "tun", "tap" ], "tun" is tunnel, "tap" is bridge to ifname@lan
+    "topology":"topological structure",            // [ "p2p", "subnet" ]
     "localip":"tunnel local address",              // [ ip address ], vailed when "topology" is "p2p"
     "remoteip":"tunnel peer address",              // [ ip address ], vailed when "topology" is "p2p"
 
@@ -28,13 +31,13 @@ Management of OPENVPN client
                                                    //   AES-128-CFB, AES-192-CBC, AES-192-OFB, AES-192-CFB, AES-256-CBC, AES-256-OFB, AES-256-CFB,
                                                    //   AES-128-CFB1, AES-192-CFB1, AES-256-CFB1, AES-128-CFB8, AES-192-CFB8, AES-256-CFB8,
                                                    //   DES-CFB1, DES-CFB8, DES-EDE3-CFB1, DES-EDE3-CFB8, SEED-CBC, SEED-OFB, SEED-CFB ]
-    "comp_lzo":"lzo compress mode",                // [ disable, yes, no, adaptive ]
-    "hmac": "HMAC signature check",                // [ disable, tls-auth, tls-crypt ], version2.3 don't supoort "tls-crypt", "tls-auth" and "tls-crypt" need client.tlskey
-    "auth":"authentication type",                  // [ none, static, certificate, username ]
-                                                   //    none: is disable
-                                                   //    static: use static key, need client.statickey
-                                                   //    certificate: use CA certificate, need client.cacrt/client.crt/client.key
-                                                   //    username: use username and password, need client.cacrt
+    "comp_lzo":"lzo compress mode",                // [ "disable", "yes", "no", "adaptive" ]
+    "hmac": "HMAC signature check",                // [ "disable", "tls-auth", "tls-crypt" ], version2.3 don't supoort "tls-crypt", "tls-auth" and "tls-crypt" need client.tlskey
+    "auth":"authentication type",                  // [ "none", "static", "certificate", "username" ]
+                                                   //    "none": is disable
+                                                   //    "static": use static key, need client.statickey
+                                                   //    "certificate": use CA certificate, need client.cacrt/client.crt/client.key
+                                                   //    "username": use username and password, need client.cacrt
     "username":"user name",                        // [ string ], vaild when "auth" is "username"
     "password":"user password",                    // [ string ], vaild when "auth" is "username"
 
@@ -44,20 +47,20 @@ Management of OPENVPN client
     "options":"openvpn original options",          // [ string ], multiple options are separated by semicolons
 
     // route attributes, vaild when "dev" is "tun"
-    "masq":"share interface address to access",    // [ disable, enable ]
-    "defaultroute":"set it default route",         // [ disable, enable ]
+    "masq":"share interface address to access",    // [ "disable", "enable" ]
+    "defaultroute":"set it default route",         // [ "disable", "enable" ]
     "route_table":                                 // you can custom the route rule on this connect, vaild when "defaultroute" is "disable"
     {
         "route rule name":                         // [ string ]
         {
-            "target":"destination address",           // [ string ], ip address or network
-            "mask":"destination network mask"      // [ string ]
+            "target":"destination address",           // [ ip address ], ip address or network
+            "mask":"destination network mask"         // [ netmask ]
         }
         // ...more route rule
     },
-    "custom_dns":"Custom DNS",                                 // [ disable, enable ]
-    "dns":"Custom DNS1",                                       // [ IP address ], This is valid when "custom_dns" is "enable"
-    "dns2":"Custom DNS2"                                       // [ IP address ], This is valid when "custom_dns" is "enable"
+    "custom_dns":"Custom DNS",                     // [ "disable", "enable" ]
+    "dns":"Custom DNS1",                           // [ ip address ], This is valid when "custom_dns" is "enable"
+    "dns2":"Custom DNS2"                           // [ ip address ], This is valid when "custom_dns" is "enable"
 }
 
 ```

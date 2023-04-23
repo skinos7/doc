@@ -11,8 +11,11 @@ Management of PPTP client
 {
     // common attributes
     "status":"client status",                      // [ disable, enable ]
+    "extern":"extern ifname",                      // [ "disable", "", "ifname@wan", "ifname@lte", ... ],
+                                                                // "disable" or space for none
+                                                                // "" for is defdault gateway
+                                                                // "ifname@wan", "ifname@lte", ... for specified extern interface
 
-    "extern":"extern ifname",                      // [ ifname@wan, ifname@lte, ... ], default is defdault gateway
     "server":"pptp server address",                // [ string ]
 
     // seucre attributes

@@ -1,40 +1,59 @@
 ***
-## Management of GRE tunnel
-Management of GRE tunnel
+## Management of WireGuard Interface
+Management of WireGuard Interface
 
-#### Configuration( vpn@gre )
-**vpn@gre** is first GRE tunnel
-**vpn@gre2** is second GRE tunnel
+#### Configuration( sdwan@wg )
+**sdwan@wg** is first WireGuard Interface
+**sdwan@wg2** is second WireGuard Interface
 
 ```json
 // Attributes introduction 
 {
     // common attributes
     "status":"client status",                    // [ disable, enable ]
-    "extern":"extern ifname",                      // [ "disable", "", "ifname@wan", "ifname@lte", ... ],
+    "extern":"extern ifname",                    // [ "disable", "", "ifname@wan", "ifname@lte", ... ],
                                                                 // "disable" or space for none
                                                                 // "" for is defdault gateway
                                                                 // "ifname@wan", "ifname@lte", ... for specified extern interface
 
-    "peer":"gre tunnel peer address",            // [ string ]
+    "peer":
+    {
+        "public key":                                     // [ string ]
+        {
+            "endpoint":"peer address and port",                 // [ ip address:number ]
+            "sharekey":"preshare key",                          // [ string ]
+            "ips":"allowed ip or network"                       // [ network ]
+            "keepalive":"persistent keepalive interval"         // [ number ], the unit is second
+        }
+        // ... more peer
+    },
 
-    "localip":"gre tunnel local address",        // [ ip address ]
-    "remoteip":"gre tunnel remote address",      // [ ip address ]
-    "ttl":"gre tunnel ttl",                      // [ number ]
-    "mtu":"gre tunnel MTU",                      // [ number ]
+    "local":                                        // local configure for ip address
+    {
+        "ip":"IPv4 address",                        // < ipv4 address >
+        "mask":"IPv4 netmask",                      // < ipv4 netmask >
+        "ip2":"IPv4 address 2",                     // < ipv4 address >
+        "mask2":"IPv4 netmask 2",                   // < ipv4 netmask >
+        "ip3":"IPv4 address 3",                     // < ipv4 address >
+        "mask3":"IPv4 netmask 3"                    // < ipv4 netmask >
+    },
+    "port":"listen port",                           // [ number ]
+
+    "mtu":"interface MTU",                          // [ number ]
 
     // route attributes
-    "masq":"share interface address to access",    // [ disable, enable ]
-    "defaultroute":"set it default route",         // [ disable, enable ]
-    "route_table":                                 // you can custom the route rule on this connect, vaild when "defaultroute" is "disable"
+    "masq":"share interface address to access",     // [ disable, enable ]
+    "defaultroute":"set it default route",          // [ disable, enable ]
+    "route_table":                                  // you can custom the route rule on this connect, vaild when "defaultroute" is "disable"
     {
-        "route rule name":                         // [ string ]
+        "route rule name":                          // [ string ]
         {
             "target":"destination address",           // [ string ], ip address or network
-            "mask":"destination network mask"      // [ string ]
+            "mask":"destination network mask"         // [ string ]
         }
         // ...more route rule
     },
+    "gw":"default gateway",                      // [ ip address ]
     "custom_dns":"custom the dns server",        // [ disable, enable ]
     "dns":"dns address",                         // [ ip address ], vaild when "custom_dns" be "enable"
     "dns2":"backup dns address"                  // [ ip address ], vaild when "custom_dns" be "enable"
@@ -45,11 +64,11 @@ Management of GRE tunnel
 
 #### **Methods**
 
-+ `setup[]` **setup the gre tunnel**, *succeed return ttrue, failed return tfalse, error return terror*
++ `setup[]` **setup the wireguard interface**, *succeed return ttrue, failed return tfalse, error return terror*
 
-+ `shut[]` **shutdown the gre tunnel**, *succeed return ttrue, failed return tfalse, error return terror*
++ `shut[]` **shutdown the wireguard interface**, *succeed return ttrue, failed return tfalse, error return terror*
 
-+ `status[]` **get the gre tunnel infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `status[]` **get the wireguard interface infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -71,11 +90,11 @@ Management of GRE tunnel
     }
     ```
     ```shell
-    # examples, get the first gre tunnel infomation
-    vpn@gre.status
+    # examples, get the first wiregaurd infomation
+    sdwan@wg.status
     {
         "status":"up",                     # connect is succeed
-        "netdev":"gre0",                   # netdev is gre0
+        "netdev":"wg0",                    # netdev is wg0
         "ip":"192.168.10.1",               # ip address is 192.168.1.1
         "mask":"255.255.255.0",            # network mask is 255.255.255.0
         "gw":"192.168.10.254",             # gateway is 192.168.10.254
@@ -88,9 +107,10 @@ Management of GRE tunnel
     }
     ```
 
-+ `netdev[]` **get the gre tunnel netdev**, *succeed return netdev, failed return NULL, error return terror*
++ `netdev[]` **get the wireguard interface netdev**, *succeed return netdev, failed return NULL, error return terror*
     ```shell
-    # examples, get the first gre tunnel netdev
-    vpn@gre.netdev
-    gre0
+    # examples, get the first wireguard interface netdev
+    sdwan@wg.netdev
+    wg0
     ```
+

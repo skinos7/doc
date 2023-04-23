@@ -77,6 +77,9 @@ int usbtty_cgdcont( atcmd_t fd, const char *cid, const char *type, const char *a
 /* get the qcrmcall connect ok, 0 for oK, >0 for failed, <0 for error */
 int usbtty_qcrmcallok( atcmd_t fd );
 
+/* execute custom at, tfalse for failed, terror for error, json for result */
+talk_t usbtty_customat( atcmd_t fd, talk_t cat );
+
 
 
 #endif   /* ----- #ifndef H_MODEM_LANDMODEM_H  ----- */

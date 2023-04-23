@@ -19,6 +19,17 @@ Management LTE modem
     "lock_cell":"lock cell",                   // The format varies depending on the module
     "gnss":"gps function",                     // [ "disable", "enable" ]
 
+    "custom_set":                              // custom at setting list at the modem setup
+    {
+        "AT command":"AT exeucte result"             // [ string ]:[ string ]
+        // ...more AT command
+    },
+    "custom_watch":                            // custom at watch list at the modem watch
+    {
+        "AT command":"AT exeucte result"             // [ string ]:[ string ]
+        // ...more AT command
+    },
+
     // simcard dial attributes
     "need_simcard":"SIMcard must be detected",                                                 // [ "enable", "disable" ]
     "simcard_failed_threshold":"first failed to reset time",                                   // [ number ]
