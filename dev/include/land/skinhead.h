@@ -201,13 +201,15 @@ typedef int boole;
 	#define PROJECT_TMP_DIR "/tmp/skin"
 	#define PROJECT_VAR_DIR "/var/skin"
 	#define PROJECT_LIB_DIR "/usr/local/lib"
-	#define PROJECT_CMD_DIR "/usr/local/bin"
+	#define PROJECT_BIN_DIR "/usr/local/bin"
+	#define PROJECT_ETC_DIR "/etc"
 	#define PROJECT_MNT_DIR PROJECT_VAR_DIR"/mnt"
 #else
 	#define PROJECT_TMP_DIR "/tmp"
 	#define PROJECT_VAR_DIR "/var"
 	#define PROJECT_LIB_DIR "/var/lib"
-	#define PROJECT_CMD_DIR "/var/bin"
+	#define PROJECT_BIN_DIR "/var/bin"
+	#define PROJECT_ETC_DIR "/etc"
 	#define PROJECT_MNT_DIR "/mnt"
 #endif
 #define PROJECT_DIR "/prj"
