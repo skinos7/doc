@@ -137,7 +137,7 @@ talk_t v  -------- 为值的结构化的表示, 用于表示_set设置的值
 _setup函数即获取组件配置并跟据配置的status属性决定是否把本组件的_service函数(即service接口)注册为系统服务
 
 ```c
-talk_t _setup( obj_t this, param_t param )
+boole_t _setup( obj_t this, param_t param )
 {
 	/* 默认根据组件配置的status属性来决定是否启动_service服务函数 */
 	talk_t cfg;
@@ -154,7 +154,7 @@ talk_t _setup( obj_t this, param_t param )
 	if ( ptr != NULL && 0 == strcmp( ptr, "enable") )
 	{
 		/* 将本组件的_service函数以服务的形式运行. 服务名即为当前的组件全称verify@telecom4g */
-		service_start( object, object, "service", NULL );
+		sstart( object, "service", NULL, object );
 	}
 
 	/* 释放组件配置 */
@@ -168,14 +168,14 @@ talk_t _setup( obj_t this, param_t param )
 _shut函数同样即在关闭组件时停止我们在_setup函数中注册的系统服务
 
 ```c
-talk_t _shut( obj_t this, param_t param )
+boole_t _shut( obj_t this, param_t param )
 {
 	const char *object;
 
 	/* 获取组件名全称 */
 	object = obj_combine(this);
 	/* 停止服务 */
-	service_stop( object );
+	sdelete( object );
 	/* 退出, 记住一定要运行后立即退出, 如果不退出可能导致整个系统启动卡死在这里 */
 	return ttrue;
 }
@@ -271,7 +271,7 @@ boole telecom_cpe_register( const char *remote, const char *encrypt, talk_t lte 
 - 在_service函数中实现注册的逻辑, 此函数为后台服务函数, 不允许随意退出(**因为如果非正常退出系统会自动再次运行**):
 
 ```c
-talk_t _service( obj_t this, param_t param )
+boole_t _service( obj_t this, param_t param )
 {
 	int i;
 	boole r;
@@ -289,12 +289,15 @@ talk_t _service( obj_t this, param_t param )
 	/* 获取组件名全称 */
 	object = obj_combine( this );
 	/* 查看是否存在默认路由来确定数据业务是否可用 */
-	if ( route_info( "0.0.0.0", NULL, NULL, NULL ) == false )
-	{
-		/* 如数据业务不可用, 休眠10秒后退出, 退出后系统会重新运行此函数 */
-		sleep( 10 );
-		return tfalse;
-	}
+    do
+    {
+        if ( gateway_info( NULL, NULL ) == true )
+        {
+            break;
+        }
+		/* 如数据业务不可用, 休眠15秒后再试 */
+        sleep( 5 );
+    }while(1);
 	/* 获取组件所有配置 */
 	cfg = config_get( this, NULL );
 	save_iccid = json_string( cfg, "iccid" );
@@ -373,9 +376,9 @@ talk_t _service( obj_t this, param_t param )
 ```c
 talk_t _status( obj_t this, param_t param )
 {
-	int *iptr;
 	talk_t ret;
 	talk_t cfg;
+	const int *iptr;
 	const char *ptr;
 	const char *object;
 
@@ -396,8 +399,11 @@ talk_t _status( obj_t this, param_t param )
 	{
 		json_set_string( ret, "status", "unregistered" );
 		/* 获到注册失败次数 */
-		iptr = register_pointer( object, "regfailed" );
-		json_set_number( ret, "failed", *iptr );
+		iptr = register_value( object, "regfailed" );
+		if ( iptr != NULL )
+		{
+			json_set_number( ret, "failed", *iptr );
+		}
 	}
 
 	/* 释放空间并退回 */
@@ -422,7 +428,8 @@ talk_t _take( obj_t this, param_t param )
 	/* 如果事件名称为network/online(即外网连接上线)则立即重启组件的服务 */
 	if ( event != NULL && 0 == strcmp( event, "network/online" ) )
 	{
-		return service_reset( object, object, "service", NULL );
+		sreset( object, "service", NULL, object );
+		return ttrue;
 	}
     return tfalse;
 }
@@ -432,7 +439,7 @@ talk_t _take( obj_t this, param_t param )
 这个函数就是实际的调用配置获到的函数, 并返回这个函数的返回, 模板中的代码即可满足这个需求, 所以我们不需要修改
 
 ```c
-talk_t _get( obj_t this, path_t path )
+talk_t _get( obj_t this, attr_t path )
 {
     talk_t cfg;
 
@@ -449,6 +456,7 @@ talk_t _get( obj_t this, path_t path )
 
 ```c
 boole _set( obj_t this, path_t path, talk_t v )
+boole _set( obj_t this, talk_t v, attr_t path )
 {
     boole ret;
 
@@ -807,7 +815,7 @@ dimmalex@ubuntu18:~/tiger7$ make menuconfig
 
 
 #### 升级到设备上 
-通过在设备网页的 ***系统*** 菜单下的 ***软件管理*** 界面中 **软件更新** 后的浏览按键选择 ***fpk软件包*** 升级或选择整个 ***固件*** 升级即可
+通过在设备网页的 ***系统*** 菜单下的 ***软件管理*** 界面中 **软件更新** 后的浏览按键选择 ***FPK软件包*** 升级或选择整个 ***固件*** 升级即可
 
 
 
@@ -874,4 +882,29 @@ dimmalex@ubuntu18:~/tiger7$ make menuconfig
 	#
 	`
 
+
+---
+
+## 开发中可能用到的API
+
+- ##### [调用组件接口](./call_component.md)
+	在程序中调用其它组件或自身的接口
+
+- ##### [管理组件配置](./component_config.md)
+	在程序中查询及修改其它组件的配置
+
+- ##### [直接操作配置](./project_config.md)
+	在程序中查询修改配置
+
+- ##### [获取项目信息](./project_info.md)
+	在程序中获取项目相关的信息
+
+- ##### [系统服务](./system_service.md)
+	在程序中通过系统服务API注册服务函数, 使服务函数可以一直运行
+
+- ##### [组件寄存器API](./register.md)
+	专门为组件设计的一种信息存储及交互方式， 相当于可以实时改变的环境变量
+
+- ##### [日志服务](./syslog.md)
+	用于程序记录日志
 
