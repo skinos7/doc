@@ -44,7 +44,7 @@ dimmalex@HMS:~/tiger7$ cat project/portal/prj.json
 dimmalex@HMS:~/tiger7$ 
 ```
 
-#### 3. 拷贝编译好的coova-chilli必须文件到项目中
+#### 3. 拷贝编译好的coova-chilli必要的文件到项目中
 
 以下是项目打包成FPK安装包及安装到Linux的过程图示
 
