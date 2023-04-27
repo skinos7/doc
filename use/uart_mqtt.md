@@ -50,7 +50,7 @@ dimmalex@HMS:~/tiger7$ sudo mosquitto -c /etc/mosquitto/mosquitto.conf -v
 ```
 
 #### 5. 打开新终端运行订阅两种主题, 监控linux客户端与路由器之间的交互
-订阅linux客户向路由器发送的主题
+订阅linux客户端向路由器发送的主题
 ```
 dimmalex@HMS:~$ mosquitto_sub -v -t "linux2wlink" -h 222.248.230.163 -p 1883
 ```
