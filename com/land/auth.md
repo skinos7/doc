@@ -131,7 +131,7 @@ Manage accounts and permissions, Modifying this configuration directly is not re
     ttrue
     ```
 
-+ `check[ [domain], account, password, [new password], [new account] ]` **modify the username or password with original password**, *succeed return ttrue, failed return tfalse, error return terror*
++ `modify[ [domain], account, password, [new password], [new account] ]` **modify the username or password with original password**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, modify the admin password to 12345
     land@auth.modify[ ,admin, admin, 12345 ]
