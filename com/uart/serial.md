@@ -47,6 +47,10 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
     // Modbus configure vaild when "concom" is uart@modbus
     "modbus":
     {
+        "type":"server or client",                                // [ "server", "client" ]
+
+        "server":"server address",                                // [ string ], vaild when "type" be "client"
+
         "port":"modbus port",                                     // [ number ]
         "maxconn":"Maximum number of simultaneous connections",   // [ number ]
         "timeout":"Connection timeout",                           // [ number ], the unit is ms
