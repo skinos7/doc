@@ -107,6 +107,7 @@ typedef int boole;
 #define SSHD_COM "tui@ssh"
 /** web ui management component */
 #define WEBS_PROJECT "webs"
+#define WUI_PROJECT "wui"
 #define WUI_COM "wui@admin"
 
 

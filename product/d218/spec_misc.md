@@ -1,3 +1,12 @@
+---
+title: "d218 spec misc"
+author: dimmalex@gmail.com
+date: March 22, 2022
+output:
+    word_document:
+        path: D:/tmp/d218_spec_misc.docx
+---
+
 
 
 ## D218其它资料
