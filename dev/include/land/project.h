@@ -117,5 +117,10 @@ boole project_add_object( const char *name, const char *prjpath, const char *obj
 
 
 
+talk_t project_i18n( const char *project, const char *prefix );
+const char *project_i18n_get( talk_t lang, const char *text );
+
+
+
 #endif   /* ----- #ifndef H_LAND_PROJECT_H  ----- */
 

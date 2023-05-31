@@ -231,6 +231,7 @@ typedef int boole;
 
 /// system important filename
 #define RANDOM_FILENAME  "/var/.urandom"
+#define CRACKID_MAC "00:01:02:03:04:00"
 
 
 
