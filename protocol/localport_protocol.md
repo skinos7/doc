@@ -450,7 +450,7 @@ enable
     "cmd1":
     {
         "com":"gnss@nmea",
-        "op":"status"
+        "op":"info"
     }
 }
 ```
