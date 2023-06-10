@@ -136,6 +136,7 @@ boole cstartt( obj_t com, const char *method, talk_t json, const char *nameforma
 boole cstart2t( obj_t com, const char *method, talk_t json, talk_t json2, const char *nameformat, ... );
 boole sstartt( const char *com, const char *method, talk_t json, const char *nameformat, ... );
 boole sstart2t( const char *com, const char *method, talk_t json, talk_t json2, const char *nameformat, ...  );
+boole sstartst( const char *com, const char *method, const char *json, talk_t json2, const char *nameformat, ...  );
 /**
  * @brief start a service
  * @param[in] name string for service name

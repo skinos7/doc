@@ -63,7 +63,12 @@ The network framework defines a three-tier concept to manage network interfaces:
         // Configure parameters of the delay switchover function, only in dbdc mode, the function can control the data via low delay connection
         "delay_count":"Statistical delay times of last",   // [ number ]
         "delay_divide":"delay divide line",                // [ number ], the unit is ms
-        "delay_diff":"Delay differential"                  // [ number ], the unit is ms
+        "delay_diff":"Delay differential",                 // [ number ], the unit is ms
+
+        // DNS custom when Multiple DNS
+        "custom_dns":"Custom DNS",                       // [ "disable", "enable", "ifname@lte", "ifname@lte2", ... ]
+        "dns":"Custom DNS1",                             // [ ip address ], This is valid when "custom_dns" is "enable"
+        "dns2":"Custom DNS2"                             // [ ip address ], This is valid when "custom_dns" is "enable"
     }
 }
 // Examples
