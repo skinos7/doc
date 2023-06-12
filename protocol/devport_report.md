@@ -17,7 +17,7 @@
 
 - 如要设备只上报 GPS状态信息, 即可在**初始上报信息**中填入如下:
     ```
-    uart@gnss.info
+    gnss@nmea.info
     ```
 - 如要设备只上报 客户端列表, 即可在**初始上报信息**中填入如下:
     ```
@@ -25,7 +25,7 @@
     ```
 - 如要设备上报 设备基本信息,设备基本状态,4G网络状态及GPS状态信息, 即可在**初始上报信息**中填入如下:
     ```
-    land@machine;land@machine.status;ifname@lte.status;uart@gnss.info
+    land@machine;land@machine.status;ifname@lte.status;gnss@nmea.info
     ```
 - 如要设备上报 设备基本信息,串口状态信息, 即可在**初始上报信息**中填入如下:
     ```
@@ -86,7 +86,7 @@ search(no)->noreport->end
 1. 设备上报状态, 通常设备重新启动后只会跟据agent@remote组件配置中的初始**上报状态行为配置**来上报, 可通过网页或是终端来配置 
     设备向远端发起POST请求, JSON中带有status节点, status节点下即是设备的状态信息, 以下假设**初始上报信息**为:
     ```
-    land@machine;land@machine.status;ifname@lte.status;uart@gnss.info;client@station.list;network@frame.default
+    land@machine;land@machine.status;ifname@lte.status;gnss@nmea.info;client@station.list;network@frame.default
     ```
     设备POST如下:
     ```javascript
@@ -228,7 +228,7 @@ search(no)->noreport->end
                 }
 
             }, 
-            "uart@gnss.info":      // GPS信息, 网页上可配置是否上报, 具体见uart@gnss组件接口文档
+            "gnss@nmea.info":      // GPS信息, 网页上可配置是否上报, 具体见uart@gnss组件接口文档
             {
                 "step":"step of location",                  // [ setup, search, located ]
                 "utc":"UTC date",                           // [ float ]
@@ -303,7 +303,7 @@ search(no)->noreport->end
                 "ifname@wisp.status":"",   // 要求上报无线WAN网络状态
                 "network@frame.default":"",// 要求上报当前默认网络连接状态
                 "network@frame.extern":"", // 要求上报所有外网连接网络状态
-                "uart@gnss.info":"",       // 要求上报 GPS状态信息
+                "gnss@nmea.info":"",       // 要求上报 GPS状态信息
                 "uart@serial.status":"",   // 要求上报串口状态(可外接GPS时为外接GPS状态)
                 "client@staion.list":""    // 要求上报客户端列表
             }
@@ -355,7 +355,7 @@ search(no)->noreport->end
             {
                 // 所有外网连接网络状态
             },
-            "uart@gnss.info":
+            "gnss@nmea.info":
             {
                 // GPS状态信息
             },
