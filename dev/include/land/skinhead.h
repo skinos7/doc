@@ -54,6 +54,26 @@
 #define false 0
 /// define boole data type for boolean
 typedef int boole;
+/// define project and component gap
+#define PROJECT_OBJECT_GAPS "@"
+#define PROJECT_OBJECT_GAPC '@'
+/// define component and interface gap
+#define OBJECT_METHOD_GAPS "."
+#define OBJECT_METHOD_GAPC '.'
+/// define method and parameter gap
+#define METHOD_PARAM_STARTS "["
+#define METHOD_PARAM_STARTC '['
+#define METHOD_PARAM_ENDS "]"
+#define METHOD_PARAM_ENDC ']'
+/// define parameter and parameter gap
+#define PARAM_PARAM_GAPS ","
+#define PARAM_PARAM_GAPC ','
+/// define component and configure gap
+#define OBJECT_CONFIG_GAPS ":"
+#define OBJECT_CONFIG_GAPC ':'
+/// define configure and configure gap
+#define CONFIG_CONFIG_GAPS "/"
+#define CONFIG_CONFIG_GAPC '/'
 
 
 
@@ -71,6 +91,7 @@ typedef int boole;
 #define FIRMWARE_COM "arch@firmware"
 /** hardware platform network management component */
 #define NET_CONFIG "arch@net"
+#define ETHERNET_COM "arch@ethernet"
 /** hardware platform usb management component */
 #define USB_COM "arch@usb"
 #define USB_PROJECT "usb"
@@ -115,16 +136,26 @@ typedef int boole;
 #define NETWORK_MODE "default"
 #define NETWORK_PROJECT "network"
 #define NETWORK_COM "network@frame"
-#define LAN_COM "ifname@lan"
-#define LAN2_COM "ifname@lan2"
-#define WLTE_COM "ifname@lte"
-#define WLTE2_COM "ifname@lte2"
-#define WAN_COM "ifname@wan"
-#define WAN2_COM "ifname@wan2"
-#define WISP_COM "ifname@wisp"
-#define WISP2_COM "ifname@wisp2"
-#define WNIC_COM "ifname@nic"
-#define WNIC2_COM "ifname@nic2"
+#define IFNAME_NAME "ifname"
+#define LAN_COM IFNAME_NAME"@lan"
+#define LAN1_COM IFNAME_NAME"@lan1"
+#define LAN2_COM IFNAME_NAME"@lan2"
+#define LAN3_COM IFNAME_NAME"@lan3"
+#define LAN4_COM IFNAME_NAME"@lan4"
+#define WLTE_COM IFNAME_NAME"@lte"
+#define WLTE2_COM IFNAME_NAME"@lte2"
+#define WLTE3_COM IFNAME_NAME"@lte3"
+#define WLTE4_COM IFNAME_NAME"@lte4"
+#define WAN_COM IFNAME_NAME"@wan"
+#define WAN2_COM IFNAME_NAME"@wan2"
+#define WAN3_COM IFNAME_NAME"@wan3"
+#define WAN4_COM IFNAME_NAME"@wan4"
+#define WISP_COM IFNAME_NAME"@wisp"
+#define WISP2_COM IFNAME_NAME"@wisp2"
+#define WNIC_COM IFNAME_NAME"@nic"
+#define WNIC2_COM IFNAME_NAME"@nic2"
+#define WNIC3_COM IFNAME_NAME"@nic3"
+#define WNIC4_COM IFNAME_NAME"@nic4"
 #define KEEPLIVE_COM "network@keeplive"
 #define BRIDGE_COM "network@bridge"
 #define BRIDGE_NAME "bridge"
@@ -168,6 +199,8 @@ typedef int boole;
 #define UART_COM "uart@frame"              // uart management
 #define SERIAL_COM "uart@serial"           // uart object
 #define SERIAL2_COM "uart@serial2"         // uart object
+#define SERIAL3_COM "uart@serial3"         // uart object
+#define SERIAL4_COM "uart@serial4"         // uart object
 #define SERIAL_CONVERT_PROJECT "uartgain"  // uart convert proejct
 
 
@@ -190,10 +223,10 @@ typedef int boole;
 
 
 
-/** agent broadcast component */
-#define AGENT_BROADCAST_COM "agent@broadcast"
-/** gather beacon component */
-#define AGENT_BEACON_COM "agent@beacon"
+/** agent local component */
+#define AGENT_LOCAL_COM "agent@local"
+/** agent factory component */
+#define AGENT_FACTORY_COM "agent@factory"
 
 
 

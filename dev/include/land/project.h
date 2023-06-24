@@ -83,6 +83,8 @@ const char *project_exe_path( char *buffer, int buflen, const char *name, const 
 #define shell2path( buffer, buflen, ... )  project_exe_path( buffer, buflen, PROJECT_ID, __VA_ARGS__ )
 #define project_misc_path project_exe_path
 #define misc2path( buffer, buflen, ... )  project_exe_path( buffer, buflen, PROJECT_ID, __VA_ARGS__ )
+#define project_cfg_path project_exe_path
+#define cfg2path( buffer, buflen, ... )  project_exe_path( buffer, buflen, PROJECT_ID, __VA_ARGS__ )
 /**
  * @brief get the variable pathname for project
  * @param[out] buffer buffer will be saved of variable pathname

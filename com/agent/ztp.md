@@ -1,6 +1,6 @@
 ***
 ## Zero touch provision management
-Zero touch provision from dhcp, http, mail, U/TF storage
+Zero touch provision from gather, dhcp, http, mail, U/TF storage
 
 #### Configuration( agent@ztp )
 ```json
@@ -12,10 +12,14 @@ Zero touch provision from dhcp, http, mail, U/TF storage
     "storage":"disable or enable listen for ztp from dhcp",         // [ "disable", "enable" ]
     "storage_cfg":
     {
+        "path":"ZTP json pathname"                                      // [ string ]
     },
-    "remote":"disable or enable listen for ztp from remote server", // [ "disable", "enable" ]
-    "remote_cfg":
+    "url":"disable or enable url for ztp from remote server",       // [ "disable", "enable" ]
+    "url_cfg":
     {
+        "location":"ZTP json url location",                              // [ string ]
+        "username":"url username",                                       // [ string ]
+        "password":"url password"                                        // [ string ]
     }
 }
 ```
@@ -31,25 +35,97 @@ agent@ztp:dhcp=enable
 ttrue
 ```  
 
+#### **Methods**
 
-## 零配置管理组件
-管理设备是否允许被零配置
++ `config[ {ztp json} ]` **configure a device by ztp json or location of ztp json**, *no need to update return ttrue, failed or need to update return tfalse, error return terror*
+    ```json
+    // Attributes introduction of talk that pass to interface
+    {
+        "language":"equipment language",                 // [ "cn", "en", "jp", ... ], language code in two letter
 
-#### **配置(agent@ztp)** 
-```json
-// 属性介绍
-{
-}
-```
-示例, 显示所有的配置
-```shell
-agent@ztp
-{
-}
-```
-示例, 启用DHCP的ZTP功能
-```shell
-agent@ztp:dhcp=enable
-ttrue
-```  
+        "scope":"equipment scope identify",              // [ string ]
+        "version":"equipment version",                   // [ string ]
+        "zz":"firmware url",                             // [ URL ]
+        "zz_username":"firmware url username",           // [ string ]
+        "zz_password":"firmware url password",           // [ string ]
+    
+        "oem":"oem size",                                // [ number ]
+        "dtar":"oem url",                                // [ URL ]
+        "dtar_username":"oem url username",              // [ string ]
+        "dtar_password":"oem url username",              // [ string ]
+    
+        "cfgversion":"configure version",                // [ string ]
+        "tar":"configure url",                           // [ URL ]
+        "tar_username":"configure url username",         // [ string ]
+        "tar_password":"configure url password",         // [ string ]
+    
+        "mode":"equipment operator mode"                 // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
+                                                            // "ap": access point
+                                                            // "wisp": 2.4G Wireless Internet Service Provider connection
+                                                            // "nwisp": 5.8G Wireless Internet Service Provider connection( need the board support 5.8G wirless baseband)
+                                                            // "gateway": wire WAN gateway
+                                                            // "dgateway": Dual wire WAN gateway
+                                                            // "misp": LTE Mobile Internet Service Provider connection( need the board support LTE baseband)
+                                                            // "nmisp": Next LTE/NR Mobile Internet Service Provider connection( need the board support LTE/NR baseband)
+                                                            // "dmisp": Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
+                                                            // "mix": custom mix connection from multiple internet connection
+    }    
+    ```
+    ```shell
+    # examples, configure a device by ztp json
+    agent@ztp.config[ {"language":"cn"} ]
+    ttrue
+    ```
+    # examples, configure a device by location of ztp json
+    agent@ztp.config[ ftp://user:12345678@ftp.wmdevice.com/test/ztp.json ]
+    ttrue
+    ```
+
++ `status[]` **get the equipent ztp infomation**, *succeed return talk to describes basic infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "ip":"ztp ip address",                           // [ ip address ]
+        "mac":"equipment MAC address",                   // < MAC address >
+        "sn":"equipment serial number",                  // [ string ]
+
+        "datacode":"equipment date of manufacture",      // [ string ]
+        "cmodel":"equipment model",                      // [ string ]
+        "features":"equipment features",                 // < string >
+        "language":"equipment language",                 // [ cn, en, jp, ... ], language code in two letter
+
+        "scope":"equipment scope identify",              // [ string ]
+        "version":"equipment version",                   // [ string ]
+
+        "oem":"oem size",                                // [ number ]
+    
+        "cfgversion":"configure version",                // [ string ]
+        
+        "mode":"equipment operator mode"              // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
+                                                         // "ap": access point
+                                                         // "wisp": 2.4G Wireless Internet Service Provider connection
+                                                         // "nwisp": 5.8G Wireless Internet Service Provider connection( need the board support 5.8G wirless baseband)
+                                                         // "gateway": wire WAN gateway
+                                                         // "dgateway": Dual wire WAN gateway
+                                                         // "misp": LTE Mobile Internet Service Provider connection( need the board support LTE baseband)
+                                                         // "nmisp": Next LTE/NR Mobile Internet Service Provider connection( need the board support LTE/NR baseband)
+                                                         // "dmisp": Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
+                                                         // "mix": custom mix connection from multiple internet connection
+    }    
+    ```
+    ```shell
+    # examples, get the equipent ztp infomation
+    agent@ztp.status
+    {
+        "mac":"00:03:7F:12:00:00",
+        "cmodel":"ICR-W402",
+        "language":"cn",
+        "scope":"std",
+        "version":"v7.3.0622",
+        "cfgversion":"19700105",
+        "mode":"wisp"
+    }
+    ```
+
+
 
