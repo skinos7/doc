@@ -66,6 +66,17 @@ boole       project_check( const char *name, const char *prjpath );
 const char *project_path( char *buffer, int buflen, const char *name );
 #define project2path( buffer, buflen )  project_path( buffer, buflen, PROJECT_ID )
 /**
+ * @brief get the corresponding storage directory for the project
+ * @param[out] buffer buffer will be saved of project directory
+ * @param[in] buflen size of buffer
+ * @param[in] name project name
+ * @return string of project directory
+ * 		@retval string for succeed
+ *  	@retval NULL for error, errno will be set
+ */
+const char *project_storage( char *buffer, int buflen, const char *name, const char *type );
+#define project2storage( buffer, buflen, type ) project_storage( buffer, buflen, PROJECT_ID, type )
+/**
  * @brief get the execute pathname for project
  * @param[out] buffer buffer will be saved of execute pathname
  * @param[in] buflen size of buffer

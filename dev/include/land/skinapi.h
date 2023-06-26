@@ -13,6 +13,7 @@
 
 /// machine api
 #define machine_restart( delay, key )   scalls( MACHINE_COM, "restart", "%d,%s", delay, key?:"" )
+#define machine_default( delay, key )   scalls( MACHINE_COM, "default", "%d,%s", delay, key?:"" )
 
 
 
