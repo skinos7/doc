@@ -1,10 +1,9 @@
 ***
-## Management of IPSEC connection
-Management of IPSEC connection
+## Management of IPSEC server
+Management of IPSEC server
 
-#### Configuration( ipsec@connect )
-**ipsec@connect** is first ipsec connection
-**ipsec@connect2** is second ipsec connection
+#### Configuration( ipsecs@server )
+**ipsec@server** is first ipsec server
 
 ```json
 // Attributes introduction 
@@ -13,8 +12,7 @@ Management of IPSEC connection
     "status":"client status",                    // [ "disable", "enable" ]
 
     "extern":"extern ifname",                    // [ "ifname@wan", "ifname@lte", ... ], default is defdault gateway
-    "peer":"ipsec server address",               // [ string ]
-    "peer_idtype":"local ID type",               // [ "ip", "custom", "any" ], ip for peer ip, custom the custom peer ID, any for any ID
+    "peer_idtype":"local ID type",               // [ custom", "any" ], custom the custom peer ID, any for any ID
     "peer_id":"local ID",                        // [ string ], valid when "peer_idtype" be "custom"
     "peer_network":"peer network",               // [ string ], ex. 10.0.0.0
     "peer_mask":"peer network mask",             // [ string ], ex. 255.0.0.0
@@ -28,9 +26,10 @@ Management of IPSEC connection
     "aggressive":"use aggressive",               // [ "disable", "enable" ]
     "forceencaps":"use udp encaps the EAP",      // [ "disable", "enable" ]
     "compress":"use compress",                   // [ "disable", "enable" ]
+    "unique":"only one id per one client",       // [ "disable", "enable" ]
 
     "auth":"auth type",                          // [ "psk", "pubkey" ], default is "psk"
-    "secret":"Pre-shared key",                   // [ string ]
+    "secret":"Pre-shared key",                   // [ string ], vailed when "auth" be "psk"
 
     // ike attributes
     "ike_version":"IKE version",                 // [ "ike", "ikev1", "ikev2" ]

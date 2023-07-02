@@ -4,7 +4,6 @@ Management of OPENVPN Server
 
 #### Configuration( ovpns@server )
 **ovpns@server** is first openvpn server
-**ovpns@server2** is second openvpn server
 
 ```json
 // Attributes introduction 
