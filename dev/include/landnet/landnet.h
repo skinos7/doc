@@ -66,6 +66,8 @@ boole routes_switch( const char *tid, const char *dest, const char *mask, const 
  *		@retval false for failed
  */
 boole routes_switch2( const char *tid, const char *dest, const char *mask, const char *metric, talk_t v, talk_t v2, boole clear );
+boole routes_switch3( const char *tid, const char *dest, const char *mask, const char *metric, talk_t v, talk_t v2, talk_t v3, boole clear );
+boole routes_switch4( const char *tid, const char *dest, const char *mask, const char *metric, talk_t v, talk_t v2, talk_t v3, talk_t v4, boole clear );
 /**
  * @brief create the extern route
  * @param[in] tid route id
@@ -132,6 +134,8 @@ boole shunts_fix_ifname( boole force, const char *ifname );
  *		@retval false for failed
  */
 boole shunts_balancing_2ifname( boole force, const char *ifname, const char *ifname2 );
+boole shunts_balancing_3ifname( boole force, const char *ifname, const char *ifname2, const char *ifname3 );
+boole shunts_balancing_4ifname( boole force, const char *ifname, const char *ifname2, const char *ifname3, const char *ifname4 );
 /**
  * @brief add fix some host to ifname
  * @param[in] condition
