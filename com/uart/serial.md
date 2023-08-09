@@ -14,7 +14,7 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
 {
     // UART configure
     "status":"UART status",                                      // [ "enable", "disable" ]
-    "extern":"extern ifname",                                    // [ "disable", "", "ifname@wan", "ifname@lte", ... ],
+    "extern":"extern ifname",                                    // [ "disable", "default", "ifname@wan", "ifname@lte", ... ],
                                                                          // "disable" or space for none
                                                                          // "default" for is defdault gateway
                                                                          // "ifname@wan", "ifname@lte", ... for specified extern interface
