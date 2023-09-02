@@ -33,7 +33,7 @@ typedef struct com_st
 #define COM_FILE_LIB 2
 #define COM_FILE_SHELL 3
 #define COM_FILE_EXECUTE 4
-	char type;
+	signed char type;
 
 	// component file pathname
     char path[PATH_MAX];
@@ -99,8 +99,10 @@ void         *scall( const char *com, const char *method, param_t parameter );
  */
 void         *ccallt( obj_t com, const char *method, talk_t json );
 void         *ccall2t( obj_t com, const char *method, talk_t json, talk_t json2 );
+void         *ccall4p( obj_t obj, const char *method, void *pointer, void *pointer2, void *pointer3, void *pointer4 );
 void         *scallt( const char *com, const char *method, talk_t json );
 void         *scall2t( const char *com, const char *method, talk_t json, talk_t json2  );
+void         *scall4p( const char *obj, const char *method, void *pointer, void *pointer2, void *pointer3, void *pointer4 );
 /**
  * @brief call a component method use parameter of string
  * @param[in] com a object or string description for object

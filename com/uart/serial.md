@@ -25,6 +25,7 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
                                                                         // uart@nmea is GPS mode
                                                                         // uart@hetui is He command mode
                                                                         // uart@modbus is ModBus
+                                                                        // uart@modbusm is ModBus Master
                                                                         // uart@httppost is HTTP POST the uart data
     "dev":"UART device component",                               // [ string ], modem@lte is LTE modem component
     "ttydev":"UART device pathname",                             // [ string ], Specify the serial device file directly

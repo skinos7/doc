@@ -29,7 +29,7 @@ typedef struct obj_st
 	//		shell file
 	// 		configure file
 	//		kernel module file
-    char type;
+    signed char type;
 
     // corresponding pointer of component structure
     struct com_st *com;                                                // need free

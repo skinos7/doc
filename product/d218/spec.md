@@ -225,7 +225,7 @@ output:
 
 ###### strong signal： **绿色信号强度指示灯, LTE信号强时亮**
 - LTE信号非常强时长亮
-- LTE信号良好是闪
+- LTE信号良好时闪
 
 ###### 2.4G ANT1: **2.4G的WIFI天线1, 用于接IPEX-1头的2.4G WIFI天线**
 

@@ -33,7 +33,7 @@ typedef struct param_st
     // example: id[0] point to "myname"
     // 			id[1] point to '{"test":"testvalue"}'
     // 			id[2] point to "test3"
-    char *option[PARAM_OPTIONS_MAX];
+    void *option[PARAM_OPTIONS_MAX];
 
     // talk options pointer
     // example: id[0] point to NULL
@@ -47,6 +47,9 @@ typedef struct param_st
 
 	// description the option is modifyied
 	boole dirty;
+
+	// description the option is pinter
+	boole pointer;
 
 } param_struct;
 typedef param_struct* param_t;
@@ -69,6 +72,14 @@ param_t     param_create( const char *a );
  *  	@retval NULL for error, errno will be sets
  */
 param_t     param_build( talk_t json );
+/**
+ * @brief create a structure of parameter from pointer(dynamic allocation)
+ * @param[in] pointer 1/2/3/4 attr will be reference as the options
+ * @return parameter
+ * 		@retval parameter for succeed
+ *  	@retval NULL for error, errno will be sets
+ */
+param_t 	param_found( void *pointer, void *pointer2, void *pointer3, void *pointer4 );
 /**
  * @brief create a structure of parameter on json
  * @param[out] parameter, calloc a new paramter when this is NULL
@@ -152,6 +163,17 @@ const char *param_string( param_t parameter, int serial );
  *  	@retval NULL error, errno will be sets
  */
 talk_t      param_talk( param_t parameter, int serial );
+
+/**
+ * @brief get pointer option of required from parameter, this value is also not available when the parameter is released
+ * @param[in] parameter
+ * @param[in] serial serial number( It starts 1 ), -1 will for get the last option
+ * @return pointer option
+ * 		@retval pointer succeed
+ *  	@retval NULL error, errno will be sets
+ */
+void       *param_pointer( param_t parameter, int serial );
+
 /**
  * @brief get string of the options description with parameter, this value is also not available when the parameter is released
  * @param[in] parameter

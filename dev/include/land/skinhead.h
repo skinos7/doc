@@ -203,6 +203,12 @@ typedef int boole;
 #define SERIAL4_COM "uart@serial4"         // uart object
 #define SERIAL_CONVERT_PROJECT "uartgain"  // uart convert proejct
 
+/** uart modbus management component */
+#define MODBUSDRV_PROJECT "modbusdrv"      // modbus slave driver project
+
+/** sensor device management component */
+#define SENSOR_PROJECT "sensor"
+
 
 
 /** gnss management component */
