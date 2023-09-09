@@ -77,7 +77,7 @@ Management LTE modem
     "bsim":"backup simcard function",                         // [ "disable", "enable" ]
     "bsim_cfg":                                               // settings of backup simcard save here, the json be used when "bsim" value is enable
     {
-        "mode":"Specify the simcard",                                                    // [ "auto", "bsim", "msim" ], "bsim" for backup simcard, "msim" for main simcard
+        "mode":"Specify the simcard",                                                    // [ "auto", "bsim", "msim", "detect" ], "bsim" for backup simcard, "msim" for main simcard, "detect" the IO for auto that need detect IO support
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
         "failover":"backup simcard usage duration",                                      // [ number ], the unit is second
