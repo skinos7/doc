@@ -2,9 +2,9 @@
 ## Network frame management 
 Network management framework, define local connections and external connections and data scheduling when multiple external connections coexist
 The network framework defines a three-tier concept to manage network interfaces: 
-- netdev, network inetface of linux, such as eth1, eth2, ath0, usb0
-- ifdev, Abstract network devices, such as wifi@nssid, modem@lte, wifi@asta, can be divided by VLAN and combined by bridge, 
-- ifname, Abstract network connections
+- netdev, network interface of linux, such as eth1, eth2, ath0, usb0
+- ifdev, abstract network devices, such as wifi@nssid, modem@lte, wifi@asta, can be divided by VLAN and combined by bridge, 
+- ifname, abstract network connections
 
 
 #### **configuration( network@frame )**
@@ -71,9 +71,13 @@ The network framework defines a three-tier concept to manage network interfaces:
         "dns2":"Custom DNS2"                             // [ ip address ], This is valid when "custom_dns" is "enable"
     }
 }
-// Examples
+
+// Examples use terminal command line(SSH/TELNET)
+// enter
+network@frame
+// receive
 {
-    "mode":"mix",   // mix hint multiple-connect to internet
+    "mode":"mix",   // mix mean multiple-connect to internet
     "local":                     // only one local connection is a ifname@lan
     {
         "ifname@lan":
@@ -110,12 +114,17 @@ The network framework defines a three-tier concept to manage network interfaces:
         "main":"ifname@lte",            // load balancing at ifname@lte and ifname@lte2
         "back":"ifname@lte2",
         "king":"ifname@wan",            // all data switch to ifname@wan when ifname@wan is online
-        "reserve":"ifname@wisp",        // keep the ifname@wisp online, but don't switch the data via it
+        "reserve":"ifname@wisp",        // keep the ifname@wisp online, but don't switch the internet data via it
         "delay_count":"10",             // Collect statistics on the latest 10 delays and schedule traffic based on the delay
         "delay_divide":"150", 
         "delay_diff":"100"
     }
 }
+
+// Examples use TCP JSON
+// send
+{ "cmd1": { "com":"network@frame" } }
+// receive(Omit here)
 ```
 
 
@@ -127,15 +136,17 @@ The network framework defines a three-tier concept to manage network interfaces:
     {
         "ifname object":
         {
-            "status":"Whether online",    // [ down, up ], up for online, down for offline
-            "inuse":"Whether used"       // [ disable, enable ], enable for in used, disable for not used
+            "status":"Whether online",    // [ "down", "up" ], "up" for online, "down" for offline
+            "inuse":"Whether used"        // [ "disable", "enable" ], enable for in used, disable for not used
         },
         //"ifname object":{ ... }     How many extern connections how many properties show
     }
     ```
     ```shell
-    # examples, get external connections status
+    # examples, get external connections status use terminal command line(SSH/TELNET)
+    # enter
     network@frame.status
+    # return
     {
         "ifname@lte":                   # ifname@lte status is online and inuse current
         {
@@ -148,24 +159,38 @@ The network framework defines a three-tier concept to manage network interfaces:
             "inuse":"disable"
         }
     }
+
+    # Examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame", "op":"status" } }
+    # receive
+    { "cmd1": { "ifname@lte": { "status":"up", "inuse":"enable" }, "ifname@lte2": { "status":"down", "inuse":"disable" } } }
     ```
 
 + `list[]` **list all connections**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
-        "ifname object":"The corresponding ifdev object",
+        "ifname object":"The corresponding ifdev object",      // [ string ]: [ string ]
         //"ifname object":{ ... }     How many extern connections how many properties show
     }
     ```
     ```shell
-    # examples, get all connections
+    # examples, get all connections use terminal command line(SSH/TELNET)
+    # enter
     network@frame.list
+    # return
     {
         "ifname@lan":"bridge@lan",              # local connection named ifname@lan
         "ifname@lte":"modem@lte",               # extern connection named ifname@lte
         "ifname@lte2":"modem@lte2"              # extern connection named ifname@lte2
     }
+
+    # Examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame", "op":"list" } }
+    # receive
+    { "cmd1": { "ifname@lan":"bridge@lan", "ifname@lte":"modem@lte", "ifname@lte2":"modem@lte2" } }
     ```
 
 + `local[]` **list all local connections and infomation**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
@@ -174,24 +199,26 @@ The network framework defines a three-tier concept to manage network interfaces:
     {
         "ifname object":
         {
-            "mode":"current mode",
-            "status":"current state",
-            "ifdev":"corresponding ifdev object",
-            "netdev":"netdev name of linux",
-            "ip":"IP address",
-            "rx_bytes":"receive bytes",
-            "rx_packets":"receive packets",
-            "tx_bytes":"tx bytes",
-            "tx_packets":"tx packets",
-            "mac":"MAC address"
+            "mode":"current mode",                      // [ string ], View the description of the corresponding interface
+            "status":"current state",                   // [ string ], View the description of the corresponding interface
+            "ifdev":"corresponding ifdev object",       // [ string ]
+            "netdev":"netdev name of linux",            // [ string ]
+            "ip":"IP address",                          // [ ip address ]
+            "rx_bytes":"receive bytes",                 // [ number ]
+            "rx_packets":"receive packets",             // [ number ]
+            "tx_bytes":"tx bytes",                      // [ number ]
+            "tx_packets":"tx packets",                  // [ number ]
+            "mac":"MAC address"                         // [ mac address ]
             // ... many other properties show
         }
         //"ifname object":{ ... }     How many local connections how many properties show
     }
     ```
     ```shell
-    # examples, get all the local connections infomation
+    # examples, get all the local connections infomation use terminal command line(SSH/TELNET)
+    # enter
     network@frame.local
+    # return
     {
         "ifname@lan":                           # local connection named ifname@lan
         {
@@ -211,6 +238,11 @@ The network framework defines a three-tier concept to manage network interfaces:
             "mac":"00:03:7F:12:72:06"
         }
     }
+
+    # Examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame", "op":"local" } }
+    # receive(Omit here)
     ```
 
 + `extern[]` **list all extern connections and infomation**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
@@ -219,23 +251,26 @@ The network framework defines a three-tier concept to manage network interfaces:
     {
         "ifname object":
         {
-            "mode":"current mode",
-            "status":"current state",
-            "ifdev":"corresponding ifdev object",
-            "netdev":"netdev name of linux",
-            "ip":"IP address",
-            "rx_bytes":"receive bytes",
-            "rx_packets":"receive packets",
-            "tx_bytes":"tx bytes",
-            "tx_packets":"tx packets",
-            "mac":"MAC address"            
+            "mode":"current mode",                      // [ string ], View the description of the corresponding interface
+            "status":"current state",                   // [ string ], View the description of the corresponding interface
+            "ifdev":"corresponding ifdev object",       // [ string ]
+            "netdev":"netdev name of linux",            // [ string ]
+            "ip":"IP address",                          // [ ip address ]
+            "rx_bytes":"receive bytes",                 // [ number ]
+            "rx_packets":"receive packets",             // [ number ]
+            "tx_bytes":"tx bytes",                      // [ number ]
+            "tx_packets":"tx packets",                  // [ number ]
+            "mac":"MAC address"                         // [ mac address ]
+            // ... View the description of the corresponding interface
         }
         //"ifname object":{ ... }     How many extern connections how many properties show
     }
     ```
     ```shell
-    # examples, get all the extern connections infomation
-    network@frame.local
+    # examples, get all the extern connections infomation use terminal command line(SSH/TELNET)
+    # enter
+    network@frame.extern
+    # return
     {
         "ifname@lte":
         {
@@ -299,6 +334,11 @@ The network framework defines a three-tier concept to manage network interfaces:
             "csq":"19"
         }
     }
+
+    # Examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame", "op":"extern" } }
+    # receive(Omit here)
     ```
 
 + `vpn[]` **list all vpn connections and infomation**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
@@ -307,23 +347,31 @@ The network framework defines a three-tier concept to manage network interfaces:
     {
         "ifname object":
         {
-            "mode":"current mode",
-            "status":"current state",
-            "ifdev":"corresponding ifdev object",
-            "netdev":"netdev name of linux",
-            "ip":"IP address",
-            "rx_bytes":"receive bytes",
-            "rx_packets":"receive packets",
-            "tx_bytes":"tx bytes",
-            "tx_packets":"tx packets",
-            "mac":"MAC address"            
+            "mode":"current mode",                      // [ string ], View the description of the corresponding interface
+            "status":"current state",                   // [ string ], View the description of the corresponding interface
+            "ifdev":"corresponding ifdev object",       // [ string ]
+            "netdev":"netdev name of linux",            // [ string ]
+            "ip":"IP address",                          // [ ip address ]
+            "rx_bytes":"receive bytes",                 // [ number ]
+            "rx_packets":"receive packets",             // [ number ]
+            "tx_bytes":"tx bytes",                      // [ number ]
+            "tx_packets":"tx packets",                  // [ number ]
+            "mac":"MAC address"                         // [ mac address ]
+            // ... View the description of the corresponding interface   
         }
         //"ifname object":{ ... }     How many extern connections how many properties show
     }
     ```
     ```shell
-    # examples, get all the vpn connections infomation
+    # examples, get all the vpn connections infomation use terminal command line(SSH/TELNET)
+    # enter
     network@frame.vpn
+    # return(Omit here)
+
+    # Examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame", "op":"vpn" } }
+    # receive(Omit here)
     ```
 
 + `outer[]` **list all extern and vpn ifname and its infomation**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
@@ -332,46 +380,55 @@ The network framework defines a three-tier concept to manage network interfaces:
     {
         "ifname object":
         {
-            "mode":"current mode",
-            "status":"current state",
-            "ifdev":"corresponding ifdev object",
-            "netdev":"netdev name of linux",
-            "ip":"IP address",
-            "rx_bytes":"receive bytes",
-            "rx_packets":"receive packets",
-            "tx_bytes":"tx bytes",
-            "tx_packets":"tx packets",
-            "mac":"MAC address"            
+            "mode":"current mode",                      // [ string ], View the description of the corresponding interface
+            "status":"current state",                   // [ string ], View the description of the corresponding interface
+            "ifdev":"corresponding ifdev object",       // [ string ]
+            "netdev":"netdev name of linux",            // [ string ]
+            "ip":"IP address",                          // [ ip address ]
+            "rx_bytes":"receive bytes",                 // [ number ]
+            "rx_packets":"receive packets",             // [ number ]
+            "tx_bytes":"tx bytes",                      // [ number ]
+            "tx_packets":"tx packets",                  // [ number ]
+            "mac":"MAC address"                         // [ mac address ]
+            // ... View the description of the corresponding interface    
         }
         //"ifname object":{ ... }     How many extern connections how many properties show
     }
     ```
     ```shell
-    # examples, get all the extern and vpn connections infomation
+    # examples, get all the extern and vpn connections infomation use terminal command line(SSH/TELNET)
+    # enter
     network@frame.outer
+    # return(Omit here)
+
+    # Examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame", "op":"outer" } }
+    # receive(Omit here)
     ```
 
 + `default[]` **get current default connection and infomation**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
-        "ifname":"ifname object",
-        "mode":"current mode",
-        "status":"current state",
-        "ifdev":"corresponding ifdev object",
-        "netdev":"netdev name of linux",
-        "ip":"IP address",
-        "rx_bytes":"receive bytes",
-        "rx_packets":"receive packets",
-        "tx_bytes":"tx bytes",
-        "tx_packets":"tx packets",
-        "mac":"MAC address"
-        // ... many other properties show
+        "mode":"current mode",                      // [ string ], View the description of the corresponding interface
+        "status":"current state",                   // [ string ], View the description of the corresponding interface
+        "ifdev":"corresponding ifdev object",       // [ string ]
+        "netdev":"netdev name of linux",            // [ string ]
+        "ip":"IP address",                          // [ ip address ]
+        "rx_bytes":"receive bytes",                 // [ number ]
+        "rx_packets":"receive packets",             // [ number ]
+        "tx_bytes":"tx bytes",                      // [ number ]
+        "tx_packets":"tx packets",                  // [ number ]
+        "mac":"MAC address"                         // [ mac address ]
+        // ... View the description of the corresponding interface
     }
     ```
     ```shell
-    # examples, get current default connection infomation
+    # examples, get current default connection infomation use terminal command line(SSH/TELNET)
+    # enter
     network@frame.default
+    # return
     {
         "ifname":"ifname@lte2",              # current default connetion is ifname@lte2, and the above is the infomation
         "mode":"dhcpc",
@@ -397,83 +454,181 @@ The network framework defines a three-tier concept to manage network interfaces:
         "state":"connect",
         "rssi":"-75",
         "signal":"4"
-    }    
+    }
+
+    # Examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame", "op":"default" } }
+    # receive(Omit here)
     ```
 
 
 
 + `main[]` **new session immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples
+    # examples use terminal command line(SSH/TELNET)
+    # enter
     network@frame.main
+    # return
     ttrue
+
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"main" } }
+    # receive
+    { "cmd1":"ttrue"}
     ```
 
 + `back[]` **new session immediately uses the backup connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples
+    # examples use terminal command line(SSH/TELNET)
+    # enter
     network@frame.back
+    # return
     ttrue
+
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"main" } }
+    # receive
+    { "cmd1":"ttrue"}
     ```
 
-+ `back[]` **new session immediately load balance on main and back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
++ `both[]` **new session immediately load balance on main and back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples
-    network@frame.back
+    # examples use terminal command line(SSH/TELNET)
+    # enter
+    network@frame.both
+    # return
     ttrue
+    
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"both" } }
+    # receive
+    { "cmd1":"ttrue"}
     ```
 
 + `manual[]` **disable automatic load balance, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples
+    # examples for terminal command line(SSH/TELNET)
+    # enter
     network@frame.manual
+    # return
     ttrue
+    
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"manual" } }
+    # receive
+    { "cmd1":"ttrue"}
     ```
 
 + `auto[]` **enable automatic load balance, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples
+    # examples use terminal command line(SSH/TELNET)
+    # enter
     network@frame.auto
+    # return
     ttrue
+    
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"auto" } }
+    # receive
+    { "cmd1":"ttrue"}
     ```
 
 
 
 + `src_main[ source ip address ]` **set new session of source ip address immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, the source ip 192.168.8.222 new session route to main connection
+    # examples, the source ip 192.168.8.222 new session route to main connection use terminal command line(SSH/TELNET)
+    # enter    
     network@frame.src_main[ 192.168.8.222 ]
+    # return
     ttrue
+
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"src_main", "1":"192.168.8.222" } }
+    # receive
+    { "cmd1":"ttrue"}
     ```
+
 + `dest_main[ dest ip address ]` **set new session of dest ip address immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, the dest ip 114.114.114.114 new session route to main connection
+    # examples, the dest ip 114.114.114.114 new session route to main connection use terminal command line(SSH/TELNET)
+    # enter    
     network@frame.dest_main[ 114.114.114.114 ]
+    # receive
     ttrue
+
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"dest_main", "1":"114.114.114.114" } }
+    # receive
+    { "cmd1":"ttrue"}
     ```
 
 + `src_back[ source ip address ]` **set new session of source ip address immediately uses the back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, the source ip 192.168.8.111 new session route to back connection
+    # examples, the source ip 192.168.8.111 new session route to back connection use terminal command line(SSH/TELNET)
+    # enter    
     network@frame.src_back[ 192.168.8.111 ]
+    # receive
     ttrue
+
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"src_back", "1":"192.168.8.111 " } }
+    # receive
+    { "cmd1":"ttrue"}
     ```
+
 + `dest_main[ dest ip address ]` **set new session of dest ip address immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, the dest ip 114.114.115.115 new session route to back connection
+    # examples, the dest ip 114.114.115.115 new session route to back connection use terminal command line(SSH/TELNET)
+    # enter    
     network@frame.dest_back[ 114.114.115.115 ]
+    # receive
     ttrue
+
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"dest_back", "1":"114.114.115.115" } }
+    # receive
+    { "cmd1":"ttrue"}
     ```
 
 + `src_both[ source ip address ]` **set new session of source ip address load balance on main and back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, the source ip 192.168.8.123 new session load balance on main and back connection
+    # examples, the source ip 192.168.8.123 new session load balance on main and back connection use terminal command line(SSH/TELNET)
+    # enter    
     network@frame.src_both[ 192.168.8.123 ]
+    # receive
     ttrue
+
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"src_both", "1":"192.168.8.123" } }
+    # receive
+    { "cmd1":"ttrue"}
+    ```
+
 + `dest_both[ dest ip address ]` **set new session of dest ip address load balance on main and back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, the dest ip 8.8.8.8 new session load balance on main and back connection
+    # examples, the dest ip 8.8.8.8 new session load balance on main and back connection use terminal command line(SSH/TELNET)
+    # enter    
     network@frame.dest_both[ 8.8.8.8 ]
+    # receive
     ttrue
+
+    # examples use TCP JSON
+    # send
+    { "cmd1": { "com":"network@frame","op":"dest_both", "1":"8.8.8.8" } }
+    # receive
+    { "cmd1":"ttrue"}
+    ```
 
 
