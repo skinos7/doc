@@ -13,7 +13,7 @@
 #### 在其它电脑主机上运行日志接收软件
 - 首先关闭要接收日志的主机上的防火墙及其它防火墙软件
 - 下载日志接入软件
-    ftp://ftp.wmdevice.com/pub/tools/MT_Syslog.exe
+    [Syslog抓日志程序](./MT_Syslog.exe) 
 - 运行MT_Syslog.exe, 默认MT_Syslog.exe会在UDP端口514上接收日志, 而设备上的服务器日志端口默认也是514， 所以默认不需要改动日志端口
 ![avatar](./remote_mtsyslog.png)
 
