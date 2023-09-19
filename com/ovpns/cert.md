@@ -44,13 +44,13 @@ Management of OPENVPN server certificate
     # examples, list openvpn server CA and server certificate/private key file
     ovpns@cert.list_key
     {
-        "ca.crt":"/var/.cfg/ovpns/ca.crt",                     // CA certificate
-        "ca.key":"/var/.cfg/ovpns/ca.key",                     // CA private key
-        "server.crt":"/var/.cfg/ovpns/server.crt",             // server certificate
-        "server.key":"/var/.cfg/ovpns/server.key",             // server private key
-        "server.tlskey":"/var/.cfg/ovpns/server.tlskey",       // TLS key
-        "server.statickey":"/var/.cfg/ovpns/server.statickey", // static key
-        "server.dh2048":"/var/.cfg/ovpns/server.dh2048"        // Diffie-Hellman parameter
+        "ca.crt":"/mnt/config/ovpns/ca.crt",                     // CA certificate
+        "ca.key":"/mnt/config/ovpns/ca.key",                     // CA private key
+        "server.crt":"/mnt/config/ovpns/server.crt",             // server certificate
+        "server.key":"/mnt/config/ovpns/server.key",             // server private key
+        "server.tlskey":"/mnt/config/ovpns/server.tlskey",       // TLS key
+        "server.statickey":"/mnt/config/ovpns/server.statickey", // static key
+        "server.dh2048":"/mnt/config/ovpns/server.dh2048"        // Diffie-Hellman parameter
     }
     ```
 
@@ -77,13 +77,13 @@ Management of OPENVPN server certificate
     {
         "test":                                          // client name is test
         {
-            "key":"/var/.cfg/ovpns/server.key.test",         // client test private key
-            "crt":"/var/.cfg/ovpns/server.crt.test"          // client test certificate
+            "key":"/mnt/config/ovpns/server.key.test",         // client test private key
+            "crt":"/mnt/config/ovpns/server.crt.test"          // client test certificate
         },
         "test2":                                         // client name is test2
         {
-            "crt":"/var/.cfg/ovpns/server.crt.test2",        // client test2 private key
-            "key":"/var/.cfg/ovpns/server.key.test2"         // client test2 certificate
+            "crt":"/mnt/config/ovpns/server.crt.test2",        // client test2 private key
+            "key":"/mnt/config/ovpns/server.key.test2"         // client test2 certificate
         }
     }
     ```

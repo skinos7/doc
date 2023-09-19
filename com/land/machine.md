@@ -291,7 +291,7 @@ ttrue
             "available":"0",
             "use":"100%"
         },
-        "/tmp/.cfg":                                     # configure file system
+        "/tmp/mnt/config":                                     # configure file system
         {
             "filesystem":"/dev/mtdblock7",
             "size":"1.0M",
@@ -299,7 +299,7 @@ ttrue
             "available":"824.0K",
             "use":"20%"
         },
-        "/tmp/mnt/int":                                  # interval file system for fpk install
+        "/tmp/mnt/internal":                                  # interval file system for fpk install
         {
             "filesystem":"/dev/mtdblock6",
             "size":"3.8M",

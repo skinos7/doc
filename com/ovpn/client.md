@@ -143,11 +143,11 @@ Management of OPENVPN client
     # examples, list first openvpn client all key file
     ovpn@client.list_key
     {
-        "ca":"/var/.cfg/ovpn/client.cacrt",            // CA certificate
-        "crt":"/var/.cfg/ovpn/client.crt",             // client certificate
-        "key":"/var/.cfg/ovpn/client.key",             // private key
-        "statickey":"/var/.cfg/ovpn/client.statickey", // static key
-        "tlskey":"/var/.cfg/ovpn/client.tlskey"        // TLS key
+        "ca":"/mnt/config/ovpn/client.cacrt",            // CA certificate
+        "crt":"/mnt/config/ovpn/client.crt",             // client certificate
+        "key":"/mnt/config/ovpn/client.key",             // private key
+        "statickey":"/mnt/config/ovpn/client.statickey", // static key
+        "tlskey":"/mnt/config/ovpn/client.tlskey"        // TLS key
     }
     ```
 
