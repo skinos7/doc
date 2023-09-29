@@ -1,7 +1,7 @@
 
 ***
-## Management portal of web page
-Administration of equipment Management portal web page
+## Management portal show of web page
+Administration of equipment Management portal show web page
 
 #### Configuration( portal@show )
 

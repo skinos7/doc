@@ -1,60 +1,60 @@
-***
-## chilli组件（portal@chilli)  
-管理chilli的组件
 
-#### **配置** 
+***
+## Management chilli portal of web page
+Administration of equipment Management chilli portal web page
+
+#### Configuration( portal@chilli )
+
 ```json
-// 属性介绍
+// Attributes introduction 
 {
-    "status":"状态",                     // enable为启用, disable为关闭
-    "local":"指定工作的本地接口",        // 如ifname@lan表示LAN口
-    "port":"端口",
-    "uiport":"UI端口", 
-    "listen":"工作的本地地址",
-    "net":"网段",
-    "mask":"子网掩码",
-    "dns":"指定DNS",
-    "dns2":"指定备用DNS",
-    "radius_server":"Radius服务器",
-    "radius_server2":"备用Radius服务器",
-    "radius_secret":"Radius服务器密钥",
-    "radius_authport":"Radius认证端口",
-    "radius_acctport":"Radius计费端口",
-    "radius_nasid":"Radius NAS标识",
-    "uam_format":"UMA Portal地址",
-    "uam_secret":"UMA密钥",
-    "uam_allowed":"UMA允许地址",         // 多个以逗号分隔
-    "uam_domains":"UMA允许域名",         // 多个以逗号分隔
-    "uam_aliasname":"UMA别名",
-    "www_dir":"本地网页目录",
-    "local_opt":"local.conf自定义选项",   // 多个以分号分隔, 优先级高于之上参数的值
+    "status":"start at system startup",                 // [ "disable", "enable" ]
+    "extern":"extern ifname",                           // [ "ifname@lte", "ifname@lte2", "ifname@wan", ... ], default is the default gateway
+    "local":"local ifname",                             // [ "ifname@lan", "ifname@lan2", "ifname@lan3", "wifi@nssid", "wifi@assid, "... ], default is the wifi@nssid
+
+    "ip":"chilli interface ip address",                 // [ ip address ]
+    "mask":"chilli interface netmask",                  // [ netmask ]
+    "network":"chilli interface network",               // [ network ]
+    "dns":"dns server",                                 // [ ip address ]
+    "dns2":"dns server",                                // [ ip address ]
+
+    "port":"chilli service port",                       // [ number ], 1-65535
+    "uiport":"chilli ui port",                          // [ number ], 1-65535
+
+    "radius_nasid":"Radius NAS Identify",               // [ string ]
+    "radius_server":"Radius server",                    // [ ip address ]
+    "radius_server2":"Radius server",                   // [ ip address ]
+    "radius_secret":"Radius server key",                // [ string ]
+    "radius_authport":"Radius auth port",               // [ number ], 1-65535
+    "radius_acctport":"Radius account port",            // [ number ], 1-65535
+    
+    "uam_format":"UMA Portal URL",                      // [ string ]
+    "uam_homepage":"UMA Homepage URL",                  // [ string ]
+    "uam_secret":"UMA secret",
+    "uam_allowed":"UMA allowed address",                // [ string ], Multiple addresses are separated by space
+    "uam_domains":"UMA allowed domain",                 // [ string ], Multiple domains are separated by space
+
+    "defaults_opt":"defaults custom options",            // [ string ], Multiple options are separated by semicolons
+    "local_opt":"local.conf custom options"              // [ string ], Multiple options are separated by semicolons
 }
-// 示例
+```
+
+Examples, show all the configure
+```shell
+portal@show
 {
-    "status":"disable",
-    "local":"ifname@lan",
-    "port":"3990",
-    "uiport":"4990",
-    "listen":"10.1.0.1",
-    "net":"10.1.0.0",
-    "mask":"255.255.255.0",
-    "dns":"",
-    "dns2":"",
-    "radius_server":"",
-    "radius_server2":"",
-    "radius_secret":"",
-    "radius_authport":"1812",
-    "radius_acctport":"1813",
-    "radius_nasid":"nas01",
-    "uam_format":"",
-    "uam_secret":"",
-    "uam_allowed":"",
-    "uam_domains":"",
-    "uam_aliasname":"chilli",
-    "hs_opt":"",
-    "main_opt":"",
-    "local_opt":"",
-    "www_dir":"/mnt/interval/chilli.www"       // 本地网页目录位于/mnt/interval/chilli.www
+    "status":"enable",             # start this service at system startup
+    "port":"8080"                  # service port 8080
 }
+```  
+Examples, modify the port of portal web page server
+```shell
+portal@show:port=2222
+ttrue
+```  
+Examples, disable the portal web page server
+```shell
+portal@show:status=disable
+ttrue
 ```  
 
