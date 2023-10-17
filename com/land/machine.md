@@ -1,7 +1,7 @@
 
 ***
-## Management of basic infomation component
-Management equipment basic infomation
+## Management of Basic Infomation
+Manage gateway basic infomation
 
 #### Configuration( land@machine )
 
@@ -9,167 +9,188 @@ Management equipment basic infomation
 // Attributes introduction 
 {
     // main attributes
-    "mode":"equipment operator mode",                // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
+    "mode":"gateway operator mode",                 // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
                                                        // "ap": access point
                                                        // "wisp": 2.4G Wireless Internet Service Provider connection
                                                        // "nwisp": 5.8G Wireless Internet Service Provider connection( need the board support 5.8G wirless baseband)
                                                        // "gateway": wire WAN gateway
                                                        // "dgateway": Dual wire WAN gateway
                                                        // "misp": LTE Mobile Internet Service Provider connection( need the board support LTE baseband)
-                                                       // "nmisp": Next LTE/NR Mobile Internet Service Provider connection( need the board support LTE/NR baseband)
-                                                       // "dmisp": Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
+                                                       // "nmisp": Next Mobile(NR/LTE) Internet Service Provider connection( need the board support NR/LTE baseband)
+                                                       // "dmisp": Dual Mobile(LTE/NR) Internet Service Provider connection( need the board support two LTE/NR baseband)
                                                        // "mix": custom mix connection from multiple internet connection
                                                      
-    "name":"equipment name",                         // <string>
-    "mac":"equipment MAC address",                   // < mac address >
-    "macid":"equipment MAC identify or serial id",   // < string >
-    "language":"equipment language",                 // [ "cn", "en", "jp", ... ], language code in two letter
+    "name":"gateway name",                          // < string >, The name cannot contain spaces
+    "mac":"gateway MAC address",                    // < mac address >
+    "macid":"gateway MAC identify or serial id",    // < string >
+    "language":"gateway language",                  // [ "cn", "en", "jp", ... ], language code in two letter, "cn" for Chinese, “en" for English
     // other attributes
-    "cfgversion":"equipent configure version",       // [ string ]
-    "gpversion":"equipent group configure version"   // [ string ]
+    "cfgversion":"gateway configure version",       // [ string ]
+    "gpversion":"gateway group configure version"   // [ string ]
 }
 ```
-Examples, show all configure
+
+Examples, show all basic configure
 ```shell
 land@machine
 {
-    "mode":"nmisp",                              # equipment operator mode Next LTE/NR Mobile Internet Service Provider connection
-    "name":"ASHYELF-12AAD0",                     # equipment name is ASHYELF-12AAD0
-    "mac":"00:03:7F:12:AA:D0",                   # equipment MAC is 88:12:4E:20:46:B0
-    "macid":"00037F12AAD0",                      # equipment serial id is 88124E2046B0
-    "language":"cn",                             # equipent language is chinese
-    "cfgversion":"1"                             # equipent configure version is 1(hint modify one times)
+    "mode":"nmisp",                              # gateway operator mode Next Mobile(LTE/NR) Internet Service Provider connection
+    "name":"ASHYELF-12AAD0",                     # gateway name is ASHYELF-12AAD0
+    "mac":"00:03:7F:12:AA:D0",                   # gateway MAC is 88:12:4E:20:46:B0
+    "macid":"00037F12AAD0",                      # gateway serial id is 88124E2046B0
+    "language":"cn",                             # gateway language is chinese
+    "cfgversion":"1"                             # gateway configure version is 1(hint modify one times)
 }
 ```  
-Examples, modify the machine name
+
+Examples, modify the gateway name
 ```shell
 land@machine:name=NewMachineName
 ttrue
 ```  
 
+Examples, show the gateway name after modified
+```shell
+land@machine:name
+NewMachineName
+```  
+
+Examples, modify the operation mode to "mix"
+```shell
+land@machine:mode=mix
+ttrue
+```  
+
+Examples, modify the gateway language to English
+```shell
+land@machine:language=en
+ttrue
+```  
+
 #### **Methods**
 
-+ `default[ [delay] ]` **default the equipent configure and restart**, *succeed return ttrue or cannot return, failed return tfalse, error return terror*
++ `default[ [delay] ]` **default the gateway configure and restart**, *succeed return ttrue or cannot return, failed return tfalse, error return terror*   
     ```shell
-    # examples, default the equipent configure and restart immediately( the call may cannot return beacuse the system restart now )
+    # examples, default the gateway configure and restart immediately( the call may cannot return beacuse the system restart now )
     land@machine.default
     # ---- system restart -----
-    # examples, default the equipent configure and restart after 10 second( the call will be return immediately )
+    # examples, default the gateway configure and restart after 10 second( the call will be return immediately )
     land@machine.default[ 10 ]
     ttrue
     ```
 
-+ `default_block[]` **disable all operator of default the equipent configure**, *succeed return ttrue, failed return tfalse, error return terror*
++ `default_block[]` **disable all operator of default the gateway configure**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, disable all operator of default the equipent configure
+    # examples, disable all operator of default the gateway configure
     land@machine.default_block
     ttrue
-    # then you cannot defualt the equipent configure after land@machine.default_block
+    # then you cannot defualt the gateway configure after land@machine.default_block
     land@machine.default
     machine.default: Operation not permitted
     ```
 
-+ `default_unblock[]` **enable all operator of default the equipent configure**, *succeed return ttrue, failed return tfalse, error return terror*
++ `default_unblock[]` **enable all operator of default the gateway configure**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # first, disable all operator of default the equipent configure
+    # first, disable all operator of default the gateway configure
     land@machine.default_block
     ttrue
-    # then you cannot defualt the equipent configure after land@machine.default_block
+    # then you cannot defualt the gateway configure after land@machine.default_block
     land@machine.default
     machine.default: Operation not permitted
-    # examples, enable all operator of default the equipent configure
+    # examples, enable all operator of default the gateway configure
     land@machine.default_unblock
     ttrue
-    # then you can default the equipent configure
+    # then you can default the gateway configure
     land@machine.default
     # ---- system restart ----
     ```
 
-+ `restart[ [delay] ]` **reboot the equipent**, *succeed return ttrue or cannot return, failed return tfalse, error return terror*
++ `restart[ [delay] ]` **reboot the gateway**, *succeed return ttrue or cannot return, failed return tfalse, error return terror*   
     ```shell
-    # examples, reboot the equipent immediately( the call may cannot return beacuse the system restart now )
+    # examples, reboot the gateway immediately( the call may cannot return beacuse the system restart now )
     land@machine.restart
     ttrue
-    # examples, reboot the equipent after 10 second( the call will be return immediately )
+    # examples, reboot the gateway after 10 second( the call will be return immediately )
     land@machine.restart[ 10 ]
     ttrue
     ```
 
-+ `restart_block[]` **disable all operator of reboot the equipent**, *succeed return ttrue, failed return tfalse, error return terror*
++ `restart_block[]` **disable all operator of reboot the gateway**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, disable all operator of reboot the equipent
+    # examples, disable all operator of reboot the gateway
     land@machine.restart_block
     ttrue
-    # then you cannot reboot the equipent after land@machine.restart_block
+    # then you cannot reboot the gateway after land@machine.restart_block
     land@machine.restart
     machine.restart: Operation not permitted
     ```
 
-+ `restart_unblock[]` **enable all operator of reboot the equipent**, *succeed return ttrue, failed return tfalse, error return terror*
++ `restart_unblock[]` **enable all operator of reboot the gateway**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # first, disable all operator of reboot the equipent
+    # first, disable all operator of reboot the gateway
     land@machine.restart_block
     ttrue
-    # then you cannot reboot the equipent after land@machine.default_block
+    # then you cannot reboot the gateway after land@machine.default_block
     land@machine.restart
     machine.restart: Operation not permitted
-    # examples, enable all operator of reboot the equipent
+    # examples, enable all operator of reboot the gateway
     land@machine.restart_unblock
     ttrue
-    # then you can reboot the equipent
+    # then you can reboot the gateway
     land@machine.restart
     # ---- system restart ----
     ```
 
-+ `status[]` **get the equipent basic infomation**, *succeed return talk to describes basic infomation, failed return NULL, error return terror*
++ `status[]` **get the gateway basic infomation**, *succeed return talk to describes basic infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
-        "mode":"equipment operator mode",              // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
+        "mode":"gateway operator mode",              // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
                                                          // "ap": access point
                                                          // "wisp": 2.4G Wireless Internet Service Provider connection
                                                          // "nwisp": 5.8G Wireless Internet Service Provider connection( need the board support 5.8G wirless baseband)
                                                          // "gateway": wire WAN gateway
                                                          // "dgateway": Dual wire WAN gateway
                                                          // "misp": LTE Mobile Internet Service Provider connection( need the board support LTE baseband)
-                                                         // "nmisp": Next LTE/NR Mobile Internet Service Provider connection( need the board support LTE/NR baseband)
-                                                         // "dmisp": Dual LTE/NR Mobile Internet Service Provider connection( need the board support two LTE/NR baseband)
+                                                         // "nmisp": Next Mobile(NR/LTE) Internet Service Provider connection( need the board support NR/LTE baseband)
+                                                         // "dmisp": Dual Mobile(LTE/NR) Internet Service Provider connection( need the board support two LTE/NR baseband)
                                                          // "mix": custom mix connection from multiple internet connection
-        "name":"equipment name",
-        "platform":"equipment platform identify",
-        "hardware":"equipment hardware identify",
-        "custom":"equipment custom identify",
-        "scope":"equipment scope identify",
-        "version":"equipment version",
+        "name":"gateway name",
+        "platform":"gateway platform identify",
+        "hardware":"gateway hardware identify",
+        "custom":"gateway custom identify",
+        "scope":"gateway scope identify",
+        "version":"gateway version",
         "livetime":"system running time",                // hour:minute:second:day
         "current":"current date",                        // hour:minute:second:month:day:year
-        "mac":"equipment MAC address",
-        "macid":"equipment MAC identify or serial id",
-        "model":"equipment model",
-        "magic":"equipment magic identify"
+        "mac":"gateway MAC address",
+        "macid":"gateway MAC identify or serial id",
+        "model":"gateway model",
+        "magic":"gateway magic identify"
     }    
     ```
+
     ```shell
-    # examples, get the equipent basic infomation
+    # examples, get the gateway basic infomation
     land@machine.status
     {
-        "mode":"nmisp",                                   # equipment operator mode Next LTE/NR Mobile Internet Service Provider connection
-        "name":"ASHYELF-12AAD0",                          # equipment name is ASHYELF-12AAD0
-        "platform":"smtk2",                               # equipment platform identify is smtk2( hint the basic sdk is second release of smtk )
-        "hardware":"mt7621",                              # equipment hardware identify is mt7621( hint the chip is MT7621 )
-        "custom":"d228",                                  # equipment custom identify is d228( hint the product name is D228 )
-        "scope":"std",                                    # equipment scope identify is std( hint this is a standand release for D228 )
-        "version":"tiger7-20220218",                      # equipment version is tiger7-20220218( hint the version publish at 2022.02.18 )
-        "livetime":"00:06:35:0",                          # equipment It has been running for 6 minutes and 35 seconds
+        "mode":"nmisp",                                   # gateway operator mode Next Mobile(NR/LTE) Internet Service Provider connection
+        "name":"ASHYELF-12AAD0",                          # gateway name is ASHYELF-12AAD0
+        "platform":"smtk2",                               # gateway platform identify is smtk2( hint the basic sdk is second release of smtk )
+        "hardware":"mt7621",                              # gateway hardware identify is mt7621( hint the chip is MT7621 )
+        "custom":"d228",                                  # gateway custom identify is d228( hint the product name is D228 )
+        "scope":"std",                                    # gateway scope identify is std( hint this is a standand release for D228 )
+        "version":"tiger7-20220218",                      # gateway version is tiger7-20220218( hint the version publish at 2022.02.18 )
+        "livetime":"00:06:35:0",                          # gateway It has been running for 6 minutes and 35 seconds
         "current":"14:54:30:05:04:2022",                  # current date is 2022.05.04, It's 14:54 and 30 seconds
-        "mac":"00:03:7F:12:AA:D0",                        # equipment MAC is 00:03:7F:12:AA:D0
-        "macid":"00037F12AAD0",                           # equipment serial id is 00037F12AAD0
-        "model":"5228",                                   # equipment model is 5228
-        "magic":"870E2935E4605D02"                        # equipent magic is 870E2935E4605D02
+        "mac":"00:03:7F:12:AA:D0",                        # gateway MAC is 00:03:7F:12:AA:D0
+        "macid":"00037F12AAD0",                           # gateway serial id is 00037F12AAD0
+        "model":"5228",                                   # gateway model is 5228
+        "magic":"870E2935E4605D02"                        # gateway magic is 870E2935E4605D02
     }
     ```
 
-+ `cpuinfo[]` **get the equipent CPU infomation**, *succeed return talk to describes CPU infomation, failed return NULL, error return terror*
++ `cpuinfo[]` **get the gateway CPU infomation**, *succeed return talk to describes CPU infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -186,8 +207,9 @@ ttrue
         //"cpu core identify":{ cpu infomation }     How many CPU cores show how many properties
     }
     ```
+
     ```shell
-    # examples, get the equipent cpu infomation
+    # examples, get the gateway cpu infomation
     land@machine.cpuinfo
     {
         "cpu":                       # total CPU
@@ -243,7 +265,7 @@ ttrue
     }
     ```
 
-+ `meminfo[]` **get the equipent memory infomation**, *succeed return talk to describes memory infomation, failed return NULL, error return terror*
++ `meminfo[]` **get the gateway memory infomation**, *succeed return talk to describes memory infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -253,9 +275,10 @@ ttrue
         "cached":"page cache size"         // The unit is KB  
     }
     ```
+
     ```shell
-    # examples, get the equipent memory infomation
-    land@machine.cpuinfo
+    # examples, get the gateway memory infomation
+    land@machine.meminfo
     {
         "total":"125584",
         "free":"54076",
@@ -264,7 +287,7 @@ ttrue
     }
     ```
 
-+ `fsinfo[]` **get the equipent filesystem infomation**, *succeed return talk to describes filesystem infomation, failed return NULL, error return terror*
++ `fsinfo[]` **get the gateway filesystem infomation**, *succeed return talk to describes filesystem infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -279,8 +302,9 @@ ttrue
         }
     }
     ```
+
     ```shell
-    # examples, get the equipent filesystem infomation
+    # examples, get the gateway filesystem infomation
     land@machine.fsinfo
     {
         "/":                                             # root file system
@@ -310,7 +334,7 @@ ttrue
     }
     ```
 
-+ `sginfo[]` **get the equipent storage filesystem infomation**, *succeed return talk to describes storage filesystem infomation, failed return NULL, error return terror*
++ `sginfo[]` **get the gateway storage filesystem infomation**, *succeed return talk to describes storage filesystem infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -325,8 +349,9 @@ ttrue
         }
     }
     ```
+
     ```shell
-    # examples, get the equipent storage filesystem infomation
+    # examples, get the gateway storage filesystem infomation
     land@machine.sginfo
     {
         "config":                                 # configure file system
@@ -347,7 +372,7 @@ ttrue
     }
     ```
 
-+ `esinfo[]` **get the equipent extension storage filesystem infomation**, *succeed return talk to describes extension storage filesystem infomation, failed return NULL, error return terror*
++ `esinfo[]` **get the gateway extension storage filesystem infomation**, *succeed return talk to describes extension storage filesystem infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -362,8 +387,9 @@ ttrue
         }
     }
     ```
+
     ```shell
-    # examples, get the equipent extension storage filesystem infomation
+    # examples, get the gateway extension storage filesystem infomation
     land@machine.sginfo
     {
         "int":                                    # interval file system for fpk install
@@ -377,7 +403,7 @@ ttrue
     }
     ```
 
-+ `psinfo[]` **get the equipent process infomation**, *succeed return talk to describes process infomation, failed return NULL, error return terror*
++ `psinfo[]` **get the gateway process infomation**, *succeed return talk to describes process infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -392,8 +418,9 @@ ttrue
         }
     }
     ```
+
     ```shell
-    # examples, get the equipent process infomation
+    # examples, get the gateway process infomation
     land@machine.psinfo
     {
         "1":
@@ -428,50 +455,6 @@ ttrue
         # ......
     }
     ```
-
-
-
-## 设备基本信息管理
-管理设备基本信息
-
-#### **配置( land@machine )**  
-```json
-// 属性介绍
-{
-    // 主要的属性
-    "mode":"设备工作模式",                           // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
-                                                       // "ap": 热点
-                                                       // "wisp": 2.4G无线连网
-                                                       // "nwisp": 5.8G无线连网
-                                                       // "gateway": 有线宽带
-                                                       // "dgateway": 双(WAN)有线宽带
-                                                       // "misp": 4G网关
-                                                       // "nmisp": 4G/5G网关
-                                                       // "dmisp": 双4G/5G网关
-                                                       // "mix": 可自定义的混合连网
-                                                     
-    "name":"设备名称",                              // <字符串>
-    "mac":"设备MAC地址",                            // <MAC地址>
-    "macid":"设备序列号",                           // <字符串>
-    "language":"设备语言",                          // [ "cn", "en", "jp", ... ], 两个小写字母表示的国家代号
-    // 其它属性
-    "cfgversion":"设备配置版本",                     // [ 字符串 ]
-    "gpversion":"设备组配置版本",                    // [ 字符串 ]    
-}
-```
-示例, 显示所有配置
-```shell
-land@machine
-{
-    "mode":"nmisp",                              # 设备工作模式为4G/5G网关
-    "name":"ASHYELF-12AAD0",                     # 设备名称为ASHYELF-12AAD0
-    "mac":"00:03:7F:12:AA:D0",                   # 设备MAC为00:03:7F:12:AA:D0
-    "macid":"00037F12AAD0",                      # 设备序列号为00037F12AAD0
-    "language":"cn",                             # 设备语言为中文
-    "cfgversion":"1"                             # 设备配置版本(1暗示配置被修改过1次)
-}
-
-```  
 
 
 

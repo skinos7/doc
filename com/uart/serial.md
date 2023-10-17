@@ -1,13 +1,13 @@
 ***
-## UART management components
+## UART Management
 Manage UART. Usually uart@serial is the first UART. If there are multiple UART in the system, uart@serial2 will be the second UART, and increase by degress
 **UART application components**: UART implementation manager, uart@nmea, uart@dtu, uart@hetui, uart@modbus, uart@httppost, specified by "concom" in configuration 
 **UART device component**: Provides UART information for UART application components, such as modem@lte and modem@lte2, "dev" is specified in the configuration 
 **UART Data conversion component**: The UART application component calls the interface of the component for protocol conversion when the UART operator is connected to the data of the peer end. The component must provide the specified interface as required 
 
-#### **configuration( uart@serial )**
-**uart@serial** is first UART
-**uart@serial2** is second UART
+#### Configuration( uart@serial )   
+**uart@serial** is first UART   
+**uart@serial2** is second UART   
 
 ```json
 // Attribute introduction
@@ -169,4 +169,107 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
 
 ```
 
+Examples, show all the first UART configure
+```shell
+uart@serial
+{
+    "status":"enable",                  # enable the first UART
+
+    "ttydev":"/dev/ttyS1",              # UART tty device is /dev/ttyS1
+    "concom":"uart@dtu",                # UART application component is uart@dtu
+
+    "speed":"57600",                    # UART speed is 57600
+    "flow":"disable",
+    "parity":"disable",
+    "databit":"8",
+    "stopbit":"1",
+    
+    "dtu":                              # uart@dtu settings
+    {
+        "client":                             # first client enabled, it well connect the TCP port 800 of 192.168.8.250
+        {
+            "status":"enable",
+            "proto":"tcp",
+            "server":"192.168.8.250",
+            "port":"800"
+        },
+        "client2":                            # second client disabled
+        {
+            "status":"disable",
+            "proto":"udp",
+            "server":"",
+            "port":""
+        },
+        "client3":                            # third client disabled
+        {
+            "status":"disable",
+            "proto":"mqtt",
+            "server":"",
+            "port":"1883",
+            "mqtt_id":"",
+            "mqtt_username":"",
+            "mqtt_password":"",
+            "mqtt_keepalive":"10",
+            "mqtt_interval":"",
+            "mqtt_publish":"",
+            "mqtt_publish_qos":"",
+            "mqtt_subscribe":
+            {
+            }
+        },
+        "server":                            # server is enabled, it work on TCP port 7000
+        {
+            "status":"enable",
+            "proto":"tcp",
+            "port":"7000",
+            "limit":"5",
+            "login":"disable",
+            "frame_start":"disable",
+            "frame_end":"disable",
+            "keeplive":"disable"
+        }
+    },
+    "active":"disable",
+    "frame_maxsize":"",
+    "frame_interval":""
+}
+```  
+
+Examples, disable first client
+```shell
+uart@serial:client/status=disable
+ttrue
+```  
+
+Examples, modify the server port to 8000
+```shell
+uart@serial:server/port=8000
+ttrue
+```  
+
+
+#### **Methods**
+**uart@serial** is first UART   
+**uart@serial2** is second UART   
+
+
++ `shut[]` **shutdown the UART**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, shutdown the frist UART
+    uart@serial.shut
+    ttrue
+    # examples, shutdown the second UART
+    uart@serial2.shut
+    ttrue
+    ```
+
++ `setup[]` **setup the UART**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, setup the frist UART
+    uart@serial.setup
+    ttrue
+    # examples, setup the second UART
+    uart@serial2.setup
+    ttrue
+    ```
 

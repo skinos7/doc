@@ -1,77 +1,77 @@
 ***
 
-## Management of Service component
-Administration of equipment service task
+## Management of System Service   
+Manage gateway service task
 
-#### The following describes service concepts
+#### The following describes service concepts   
 * A service is a Linux background process
 * The service is usually an endless loop that runs and never exits
 * If the service exits unexpectedly, the system will restart the service
-* All the method in the component can run in service mode. However, do not exit the method running in service mode. Otherwise, the system will continuously run the method  
+* All the method in the component can run in service mode. However, this method cannot be exited, Otherwise, the system will rerun the method frequently  
 
 
 #### **Methods**
 
-+ `run[ [delay], service name, component name, method name, [parameter list] ]` **add service**, register and start a service, if the service already exists, delete it and then add it, *succeed return ttrue, failed return tfalse, error return terror*
++ `run[ [delay], service name, component name, method name, [parameter list] ]` **add service**, register and start a service, if the service already exists, stop and delete it and then add it, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, add wui@admin.service to run
-    land@service.run[ , wui@admin, wui@admin, service ]
+    # examples, add wui@admin.service to run, named this service wuiserver
+    land@service.run[ , wuiserver, wui@admin, service ]
     ttrue
-    # examples, add tui@ssh.service to run delay 5 second
+    # examples, add tui@ssh.service to run delay 5 second, named this service sshserver
     land@service.run[ 5000000, sshserver, tui@ssh, service ]
     ttrue    
     ```
 
-+ `delete[ service name ]` **delete service**, *succeed return ttrue, failed return tfalse, error return terror*
++ `delete[ service name ]` **stop and delete service**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, stop and delete the service wui@admin
-    land@service.unregister[ wui@admin ]
+    # examples, stop and delete the service wuiserver
+    land@service.delete[ wuiserver ]
     ttrue   
     ```
 
-+ `start[ service name, component name, method name ]` **add service**, Only start is if the service already exists, register and start it if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
++ `start[ service name, component name, method name ]` **add service**, only start is if the service already exists, add it if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, add wui@admin.service to run
-    land@service.start[ wui@admin, wui@admin, service ]
+    # examples, add wui@admin.service to run, named this service wuiserver
+    land@service.start[ wuiserver, wui@admin, service ]
     ttrue
-    # examples, add tui@ssh.service to run
+    # examples, add tui@ssh.service to run, named this service sshserver
     land@service.start[ sshserver, tui@ssh, service ]
     ttrue    
     ```
 
-+ `stop[ service name ]` **stop service**, *succeed return ttrue, failed return tfalse, error return terror*
++ `stop[ service name ]` **stop service**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, stop the service wui@admin
-    land@service.stop[ wui@admin ]
+    # examples, stop the service wuiserver
+    land@service.stop[ wuiserver ]
     ttrue   
     ```
 
-+ `reset[ service name, [component name], [method name] ]` **reset service**, Only reset is if the service already exists, register and start it if the service does not exist, *succeed return ttrue, failed return tfalse, error return terror*
++ `reset[ service name, [component name], [method name] ]` **reset service**, only reset is if the service already exists, add it if the service does not exist and the parameter component/method is given , *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, add wui@admin.service to run
-    land@service.reset[ wui@admin, wui@admin, service ]
+    # examples, add wui@admin.service to run, named this service wuiserver
+    land@service.reset[ wuiserver, wui@admin, service ]
     ttrue
-    # examples, add tui@ssh.service to run
+    # examples, add tui@ssh.service to run, named this service sshserver
     land@service.reset[ sshserver, tui@ssh, service ]
     ttrue    
     ```
 
-+ `off[ service name ]` **off control service**, then the system don't restart the service when the service exitd any way, *succeed return ttrue, failed return tfalse, error return terror*
++ `off[ service name ]` **off control service**, then the system don't restart the service when the service exitd any way, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, off control the service wui@admin
-    land@service.off[ wui@admin ]
+    # examples, off control the service wuiserver
+    land@service.off[ wuiserver ]
     ttrue   
     ```
 
 
-+ `pid[ service name ]` **get the service pid**, *succeed return pid, failed return NULL, error return terror*
++ `pid[ service name ]` **get the service pid**, *succeed return pid, failed return NULL, error return terror*   
     ```shell
-    # examples, get service wui@admin pid
-    land@service.pid[ wui@admin ]
+    # examples, get service wuiserver pid
+    land@service.pid[ wuiserver ]
     2041   
     ```
 
-+ `info[ service name ]` **get the service infomation**, *succeed return talk, failed return NULL, error return terror*
++ `info[ service name ]` **get the service infomation**, *succeed return talk, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -87,21 +87,22 @@ Administration of equipment service task
         "last_start":"the system uptime when the service last start"   // [ number ]
     }    
     ```
+
     ```shell
-    # examples, get service wui@admin infomation
-    land@service.info[ wui@admin ]
+    # examples, get service wuiserver infomation
+    land@service.info[ wuiserver ]
     {
-        "name":"wui@admin",
-        "delay":"0",
-        "com":"wui@admin",
-        "op":"service",
-        "1":"/tmp/webpage",
-        "pid":"2041",
-        "last_start":"130"
+        "name":"wuiserver",         # service name is wuiserver
+        "delay":"0",                # no delay to run
+        "com":"wui@admin",          # component name is wui@admin
+        "op":"service",             # component method is service
+        "1":"/tmp/webpage",         # the first parameter is /tmp/webpage
+        "pid":"2041",               # service process id is 2041
+        "last_start":"130"          # last start when system uptime 130 second
     }
     ```
 
-+ `list` **list all the service**, *succeed return talk, failed return NULL, error return terror*
++ `list` **list all the service**, *succeed return talk, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -118,6 +119,7 @@ Administration of equipment service task
         // "...":{ service infomation }  // How many service show how many properties
     }    
     ```
+
     ```shell
     # examples, list all service
     land@service.list

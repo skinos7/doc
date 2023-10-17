@@ -1,19 +1,20 @@
 ***
-## Management of firewall
-Management of firewall to control access from extern inteface( internet )
+## Management of System Firewall
+Management of firewall to limit access from extern inteface( internet )
 
-#### Configuration( forward@firewall )
+#### Configuration( forward@firewall )   
 ```json
 // Attributes introduction 
 {
     "extern interface name":       // [ "ifname@lte", "ifname@lte2", "ifname@wan", ... ], above rules set at this interface name
     {
-        "status":"disable or enable or firewall",           // [ "enable", "disable" ]
+        "status":"disable or enable the firewall",          // [ "enable", "disable" ]
         "default":"action for default access",              // [ "drop", "accept" ]
+
         "input_icmp_through":"ICMP protocol access",        // [ "disable", "enable" ]
         "input_espah_through":"ESP/AH protocol access",     // [ "disable", "enable" ]
-        "input_telnet_through":"telnet access",             // [ "disable", "enable" ]
-        "input_ssh_through":"SSH access",                   // [ "disable", "enable" ]
+        "input_telnet_through":"TELNET Server access",      // [ "disable", "enable" ]
+        "input_ssh_through":"SSH Server access",            // [ "disable", "enable" ]
         "input_wui_through":"WEB Server access",            // [ "disable", "enable" ]
 
         "nat_through":"NAT rule settings at forward@nat  passthrough auto",    // [ "disable", "enable" ]
@@ -50,11 +51,12 @@ Management of firewall to control access from extern inteface( internet )
     // ... more extern interface
 }
 ```  
+
 Examples, show current all of firewall settings
 ```shell
 forward@firewall
 {
-    "ifname@lte":                 // first LTE firewall settings
+    "ifname@lte":                 // first LTE network firewall settings
     {
         "status":"enable",             // enable the firewall
         "default":"drop",              // default action is drop
@@ -69,7 +71,7 @@ forward@firewall
             }
         }
     },
-    "ifname@lte2":              // second LTE firewall settings
+    "ifname@lte2":               // second NR/LTE network firewall settings
     {
         "status":"disable",           // disable the firewall
         "default":"drop",
@@ -79,9 +81,39 @@ forward@firewall
     }
 }
 ```
-Examples, enable the second LTE firewall
+
+Examples, add the rule named webwork for ifname@lte, that make 113.23.64.28 can access the gateway web port 80 from ifname@lte
 ```shell
-forward@firewall:ifname@lte2/status=enable
+forward@firewall:ifname@lte/rule/webwork={"action":"accept","src":"113.23.64.28","protocol":"tcp","destport":"80"}
 ttrue
 ```
 
+Examples, add the rule named webpass for ifname@lte, that make 113.23.64.28 can access the web port 80 of 192.168.8.250 from ifname@lte
+```shell
+forward@firewall:ifname@lte/rule/webpass={"action":"accept","src":"113.23.64.28","protocol":"tcp","dest":"192.168.8.250","destport":"80"}
+ttrue
+```
+
+Examples, enable the first LTE network firewall
+```shell
+forward@firewall:ifname@lte/status=enable
+ttrue
+```
+
+Examples, modify default action from the first LTE network to drop
+```shell
+forward@firewall:ifname@lte/default=drop
+ttrue
+```
+
+Examples, clear the rule named webwork for ifname@lte
+```shell
+forward@firewall:ifname@lte/rule/webwork=
+ttrue
+```
+
+Examples, clear the rule named webpass for ifname@lte
+```shell
+forward@firewall:ifname@lte/rule/webpass=
+ttrue
+```

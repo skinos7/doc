@@ -1,27 +1,27 @@
 
-***
-# 本地被管理协议说明
+
+## 本地被管理协议说明
 网关可接受来自局域网的管理协议, 管理协议通常由批量管理工具或本地的其它设备发出, 通过此协议批量管理工具或其它设备可以实现局域网管理网关
 
 
 
-### **1. 协议分类**  
+#### 协议分类
 
 在局域网与网关通信分为三种协议
-- **JSON控制协议(TCP端口22220), 用于通过TCP发送JSON指令修改/查询/配置网关**
+- **TCP(JSON)控制协议(端口22220), 用于通过TCP发送JSON指令修改/查询/配置网关**
 - **局域网搜索协议(UDP端口22222), 用于在局域网内搜索所有的网关**
 - **局域网查询协议(UDP端口22222), 用于在局域网内搜索所有的网关并查询所有网关的信息(不常用)**
 图示
 ![avatar](./localport_protocol.png)
 
+---
 
-
-### **2. JSON控制协议**
+## TCP(JSON)控制协议
 通过 **TCP端口22220** 与网关交互JSON指令， 实现对网关的控制, 使用TCP协议交互, 适合交互各种信息
 
-##### 1. 在网关上开启JSON控制协议
+#### 在网关上开启JSON控制协议
 
-默认网关不会响应JSON控制协议, 需要进入管理网页打开此协议(*打开此协议会存在安全风险，请确保局域网安全*)
+默认网关不会响应TCP(JSON)控制协议, 需要进入管理网页打开此协议(*打开此协议会存在安全风险，请确保局域网安全*)
 ![avatar](./localport_jsonwui.png)   
 
 或者通过网关终端命令行(SSH/Telnet)打开此协议
@@ -35,16 +35,76 @@ enable
 # 
 ```
 
-##### 2. 与网关的交互流程
+#### 与网关的交互流程
 - 如下图所示  
 ![avatar](./localport_control.png)
 - 交互简介  
     每一次的交互都需要建立TCP连接, 然后再发送JSON指令, 网关收到JSON指令将会回复JSON指令的执行结果, 之后将立即关闭TCP连接, 因此, 每一次交互都需要建立一个TCP连接, 也称之为**短连接**, 为保证指令的完整性, 指令被设计成一个完整的JSON对象, 同样回复信息也是一个完整的JSON对象, 对于网关的操作可以分为三种JSON指令：
 	1. 查询配置：用于查询网关当前的配置
 	2. 修改配置：用于修改网关的配置
-	3. 调用接口：用于查看或修改网关的状态等
+	3. 调用方法：用于查看或修改网关的状态等
 
-##### 3. JSON指令格式
+#### JSON指令格式 --- HE指令模式
+- 直接使用JSON包装HE指令
+    以下是JSON格式包装HE指令格式介绍
+    ```json
+    {
+        "cmd1":"HE指令"   // [ 字符串 ]:[ 字符串 ] 属性名可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
+        // 更多指令...
+    }
+    ```
+    网关跟据HE指令执行的结果返回内容, 格式可为:
+    1. 一个JSON
+        ```json
+        {
+            "cmd1":{JSON格式的配置内容}
+        }
+        ```
+    2. 一个字符串
+        ```json
+        {
+            "cmd1":"属性值"
+        }
+        ```
+    3. 空, 表示不存在此项配置
+        ```json
+        {
+            "cmd1":"NULL"
+        }
+        ```
+    例1：如查询网关的基本配置的HE指令为 land@machine , 对应的json指令格式为
+    ```json
+    { "cmd1":"land@machine" }
+    ```
+    例2：如查询网关名称的HE指令为 land@machine:name , 对应的json指令格式为
+    ```json
+    { "cmd1":"land@machine:name" }
+    ```
+    例2：如查询网关工作模式的HE指令为 land@machine:mode , 对应的json指令格式为
+    ```json
+    { "cmd1":"land@machine:mode" }
+    ```
+    例3：如查询网关LTE的配置的HE指令为 ifname@lte , 对应的json指令格式为
+    ```json
+    { "cmd1":"ifname@lte" }
+    ```    
+    例4：如查询网关LTE的状态的HE指令为 ifname@lte.status , 对应的json指令格式为
+    ```json
+    { "cmd1":"ifname@lte.status" }
+    ```
+    例5：如调用clock@date(时间管理)的ntpsynct方法实现与ntp1.aliyun.com的NTP对时的HE指令为clock@date.ntpsync[ntp1.aliyun.com] , 对应的json指令格式为
+    ```json
+    { "cmd1":"clock@date.ntpsync[ntp1.aliyun.com]" }
+    ```
+    例5：也可以同时执行多条HE指令, 如果重启一下LTE的网络先执行ifname@lte.shut再执行ifname@lte.setup, 对应的json指令格式为
+    ```json
+    { "cmd1":"ifname@lte.shut", "cmd2":"ifname@lte.setup" }
+    ```
+    *更多HE终端指令介绍见此文档 [HE指令介绍](../use/he_command.md)*
+
+    
+#### JSON指令格式 --- JSON模式
+
 - 查询网关配置交互格式介绍, 查询网关配置的终端指令格式为 ***组件名称[:属性/属性/...]***
     以下是JSON指令格式介绍
     ```json
@@ -76,24 +136,24 @@ enable
             "cmd1":"NULL"
         }
         ```
-    例1：如查询网关的基本配置的终端指令为 land@machine , 对应的json指令格式为
+    例1：如查询网关的基本配置的HE指令为 land@machine , 对应的json指令格式为
     ```json
     { "cmd1": { "com":"land@machine" } }
     ```
-    例2：如查询网关名称的终端指令为 land@machine:name , 对应的json指令格式为
+    例2：如查询网关名称的HE指令为 land@machine:name , 对应的json指令格式为
     ```json
     { "cmd1": { "com":"land@machine","ab":"name" } }
     ```
-    例2：如查询网关工作模式的终端指令为 land@machine:mode , 对应的json指令格式为
+    例2：如查询网关工作模式的HE指令为 land@machine:mode , 对应的json指令格式为
     ```json
     { "cmd1": { "com":"land@machine","ab":"mode" } }
     ```
-    例3：如查询网关LTE的配置的终端指令为 ifname@lte , 对应的json指令格式为
+    例3：如查询网关LTE的配置的HE指令为 ifname@lte , 对应的json指令格式为
     ```json
     { "cmd1": { "com":"ifname@lte" } }
     ```
 
-- 修改网关配置交互格式介绍, 修改网关配置的终端指令格式为 ***组件名称[:属性/属性/...]=值***
+- 修改网关配置交互格式介绍, 修改网关配置的HE指令格式为 ***组件名称[:属性/属性/...]=值***
     以下是JSON指令格式介绍 --- 当值为字符串时
     ```json
     {
@@ -131,17 +191,17 @@ enable
             "cmd1":"tfalse"
         }
         ```
-    例1：如修改网关语言的终端指令为 land@machine:language=en , 对应的json指令格式为
+    例1：如修改网关语言的HE指令为 land@machine:language=en , 对应的json指令格式为
     ```json
     { "cmd1": { "com":"land@machine", "ab":"language", "op":"=", "v":"en" } }
     ```
-    例2：如修改网关名称的终端指令为 land@machine:name=NewName , 对应的json指令格式为
+    例2：如修改网关名称的HE指令为 land@machine:name=NewName , 对应的json指令格式为
     ```json
     { "cmd1": { "com":"land@machine","ab":"name", "op":"=", "v":"NewName" } }
     ```
 
 
-- 调用网关接口交互格式介绍, 调用网关接口的终端指令格式为 ***组件名称.接口名称[ 参数1, 参数2, 参数3 ]***
+- 调用网关接口交互格式介绍, 调用网关接口的HE指令格式为 ***组件名称.接口名称[ 参数1, 参数2, 参数3 ]***
     以下是JSON指令格式介绍
     ```json
     {
@@ -186,23 +246,23 @@ enable
             "cmd1":"NULL"
         }
         ```
-    例1：如查询网关基本状态的终端指令为 land@machine.status , 对应的json指令格式为
+    例1：如查询网关基本状态的HE指令为 land@machine.status , 对应的json指令格式为
     ```json
     { "cmd1": { "com":"land@machine", "op":"status" } }
     ```
-    例2：如查询网关LTE网络状态的终端指令为 ifname@lte.status , 对应的json指令格式为
+    例2：如查询网关LTE网络状态的HE指令为 ifname@lte.status , 对应的json指令格式为
     ```json
     { "cmd1": { "com":"ifname@lte", "op":"status" } }
     ```
-    例3：如查询网关GPS信息的终端指令为 gnss@nmea.info , 对应的json指令格式为
+    例3：如查询网关GPS信息的HE指令为 gnss@nmea.info , 对应的json指令格式为
     ```json
     { "cmd1": { "com":"gnss@nmea", "op":"info" } }
     ```
 
 
 
-##### 4. 示例-获取网关基本信息配置
-- 网关基本信息在land@machine组件的配置中, 发送查询land@machine配置指令即可(在终端中的命令为land@machine), 点击 [网关基本信息](../com/land/machine.md) 查看有关配置的介绍
+#### 示例-获取网关基本信息配置
+- 网关基本信息在land@machine组件的配置中, 发送查询land@machine配置指令即可(在终端中的命令为land@machine), 点击 [Management of Basic Infomation](../com/land/machine.md) 查看有关配置的介绍
 ```json
 {
     "cmd1":
@@ -228,8 +288,8 @@ enable
 使用TCP客户端工具测试:   
 ![avatar](./localport_jsontest.png)
 
-##### 5. 示例-获取网关基本状态
-- 网关基本状态由land@machine组件的status接口返回, 发送调用land@machine组件status接口指令即可(在终端中的命令为land@machine.status), 点击 [网关基本信息](../com/land/machine.md) 查看有关status接口的介绍
+#### 示例-获取网关基本状态
+- 网关基本状态由land@machine组件的status接口返回, 发送调用land@machine组件status方法指令即可(在终端中的命令为land@machine.status), 点击 [Management of Basic Infomation](../com/land/machine.md) 查看有关status接口的介绍
 ```json
 {
     "cmd1":
@@ -265,8 +325,8 @@ enable
 
 
 
-##### 6. 示例-获取LTE网络状态信息
-- LTE状态信息由ifname@lte的status接口返回, 点击 [LTE网络管理](../com/ifname/lte.md) 及 [LTE模块管理](../com/modem/lte.md) 查看有关status接口的介绍
+#### 示例-获取LTE网络状态信息
+- LTE状态信息由ifname@lte的status接口返回, 点击 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 查看有关status接口的介绍
 ```json
 {
     "cmd1":
@@ -335,8 +395,8 @@ enable
 
 
 
-##### 7. 示例-断开LTE网络, 必须要有LTE网络的工作模式下才有效(如在4G/5G路由器或混合模式下)
-- 断开LTE网络连接调用ifname@lte组件的shut接口(在终端中的命令为ifname@lte.shut), 点击 [LTE网络管理](../com/ifname/lte.md) 查看shut接口介绍
+#### 示例-断开LTE网络, 必须要有LTE网络的工作模式下才有效(如在4G/5G路由器或混合模式下)
+- 断开LTE网络连接调用ifname@lte组件的shut接口(在终端中的命令为ifname@lte.shut), 点击 [LTE/NR Network Management](../com/ifname/lte.md) 查看shut接口介绍
 ```json
 {
     "cmd1":
@@ -354,8 +414,8 @@ enable
 }
 ```
 
-##### 8. 示例-发起LTE连网, 必须要有LTE网络的工作模式下才有效(如在4G/5G路由器或混合模式下)
-- 启用LTE网络连接调用ifname@lte组件的setup接口(在终端中的命令为ifname@lte.setup), 点击 [LTE网络管理](../com/ifname/lte.md) 查看setup接口介绍
+#### 示例-发起LTE连网, 必须要有LTE网络的工作模式下才有效(如在4G/5G路由器或混合模式下)
+- 启用LTE网络连接调用ifname@lte组件的setup接口(在终端中的命令为ifname@lte.setup), 点击 [LTE/NR Network Management](../com/ifname/lte.md) 查看setup接口介绍
 ```json
 {
     "cmd1":
@@ -375,8 +435,8 @@ enable
 
 
 
-##### 9. 示例-设置禁用LTE连网(禁用后重启后也会保持禁用), 将改变网关的配置不建议频繁使用
-- 设置禁用LTE网络即是将ifname@lte配置中的status属性改为disable即可(在终端中的命令为ifname@lte:status=disable), 点击 [LTE网络管理](../com/ifname/lte.md) 查看配置介绍
+#### 示例-设置禁用LTE连网(禁用后重启后也会保持禁用), 将改变网关的配置不建议频繁使用
+- 设置禁用LTE网络即是将ifname@lte配置中的status属性改为disable即可(在终端中的命令为ifname@lte:status=disable), 点击 [LTE/NR Network Management](../com/ifname/lte.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -396,8 +456,8 @@ enable
 }
 ```
 
-##### 10. 示例-设置启用LTE连网(启用后重启后也会保持启用), 将改变网关的配置不建议频繁使用
-- 设置启用LTE网络即是将ifname@lte配置中的status属性改为enable即可(在终端中的命令为ifname@lte:status=enable), 点击 [LTE网络管理](../com/ifname/lte.md) 查看配置介绍
+#### 示例-设置启用LTE连网(启用后重启后也会保持启用), 将改变网关的配置不建议频繁使用
+- 设置启用LTE网络即是将ifname@lte配置中的status属性改为enable即可(在终端中的命令为ifname@lte:status=enable), 点击 [LTE/NR Network Management](../com/ifname/lte.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -418,8 +478,8 @@ enable
 ```
 
 
-##### 11. 示例-设置LTE网络的拨号APN相关的配置
-- 修改ifname@lte的配置即可, 修改APN需要先打开APN自定义, 然后设置APN相关的信息, 整个指令需要修改多项属性值, 点击 [LTE网络管理](../com/ifname/lte.md) 及 [LTE模块管理](../com/modem/lte.md) 相关的配置介绍
+#### 示例-设置LTE网络的拨号APN相关的配置
+- 修改ifname@lte的配置即可, 修改APN需要先打开APN自定义, 然后设置APN相关的信息, 整个指令需要修改多项属性值, 点击 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE模块管理](../com/modem/lte.md) 相关的配置介绍
 ```json
 {
     "cmd1":
@@ -449,8 +509,8 @@ enable
 ```
 
 
-##### 12. 示例-获取第二个LTE/NR网络(5G)状态信息(对于双模块网关)
-- 第二个TE/NR状态信息由ifname@lte2的status接口返回(在终端中的命令为ifname@lte2.status), 点击[LTE/NR网络管理](../com/ifname/lte.md)及[LTE/NR模块管理](../com/modem/lte.md)查看有关status接口的介绍
+#### 示例-获取第二个LTE/NR网络(5G)状态信息(对于双模块网关)
+- 第二个TE/NR状态信息由ifname@lte2的status接口返回(在终端中的命令为ifname@lte2.status), 点击[LTE/NR网络管理](../com/ifname/lte.md)及[LTE/NR Modem Management](../com/modem/lte.md)查看有关status接口的介绍
 ```json
 {
     "cmd1":
@@ -474,8 +534,8 @@ enable
 
 
 
-##### 13. 示例-获取网关的客户端信息
-- 网关上的客户端信息由client@station组件的list接口返回(在终端中的命令为client@station.list), 点击 [客户端管理](../com/client/station.md) 查看有关list接口的介绍
+#### 示例-获取网关的客户端信息
+- 网关上的客户端信息由client@station组件的list接口返回(在终端中的命令为client@station.list), 点击 [Management of Client Access](../com/client/station.md) 查看有关list接口的介绍
 ```json
 {
     "cmd1":
@@ -517,8 +577,8 @@ enable
 
 
 
-##### 14. 示例-获取GPS信息(对应的网关必须有GPS功能并且配置正确)
-- GPS信息由gnss@nmea组件的info接口返回(在终端中的命令为gnss@nmea.info), 点击 [GNSS管理](../com/gnss/nmea.md) 查看有关info接口的介绍
+#### 示例-获取GPS信息(对应的网关必须有GPS功能并且配置正确)
+- GPS信息由gnss@nmea组件的info接口返回(在终端中的命令为gnss@nmea.info), 点击 [GNSS NEMA Protocol Management](../com/gnss/nmea.md) 查看有关info接口的介绍
 ```json
 {
     "cmd1":
@@ -554,8 +614,8 @@ enable
 
 
 
-##### 15. 示例-获取网关LAN口状态信息
-- 网关LAN口信息由ifname@lan组件的status接口返回(在终端中的命令为ifname@lan.status), 点击查看 [LAN口管理](../com/ifname/lan.md) 查看有关status接口的介绍
+#### 示例-获取网关LAN口状态信息
+- 网关LAN口信息由ifname@lan组件的status接口返回(在终端中的命令为ifname@lan.status), 点击查看 [LAN Network Management](../com/ifname/lan.md) 查看有关status接口的介绍
 ```json
 {
     "cmd1":
@@ -590,8 +650,8 @@ enable
 
 
 
-##### 16. 示例-重启网关
-- 对应终端中的命令land@machine.restart, 点击 [网关基本信息](../com/land/machine.md) 查看有关restart接口的介绍
+#### 示例-重启网关
+- 对应终端中的命令land@machine.restart, 点击 [Management of Basic Infomation](../com/land/machine.md) 查看有关restart接口的介绍
 ```json
 {
     "cmd1":
@@ -608,8 +668,8 @@ enable
 }
 ```
 
-##### 17. 示例-重置网关(恢复出厂设置)
-- 对应终端中的命令land@machine.default, 点击查看 [网关基本信息](../com/land/machine.md) 查看有关default接口的介绍
+#### 示例-重置网关(恢复默认设置)
+- 对应终端中的命令land@machine.default, 点击查看 [Management of Basic Infomation](../com/land/machine.md) 查看有关default接口的介绍
 ```json
 {
     "cmd1":
@@ -626,8 +686,8 @@ enable
 }
 ```
 
-##### 18. 示例-修改网关admin用户的密码
-- 用户及密码管理在land@auth组件中, 修改密码使用modify的接口, 以下示例修改用户名admin的密码为123456, 点击 [帐号密码及权限管理](../com/land/auth.md) 查看modify接口介绍
+#### 示例-修改网关admin用户的密码
+- 用户及密码管理在land@auth组件中, 修改密码使用modify的接口, 以下示例修改用户名admin的密码为123456, 点击 [Username/Password and Permission Management](../com/land/auth.md) 查看modify接口介绍
 ```json
 {
     "cmd1":
@@ -655,8 +715,8 @@ enable
 
 
 
-##### 19. 示例-修改2.4G无线热点的SSID名称
-- 2.4G无线热点的配置在组件wifi@nssid中, ssid属性的值为SSID名称, 以下示例修改SSID名称为NewSSID(在终端中的命令为wifi@nssid:ssid=NewSSID), 点击 [2.4G无线SSID](../com/wifi/nssid.md) 查看配置介绍
+#### 示例-修改2.4G无线热点的SSID名称
+- 2.4G无线热点的配置在组件wifi@nssid中, ssid属性的值为SSID名称, 以下示例修改SSID名称为NewSSID(在终端中的命令为wifi@nssid:ssid=NewSSID), 点击 [2.4G Station Management](../com/wifi/nssid.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -675,8 +735,8 @@ enable
 }
 ```
 
-##### 20. 示例-同时修改2.4G无线热点的SSID名称及密码
-- 同时修改两个及以上的属性需要使用**或操作**, 以下示例修改SSID名称为NewSSID并将密码修改为NewPassword(在终端中的命令为wifi@nssid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [2.4G无线SSID](../com/wifi/nssid.md) 查看配置介绍
+#### 示例-同时修改2.4G无线热点的SSID名称及密码
+- 同时修改两个及以上的属性需要使用**或操作**, 以下示例修改SSID名称为NewSSID并将密码修改为NewPassword(在终端中的命令为wifi@nssid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [2.4G Station Management](../com/wifi/nssid.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -700,8 +760,8 @@ enable
 }
 ```
 
-##### 21. 示例-同时修改5.8G无线热点的SSID名称及密码
-- 5.8G无线热点配置在组件wifi@assid中, 以下示例修改SSID名称为NewSSID-5G并将密码修改为NewPassword(在终端中的命令为wifi@assid|{"ssid":"NewSSID-5G","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [5.8G无线SSID](../com/wifi/assid.md) 查看配置介绍
+#### 示例-同时修改5.8G无线热点的SSID名称及密码
+- 5.8G无线热点配置在组件wifi@assid中, 以下示例修改SSID名称为NewSSID-5G并将密码修改为NewPassword(在终端中的命令为wifi@assid|{"ssid":"NewSSID-5G","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [5.8G Station Management](../com/wifi/assid.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -731,8 +791,8 @@ enable
 
 
 
-##### 22. 示例-设置2.4G无线连网连接指定的SSID, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
-- 2.4G无线连网配置在组件ifname@wisp中, 设置2.4G无线连网需要同时修改两个以上的属性, 因此使用**或操作**, 以下示例设置连接SSID为CMCC密码为CMCC@passwd的2.4G网络(在终端的命令为ifname@wisp|{"peer":"CMCC","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [无线连网](../com/ifname/wisp.md) 查看配置介绍
+#### 示例-设置2.4G无线连网连接指定的SSID, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
+- 2.4G无线连网配置在组件ifname@wisp中, 设置2.4G无线连网需要同时修改两个以上的属性, 因此使用**或操作**, 以下示例设置连接SSID为CMCC密码为CMCC@passwd的2.4G网络(在终端的命令为ifname@wisp|{"peer":"CMCC","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -757,8 +817,8 @@ enable
 }
 ```
 
-##### 23. 示例-设置禁用2.4G无线连网, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
-- 2.4G无线连网配置在组件ifname@wisp中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp:status=disable), 点击 [无线连网](../com/ifname/wisp.md) 查看配置介绍
+#### 示例-设置禁用2.4G无线连网, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
+- 2.4G无线连网配置在组件ifname@wisp中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp:status=disable), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -778,8 +838,8 @@ enable
 }
 ```
 
-##### 24. 示例-断开2.4G无线连网, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
-- 断开2.4G无线连接调用ifname@wisp的shut接口(在终端中的命令为ifname@wisp.shut), 点击 [无线连网](../com/ifname/wisp.md) 查看shut接口介绍
+#### 示例-断开2.4G无线连网, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
+- 断开2.4G无线连接调用ifname@wisp的shut接口(在终端中的命令为ifname@wisp.shut), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看shut接口介绍
 ```json
 {
     "cmd1":
@@ -797,8 +857,8 @@ enable
 }
 ```
 
-##### 25. 示例-发起2.4G无线连网, 必须有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)， 并已配置好相关的2.4G无线连网的参数且被断开过
-- 发起2.4G无线连网调用ifname@wisp的setup接口(在终端中的命令为ifname@wisp.setup), 点击 [无线连网](../com/ifname/wisp.md) 查看setup接口介绍
+#### 示例-发起2.4G无线连网, 必须有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)， 并已配置好相关的2.4G无线连网的参数且被断开过
+- 发起2.4G无线连网调用ifname@wisp的setup接口(在终端中的命令为ifname@wisp.setup), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看setup接口介绍
 ```json
 {
     "cmd1":
@@ -820,8 +880,8 @@ enable
 
 
 
-##### 26. 示例-设置5.8G无线连网连接指定的SSID, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
-- 5.8G无线连网配置在组件ifname@wisp2中, 以下示例设置连接SSID为CMCC-5G密码为CMCC@passwd的5.8G网络(在终端中的命令为ifname@wisp2|{"peer":"CMCC-5G","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [无线连网](../com/ifname/wisp.md) 查看配置介绍
+#### 示例-设置5.8G无线连网连接指定的SSID, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
+- 5.8G无线连网配置在组件ifname@wisp2中, 以下示例设置连接SSID为CMCC-5G密码为CMCC@passwd的5.8G网络(在终端中的命令为ifname@wisp2|{"peer":"CMCC-5G","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -846,8 +906,8 @@ enable
 }
 ```
 
-##### 27. 示例-设置禁用5.8G无线连网, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
-- 5.8G无线连网配置在组件ifname@wisp2中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp2:status=disable), 点击 [无线连网](../com/ifname/wisp.md) 查看配置介绍
+#### 示例-设置禁用5.8G无线连网, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
+- 5.8G无线连网配置在组件ifname@wisp2中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp2:status=disable), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -867,8 +927,8 @@ enable
 }
 ```
 
-##### 28. 示例-断开5.8G无线连网, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
-- 5.8G无线连网管理在组件ifname@wisp2中, 断开5.8G无线连接调用shut接口(在终端中的命令为ifname@wisp2.shut), 点击 [无线连网](../com/ifname/wisp.md) 查看shut接口介绍
+#### 示例-断开5.8G无线连网, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
+- 5.8G无线连网管理在组件ifname@wisp2中, 断开5.8G无线连接调用shut接口(在终端中的命令为ifname@wisp2.shut), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看shut接口介绍
 ```json
 {
     "cmd1":
@@ -886,8 +946,8 @@ enable
 }
 ```
 
-##### 29. 示例-发起5.8G无线连网, 必须有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)， 并已配置好相关的5.8G无线连网的参数且被断开
-- 5.8G无线连网管理在组件ifname@wisp2中, 发起5.8G无线连网调用setup接口(在终端中的命令为ifname@wisp2.setup), 点击 [无线连网](../com/ifname/wisp.md) 查看setup接口介绍
+#### 示例-发起5.8G无线连网, 必须有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)， 并已配置好相关的5.8G无线连网的参数且被断开
+- 5.8G无线连网管理在组件ifname@wisp2中, 发起5.8G无线连网调用setup接口(在终端中的命令为ifname@wisp2.setup), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看setup接口介绍
 ```json
 {
     "cmd1":
@@ -910,8 +970,8 @@ enable
 
 
 
-##### 30. 示例-添加新策略路由, 指定源地址为192.168.2.12走第一个LTE
-- 策略路由管理在组件forward@rule中, 添加策略路由由add接口操作, 点击 [策略路由](../com/forward/rule.md) 查看接口add相关介绍
+#### 示例-添加新策略路由, 指定源地址为192.168.2.12走第一个LTE
+- 策略路由管理在组件forward@rule中, 添加策略路由由add接口操作, 点击 [Policy based routing](../com/forward/rule.md) 查看接口add相关介绍
 ```json
 {
     "cmd1":
@@ -935,7 +995,7 @@ enable
     "cmd1":"ttrue"
 }
 ```
-##### 31. 示例-添加新策略路由, 指定所有数据走第二个LTE
+#### 示例-添加新策略路由, 指定所有数据走第二个LTE
 ```json
 {
     "cmd1":
@@ -959,7 +1019,7 @@ enable
     "cmd1":"ttrue"
 }
 ```
-##### 32. 示例-删除原设置的名为video的策略路由规则
+#### 示例-删除原设置的名为video的策略路由规则
 - 删除策略路由由delete接口操作, 
 ```json
 {
@@ -978,7 +1038,7 @@ enable
     "cmd1":"ttrue"
 }
 ```
-##### 33. 示例-同时添加两条策略路由, 指定源地址为192.168.2.12走第一个LTE, 并指定其它所有数据走第二个LTE
+#### 示例-同时添加两条策略路由, 指定源地址为192.168.2.12走第一个LTE, 并指定其它所有数据走第二个LTE
 ```json
 {
     "cmd1":
@@ -1015,7 +1075,7 @@ enable
     "cmd2":"ttrue"
 }
 ```
-##### 34. 示例-删除原添加的名为senser及名为video的策略路由规则
+#### 示例-删除原添加的名为senser及名为video的策略路由规则
 
 ```json
 {
@@ -1044,26 +1104,24 @@ enable
 
 
 
+## 对照组件文档使用TCP(JSON)协议管理
 
-
-
-
-## 对照组件文档使用JSON协议管理
 有两种方式可以查询到所有组件文档, 通过这些组件文档可以管理到网关的每一个功能
 - 访问 [在线组件文档](../com/) 查看组件文档, 此在线文件会随着开发新的功能动态增加及修订
 - 资询技术支持人员
 
 #### 组件文档要点
+
 - 在 [在线组件文档](../com/) 中首先以行的形式列出了系统中常用的项目, 每个项目下包含了组件文档
 - 点击项目进入项目中, 会以行的形式列出此项目下所有的组件文档
 - 点击组件打开组件文档, 组件文件首先是抬头, 抬头是组件名称介绍
-- 组件文档首先是介绍此组件的功能, 然后就是 **配置**, 配置是JSON格式, 可以在JSON控制协议或命令行中查询或修改这些配置, 通常文档中会给出修改及查询示例
-- 组件文档 **配置** 之后通常是介绍此组件的 **接口**, 可以在JSON控制协议或命令行中调用这些接口
+- 组件文档首先是介绍此组件的功能, 然后就是 **Configuration**, 配置是JSON格式, 可以在JSON控制协议或命令行中查询或修改这些配置, 通常文档中会给出修改及查询示例
+- 组件文档 **Configuration** 之后通常是介绍此组件的 **Methods**, 可以在JSON控制协议或命令行中调用这些方法
 
 #### 对照组件文档查询组件配置
-在组件文档的抬头中会指出组件名, 比如 [日志管理](../com/land/syslog.md) 的组件名为 **land@syslog**
 
-- 发送JOSN查询指令, 对应的终端指令为land@syslog
+在组件文档的抬头中会指出组件名, 比如 [Syslog Management](../com/land/syslog.md) 的组件名为 **land@syslog**
+- 发送JOSN查询指令, 对应的HE指令为land@syslog
 ```json
 {
     "cmd1":
@@ -1072,6 +1130,7 @@ enable
     }
 }
 ```
+
 网关将返回如下, cmd1的属性即是land@syslog的配置
 ```json
 {
@@ -1098,6 +1157,7 @@ enable
     }
 }
 ```
+
 网关将返回如下, cmd1的属性值即是land@syslog配置下size属性的值
 ```json
 {
@@ -1105,9 +1165,9 @@ enable
 }
 ```
 
-
 #### 对照组件文档修改组件配置
-接以上 [日志管理](../com/land/syslog.md) 的组件文档, 在文档的 **配置** 中描述属性可以在JOSN指令协议中修改
+
+接以上 [Syslog Management](../com/land/syslog.md) 的组件文档, 在文档的 **Configuration** 中描述属性可以在JOSN指令协议中修改
 - 通过JSON指令协议修改land@syslog的远程日志服务器(remote属性值)为192.168.8.230
     ```json
     {
@@ -1120,6 +1180,7 @@ enable
         }
     }
     ```
+
     网关将返回如下, cmd1的属性值指示是否成功, 成功返厍ttrue, 失败返回tfalse
     ```json
     {
@@ -1142,12 +1203,14 @@ enable
         }
     }
     ```
+
     网关将返回如下, cmd1的属性值指示是否成功, 成功返厍ttrue, 失败返回tfalse
     ```json
     {
         "cmd1":"ttrue"
     }
     ```
+
 - 通过JSON指令协议修改land@syslog的所有配置, 组件配置都是一个JSON, 如要修改所有的配置必须同样的给出一个JSON
     ```json
     {
@@ -1169,6 +1232,7 @@ enable
         }
     }
     ```
+
     网关将返回如下, cmd1的属性值指示是否成功, 成功返厍ttrue, 失败返回tfalse
     ```json
     {
@@ -1177,7 +1241,8 @@ enable
     ```
 
 #### 对照组件文档调用组件接口
-接以上 [日志管理](../com/land/syslog.md) 的组件文档, 在文档的 **接口** 中描述接口都可以在JSON指令协议中调用
+
+接以上 [Syslog Management](../com/land/syslog.md) 的组件文档, 在文档的 **Methods** 中描述方法都可以在JSON指令协议中调用
 - 在JSON指令协议中调用组件land@syslog的clear接口清除日志
     ```json
     {
@@ -1188,6 +1253,7 @@ enable
         }
     }
     ```
+
     网关将返回如下, cmd1的属性值指示是否成功, 成功返厍ttrue, 失败返回tfalse
     ```json
     {
@@ -1199,11 +1265,11 @@ enable
 
 
 
+---
 
 
 
-
-### **2. 局域网搜索协议**
+## 局域网搜索协议
 在局域网通过向 **UDP端口22222** 广播搜索网内的所有网关
 ##### 1. 搜索网内网关交互流程
 图示
@@ -1239,7 +1305,7 @@ client->data->device
 *注意: 因未找到合适的广播工具而用单播工具代替演示, 在实际开发过程中通过向UDP的22222端口广播相同的数据将产生相同的结果*
 
 
-### **3. 局域网查询协议**
+## 局域网查询协议
 在局域网通过向 **UDP端口22222** 广播搜索并查询网内的所有网关的信息, 因使用UDP协议所以当交互数据过大时会出现丢包的问题, 不合适做信息量较大的交互
 
 ##### 1. 查询网内网关基本信息交互流程
@@ -1257,13 +1323,13 @@ client->data->device
 ##### 2. 查询网内网关基本信息交互详解
 - 1. **管理工具** 发送查询请求, 即向IP为255.255.255.255的UDP端口22222广播组名7个字符default加逗号及以逗号间隔的指令, 所有在网内网关都能收到这个字符串
     ```
-    default,he查询指令1,he查询指令2,he查询指令3
+    default,HE查询指令1,HE查询指令2,HE查询指令3
     ```
 - 2. **网关** 回复, 所有网关收到后会向UDP端口22222广播回复自已的MAC地址、IP地址及指令的执行结果, 格式为: 
     ```
-    MAC地址|IP地址|he查询指令1回复,he查询指令2回复,he查询指令3回复
+    MAC地址|IP地址|HE查询指令1回复,HE查询指令2回复,HE查询指令3回复
     ```
-    以下列举几个常用的he指令, 终端指令格式介绍见 [终端指令使用说明](../use/he_command.md) , 具体更多的指令可以参看网关组件对应的介绍文档:
+    以下列举几个常用的HE指令, HE指令格式介绍见 [HE指令介绍](../use/he_command.md) , 具体更多的指令可以参看网关组件对应的介绍文档:
     ```
     land@machine:model           //  查询网关的型号
     land@machine:version         //  查询网关的软件版本

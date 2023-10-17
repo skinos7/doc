@@ -1,8 +1,8 @@
 ***
-## Route table management
-Management of routes table
+## System Route Table Management
+Management of system route table, modifying this configuration directly is not recommended, It is recommended to manage through the method
 
-#### Configuration( forward@route )
+#### Configuration( forward@route )   
 ```json
 // Attributes introduction 
 {
@@ -17,7 +17,8 @@ Management of routes table
     // ... more rule
 }
 ```
-Examples, show current all of route rule
+
+Examples, show current all rule settings of route
 ```shell
 forward@route
 {
@@ -40,7 +41,7 @@ forward@route
 
 #### **Methods**
 
-+ `status[]` **get the current route rule**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
++ `status[]` **get the current system route table**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -61,6 +62,7 @@ forward@route
         // ... more rule
     }
     ```
+
     ```shell
     # examples, get the current route rule
     forward@route
@@ -94,11 +96,14 @@ forward@route
     }
     ```
 
-+ `add[ name, [target], [mask], [gateway], [ifname], [metric] ]` **add route rule**, *succeed return ttrue, failed return tfalse, error return terror*
++ `add[ name, [target], [mask], [gateway], [ifname], [metric] ]` **add route rule**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
     # examples, add a rule named office1, make that address 192.168.2.12 route to ifname@lan's 192.168.9.40
     forward@route.add[ office1, 192.168.2.12, 255.255.255.0, 192.168.9.40, ifname@lan, ]
     ttrue
+    ```
+
+    ```shell
     # examples, add a rule named office2, make that all ddress route to ifname@lan's 192.168.9.41
     forward@route.add[ office2, , , 192.168.9.41, ifname@lan, ]
     ttrue
@@ -109,6 +114,9 @@ forward@route
     # examples, delete the custom route named office2
     forward@route.delete[ office2 ]
     ttrue
+    ```
+
+    ```shell
     # examples, delete the custom route named office1
     forward@route.delete[ office1 ]
     ttrue

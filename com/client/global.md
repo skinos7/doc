@@ -1,6 +1,6 @@
 ***
-## Management of global access
-Management of global local interface name client access
+## Management of Global Access
+Management of global client of local network access
 
 #### Configuration( client@global )
 ```json
@@ -8,7 +8,7 @@ Management of global local interface name client access
 {
     "interface name":       // [ "ifname@lan", "ifname@lan2", "ifname@lan3", ... ], above rules set at this interface name
     {
-        // access internet privilege
+        // client access internet privilege from this ifname
         "internet":"disable or enable or regular internet access",  // [ "enable", "disable" ,"timer" ]
                                                                             // "timer" for regular internet access
                                                                             // "disable" for forbid internet access
@@ -33,13 +33,13 @@ Management of global local interface name client access
             // ... more rule
         },
 
-        // access control list
+        // client access control list from this ifname
         "acl":"enable or disable the access control list",          // [ "disable", "enable" ]
         "acl_rule":                                                 // access control list, valid when "acl" be "enable"
         {
             "rule name":                                                 // [ string ], user can custom the rule name
             {
-                "action":"drop or accept or return",                     // [ "drop", "accept", "return" ], "drop" for forbid, "accept" for pass, "return" for don't match it with after rule
+                "action":"drop or accept",                               // [ "drop", "accept", "return" ], "drop" for forbid, "accept" for pass
                 "source":"local source address",                         // [ string ]:
                                                                                   // single IP: 192.168.8.222
                                                                                   // multiple IP: 192.168.8.2,192.168.8.3,192.168.8.4
@@ -72,7 +72,7 @@ Management of global local interface name client access
             // ... more rule
         },
 
-        // limit send packet rate
+        // limit client send packet rate from this ifname
         "limit":"enable or disable limit packet send rate",         // [ "disable", "enable" ]
         "limit_rule":                                               // limit send packet rate control list, valid when "limit" be "enable"
         {
@@ -102,7 +102,7 @@ Management of global local interface name client access
             // ... more rule
         },
 
-        // filter function on ifname
+        // packet filter function on this ifname
         "filter":"functions state",                                // [ "disable", "accept", "drop" ], "disable" for disable the function, "accept" for accept all packet defualt, "drop" for drop all packet default
         "filter_rule":                                             // filter network bridge packet, valid when "filter" be "accept" or "drop"
         {
@@ -119,17 +119,18 @@ Management of global local interface name client access
 
     }
 }
-```
+```   
+
 Examples, show current all of global settings
 ```shell
 client@global
 {
     "ifname@lan":
     {
-        "internet":"timer",                   // timer to access internet
+        "internet":"timer",                   # timer to access internet
         "internet_timer":
         {
-            "date":                                // all client during 05:30 to 23:59:59 can access internet
+            "date":                                # all client during 05:30 to 23:59:59 can access internet
             {
                 "source":"",
                 "datestart":"",
@@ -138,7 +139,7 @@ client@global
                 "timestop":"23:59:59",
                 "weekdays":"1,2,3,4,5,6,7"
             },
-            "night":                              // all client during 00:00 to 03:59:59 can access internet
+            "night":                              # all client during 00:00 to 03:59:59 can access internet
             {
                 "source":"",
                 "datestart":"",
@@ -148,10 +149,10 @@ client@global
                 "weekdays":"1,2,3,4,5,6,7"
             }
         },
-        "acl":"enable",                      // enable access control list
+        "acl":"enable",                      # enable access control list
         "acl_rule":
         {
-            "dis163":                             // all client cannot access domain www.163.com at all time
+            "dis163":                             # all client cannot access domain www.163.com at all time
             {
                 "source":"",
                 "proto":"domain",
@@ -168,11 +169,13 @@ client@global
     }
 }        
 ```
-Examples, add a acl rule named "disqq"
+
+Examples, add a acl rule named "disqq", all the client on ifname ifname@lan cannot access domain www.qq.com
 ```shell
 client@global:ifname@lan/acl_rule/disqq={"proto":"domain","dest":"www.qq.com","action":"drop"}
 ttrue
 ```
+
 Examples, delete a acl rule named "disqq"
 ```shell
 client@global:ifname@lan/acl_rule/disqq=

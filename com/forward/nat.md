@@ -1,8 +1,8 @@
 ***
-## Management of NAT
+## Management of System NAT/DMZ
 Management of NAT to PORT map from extern inteface to local network client
 
-#### Configuration( forward@nat )
+#### Configuration( forward@nat )   
 ```json
 // Attributes introduction 
 {
@@ -31,6 +31,7 @@ Management of NAT to PORT map from extern inteface to local network client
     // ... more extern interface name
 }
 ```  
+
 Examples, show all nat settings
 ```shell
 forward@nat
@@ -77,3 +78,38 @@ forward@nat
 }
 ```
 
+Examples, add a nat rule named telnet that make ifname@lte tcp port 23 map to 23 of 192.168.31.230
+```shell
+forward@nat:ifname@lte/rule/telnet={"targetport":"23","protocol":"tcp","destip":"192.168.31.230","destport":"23"}
+ttrue
+```
+
+Examples, add a nat rule named web that make ifname@wan tcp port 80 map to 8080 of 192.168.31.231
+```shell
+forward@nat:ifname@wan/rule/web={"targetport":"80","protocol":"tcp","destip":"192.168.31.231","destport":"8080"}
+ttrue
+```
+
+Examples, delete the rule named web at the ifname@wan
+```shell
+fforward@nat:ifname@wan/rule/web=
+ttrue
+```
+
+Examples, delete the rule named telnet at the ifname@lte
+```shell
+fforward@nat:ifname@lte/rule/telnet=
+ttrue
+```
+
+Examples, modify the ifname@lte dmz host to 192.168.31.250
+```shell
+forward@nat:ifname@wlte/dmzhost=192.168.31.250
+ttrue
+```
+
+Examples, clear the ifname@lte dmz host
+```shell
+forward@nat:ifname@wlte/dmzhost=
+ttrue
+```

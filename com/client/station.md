@@ -1,8 +1,8 @@
 ***
-## Management of client access
+## Management of Client Access   
 Management of specified client access
 
-#### Configuration( client@station )
+#### Configuration( client@station )   
 ```json
 // Attributes introduction 
 {
@@ -30,7 +30,7 @@ Management of specified client access
 
         // access control list
         "acl":"enable or disable access control list",                   // [ "disable", "enable" ]
-        "acl_rule":                                                 // access control list, valid when "acl" be "enable"
+        "acl_rule":                                                      // access control list, valid when "acl" be "enable"
         {
             "rule name":                                                 // [ string ], user can custom the rule name
             {
@@ -73,36 +73,85 @@ Management of specified client access
 }
 ``` 
 
+Examples, enable the MAC 00:03:7F:18:BD:30 can access internet
+```shell
+client@station:00:03:7F:18:BD:30/internet=enable
+ttrue
+```
+
+Examples, add the acl rule named nodns for 88:12:7F:B1:78:89, the rule make 88:12:7F:B1:78:89 cannot access dns port 53 of 8.8.8.8
+```shell
+client@station:88:12:7F:B1:78:89/acl_rule/nodns={"action":"drop","proto":"udp","dest":"8.8.8.8","destport":"53"}
+ttrue
+```
+
+Examples, add the acl rule named noweb for 88:12:7F:B1:78:89, the rule make 88:12:7F:B1:78:89 cannot access web port 80 of 115.63.2.103
+```shell
+client@station:88:12:7F:B1:78:89/acl_rule/noweb={"action":"drop","proto":"tcp","dest":"115.63.2.103","destport":"80"}
+ttrue
+```
+
+Examples, enable the acl for 88:12:7F:B1:78:89
+```shell
+client@station:88:12:7F:B1:78:89/acl=enable
+ttrue
+```
+
+Examples, clear the acl rule named nodns for 88:12:7F:B1:78:89
+```shell
+client@station:88:12:7F:B1:78:89/acl_rule/nodns=
+ttrue
+```
+
+Examples, clear the acl rule named noweb for 88:12:7F:B1:78:89
+```shell
+client@station:88:12:7F:B1:78:89/acl_rule/nodns=
+ttrue
+```
+
+Examples, bind ip 192.168.31.222 for 00:51:45:CB:78:80
+```shell
+client@station:00:51:45:CB:78:80/bindip=192.168.31.222
+ttrue
+```
+
+Examples, clear the bind ip for 00:51:45:CB:78:89
+```shell
+client@station:00:51:45:CB:78:89/bindip=
+ttrue
+```
+
 
 #### **Methods**
 
-+ `list[]` **list all client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `list[]` **list current all client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
         "client mac address":               // [ MAC address ]
         {
-            "ip":"ip address",                  // [ IP address ]
-            "ifname":"connected ifname",        // [ "ifname@lan", "ifname@lan2", ... ]
-            "name":"client name",               // [ string ]
-            "tx_bytes":"bytes of send",         // [ number ]
-            "rx_bytes":"bytes recvice",         // [ number ]
-            "livetime":"connected time",        // [ string ], format is hour:minute:second:day
+            "ip":"ip address",                    // [ IP address ]
+            "ifname":"connected ifname",          // [ "ifname@lan", "ifname@lan2", ... ]
+            "name":"client name",                 // [ string ]
+            "tx_bytes":"current sent of byte",    // [ number ]
+            "rx_bytes":"current recived of byte", // [ number ]
+            "livetime":"connected time",          // [ string ], format is hour:minute:second:day
         }
         // ... more client
     }
     ```
+
     ```shell
-    # examples, list all client
+    # examples, list current all client
     client@station.list
     {
         "04:CF:8C:39:91:7A":            # first client
         {
-            "ip":"192.168.31.140",
-            "name":"xiaomi-aircondition-ma2_mibt917A",
-            "tx_bytes":"1779693",
-            "rx_bytes":"1375610",
-            "livetime":"14:39:34:1"
+            "ip":"192.168.31.140",                        # ip is 192.168.31.140
+            "name":"xiaomi-aircondition-ma2_mibt917A",    # hostname is xiaomi-aircondition-ma2_mibt917A
+            "tx_bytes":"1779693",                         # sent 1779693 byte
+            "rx_bytes":"1375610",                         # recived 1375610 byte
+            "livetime":"14:39:34:1"                       # livetime is 1 day 14 hour 39 minute 34 second
         },
         "40:31:3C:B5:6D:4C":            # second client
         {

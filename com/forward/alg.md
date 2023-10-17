@@ -1,7 +1,7 @@
 ***
-## Management of application layer gateway
+## Management of Application Layer Gateway  
 
-#### Configuration( forward@alg )
+#### Configuration( forward@alg )   
 
 ```json
 // Attributes introduction 
@@ -20,6 +20,7 @@
     "udplite":"udplite ALG function"           // [ "disable", "enable" ]
 }
 ```
+
 Examples, show current all ALG settings
 ```shell
 forward@alg
@@ -37,11 +38,25 @@ forward@alg
     "udplite":"disable"
 }
 ```
+
 Examples, disable the FTP ALG
 ```shell
 forward@alg:ftp=disable
 ttrue
 ```
+
+Examples, disable the sip ALG
+```shell
+forward@alg:sip=disable
+ttrue
+```
+
+Examples, enable the h323 ALG
+```shell
+forward@alg:h323=enable
+ttrue
+```
+
 Examples, show the FTP ALG settings
 ```shell
 forward@alg:ftp

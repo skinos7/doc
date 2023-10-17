@@ -1,9 +1,9 @@
 
 ***
-## IO agent Management
+## IO Management Agent
 manage IO
 
-#### Configuration( io@agent )
+#### Configuration( io@agent )   
 
 ```json
 // Attributes introduction 
@@ -28,7 +28,7 @@ manage IO
         "contact":"contact number",             // [ phone number ]
         "contact2":"contact number",            // [ phone number ]
         "contact3":"contact number"             // [ phone number ]
-    }
+    },
 
     // first client, default is TCP/UDP client configure
     "client":
@@ -44,7 +44,7 @@ manage IO
         "vcode":"custom the vocde"              // [ string ]
     },
     // second client, default is MQTT Client configure
-    "client2":                       // MQTT client
+    "client2":
     {
         "status":"client status",               // [ "disable", "enable" ]
         "proto":"client protocol",              // [ "tcp", "udp", "mqtt" ]
@@ -70,6 +70,7 @@ manage IO
 
 }
 ```
+
 Examples, show all the io agnet configure
 ```shell
 io@agent
@@ -93,32 +94,32 @@ io@agent
     },
     "client2":
     {
-        "status":"enable",           # enable the mqtt client
-        "proto":"mqtt",              # protocol is mqtt
-        "server":"mqtt.wmdevice.com",# server is mqtt.wmdevice.com
-        "port":"1883",               # port is 1883
-        "mqtt_id":"",                # default is device MAC
-        "mqtt_username":"dimmalex",  # mqtt username is dimmalex
-        "mqtt_password":"0815",      # mqtt pasword is 0815
-        "mqtt_keepalive":"10",       # mqtt keeplive is 10 sec
-        "mqtt_interval":"5",         # mqtt connect interval is 5 sec
-        "mqtt_publish":"d218/io",    # mqtt publish topic is d218/io
-        "mqtt_publish_qos":"1",      # mqtt publish qos is 1
+        "status":"enable",            # enable the mqtt client
+        "proto":"mqtt",               # protocol is mqtt
+        "server":"mqtt.wmdevice.com", # server is mqtt.wmdevice.com
+        "port":"1883",                # port is 1883
+        "mqtt_id":"",                 # default is device MAC
+        "mqtt_username":"dimmalex",   # mqtt username is dimmalex
+        "mqtt_password":"0815",       # mqtt pasword is 0815
+        "mqtt_keepalive":"10",        # mqtt keeplive is 10 sec
+        "mqtt_interval":"5",          # mqtt connect interval is 5 sec
+        "mqtt_publish":"d218/io",     # mqtt publish topic is d218/io
+        "mqtt_publish_qos":"1",       # mqtt publish qos is 1
         "mqtt_subscribe":
         {
-            "d218/order":"2",        # mqtt subscribe d218/order topic, qos is 2
-            "route/order":"2"        # mqtt also subscribe route/order topic, qos is 2
+            "d218/order":"2",         # mqtt subscribe d218/order topic, qos is 2
+            "route/order":"2"         # mqtt also subscribe route/order topic, qos is 2
         }
     }
 }
-
 ```  
+
 Examples, disable mqtt client
 ```shell
 io@agent:client2/status=disable
 ttrue
 ```  
-```  
+
 Examples, modify the tcp/udp client server
 ```shell
 io@agent:client/server=new.wmdevice.com
@@ -126,9 +127,10 @@ ttrue
 ```  
 
 
+
 #### **Methods**
 
-+ `status[]` **get the agent status**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*
++ `status[]` **get the io agent status**, *succeed return talk to describes infomation, failed reeturn NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -158,6 +160,7 @@ ttrue
         }
     }
     ```
+
     ```shell
     # examples, get the io agent status
     io@agent.status
@@ -183,7 +186,7 @@ ttrue
     }
     ```
 
-+ `modify[ modify io state ]` **modify the io state**, *succeed return talk to describes state after modify, failed return NULL, error return terror*
++ `modify[ modify io state ]` **modify the io state**, *succeed return talk to describes state after modify, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -196,6 +199,7 @@ ttrue
                                                             //  can be 2 for output timer
     }
     ```
+
     ```shell
     # examples, modify the g1 input, g2 output high, g2 output low
     io@agent.modify[ g1=00;g2=11;g3=10 ]
@@ -207,6 +211,7 @@ ttrue
                                                 # g5 is timer output
     }
     ```
+
     ```shell
     # examples, modify the g1 output high
     io@agent.modify[ g1=11 ]
@@ -218,6 +223,7 @@ ttrue
                                                 # g5 is timer output
     }
     ```
+
     ```shell
     # examples, modify the g1 output timer for 200ms high, 500ms low
     io@agent.modify[ g1=2-200-500 ]

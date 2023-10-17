@@ -1,36 +1,43 @@
 
 
 ***
-## Account password and permission management components
-Management equipment basic infomation
-Manage accounts and permissions, Modifying this configuration directly is not recommended, It is recommended to manage through the interface
+## Username/Password and Permission Management
+Manage username and permissions, modifying this configuration directly is not recommended, It is recommended to manage through the method
+The configuration structure is divided into three layers
+- username can belong to multiple groups
+- group can have permissions of domains
+- because the three-layer structure is relatively complex, the group and domain permissions are temporarily one-to-one
+    > that is, there are only username and groups, and each group has a separate domain permission
+- groups are pre-built in the system (built-in based on functions), and corresponding username can be created and deleted.
+    > Examples storage functions are added, "nas" group are built in the storage. you can add or delete username belonging to "nas" group
+
 
 #### Configuration( land@auth )
 
 ```json
 // Attributes introduction 
 {
-    "user":        //  Account list, all accounts in the system are under this node
+    "user":        //  username list, all accounts in the system are under this node
     {
-        "account name":                  // [ string ], you can custom the username
+        "user name":                  // [ string ], you can custom the username
         {
-            "id":"account identify",     // [ number ]
-            "key":"account key",         // [ string ]
-            "group":                     // List of groups to which the account belongs
+            "id":"username identify",     // [ number ]
+            "key":"username password",         // [ string ]
+            "group":                     // List of groups to which the username belongs
             {
                 "group name":"belongs state"  // [ string ]: [ "disable","enable" ], "enable" for belongs, "disable" for not
                 // "...":"..."                // How many groups belongs show how many properties
             },
-            "domain":                    // List of domains to which the account belongs
+            "domain":                    // List of all domains configure for this username
             {
                 "domain name":
                 {
-                    "key":"In this domain specialized key"        // [ string ], an empty one represents the use of the default password
+                    "key":"In this domain specialized password"        // [ string ], an empty one represents the use of the default password
                 }
                 // "...":{ ... }                                  // How many domain show how many properties
             }
         },
-        // "...":{...}                  // How many account show how many properties
+        // "...":{...}                  // How many username show how many properties
     },
     "group":     // Group list, all groups in the system are under this node
     {
@@ -46,15 +53,19 @@ Manage accounts and permissions, Modifying this configuration directly is not re
         // "...":{...}                  // How many group show how many properties
     }
 }
-// Examples
+```
+
+Examples, show all the accounts configure
+```shell
+land@auth
 {
     "user":
     {
-        "admin":                       // account: admin
+        "admin":                       # username: admin
         {
-            "id":"0",                  // admin account id is 0
-            "key":"E@3DLKSLKJWEWWWWW", // admin default key is E@3DLKSLKJWEWWWWW
-            "group":                   // admin belongs gruop: admin, web, tui, nas
+            "id":"0",                  # admin username id is 0
+            "key":"E@3DLKSLKJWEWWWWW", # admin default password is E@3DLKSLKJWEWWWWW
+            "group":                   # admin belongs groups: admin, web, tui, nas
             {
                 "admin":"enable",
                 "web":"enable",
@@ -63,21 +74,21 @@ Manage accounts and permissions, Modifying this configuration directly is not re
             },
             "domain":
             {
-                "nas":                 // admin key is ADSAADFFF at the nas domain
+                "nas":                 # admin password is ADSAADFFF at the nas domain
                 {
                     "key":"ADSAADFFF"
                 },
-                "web":                 // admin key is DSDFSDFF at the web domain
+                "web":                 # admin password is DSDFSDFF at the web domain
                 {
                     "key":"DSDFSDFF"
                 }
             }
         },
-        "nas":                         // account: nas
+        "nas":                         # username: nas
         {
-            "id":"1000",               // nas account id is 1000
-            "key":"nas",               // nas default key is nas
-            "group":                   // admin belongs gruop: nas
+            "id":"1000",               # nas username id is 1000
+            "key":"nas",               # nas default password is nas
+            "group":                   # admin belongs group: nas
             {
                 "nas":"enable"
             }
@@ -85,34 +96,34 @@ Manage accounts and permissions, Modifying this configuration directly is not re
     },
     "group":
     {
-        "admin":                       // admin group
+        "admin":                       # admin group
         {
-            "id":"0",                  // admin group identify is 0
-            "domain":                  // admin group belongs admin domain
+            "id":"0",                  # admin group identify is 0
+            "domain":                  # admin group belongs admin domain
             {
                 "admin":"enable"
             }
         },
-        "web":                         // web group
+        "web":                         # web group
         {
-            "id":"1000",               // web group identify is 1000
-            "domain":                  // web group belongs web domain
+            "id":"1000",               # web group identify is 1000
+            "domain":                  # web group belongs web domain
             {
                 "web":"enable"
             }
         },
-        "tui":                         // tui group
+        "tui":                         # tui group
         {
-            "id":"1001",               // tui group identify is 0
-            "domain":                  // tui group belongs tui domain
+            "id":"1001",               # tui group identify is 0
+            "domain":                  # tui group belongs tui domain
             {
                 "tui":"enable"
             }
         },
-        "nas":                         // nas group
+        "nas":                         # nas group
         {
-            "id":"1002",               // nas group identify is 0
-            "domain":                  // nas group belongs nas domain
+            "id":"1002",               # nas group identify is 0
+            "domain":                  # nas group belongs nas domain
             {
                 "nas":"enable"
             }
@@ -124,63 +135,70 @@ Manage accounts and permissions, Modifying this configuration directly is not re
 
 #### **Methods**
 
-+ `check[ [domain], account, password ]` **check the username and password is legal**, *succeed return ttrue, failed return tfalse, error return terror*
++ `check[ [domain], username, password ]` **check the username and password correct**, *correct return ttrue, wrong return tfalse, error return terror*   
     ```shell
-    # examples, check the account admin is legal
+    # examples, check the username admin correct
     land@auth.check[ ,admin, admin ]
     ttrue
+    # examples, check the username admin correct with wrong password
+    land@auth.check[ ,admin, passwrong ]
+    tfalse
     ```
 
-+ `modify[ [domain], account, password, [new password], [new account] ]` **modify the username or password with original password**, *succeed return ttrue, failed return tfalse, error return terror*
++ `modify[ [domain], username, password, [new password], [new username] ]` **modify the username or password with original password**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, modify the admin password to 12345
+    # examples, modify the password of admin to 12345
     land@auth.modify[ ,admin, admin, 12345 ]
     ttrue
-    # examples, modify the admin account name to user
-    land@auth.modify[ ,admin, admin, , user ]
+    # examples, modify the username of admin to Bob
+    land@auth.modify[ ,admin, 12345, , Bob ]
     ttrue
     ```
 
-+ `add[ [domain], account, password ]` **add a new username**, *succeed return ttrue, failed return tfalse, error return terror*
++ `add[ [domain], username, password ]` **add a new username**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
-    # examples, add xiaomi username
+    # examples, add xiaomi username, the password is xiaomin123
     land@auth.add[ ,xiaomi, xiaomin123 ]
     ttrue
     ```
 
-+ `delete[ account[, ...] ]` **delete username**, *succeed return ttrue, failed return tfalse, error return terror*
++ `delete[ username[, ...] ]` **delete username**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```shell
     # examples, delete the username xiaomi
     land@auth.delete[ xiaomi ]
     ttrue
+    # examples, delete the username Alice and Bob 
+    land@auth.delete[ Alice, Bob ]
+    ttrue
     ```
 
-+ `list[ [group] ]` **list system username**, *succeed return talk, failed return tfalse, error return terror*
++ `list[ [group] ]` **list system username**, *succeed return talk, failed return tfalse, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
-        "account name":                 // [ string ]
+        "user name":                 // [ string ]
         {
-            "key":"account key"         // [ string ]
+            "key":"username password"         // [ string ]
         }
-        // "...":{...}                  // How many account show how many properties
+        // "...":{...}                  // How many username show how many properties
     }    
     ```
+
     ```shell
-    # examples, list all admin group account
+    # examples, list all admin group username
     land@auth.list[ admin ]
     {
         "admin":
         {
-            "key":"admin"
+            "key":"E@3DLKSLKJWEWWWWW"
         }
     }
-    # examples, list all account
+    # examples, list all username
     land@auth.list
     {
         "admin":
         {
-            "key":"admin"
+            "key":"E@3DLKSLKJWEWWWWW"
         },
         "nas":
         {
@@ -192,7 +210,7 @@ Manage accounts and permissions, Modifying this configuration directly is not re
     }
     ```
 
-+ `domain[ account ]` **list domain belongs of username**, *succeed return talk, failed return tfalse, error return terror*
++ `domain[ username ]` **list domain belongs of username**, *succeed return talk, failed return tfalse, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -200,8 +218,9 @@ Manage accounts and permissions, Modifying this configuration directly is not re
         // "...":"..."                 // How many domain show how many properties
     }    
     ```
+
     ```shell
-    # examples, list all admin domain
+    # examples, list all domain of username admin
     land@auth.domain[ admin ]
     {
         "admin":"enable",
@@ -209,217 +228,4 @@ Manage accounts and permissions, Modifying this configuration directly is not re
         "nas":"enable"
     }
     ```
-
-
-
-
-## 帐号密码及权限管理组件
-管理帐号及权限, 不建议直接修改此配置, 建议通过接口来管理
-
-#### **配置( land@auth )** 
-```json
-// 属性介绍
-{
-    "user":                  //  帐号列表, 系统中所有的帐号都在此节点下
-    {
-        "帐号名":                 // [ 字符串 ]
-        {
-            "id":"帐号ID",        // [ 数字 ]
-            "key":"密钥",         // [ 字符串 ]
-            "group":         // 帐号所属组列表
-            {
-                "组名":"状态",    // [ 字符串 ]:[ "disable", "enable" ], enable为使能为此组成员, 其它为禁用
-                // "...":"..."    // 可能的更多组
-            },
-            "domain":        // 针对帐号中域信息专用的存放节点
-            {
-                "域名":                             // [ 字符串 ]
-                {
-                    "key":"在此域中专门的密钥"      // [ 字符串 ], 空表示使用默认密码
-                }
-                // "...":{...}                      // 可能的更多域
-            }
-        },
-        // "...":{...}       // 系统中其它的帐号
-    },
-    "group":                 // 组列表, 系统中所有的组都在此节点下
-    {
-        "组名":                   // [ 字符串 ]
-        {
-            "id":"组ID",          // [ 数字 ]
-            "domain":             // 组下所有的域权限列表
-            {
-                "域名":"域名状态",  // [ 字符串 ]:[ "disable", "enable" ], enable为使能为此域成员, 其它为禁用 
-                //  "...":"..."     // 可能的更多域
-            }
-        },
-        // "...":{...}       // 系统中其它的组
-    }
-}
-// 示例
-{
-    "user":                            // 帐号列表
-    {
-        "admin":                       // 管理帐号, 此处为admin帐号
-        {
-            "id":"0",                  // 帐号ID
-            "key":"E@3DLKSLKJWEWWWWW", // 默认密码, 对应的域下未设置密码时将使用此密码，以|*|V2开头的为经过加密的密码
-            "group":                   // 所属组列表
-            {
-                "admin":"enable",      // 管理组, enable为使能为此组成员, 其它为禁用
-                "web":"enable",        // WEB组
-                "tui":"enable",        // 终端组
-                "nas":"enable"         // 存储组
-            },
-            "domain":                  // 对应的域信息
-            {
-                "nas":                 // 存储域(nas)下的专用信息
-                {
-                    "key":"ADSAADFFF"  // 在存储域下专门的密码, 空表示使用默认密码
-                }
-            }
-        },
-        "nas":                         // 存储帐号
-        {
-            "id":"1000",
-            "key":"nas",               // 默认密码
-            "group":                   // 所属组列表
-            {
-                "nas":"enable"
-            }
-        }
-    },
-    "group":                           // 组列表
-    {
-        "admin":                       // 管理组
-        {
-            "id":"0",                  // 组ID
-            "domain":                  // 所有的域权限列表
-            {
-                "admin":"enable"       // 管理组拥用管理员域的权限
-            }
-        },
-        "web":                         // WEB组
-        {
-            "id":"1000",
-            "domain":                  // 所有的域权限列表
-            {
-                "web":"enable"         // WEB组拥用存储域权限
-            }
-        },
-        "tui":                         // 终端组
-        {
-            "id":"1001",
-            "domain":                  // 所有的域权限列表
-            {
-                "tui":"enable"         // 终端组拥用存储域权限
-            }
-        },
-        "nas":                         // 存储组
-        {
-            "id":"1002",
-            "domain":                  // 所有的域权限列表
-            {
-                "nas":"enable"         // 存储组拥用存储域权限
-            }
-        }
-    }
-}
-```  
-
-
-#### **接口** 
-
-+ `check[ [域], 帐号名, 密码 ]` **检测帐号密码是否合法**, *修改成功返回ttrue, 修改失败返回tfalse, 出错返回terror*
-    ```shell
-    # 示例, 检测admin帐号及密码
-    land@auth.check[ ,admin, admin ]
-    ttrue
-    ```
-
-+ `modify[ [域], 帐号名, 原密码, [新密码], [新帐号名] ]` **修改帐号名或密码,** 新密码及新帐号名两个参数必须给出一个, 不给出域表示修改默认域, *修改成功返回ttrue, 修改失败返回tfalse, 出错返回terror*
-    ```shell
-    # 示例, 修改admin用户的密码为NewPassword, 需要给出原密码, 原密码为123456
-    land@auth.modify[,admin,123456,NewPassword]
-    ttrue
-    # 示例, 修改user1用户的密码为cf8k2sfd, 需要给出原密码, 原密码为87654
-    land@auth.modify[,user1,87654,cf8k2sfd]
-    ttrue
-    ```
-
-+ `add[ [域], 帐号名, [密码], [组,...] ]` **添加帐号**, 给出组将在添加新帐号同时添加进对应的组, 不给出域参数表示密码添加到默认域, *添加成功返回ttrue, 添加失败返回tfalse, 出错返回terror*
-    ```shell
-    # examples, add xiaomi username
-    land@auth.add[ ,xiaomi, xiaomin123 ]
-    ttrue
-    ```
-+ `delete[ 帐号, [...] ]` **删除帐号**, 可同时给出多个帐号, *修改成功返回ttrue, 修改失败返回tfalse*
-    ```shell
-    # examples, delete the username xiaomi
-    land@auth.delete[ xiaomi ]
-    ttrue
-    ```
-
-+ `list[ [组] ]` **列出系统中所有帐号或列出参数中指定组的帐号**, *成功返回JSON, 以下为JSON介绍; 失败返回NULL*
-    ```json
-    // 属性介绍
-    {
-        "帐号名":                      // [ 字符串 ]
-        {
-            "key":"密钥"               // [ 字符串 ]
-        }
-        //  "...":{...}                // 更多帐号
-    }
-    ```
-    ```shell
-    # 示列, 列出系统中所有的帐号
-    land@auth.list
-    {
-        "admin":                       // 管理员帐号
-        {
-            "key":"J@#FDSSDFSDFS"      // 密钥
-        },
-        "nas":                         // 存储帐号
-        {
-            "key":"SE$*SDFSKFSDF"
-        },
-        "nobody":
-        {
-        }
-    }
-    ```
-
-+ `domain[ 帐号 ]` **列出帐号所属的域**, *成功返回JSON, 以下为JSON介绍; 失败返回NULL*
-    ```json
-    // 属性介绍
-    {
-        "权限域":"是否启用",  // enable为启用, disable为禁用
-        // ...                // 更多权限域
-    }
-    ```
-    ```shell
-    # 示列, 列出用户admin对应的域
-    land@auth.domain[ admin ]
-    {
-        "admin":"enable",        // 管理员域的权限
-        "wui":"enable",          // 网页管理域的权限
-        "tui":"enable",          // 终端管理域的权限
-        "nas":"enable"          // 存储域的权限
-    }
-    ```
-
-
-#### 解释
-
-+ `组件配置结构` *以上组件配置的结构方式分为三层: 帐号>组>域权限*
-
->+ 帐号可以同时属于多个组
-
->+ 组可以同时拥有多个域的权限
-
->+ 因三层结构相对复杂, 暂时以将组与域权限一对一对应, 即只有帐号与组， 每个组拥有一个单独的域权限
-
->+ 组在系统中预先内置(基于功能内置), 对应的帐号可以创建及删除, 如添加了存储功能即为存储内置了nas组, 在nas组中实现添加删除属于nas组的帐号
-
-
 

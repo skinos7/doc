@@ -1,8 +1,8 @@
 ***
-## GNSS management components
-Manage GNSS, nmea data can from UART, LTE
+## GNSS NEMA Protocol Management
+Manage and parse GNSS nmea data, nmea data can from UART or LTE
 
-#### **configuration( gnss@nmea )**
+#### Configuration( gnss@nmea )   
 
 ```json
 // Attribute introduction
@@ -66,10 +66,71 @@ Manage GNSS, nmea data can from UART, LTE
 
 ```
 
+Examples, show all the GNSS configure
+```shell
+gnss@nmea
+{
+    "status":"enable",                # enable the GNSS
+    "client":                         # first client: send the DATA(NMEA) to tcp port 9000 of 11.43.52.124
+    {
+        "status":"enable",
+        "proto":"tcp",
+        "server":"11.43.52.124",
+        "port":"9000",
+        "id":"",
+        "user":"",
+        "vcode":"",
+        "login":"",
+        "login_string":"",
+        "frame_start":"disable",
+        "frame_string_string":"",
+        "frame_end":"disable",
+        "frame_end_string":""
+    },
+    "client2":                         # second client: send the location infomation to MQTT port 1883 of 23.21.23.28
+    {
+        "status":"enable",
+        "proto":"mqtt",
+        "server":"23.21.23.28",
+        "port":"1883",
+        "mqtt_id":"",
+        "mqtt_username":"",
+        "mqtt_password":"",
+        "mqtt_keepalive":"10",
+        "mqtt_interval":"",
+        "mqtt_publish":"",
+        "mqtt_publish_qos":"",
+        "mqtt_subscribe":
+        {
+        }
+    },
+    "server":                          # enable the server, the server work on TCP port 6000, the client can connect to and get the DATA(NMEA) 
+    {
+        "status":"enable",
+        "proto":"tcp",
+        "port":"6000",
+        "limit":"5"                          # limit the five concurrence client
+    }
+}
+```  
+
+Examples, disable mqtt client
+```shell
+gnss@nmea:client2/status=disable
+ttrue
+```  
+
+Examples, modify the server port to 8000
+```shell
+gnss@nmea:server/port=8000
+ttrue
+```  
+
+
 
 #### **Methods**
 
-+ `info[]` **get the nmea location infomation**, *succeed return talk to describes, failed return NULL, error return terror*
++ `info[]` **get the nmea location infomation**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -87,8 +148,9 @@ Manage GNSS, nmea data can from UART, LTE
         "inuse":"Number of satellites in use"       // [ nubmer ]     
     }
     ```
+
     ```shell
-    # examples, get the current date
+    # examples, get the current location
     gnss@nmea.info
     {
         "step":"located",                           # already located
@@ -105,7 +167,7 @@ Manage GNSS, nmea data can from UART, LTE
     }
     ```
 
-+ `status[]` **get the nmea service status**, *succeed return talk to describes, failed return NULL, error return terror*
++ `status[]` **get the nmea service status**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -137,6 +199,7 @@ Manage GNSS, nmea data can from UART, LTE
         // ... more client 
     }    
     ```
+
     ```shell
     # examples, get the current nmea service status
     gnss@nmea.status

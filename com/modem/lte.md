@@ -1,6 +1,6 @@
 
 ***
-## LTE modem Management
+## LTE/NR Modem Management
 Management LTE modem
 
 #### Configuration( modem@lte )
@@ -136,7 +136,8 @@ Management LTE modem
 
 }
 ```
-Examples, show all the lte modem configure
+
+Examples, show all the first lte modem configure
 ```shell
 modem@lte
 {
@@ -183,7 +184,8 @@ modem@lte
     }
 }
 ```  
-Examples, enable the GNSS for lte modem
+
+Examples, enable the GNSS for first lte modem
 ```shell
 modem@lte:gnss=enable
 ttrue
@@ -247,8 +249,9 @@ ttrue
         }
     }
     ```
+
     ```shell
-    # examples, get the first modem infomation
+    # examples, get the first lte modem infomation
     modem@lte.status
     {
         "imei":"867160040494084",          # imei is 867160040494084
@@ -260,10 +263,10 @@ ttrue
         "plmn":"46001",                    # plmn is 46001
         "nettype":"WCDMA",                 # nettype is WCDMA
         "rssi":"-107",                     # signal intensity is -107
-        "operator":"中国联通",             # operator name is 中国联通
-        "operator_advise":                 # recommended profile for 中国联通
+        "operator":"ChinaMobile",              # operator name is ChinaMobile
+        "operator_advise":                 # recommended profile for ChinaMobile
         {
-            "name":"中国联通",                 # name is 中国联通
+            "name":"ChinaMobile",                 # name is ChinaMobile
             "dial":"*99#",                     # dial number is *99#
             "apn":"3gnet"                      # APN is 3gnet
         }
@@ -272,23 +275,23 @@ ttrue
 
 + `reset[]` **reset the modem**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, reset the first modem
+    # examples, reset the first lte modem
     modem@lte.reset
     ttrue
-    # examples, reset the second modem
+    # examples, reset the second lte modem
     modem@lte2.reset
     ttrue
     ```
 
 + `at[]` **at to the modem**, *succeed return ttrue and print the command result, failed return tfalse, error return terror*
     ```shell
-    # examples, talk to first modem AT command for simcard state
+    # examples, talk to first lte modem AT command for simcard state
     modem@lte.talk[at+cpin?]
     +CPIN: READY
 
     OK
     ttrue
-    # examples, talk to second modem AT command for network state
+    # examples, talk to second lte modem AT command for network state
     modem@lte2.talk[at+creg?]
     +CREG: 2,1,"A538","1EB3FB7",2
 
@@ -307,8 +310,9 @@ ttrue
         "msim_imsi":"main simcard imsi"                  // [ string ]
     }
     ```
+
     ```shell
-    # examples, get the first modem simcard infomation
+    # examples, get the first lte modem simcard infomation
     modem@lte.siminfo
     {
         "bsim_state":"backup",
@@ -329,9 +333,10 @@ ttrue
         "mtty":"modem tty device pathname"    // [ string ]
     }
     ```
+
     ```shell
-    # examples, get the second modem profile
-    modem@lte2.profile
+    # examples, get the first lte modem profile
+    modem@lte.profile
     {
         "name":"中国联通",
         "dial":"*99#",
@@ -342,15 +347,21 @@ ttrue
 
 + `shut[]` **shutdown the modem**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, shutdown the frist modem
+    # examples, shutdown the frist lte modem
     modem@lte.shut
+    ttrue
+    # examples, shutdown the second lte modem
+    modem@lte2.shut
     ttrue
     ```
 
 + `setup[]` **setup the modem**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
-    # examples, setup the frist modem
+    # examples, setup the frist lte modem
     modem@lte.setup
+    ttrue
+    # examples, setup the second lte modem
+    modem@lte2.setup
     ttrue
     ```
 
