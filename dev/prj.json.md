@@ -1,12 +1,11 @@
 
-## 项目描述文件（prj.json） 
-- prj.json是在项目目录必须存在
-- prj.json在项目编译打包时一起打包到FPK安装包
-- prj.json在项目或FPK安装包中描述整个项目的资源
+## Project description file（prj.json） 
+- prj.json must exist in the project directory
+- prj.json is packaged into FPK together with compilation
+- prj.json describe the resources for the entire project in the project or FPK
 
-## prj.json属性介绍
+## prj.json Attribute introduction
 ```json
-// 属性介绍
 {
     "name":"project name",                 // [ string ]
     "intro":"project brief",               // [ string ]
@@ -126,15 +125,15 @@
 }
 ```  
 
-## 示例介绍tui项目中的prj.json
-tui项目位置 **[tiger7/project/tui](./project/tui)**, 以下是tui项目的项目描述文件prj.json
+## Example describes prj.json in the tui project
+
 ```json
 {
     "name":"tui",                                         // name is tui
-    "intro":"Terminal user interface service", 
+    "intro":"Terminal user interface service",            // tui project ntroduction
     "type":"root",
-    "version":"7.0.0",
-    "author":"dimmalex@gmail.com",
+    "version":"7.0.0",                                    // current version
+    "author":"dimmalex@gmail.com",                        // project author
     "com":                                                // two components in the tui project, 
     {   
         "telnet":"telnet server management",                    // The corresponding component code is in the "telnet" directory of the "tui" project directory
