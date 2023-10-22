@@ -1,44 +1,27 @@
 
-## Execute the HE command on the CLI to manage the gateway
+## Execute the HE command on the terminal to manage the gateway   
 The terminal command line is used to execute the HE command to control the gateway, such as querying gateway information, setting gateway parameters, and restarting or resetting the gateway. The HE command is not only used in the terminal command line, but also supported by many control protocols
-> #### 通过终端命令行执行HE指令管理网关
-> 终端命令行用于执行HE指令， 通过HE指令可以控制网关， 实现如：查询网关信息、设置网关参数、重启或重置网关等各种操作, HE指令不止使用于终端命令行中, 在很多控制协议中也都支持
 
-You can log in to the gateway using the HE command line in several ways:
-- Telnet
-- SSH
-- TTL UART(The baud rate is usually 57600/8-data-bit/1-stop-bit/no flow control/no check)
-- RS232 UART(The baud rate is usually 57600/8-data-bit/1-stop-bit/no flow control/no check)
-- RS485 UART(The baud rate is usually 57600/8-data-bit/1-stop-bit/no flow control/no check)
->可通过几种方式登录网关使用HE终端命令行:
->- 通过Telnet客户端连接网关登录后可以直接使用HE指令
->- 通过SSH客户端连接网关登录后可以直接使用HE指令
->- 通过TTL串口连接网关后可以直接使用HE指令(串口波特率通常为57600/8位数据位/1位停止位/无流控及校验)
->- 通过RS232串口连接网关后可以直接使用HE指令(串口波特率通常为57600/8位数据位/1位停止位/无流控及校验)
->- 通过RS485串口连接网关后可以直接使用HE指令(串口波特率通常为57600/8位数据位/1位停止位/无流控及校验)
+You can log in to the gateway using the HE command in several ways:   
+- Telnet   
+- SSH   
+- TTL UART(The baud rate is usually 57600/8-data-bit/1-stop-bit/no flow control/no check)   
+- RS232 UART(The baud rate is usually 57600/8-data-bit/1-stop-bit/no flow control/no check)   
+- RS485 UART(The baud rate is usually 57600/8-data-bit/1-stop-bit/no flow control/no check)   
 
-##### Telnet client use HE command(  )
-1. First, open the **Telnet Server** in the **<System>** menu of the gateway management web page
-2. After logging in to the gateway through the Telnet client using the user name and password, you can execute the HE command on terminal
-> Telnet客户端下使用HE指令
->1. 首先在网关管理网页下的 **<系统>** 下的 **<Telnet服务器>** 界面中打开 **Telnet服务器**
->2. 通过Telnet客户端使用 用户名及密码 登录网关后即可进入终端HE指令界面
+##### Telnet client use HE command   
+1. First, open the **Telnet Server** in the **<System>** menu of the gateway management web page   
+2. After logging in to the gateway through the Telnet client using the user name and password, you can execute the HE command on terminal   
 
-##### SSH client use HE command( SSH客户端下使用HE指令 )
-1. First, open the **SSH Server** in the **<System>** menu of the gateway management web page
-1. 首先在网关管理网页下的 **<系统>** 下的 **<SSH服务器>** 界面中打开 **SSH服务器**
-2. After logging in to the gateway through the SSH client using the user name and password, you can execute the HE command on terminal
-2. 通过SSH客户端使用 用户名及密码 登录后即可进入终端HE指令界面
+##### SSH client use HE command   
+1. First, open the **SSH Server** in the **<System>** menu of the gateway management web page   
+2. After logging in to the gateway through the SSH client using the user name and password, you can execute the HE command on terminal   
 
-##### TTL/RS232/RS485 use HE command( 串口下使用HE指令 )
-1. First, modify the **Serial#TTL**/**Serial#RS232**/**Serial#485** or **UART**/**UART2**/**UART3** mode to **Command Line** in the **<Application>** menu of the gateway management web page
-1. 首先在网关管理网页下的 **<应用>** 下的 **<串口1>** 或 **<串口2>**(具体跟据你使用的串口定) 界面中启用 **状态**, 并修改 **模式** 为 **终端命令行** 模式后后应用
-2. Use the serial port tool to connect to the serial port of the gateway to execute the HE command
-2. 通过串口工具连接网关对应的串口即可进入终端HE指令界面
+##### TTL/RS232/RS485 use HE command   
+1. First, modify the **Serial#TTL**/**Serial#RS232**/**Serial#485** or **UART**/**UART2**/**UART3** mode to **Command Line** in the **<Application>** menu of the gateway management web page   
+2. Use the serial port tool to connect to the serial port of the gateway to execute the HE command   
 
- *注:串口默认为57600的波特率（8位数据位/1位停止位/无流控/无校检）*
-
-进入HE终端命令行后首先会显示简介界面, 界面如下：
+After entering the terminal command line, the introduction screen is displayed as follows:   
 ```
                EEEEEEEEE   LL           FFFFFFFFF
                EE          LL           FF
@@ -58,78 +41,76 @@ You can log in to the gateway using the HE command line in several ways:
  <com>:<config>=<value> -- Set component configure attribute
  -----------------------------------------------------------
  # 
-```
-看到以上简介或出现#号命令行输入提示符即表示成功登录HE终端命令行
+```   
+you have successfully logged in to the terminal command line when the command line input prompt (# ) is displayed
 
 ---
 
-## HE指令格式
+## HE Command Format
 
-#### **HE指令介绍**
-+ 每条命令占一行, 以回车结尾(如在非终端命令行协议中回车省略), 终端命令可分为三种类型:
-	+ **查询配置**                用于查询网关某些功能组件当前的一些配置信息
-	+ **设置配置**                用于修改网关某些功能组件的配置
-	+ **调用组件方法**            用于执行网关某些功能组件操作, 通常如查询状态/启动/禁用等都属于此类型
-+ 命令的返回类型
-	+ **字符串**              用于表示一个单一的信息(被调用的方法返回talk_t类型的字符串), ***以换行符结尾后并以#加一个空格在新行提示***
-	+ **ttrue** 或 **tfalse** ttrue通常用于表示操作成功, tfalse表示操作失败, ***以换行符结尾后并以#加一个空格在新行提示***
-	+ **{JSON}**              用于表示一些复杂的信息, 所含多种信息, 以{开头并以}结尾的JSON对象(被调用的方法返回talk_t类型的json结构), ***以换行符结尾后并以#加一个空格在新行提示***
-	+ **空**                  用于表示未得到可用信息(被调用的方法返回NULL时为空), ***以换行符结尾后并以#加一个空格在新行提示***
+#### **HE Command Introduction**
 
-#### **查询配置**
-+ 查询网关对应功能组件的所有配置时给出对应的 **组件名称** 回车即可
-通常返回值会是一个JSON
++ Each command takes a line and ends with a CR. HE commands can be divided into three types:   
+	+ **Query configuration**              Used to query the current configuration of some function components of the gateway
+	+ **Modify configuration**             Used to modify the configuration of certain gateway components
+	+ **Calling component method**         Used to perform some functions of the gateway component operations, such as querying status, starting, and disabling
++ The return type of the command   
+	+ **Character string**         Used to represent a single piece of information(The called method returns a string of type talk t), *Prompt a new line with a # space after a newline character*
+	+ **ttrue** 或 **tfalse**      ttrue indicates successful operation, tfalse indicates operation failure, *Prompt a new line with a # space after a newline character*
+	+ **{JSON}**                   A JSON object that starts with {and ends with} (the called method returns a json structure of type talk_t) is used to represent some complex information., *Prompt a new line with a # space after a newline character*
+	+ **Empty**                       Used to indicate that no available information is available(NULL if the called method returns null), *Prompt a new line with a # space after a newline character*
+
+#### **Query configuration**
+
++ When querying all configurations of the components of the gateway, enter **component name** Press enter
+Usually the return value will be a JSON
     ```shell
-    # land@machine                    # 查询land@machine组件(设备基本信息)的配置
-    {                                 # 返回一个完整的JSON对象
-        "platform":"smtk",                   # 平台编号
-        "hardware":"mt7628",                 # 芯片编号
-        "custom":"d218",                     # 产品编号
-        "scope":"std",                       # 定制编号
-        "language":"cn",                     # 语言
-        "macid":"00037F123310",              # MAC号
-        "mac":"00:03:7F:12:33:10",           # MAC地址
-        "name":"D218-123310",                # 设备名
-        "title":"D218-123310",               # 标识名
-        "mode":"misp"                        # 工作模式
+    # land@machine                    # Query configurations of land@machine (Basic Infomation of Gateway)
+    {                                 # Return a complete JSON object
+        "mode":"nmisp",                              # gateway operator mode Next Mobile(LTE/NR) Internet Service Provider connection
+        "name":"ASHYELF-12AAD0",                     # gateway name is ASHYELF-12AAD0
+        "mac":"00:03:7F:12:AA:D0",                   # gateway MAC is 88:12:4E:20:46:B0
+        "macid":"00037F12AAD0",                      # gateway serial id is 88124E2046B0
+        "language":"cn",                             # gateway language is chinese
+        "cfgversion":"1"                             # gateway configure version is 1(hint modify one times)
     }
     # 
     ```   
-    > 具体设备基本信息的配置参数介绍参见 *[Management of Basic Infomation](../com/land/machine.md)*
+    > See *[Management of Basic Infomation](../com/land/machine.md)* for more
 
-+ 查询功能组件指定的属性时给出 **组件名称:属性路径** 回车即可
-返回值可以为一个字符串也可以为一个JSON, 具体看对应的属性的值
++ When querying the attributes specified by the component, give the **component name:attribute path** Enter
+The return value can be a string or a JSON, depending on the value of the corresponding attribute
     ```shell
-    # land@machine:name              # 查询land@machine组件配置下的name属性的值
-    A218-120108                      # 返回一个字符串
+    # land@machine:name              # Query the value of the name attribute under the land@machine component configuration
+    A218-120108                      # Return a string
     # 
     ```   
-+ 当组件的属性有很多层次时, **属性路径** 就会以/号分隔多层的属性名, 属性路径用于定位属性, 如下
++ When a component has many levels of attributes, **attribute path** will separate the multiple layers of **attribute names** with a **/**. The attribute path is used to locate the attributes, as follows
     ```shell
-    # ifname@lan:static              # 查询ifname@lan(LAN口管理)组件配置下的static属性的值
+    # ifname@lan:static              # Query the value of the static attribute under the ifname@lan(LAN Network Management) component configuration
     {
         "ip":"192.168.8.1",
         "mask":"255.255.255.0"
     }
-    # ifname@lan:static/ip           # 查询ifname@lan(LAN口管理)组件配置下的static属性下ip属性的值
+    # ifname@lan:static/ip           # Query the value of the ip attribute under the static attribute of the ifname@lan(LAN Network Management) component configuration
     192.168.8.1
     # 
     ```   
-    > 具体本地网络的配置参数介绍参见 *[LAN Network Management](../com/ifname/lan.md)*
+    > See *[LAN Network Management](../com/ifname/lan.md)* for more
 
-    以上示列通过 **属性/下级属性/下级属性/…** 这种路径式的方式来定位多次层属性
+    The above are passed by **attribute/subordinate attribute/subordinate attribute/...** This path-like way to locate multiple layer attributes
 
-#### **修改配置**
-+ 修改组件配置时与查询组件配置相似，首先给出 **组件名称**， 然后给出修改属性的 **属性路径**，最后就是给出 **值**
-    当设置整个组件的值时:
+#### **Modify configuration**
+
++ Modifying the component configuration is similar to querying the component configuration, first giving the **component name**, then giving the **attribute path** to modify the attribute, and finally giving the **value**
+    When modifying the value of the entire component:
     ```shell
-    组件名称=值
-    ```
-
-    设置整个组件的值时, 通常值必须为一个JSON(即以{开头并以}结尾)
-    而返回值如果是 **ttrue** 表示修改成功, 或是 **tfalse** 表示修改失败, 见以下示例
+    component name=value
+    ```   
+    When modifying the value of an entire component, usually the value must be a JSON(start with {and end with})
+    **ttrue** is returned if the modification succeeds, **tfalse** is returned if the modification fails. See the following example
     ```shell
-    # forward@alg               # 查询ALG的配置
+    # forward@alg               # Query the ALG configuration
     {
         "amanda":"disable",
         "ftp":"enable",
@@ -144,9 +125,9 @@ You can log in to the gateway using the HE command line in several ways:
         "udplite":"disable"
     }
     #
-    # forward@alg={"amanda":"enable","ftp":"enable","h323":"enable","irc":"enable","pptp":"enable","gre":"enable""rtsp":"enable","sip":"enable","snmp":"enable","tftp":"enable","udplite":"enable"}   // 修改整个ALG配置
-    ttrue                          # 返回ttrue表示修改成功
-    # forward@alg                  # 修改后再次查看配置, 已发生变化
+    # forward@alg={"amanda":"enable","ftp":"enable","h323":"enable","irc":"enable","pptp":"enable","gre":"enable""rtsp":"enable","sip":"enable","snmp":"enable","tftp":"enable","udplite":"enable"}   # Modify the entire ALG configuration
+    ttrue                          # ttrue is returned, the change is successful
+    # forward@alg                  # After the configuration is modified, check the configuration again
     {
         "amanda":"enable",
         "ftp":"enable",
@@ -162,17 +143,16 @@ You can log in to the gateway using the HE command line in several ways:
     }
     # 
     ```   
-    > 具体应用层网关的配置参数介绍参见 *[Management of Application Layer Gateway](../com/forward/alg.md)*
+    > See *[Management of Application Layer Gateway](../com/forward/alg.md)* for more
 
-+ 当修改组件指定属性时:
++ When modifying a component specified attribute:
     ```shell
-    组件名称:属性路径=值
-    ```
-
-    值可以为一个JSON(即以{开头并以}结尾), 也可以为一个字符串
-    而返回值如果是 **ttrue** 表示修改成功, 或是 **tfalse** 表示修改失败,见以下示列
+    component name:attribute path=value
+    ```   
+    The value can be a JSON(starting with {and ending with}) or a string
+    **ttrue** is returned if the modification succeeds, **tfalse** is returned if the modification fails. See the following example
     ```shell
-    # gnss@nmea                               # 查询gnss@nmea(GPS管理)配置
+    # gnss@nmea                               # Query the GNSS configuration
     {
         "status":"enable",
         "client":
@@ -216,7 +196,7 @@ You can log in to the gateway using the HE command line in several ways:
             "limit":"5"
         }
     }
-	# gnss@nmea:client                        # 查询gnss@nmea(GPS管理)配置下的client属性的值
+	# gnss@nmea:client                        # Query the client attribute in GNSS configuration
     {
         "status":"disable",
         "proto":"tcp",
@@ -232,9 +212,9 @@ You can log in to the gateway using the HE command line in several ways:
         "frame_end":"disable",
         "frame_end_string":""
     }
-	# gnss@nmea:client={"status":"enable","server":"192.168.8.250","port":"8000","interval":"30","id":"2232"}  // 修改gnss@nmea(GPS管理)下的client属性
+	# gnss@nmea:client={"status":"enable","server":"192.168.8.250","port":"8000","interval":"30","id":"2232"}  # Modify the client attribute in gnss@nmea(GNSS configuration)
 	ttrue
-	# gnss@nmea:client                       # 查询ugnss@nmea(GPS管理)下client属性修改后的结果
+	# gnss@nmea:client                       # Query the result of modifying the client attributes in ugnss@nmea(GNSS configuration)
     {
         "status":"enable",
         "server":"192.168.8.250",
@@ -242,9 +222,9 @@ You can log in to the gateway using the HE command line in several ways:
         "interval":"30",
         "id":"2232"
     }
-	# gnss@nmea:client/server=192.168.8.251  # 修改gnss@nmea(GPS管理)client属性下server属性的值
+	# gnss@nmea:client/server=192.168.8.251  # Change the value of the server attribute under the gnss@nmea(GPS management)client attribute
 	ttrue
-	# gnss@nmea:client                       # 查询修改后的结果
+	# gnss@nmea:client                       # After the configuration is modified, check the configuration again
 	{
 	    "status":"enable",
 	    "server":"192.168.8.251",
@@ -252,7 +232,7 @@ You can log in to the gateway using the HE command line in several ways:
 	    "interval":"30",
 	    "id":"2232"
 	}
-	# gnss@nmea                              # 查询gnss@nmea(GPS管理)所有的配置
+	# gnss@nmea                              # Query the all of GNSS configuration
     {
         "status":"enable",
         "client":
@@ -290,17 +270,16 @@ You can log in to the gateway using the HE command line in several ways:
     }
 	# 
     ```   
-    > 具体GNSS定位的配置参数介绍参见 *[GNSS NEMA Protocol Management](../com/gnss/nmea.md)*
+    > See *[GNSS NEMA Protocol Management](../com/gnss/nmea.md)* for more
  
-+ 当修改指定的几个属性而不影响其它属性时:
++ When modifying several specified attributes without affecting others:
     ```shell
-    组件名称|{“属性1”:”值1”, “属性2”:”值2” , “属性3”:”值3”}
-    ```
-
-    值1, 值2, 值3通常为一个字符串
-    而返回值如果是 **ttrue** 表示修改成功, 或是 **tfalse** 表示修改失败,见以下示列
+    component name|{“attribute1”:”value1”, “attribute2”:”value2” , “attribute3”:”value3”}
+    ```   
+    value1, value2, value3 is usually a string
+    **ttrue** is returned if the modification succeeds, **tfalse** is returned if the modification fails. See the following example
     ```shell
-	# gnss@nmea:client                      # 查询gnss@nmea(GPS管理)的client属性的值
+	# gnss@nmea:client                      # Query the client attribute in GNSS configuration
 	{
 	    "status":"enable",
 	    "server":"192.168.8.251",
@@ -308,9 +287,9 @@ You can log in to the gateway using the HE command line in several ways:
 	    "interval":"30",
 	    "id":"2232"
 	}
-	# gnss@nmea:client|{"status":"disable","server":"192.168.2.11","proto":"tcp"}  # 修改gnss@nmea(GPS管理)的client属性的值
+	# gnss@nmea:client|{"status":"disable","server":"192.168.2.11","proto":"tcp"}  # Modify the several value of the client attributes of gnss@nmea(GNSS configuration)
 	ttrue
-	# gnss@nmea:client                      # 再次查询时指定的几项属性已改变, 未指定的属性未发生变化
+	# gnss@nmea:client                      # After the configuration is modified, check the configuration again
 	{
         "status":"disable",
         "server":"192.168.2.11",
@@ -321,18 +300,15 @@ You can log in to the gateway using the HE command line in several ways:
 	}
 	# 
     ```   
-    > 具体GNSS定位的配置参数介绍参见 *[GNSS NEMA Protocol Management](../com/gnss/nmea.md)*
+    > See *[GNSS NEMA Protocol Management](../com/gnss/nmea.md)* for more
  
-
-
-+ 当要清除组件配置的某个属性时可以在=号后直接回车即可:
++ To clear a attribute of a component configuration, press Enter after the =:
     ```shell
-    组件名称:属性路径=
-    ```
-
-    而返回值如果是 **ttrue** 表示清除成功, 或是 **tfalse** 表示清除失败,见以下示列
+    component name:attribute path=
+    ```   
+    **ttrue** is returned if the modification succeeds, **tfalse** is returned if the modification fails. See the following example
     ```shell
-    # gnss@nmea                         # 查询gnss@nmea(GPS管理)配置
+    # gnss@nmea                         # Query the all of GNSS configuration
     {
         "status":"enable",
         "client":
@@ -369,9 +345,9 @@ You can log in to the gateway using the HE command line in several ways:
             "limit":"5"
         }
     }
-	# gnss@nmea:client=                 # 清除gnss@nmea(GPS管理)的client属性
+	# gnss@nmea:client=                 # Clear the client attribute of gnss@nmea(GNSS configuration)
 	ttrue
-	# gnss@nmea                         # 再次查询gnss@nmea(GPS管理)时已无client属性
+	# gnss@nmea                         # After the configuration is modified, check the configuration again
     {
         "status":"enable",
         "client2":
@@ -401,17 +377,19 @@ You can log in to the gateway using the HE command line in several ways:
     }
 	# 
     ```   
-    > 具体GNSS定位的配置参数介绍参见 *[GNSS NEMA Protocol Management](../com/gnss/nmea.md)*
+    > See *[GNSS NEMA Protocol Management](../com/gnss/nmea.md)* for more
  
-#### **调用组件方法**
-调用组件方法需要给出组件名称及方法名称, 如有参数时还需要带入参数
-+ 当调用组件方法不带参数时    
-    ```shell
-    组件名称.接口名称
-    ```
 
+
+#### **Calling component method**
+
+To call a component method, you need to give the component name and method name, parameters can also be given if any
++ When a component method is called without arguments    
     ```shell
-    # client@station.list                     # 调用client@station(客户端管理)的list方法获取当前客户端例表
+    component name.component method
+    ```   
+    ```shell
+    # client@station.list                     # Call the list method of client@station(Client Access) to get the current list of clients
     {
         "B4:2E:99:3F:ED:12":
         {
@@ -421,32 +399,27 @@ You can log in to the gateway using the HE command line in several ways:
     }
     # 
     ```   
-    > 具体客户端管理的方法介绍参见 *[Management of Client Access](../com/client/station.md)*
- 
+    > See *[Management of Client Access](../com/client/station.md)* for more
 
-+ 当调用组件方法带参数时
++ When calling a component method with parameters
     ```shell
-    组件名称.接口名称[ 参数 ]
-    ```
-
+    component name.component method[ parameter ]
+    ```   
     ```shell
-    # clock@date.ntpsync[ntp1.aliyun.com]       # 调用clock@date(时间管理)的ntpsynct方法实现与ntp1.aliyun.com的NTP对时
+    # clock@date.ntpsync[ntp1.aliyun.com]       # Call the ntpsync method of clock@date(System Date) to synchronize time by NTP with ntp1.aliyun.com
     ttrue
     # 
     ```   
-    > 具体时间管理的方法介绍参见 *[Manage System Date](../com/clock/date.md)*
+    > See *[Manage System Date](../com/clock/date.md)* for more
      
-
-
-+ 当调用组件方法带多参数时
++ When calling a component method with multiple parameters
     ```shell
-    组件名称.接口名称[ 参数1, 参数2, 参数3, … ]
-    ```
-
+    component name.component method[ parameter1, parameter2, parameter3, ... ]
+    ```   
     ```shell
-    # land@auth.add[,xiaomi,4431232]  # 调用land@auth(帐号密码及权限管理)的add接口来添加帐号, 第一个参数域为空(无), 第二个参数帐号为xiaomi, 第三个参数密码为4431232
+    # land@auth.add[,xiaomi,4431232]  # Call the add of land@auth to add an account with the first parameter empty (none), the second parameter xiaomi, and the third 4431232
     ttrue
-    # land@auth.list                  # 调用and@auth(帐号密码及权限管理)的list接口来获取当前所有的帐号
+    # land@auth.list                  # Call and@auth's list method to get all the current accounts
     {
         "admin":
         {
@@ -458,15 +431,14 @@ You can log in to the gateway using the HE command line in several ways:
         }
     }
     ```   
-    > 具体用户管理的方法介绍参见 *[Username/Password and Permission Management](../com/land/auth.md)*
+    > See *[Username/Password and Permission Management](../com/land/auth.md)* for more
 
-+ 当调用组件方法返回JSON时, 可以要求只返回JSON中指定的属性值
++ When a component method is called to return JSON, you can ask that only the attribute values specified in the JSON be returned
     ```shell
-    组件名称.接口名称:属性路径
-    ```
-
+    component name.component method:attribute path
+    ```   
     ```shell
-    # ifname@lte.status  # 调用ifname@lte的status接口, 即查询系统中第一个LTE的状态
+    # ifname@lte.status                        # Call the status method of ifname@lte to query the status of the first LTE connection
     {
         "mode":"dhcpc",
         "ifname":"ifname@lte",
@@ -506,446 +478,416 @@ You can log in to the gateway using the HE command line in several ways:
         "plmn":"46001",
         "csq":"25",
         "signal":"4",
-        "operator":"中国联通"
+        "operator":"ChinaUnion"
         "operator_advise":
         {
-            "name":"中国联通",
+            "name":"ChinaUnion",
             "dial":"*99#",
             "apn":"3gnet"
         },
         "state":"connected"
     }
-    # ifname@lte.status:ip                   # 调用ifname@lte的status接口, 即查询系统中第一个LTE的状态中的ip地址
+    # ifname@lte.status:ip                   # Call the status method of ifname@lte, only query the ip address in the state of the first LTE connection
     10.33.13.103
-    # ifname@lte.status:operator_advise      # 调用ifname@lte的status接口, 即查询系统中第一个LTE的状态中的有关运营商的建议配置
+    # ifname@lte.status:operator_advise      # Call the status method of ifname@lte, only query the operator_advise in the state of the first LTE connection
     {
-        "name":"中国联通",
+        "name":"ChinaUnion",
         "dial":"*99#",
         "apn":"3gnet"
     }
-    # ifname@lte.status:operator_advise/apn  # 调用ifname@lte的status接口, 即查询系统中第一个LTE的状态中的有关运营商的建议的APN的配置
+    # ifname@lte.status:operator_advise/apn  # Call the status method of ifname@lte, only query the APN in the state of the first LTE connection
     3gnet
     ```   
-    > 具体用户管理的方法介绍参见 *[LTE/NR Network Management](../com/ifname/lte.md)*
+    > See *[LTE/NR Network Management](../com/ifname/lte.md)* for more
+
 
 
 ---
+## Common HE Command
+The following describes common HE commands, such as query LTE/NR information, GNSS information, and reset gateway commands. For more commands, see the interface documentation of each component
 
-## 常用的HE指令
-以下介绍常用的HE指令， 如查询4G信息， GPS信息及重置网关等指令， 更多指令可参看各个组件的接口文档
-
-#### **获取网关基本配置**
-
-在HE终端命令行输入以下指令, 点击查看 [Management of Basic Infomation](../com/land/machine.md) 介绍
+#### **Obtain the basic gateway configuration**   
+Enter
 ```shell
-// 查询设备基本配置
 # land@machine
-```
-
-网关将返回如下
+```   
+Return
 ```shell
 {
-    "mode":"misp",                        // 工作模式
-                                            //    gateway为网关
-                                            //    ap为热点
-                                            //    bridge为桥
-                                            //    repeater为中继
-                                            //    wisp为WISP
-                                            //    misp为4G
-                                            //    mix为混合模式
-    "name":"D218-123310",                // 设备名
-    "macid":"00037F123310",              // MAC号
-    "mac":"00:03:7F:12:33:10",           // MAC地址
-    "language":"cn",                     // 语言
-    "gpversion":"v4.3.2",                // 组配置版本
-    "cfgversion":"44"                    // 配置版本
+    "mode":"nmisp",                              # gateway operator mode Next Mobile(LTE/NR) Internet Service Provider connection
+    "name":"ASHYELF-12AAD0",                     # gateway name is ASHYELF-12AAD0
+    "mac":"00:03:7F:12:AA:D0",                   # gateway MAC is 88:12:4E:20:46:B0
+    "macid":"00037F12AAD0",                      # gateway serial id is 88124E2046B0
+    "language":"cn",                             # gateway language is chinese
+    "cfgversion":"1"                             # gateway configure version is 1(hint modify one times)
 }
-```
+```   
+Click [Management of Basic Infomation](../com/land/machine.md) to see more
 
-#### **获取网关基本状态**
-
-在HE终端命令行输入以下指令, 点击查看 [Management of Basic Infomation](../com/land/machine.md) 介绍
+#### **Obtain the basic gateway status**   
+Enter
 ```shell
-# 调用land@machine(设备基本信息)组件的status方法
 # land@machine.status
-```
-
-网关将返回如下
+```   
+Return
 ```shell
 {
-    "platform":"smtk",                   // 平台编号
-    "hardware":"mt7628",                 // 芯片编号
-    "custom":"d218",                     // 产品编号
-    "scope":"std",                       // 定制编号
-    "version":"4.3.3d",                  // 版本号
-    "macid":"00037F123310",              // MAC号
-    "mac":"00:03:7F:12:33:10",           // MAC地址
-    "magic":"23571121DF68ACC3",
-    "model":"D218",                      // 产品型号
-    "mode":"misp"                        // 工作模式
-    "livetime":"00:01:18:0",             // 在线时长: 时：分：秒：天
-    "current":"01:41:15:01:01:2016"      // 当前时间  时:分:秒:月:日:年
+    "mode":"nmisp",                                   # gateway operator mode Next Mobile(NR/LTE) Internet Service Provider connection
+    "name":"ASHYELF-12AAD0",                          # gateway name is ASHYELF-12AAD0
+    "platform":"smtk2",                               # gateway platform identify is smtk2( hint the basic sdk is second release of smtk )
+    "hardware":"mt7621",                              # gateway hardware identify is mt7621( hint the chip is MT7621 )
+    "custom":"d228",                                  # gateway custom identify is d228( hint the product name is D228 )
+    "scope":"std",                                    # gateway scope identify is std( hint this is a standand release for D228 )
+    "version":"tiger7-20220218",                      # gateway version is tiger7-20220218( hint the version publish at 2022.02.18 )
+    "livetime":"00:06:35:0",                          # gateway It has been running for 6 minutes and 35 seconds
+    "current":"14:54:30:05:04:2022",                  # current date is 2022.05.04, It's 14:54 and 30 seconds
+    "mac":"00:03:7F:12:AA:D0",                        # gateway MAC is 00:03:7F:12:AA:D0
+    "macid":"00037F12AAD0",                           # gateway serial id is 00037F12AAD0
+    "model":"5228"                                    # gateway model is 5228
 }
+```   
+Click [Management of Basic Infomation](../com/land/machine.md) to see more
 
-```
 
-#### **获取4G状态信息**
-
-在HE终端命令行输入以下指令, 点击查看 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 介绍
+#### **Obtain LTE/NR network status information**   
+Enter
 ```shell
-// 调用ifname@lte(4G网络管理)组件的status方法
 # ifname@lte.status
-```
-
-网关将返回如下
+```   
+Return
 ```shell
 {
-    "mode":"dhcpc",                    # 拨号模式, dhcpc为自动获取, ppp为PPP拨号, static为静态IP
+    "mode":"dhcpc",                    # IPv4 connect mode is DHCP
     "netdev":"usb0",                   # netdev is usb0
-    "gw":"10.137.89.118",              # 网关
-    "dns":"120.80.80.80",              # DNS
-    "dns2":"221.5.88.88",              # DNS
-    "status":"up",                     # up表示已连接, down表示未连接, uping表示连接中
-    "ip":"10.137.89.117",              # IP地址
-    "mask":"255.255.255.252",          # 子网掩码
-    "livetime":"00:15:50:0",           # 在线时长 时:分:秒:天
-    "rx_bytes":"1256",                 # 收包字节
-    "rx_packets":"4",                  # 收包数
-    "tx_bytes":"1320",                 # 发包字节
-    "tx_packets":"4",                  # 发包数
-    "mac":"02:50:F4:00:00:00",         # MAC地址
-    "imei":"867160040494084",          # IMEI号
-    "imsi":"460015356123463",          # IMSI号
-    "iccid":"89860121801097564807",    # ICCID号
-    "csq":"3",                         # CSQ
-    "signal":"3",                      # 信号格数(1-4格), 1表示一格, 2表示两格, 3表示三格, 4表示四格, 0或空表示无信号
-    "state":"connect",                 #  当前LTE模块状态
-    "plmn":"46001",
-    "nettype":"WCDMA",                 # 网络类型
-    "rssi":"-107",                     # 信号强度, dBm值
-    "operator":"中国联通"               # 运营商名称
-}
-```
-
-#### **获取第二个4G状态信息**
-
-在HE终端命令行输入以下指令, 点击查看 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 介绍
-```shell
-// 调用ifname@lte2(第二个4G网络管理)组件的status方法
-# ifname@lte2.status
-```
-
-网关将返回如下
-```shell
-{
-    与 获取4G状态信息 的返回相同
-}
-```
-
-#### **获取客户端信息**
-
-在HE终端命令行输入以下指令, 点击查看 [Management of Client Access](../com/client/station.md) 介绍
-```shell
-// 调用client@station(客户端管理)组件的list方法
-# client@station.list
-```
-
-网关将返回如下
-```shell
-{
-    "00:E0:4C:68:2A:8B":                           // 客户端MAC地址
+    "gw":"10.137.89.118",              # gateway is 10.137.89.118
+    "dns":"120.80.80.80",              # dns is 120.80.80.80
+    "dns2":"221.5.88.88",              # backup dns is 221.5.88.88
+    "status":"up",                     # connect is succeed
+    "ip":"10.137.89.117",              # ip address is 10.137.89.117
+    "mask":"255.255.255.252",          # network mask is 255.255.255.252
+    "livetime":"00:15:50:0",           # already online 15 minute and 50 second
+    "rx_bytes":"1256",                 # receive 1256 bytes
+    "rx_packets":"4",                  # receive 4 packets
+    "tx_bytes":"1320",                 # send 1320 bytes
+    "tx_packets":"4",                  # send 4 packets
+    "mac":"02:50:F4:00:00:00",         # netdev MAC address is 02:50:F4:00:00:00
+    "method":"slaac",                  # IPv6 address mode is slaac
+    "addr":"fe80::50:f4ff:fe00:0",     # local IPv6 address is fe80::50:f4ff:fe00:0
+    "imei":"867160040494084",          # imei is 867160040494084
+    "imsi":"460015356123463",          # imei is 460015356123463
+    "iccid":"89860121801097564807",    # imei is 89860121801097564807
+    "csq":"3",                         # CSQ nubmer is 3
+    "signal":"3",                      # signal level is 3
+    "state":"connect",                 # state is connect to the internet
+    "plmn":"46001",                    # plmn is 46001
+    "nettype":"WCDMA",                 # nettype is WCDMA
+    "rssi":"-107",                     # signal intensity is -107
+    "operator":"ChinaUnion",           # operator name is ChinaUnion
+    "operator_advise":                 # recommended profile for ChinaUnion
     {
-        "ip":"192.168.1.250",                        // IP地址
-        "device":"lan",                              // 接入的网络接口
-        "ifname":"ifname@lan",                       // 接入的网络连接
-        "ontime":"25172",                            // 上线时网关的启动秒数
-        "livetime":"00:40:25:0"                      // 连接时间
-    },
-    "FC:87:43:DC:6F:B4":                          // 客户端MAC地址
-    {
-        "ip":"192.168.1.248",                        // IP地址
-        "device":"lan",                              // 接入的网络接口
-        "ifname":"ifname@lan",                       // 接入的网络连接
-        "ontime":"25186",                            // 上线时网关的启动秒数
-        "livetime":"00:40:11:0",                     // 连接时间
-        "ifdev":"wifi@assid",                        // 接入的连接设备
-        "rssi":"-73",                                // 信号强度, 只有连接设备为热点类设备才有此属性
-        "name":"HUAWEI_P30_Pro-9f13d2ee6f",          // 客户端名称
-        "tx_bytes":"610528",                         // 发送字节
-        "rx_bytes":"1653658"                         // 接收字节
+        "name":"ChinaUnion",               # name is ChinaUnion
+        "dial":"*99#",                     # dial number is *99#
+        "apn":"3gnet"                      # APN is 3gnet
     }
 }
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
+
+#### **Get the second LTE/NR network status information**   
+Enter
+```shell
+# ifname@lte2.status
+```   
+Return
+```shell
+{
+    Same as the return for ifname@lte
+}
 ```
 
-#### **获取GPS信息**
 
-在HE终端命令行输入以下指令, 点击查看 [GNSS NEMA Protocol Management](../com/gnss/nmea.md) 介绍
+#### **Obtain client information**   
+Enter
 ```shell
-// 调用gnss@nmea(GPS管理)组件的info方法
+# client@station.list
+```   
+Return
+```shell
+{
+    "04:CF:8C:39:91:7A":            # first client
+    {
+        "ip":"192.168.31.140",                        # ip is 192.168.31.140
+        "name":"xiaomi-aircondition-ma2_mibt917A",    # hostname is xiaomi-aircondition-ma2_mibt917A
+        "tx_bytes":"1779693",                         # sent 1779693 byte
+        "rx_bytes":"1375610",                         # recived 1375610 byte
+        "livetime":"14:39:34:1"                       # livetime is 1 day 14 hour 39 minute 34 second
+    },
+    "40:31:3C:B5:6D:4C":            # second client
+    {
+        "ip":"192.168.31.61",
+        "name":"minij-washer-v5_mibt6D4C",
+        "livetime":"14:39:26:1"
+    },
+    "14:13:46:C9:97:C7":            # third client
+    {
+        "ip":"192.168.31.9",
+        "name":"",
+        "livetime":"14:39:27:1"
+    }
+}
+```   
+Click [Management of Client Access](../com/client/station.md) to see more
+
+
+#### **Obtain location information**   
+Enter
+```shell
 # gnss@nmea.info
-```
-
-网关将返回如下
+```   
+Return
 ```shell
 {
-    "step":"search",       // GPS定位步骤, notty无端口, search搜索信号中, located已定位
-    "utc":"",              // nmea的UTC格式
-    "lon":"",              // 经度
-    "lat":"",              // 纬度
-    "speed":"",            // 速度
-    "direction":"",        // 方向
+    "step":"located",                           # already located
+    "utc":"7:55:22:7:12:2021",                  # UTC
+    "lon":"11356.56400",
+    "lat":"2240.80119",
+    "longitude":"113.94273",                    # longitude is 113.94
+    "latitude":"22.68001",                      # latitude is 22.68
+    "speed":"0.34",
+    "elv":"77.90",
+    "direction":"",
     "declination":"",
-    "elv":"",              // 海拨高度, 米为单位
-    "sat":""              // 卫星数
+    "inuse":"8"                                 # 8 sat in use
 }
-```
+```   
+Click [GNSS NEMA Protocol Management](../com/gnss/nmea.md) to see more
 
-#### **获取网关LAN口信息**
 
-在HE终端命令行输入以下指令, 点击查看 [LAN Network Management](../com/ifname/lan.md) 介绍
+#### **Obtain the information about the gateway LAN network**   
+Enter
 ```shell
-// 调用ifname@lan(LAN口管理)组件的status方法
 # ifname@lan.status
-```
-
-网关将返回如下
+```   
+Return
 ```shell
 {
-    "status":"up",                        // up表示已连接, down表示未连接, uping表示连接中
-    "mode":"static",                       // IP模式, dhcpc为自动获取, static为静态IP
-    "ip":"192.168.1.1",                   // IP地址
-    "mask":"255.255.255.0",               // 子网掩码
-    "mac":"76:C7:8C:05:39:F3",            // MAC地址
-    "rx_bytes":"6864",                    // 增量收包字节
-    "rx_packets":"65",                    // 增量收包数
-    "tx_bytes":"7296",                    // 增量发包字节
-    "tx_packets":"74",                    // 增量发包数
-    "livetime":"00:04:37:0"              // 在线时长 时:分:秒:天
-}
+    "mode":"static",                   # IPv4 connect mode is static
+    "netdev":"lan",                    # netdev is lan
+    "status":"up",                     # connect is succeed
+    "ip":"192.168.1.1",                # ip address is 192.168.1.1
+    "mask":"255.255.255.0",            # network mask is 255.255.255.0
+    "livetime":"01:15:50:0",           # already online 1 hour and 15 minute and 50 second
+    "rx_bytes":"1256",                 # receive 1256 bytes
+    "rx_packets":"4",                  # receive 4 packets
+    "tx_bytes":"1320",                 # send 1320 bytes
+    "tx_packets":"4",                  # send 4 packets
+    "mac":"02:50:F4:00:00:00",         # netdev MAC address is 02:50:F4:00:00:00
+    "method":"slaac",                  # IPv6 address mode is slaac
+    "addr":"fe80::50:f4ff:fe00:0"      # local IPv6 address is fe80::50:f4ff:fe00:0
 ```  
+Click [LAN Network Management](../com/ifname/lan.md) to see more
 
-#### **重启网关**
 
-在HE终端命令行输入以下指令, 点击查看 [Management of Basic Infomation](../com/land/machine.md) 介绍
+#### **Reboot gateway**   
+Enter
 ```shell
-// 调用land@machine(设备基本信息)组件的restart方法
 # land@machine.restart
-```
+```   
+The gateway does not return any information and will restart immediately
 
-网关不返回任何信息， 将会立即重启
+Click [Management of Basic Infomation](../com/land/machine.md) to see more
 
 
-#### **重置网关(恢复默认设置)**
-
-在HE终端命令行输入以下指令, 点击查看 [Management of Basic Infomation](../com/land/machine.md) 介绍
+#### **Reset gateway(restore default settings)**   
+Enter
 ```shell
-// 调用land@machine(设备基本信息)组件的default方法
 # land@machine.default
 ```
-网关不返回任何信息， 将会立即重启并重置所有配置
+The gateway does not return any information and will restart immediately
 
-#### **修改4G的APN**
+Click [Management of Basic Infomation](../com/land/machine.md) to see more
 
-在HE终端命令行输入以下指令, 点击查看 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 介绍
+#### **Modify the LTE's APN**   
+Enter
 ```shell
-// 修改ifname@lte(4G网络管理)组件配置的属性下的profile属性的值为enable(表示自定义APN), 并且在profile_cfg下的apn属性的值中给出APN, 以下就是修改APN为MyCustomAPN
 # ifname@lte|{"profile":"enable","profile_cfg":{"apn":"MyCustomAPN"}}
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
 
-#### **开启4G的GPS端口**
-
-在HE终端命令行输入以下指令, 点击查看 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 介绍
+#### **Enable Location function of LTE/NR modem**   
+Enter
 ```shell
-// 修改ifname@lte(4G网络管理)组件配置的gnss属性下的status属性的值为enable
 # ifname@lte:gnss=enable
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
 
-#### **开启GPS功能**
 
-在HE终端命令行输入以下指令, 点击查看 [GNSS NEMA Protocol Management](../com/gnss/nmea.md) 介绍
+#### **Enable GNSS function**   
+Enter
 ```shell
-// 修改gnss@nmea(GPS管理)组件配置的status的值为enable
 # gnss@nmea:status=enable
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [GNSS NEMA Protocol Management](../com/gnss/nmea.md) to see more
 
-#### **修改无线热点(2.4G)的SSID名称**
 
-在HE终端命令行输入以下指令, 点击查看 [2.4G SSID Management](../com/wifi/nssid.md) 介绍
+#### **Change the SSID name of a wireless hotspot (2.4G)**   
+Enter
 ```shell
-// 修改wifi@nssid(无线热点2.4G)组件配置的ssid的值为NewSSID
 # wifi@nssid:ssid=NewSSID
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [2.4G SSID Management](../com/wifi/nssid.md) to see more
 
-#### **修改无线热点(2.4G)的密码**
-
-在HE终端命令行输入以下指令, 点击查看 [2.4G SSID Management](../com/wifi/nssid.md) 介绍
+#### **Change the SSID password of a wireless hotspot (2.4G)**   
+Enter
 ```shell
-// 修改wifi@nssid(无线热点2.4G)组件配置的wpa_key的值为NewPassword
 # wifi@nssid:wpa_key=NewPassword
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [2.4G SSID Management](../com/wifi/nssid.md) to see more
 
-#### **同时修改无线热点(2.4G)的SSID名称及密码**
-
-在HE终端命令行输入以下指令, 同时修改两个及以上的属性需要使用**或操作**, 点击查看 [2.4G SSID Management](../com/wifi/nssid.md) 介绍
+#### **Change the SSID name and password of the wireless hotspot (2.4G)**   
+Enter
 ```shell
-// 修改wifi@nssid(无线热点2.4G)组件的配置中的ssid, secure及wpa_key三个属性的值 
 # wifi@nssid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [2.4G SSID Management](../com/wifi/nssid.md) to see more
 
-#### **修改无线热点(5.8G)的SSID名称**
-
-在HE终端命令行输入以下指令, 点击查看 [5.8G SSID Management](../com/wifi/assid.md) 介绍
+#### **Change the SSID name of a wireless hotspot (5.8G)**   
+Enter
 ```shell
-// 修改wifi@assid(无线热点5.8G)组件配置的ssid的值为NewSSID
 # wifi@assid:ssid=NewSSID
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [5.8G SSID Management](../com/wifi/assid.md) to see more
 
-#### **修改无线热点(5.8G)的密码**
-
-在HE终端命令行输入以下指令, 点击查看 [5.8G SSID Management](../com/wifi/assid.md) 介绍
+#### **Change the SSID password of a wireless hotspot (5.8G)**   
+Enter
 ```shell
-// 修改wifi@assid(无线热点5.8G)组件配置的wpa_key的值为NewPassword
 # wifi@assid:wpa_key=NewPassword
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [5.8G SSID Management](../com/wifi/assid.md) to see more
 
-#### **同时修改无线热点(5.8G)的SSID名称及密码**
-
-在HE终端命令行输入以下指令, 同时修改两个及以上的属性需要使用**或操作**, 点击查看 [5.8G SSID Management](../com/wifi/assid.md) 介绍
+#### **Change the SSID name and password of the wireless hotspot (5.8G)**   
+Enter
 ```shell
-// 修改wifi@assid(无线热点5.8G)组件的配置中的ssid, secure及wpa_key三个属性的值 
 # wifi@assid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [5.8G SSID Management](../com/wifi/assid.md) to see more
 
-#### **修改admin用户的密码**
 
-在HE终端命令行输入以下指令, 点击查看 [Username/Password and Permission Management](../com/land/auth.md) 介绍
+#### **Change the password of the admin user**   
+Enter
 ```shell
-// 调用land@auth(帐号密码及权限管理组件)的modify方法, 参数1域表示为空, 参数2用户名为admin, 参数3原密码为admin, 参数4新密码为NewPassword
 # land@auth.modify[,admin,admin,NewPassword]
-```
-
-成功后网关将返回如下
+```   
+Return
 ```shell
 ttrue
-```
+```   
+Click [Username/Password and Permission Management](../com/land/auth.md) to see more
 
 
 
 ---
+##  Reference the component documentation to manage the gateway using the HE command
 
-##  对照组件文档使用终端HE指令管理网关
+There are two ways to query all component documentation, Each function of the gateway can be managed through these component documents
+- Access [Online component documentation](../com/) View component documentation, an online file that is dynamically added and revised as new features are developed
+- Contact technical support
 
-有两种方式可以查询到所有组件文档, 通过这些组件文档可以管理到网关的每一个功能
-- 访问 [在线组件文档](../com/) 查看组件文档, 此在线文件会随着开发新的功能动态增加及修订
-- 资询技术支持人员
+#### Component documentation points   
+- In [Online component documentation](../com/) projects in the system are listed in the form of a directory, and each project contains component documents
+- Clicking on a project to enter the project will list all the component documents under this project
+- Click on the component to open the component document, which begins with a function description
+- Then there is **Configuration**. Configuration is in JSON format, There are also examples of queries or modifications, The configuration can be queried or modified in the HE command
+- This is usually followed by an introduction to the **Methods** of this component, There are also examples of calls, which can be called in the HE command
 
-#### 组件文档要点
+#### Reference document query component configuration   
+The component name is given in the **Configuration**, for example [Syslog Management](../com/land/syslog.md) component name is **land@syslog**
 
-- 在 [在线组件文档](../com/) 中首先以目录的形式列出了系统中常用的项目, 每个项目下包含了组件文档
-- 点击项目进入项目中, 会以行的形式列出此项目下所有的组件文档
-- 点击组件打开组件文档, 组件文件首先是抬头, 抬头是组件名称介绍, 然后是小括号, 小括号中是组件名, 通过此组件名操作组件
-- 组件文档首先是会介绍此组件的功能, 然后就是 **Configuration**, 配置是JSON格式, 可以在HE终端中查询或修改这些配置
-- 组件文档 **Configuration** 之后通常是介绍此组件的 **Methods**, 可以在HE指令中调用这些方法
-
-#### 对照组件文档查询组件配置
-
-在组件文档的抬头中会指出组件名, 比如 [Syslog Management](../com/land/syslog.md) 的组件名为 **land@syslog**
-
-- 在HE终端中输入 **组件名** 回车即会返回此组件的所有配置, 而在组件文档中的 **Configuration** 中会详细介绍每个配置的属性及示例
+- Enter **component name** all configurations for this component are returned, The attributes and examples of each configuration are described detailedly in **Configuration** in the component documentation
     ```shell
-    # land@syslog                             # 输入组件名
-    {                                         # 返回一个JSON, JSON中为组件所有的配置
-        "status":"enable",                # 开启syslog
-        "type":"init|serv|joint|default", # 记录启动项及关机项, 服务, 事件及其它默认类型相关的日志
-        "level":"info",                   # 只记录通知级别的日志
-        "trace":"enable",                 # 记录代码位置及进程ID
-        "size":"20",                      # 记录池为20k
-        "remote":"192.168.8.100",         # 远程日志服务器地址为192.168.8.100
-        "port":"514"                      # 远程日志服务器的端口为514
+    # land@syslog                   # Enter component name
+    {                               # Reutn a json of all the component configuration
+        "status":"enable",                # enable the syslog functions
+        "location":"memory",              # logs stored in memory, restart will be lost
+        "type":"arch|land|default",       # log the arch, land, default log
+        "level":"info",                   # log level is normal infomation
+        "trace":"disable",                # disable the code information
+        "size":"100",                     # log buffer is 100k
+        "remote":"192.168.8.250",         # send the syslog to remote server 192.168.8.250
+        "port":"514"                      # send the syslog to remote server port 514
     }
     #
     ```
 
-- 也可以在HE终端中查询组件配置中指定的属性, 只需要在 **组件名** 后以 **:属性** 给出指定的属性
+- Queries the attributes specified in the component configuration, You only need to give the specified attribute with the **attribute path** after the **component name**
     ```shell
-    # land@syslog:level                     # 查询日志管理组中的level的属性的值
-    info                                    # level属性的值为info
+    # land@syslog:level                     # Query the value of the level attribute
+    info                                    # value of level is info
     #
     ```
 
-#### 对照组件文档修改组件配置
-
-接以上 [Syslog Management](../com/land/syslog.md) 的组件文档, 在文档的 **Configuration** 中描述属性可以在HE终端中通过 **组件名** 后加 **:属性** 加 **=值** 来修改
-- 在HE终端中修改land@syslog的远程日志服务器remote属性
+#### Refer to the component documentation to modify the component configuration   
+Refer to [Syslog Management](../com/land/syslog.md), The attributes described in **Configuration** of the document can be modified in the terminal by **component name** followed by **attribute path** followed by **value**
+- Modify the remote attribute of the land@syslog remote log server on the terminal
     ```shell
-    # land@syslog:remote=192.168.8.250       # 将land@syslog的远程日志服务器改为192.168.8.250
-    ttrue                                    # ttrue表示修改成功, 如返回tfalse表示修改失败
+    # land@syslog:remote=192.168.8.250       # Change the value of remote to 192.168.8.250
+    ttrue                                    # Return ttrue successfully
     #
     ```
 
-- 在HE终端中同时修改land@syslogd的多个属性, 同时修改多个属性时必须以JSON的格式封装需要修改的属性, 以下同时修改remote及port两个属性, 并不对其它的属性产生任何影响
+- Modify multiple attributes of land@syslogd on the terminal at the same time. When modifying multiple attributes, encapsulate the attributes to be modified in JSON format. Modifying the remote and port attributes does not affect other attributes
     ```shell
-    # land@syslog|{"remote":"192.168.8.251","port":"500"}    # 修改land@syslog的remote为192.168.8.251, 并且修改port为500
-    ttrue                                                    # ttrue表示修改成功, 如返回tfalse表示修改失败
+    # land@syslog|{"remote":"192.168.8.251","port":"500"}    # Change the value of remote to 192.168.8.251 and value of port to 500
+    ttrue                                                    # Return ttrue successfully
     #
     ```
 
-- 在HE终端中设置land@syslogd所有的配置, 组件配置都是一个JSON, 如要修改所有的配置必须同样的给出一个JSON
+- Set land@syslogd in the terminal. All configurations and component configurations are JSON. To modify all configurations, you must provide the same JSON
     ```shell
-    # land@syslog={"status":"enable","location":"memory","type":"default|init","level":"info","trace":"disable","size":"100"}            # 设置land@syslog所有的配置
-    ttrue                                    # ttrue表示修改成功, 如返回tfalse表示修改失败
+    # land@syslog={"status":"enable","location":"memory","type":"default|init","level":"info","trace":"disable","size":"100"}
+    ttrue                                    # Return ttrue successfully
     #
     ```
 
-#### 对照组件文档调用组件方法
-
-接以上 [Syslog Management](../com/land/syslog.md) 的组件文档, 在文档 **Methods** 中描述的方法都可以在HE终端中通过 **组件名** 后加 **.方法** 来调用
-- 在HE终端中调用组件land@syslog的show方法显示当前日志
+#### call a component method by referring to the component documentation   
+Refer to [Syslog Management](../com/land/syslog.md), Methods described in the documentation **Methods** can be calle on the terminal by **component name**.**component method**
+- call the component land@syslog's show method to display the current log
     ```shell
     # land@syslog.show
     Dec 15 15:47:20 V520-12CC70 user.warn syslog: modem@lte check simcard failed 102 times
@@ -966,20 +908,18 @@ ttrue
     Dec 15 15:48:35 V520-12CC70 user.warn syslog: modem@lte check simcard failed 117 times
     #
     ```
-- 在HE终端中调用组件land@syslog的clear方法清除当前所有日志
+- Call the clear method of component land@syslog to clear all current logs
     ```shell
     # land@syslog.clear
     ttrue
     #
     ```
-`
 
 
 
+##  How do I access the Linux Shell command line in the terminal
 
-##  在HE终端中如何进入Linux的Shell命令行
-
-如果需要进一步的操作Linux系统, 进入熟悉的Linux Shell环境可以在HE终端中输入如下进入Linux Shell命令行
+If you need to enter the familiar Linux Shell environment to enter the Linux Shell command line as follows in the terminal
 ```shell
 # elf
 
@@ -989,20 +929,17 @@ Enter 'help' for a list of built-in commands.
 ~ #
 ```
 
-#### 在Linux Shell命令行中执行HE指令
+#### Execute the HE command in the Linux Shell command line
 
-在Shell命令行中偶尔需要执行HE指令, 只要输入
+To execute the HE command on the Shell command line, just type
 ```shell
-he <HE指令>
-```
-
-即可, HE指令的格式与原HE终端中的一致
-而对于比较复杂的HE指令因涉及Shell的一些专用字符, 为了不被Shell命令行解析可加入单引号
+he <HE command>
+```   
+HE commands that involve some special characters of the Shell, single quotes can be added to avoid being parsed by the Shell command line
 ```shell
-he '<HE指令>'
-```
-
-示例如下:
+he '<HE command>'
+```   
+Examples are as follows:
 ```shell
 # elf
 
