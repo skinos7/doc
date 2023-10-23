@@ -1,6 +1,7 @@
 
 
 ## 本地被管理协议说明
+
 网关可接受来自局域网的管理协议, 管理协议通常由批量管理工具或本地的其它设备发出, 通过此协议批量管理工具或其它设备可以实现局域网管理网关
 
 
@@ -11,7 +12,7 @@
 - **TCP(JSON)控制协议(端口22220), 用于通过TCP发送JSON指令修改/查询/配置网关**
 - **局域网搜索协议(UDP端口22222), 用于在局域网内搜索所有的网关**
 - **局域网查询协议(UDP端口22222), 用于在局域网内搜索所有的网关并查询所有网关的信息(不常用)**
-图示
+
 ![avatar](./localport_protocol.png)
 
 ---
@@ -21,7 +22,7 @@
 
 #### 在网关上开启JSON控制协议
 
-默认网关不会响应TCP(JSON)控制协议, 需要进入管理网页打开此协议(*打开此协议会存在安全风险，请确保局域网安全*)
+默认网关不会响应TCP(JSON)控制协议, 需要进入管理网页打开此协议, *打开此协议会存在安全风险，请确保局域网安全*
 ![avatar](./localport_jsonwui.png)   
 
 或者通过网关终端命令行(SSH/Telnet)打开此协议
@@ -72,31 +73,31 @@ enable
             "cmd1":"NULL"
         }
         ```
-    例1：如查询网关的基本配置的HE指令为 land@machine , 对应的json指令格式为
+    例1：如查询网关的基本配置的HE指令为 land@machine, 对应的json指令格式为
     ```json
     { "cmd1":"land@machine" }
     ```
-    例2：如查询网关名称的HE指令为 land@machine:name , 对应的json指令格式为
+    例2：如查询网关名称的HE指令为 land@machine:name, 对应的json指令格式为
     ```json
     { "cmd1":"land@machine:name" }
     ```
-    例2：如查询网关工作模式的HE指令为 land@machine:mode , 对应的json指令格式为
+    例2：如查询网关工作模式的HE指令为 land@machine:mode, 对应的json指令格式为
     ```json
     { "cmd1":"land@machine:mode" }
     ```
-    例3：如查询网关LTE的配置的HE指令为 ifname@lte , 对应的json指令格式为
+    例3：如查询网关LTE的配置的HE指令为 ifname@lte, 对应的json指令格式为
     ```json
     { "cmd1":"ifname@lte" }
     ```    
-    例4：如查询网关LTE的状态的HE指令为 ifname@lte.status , 对应的json指令格式为
+    例4：如查询网关LTE的状态的HE指令为 ifname@lte.status, 对应的json指令格式为
     ```json
     { "cmd1":"ifname@lte.status" }
     ```
-    例5：如调用clock@date(时间管理)的ntpsynct方法实现与ntp1.aliyun.com的NTP对时的HE指令为clock@date.ntpsync[ntp1.aliyun.com] , 对应的json指令格式为
+    例5：如调用clock@date(时间管理)的ntpsync方法实现与ntp1.aliyun.com的NTP对时的HE指令为clock@date.ntpsync[ntp1.aliyun.com], 对应的json指令格式为
     ```json
     { "cmd1":"clock@date.ntpsync[ntp1.aliyun.com]" }
     ```
-    例5：也可以同时执行多条HE指令, 如果重启一下LTE的网络先执行ifname@lte.shut再执行ifname@lte.setup, 对应的json指令格式为
+    例6：也可以同时执行多条HE指令, 如果重启一下LTE的网络先执行ifname@lte.shut再执行ifname@lte.setup, 对应的json指令格式为
     ```json
     { "cmd1":"ifname@lte.shut", "cmd2":"ifname@lte.setup" }
     ```

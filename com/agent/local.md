@@ -8,8 +8,21 @@ Accept administrative command from the local network
     "broadcast":"disable or enable listen for broadcast command from the local",  // [ "disable", "enable" ]
     "broadcast_port":"broadcast port",                                            // [ number ], default is 22222
     "broadcast_group":"group name",                                               // [ string ], default is default
+    "broadcast_manager":                              // Only the specified IP address or MAC address is allowed for access
+    {
+        // "...":"..." You can configure multiple host who can access
+        "host name":"IP address or MAC address", // [ string ]: [ IP/MAC address ]
+        "host name2":"IP address or MAC address" // [ string ]: [ IP/MAC address ]
+    },
+
     "json":"disable or enable listen for JSON command from the local",            // [ "disable", "enable" ]
-    "json_port":"JSON port"                                                       // [ number ], defaultis 22220
+    "json_port":"JSON port",                                                       // [ number ], defaultis 22220
+    "json_manager":                              // Only the specified IP address or MAC address is allowed for access
+    {
+        // "...":"..." You can configure multiple host who can access
+        "host name":"IP address or MAC address", // [ string ]: [ IP/MAC address ]
+        "host name2":"IP address or MAC address" // [ string ]: [ IP/MAC address ]
+    }
 }
 ```
 Examples, show all the configure

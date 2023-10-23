@@ -549,6 +549,7 @@ Return
 Click [Management of Basic Infomation](../com/land/machine.md) to see more
 
 
+
 #### **Obtain LTE/NR network status information**   
 Enter
 ```shell
@@ -603,7 +604,75 @@ Return
 {
     Same as the return for ifname@lte
 }
-```
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
+
+#### **Disconnect(Shutdown) LTE/NR network**   
+Enter
+```shell
+# ifname@lte.shut
+```   
+Return
+```shell
+ttrue
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) to see more
+
+#### **Connect(Setup) to LTE/NR network**   
+Enter
+```shell
+# ifname@lte.setup
+```   
+Return
+```shell
+ttrue
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) to see more
+
+#### **Modify the LTE/NR network to disabled**   
+Enter
+```shell
+# ifname@lte:status=disable
+```   
+Return
+```shell
+ttrue
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) to see more
+
+#### **Modify the LTE/NR network to enabled**   
+Enter
+```shell
+# ifname@lte:status=enable
+```   
+Return
+```shell
+ttrue
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) to see more
+
+#### **Modify the LTE/NR modem dail APN/Username/Password**   
+Enter
+```shell
+# ifname@lte|{ "profile":"enable", "profile_cfg":{ "apn":"NewAPN", "user":"NewUser", "passwd":"NewPassword" } }
+```   
+Return
+```shell
+ttrue
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
+
+#### **Enable Location function of LTE/NR modem**   
+Enter
+```shell
+# ifname@lte:gnss=enable
+```   
+Return
+```shell
+ttrue
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
+
 
 
 #### **Obtain client information**   
@@ -688,46 +757,23 @@ Return
 Click [LAN Network Management](../com/ifname/lan.md) to see more
 
 
+
 #### **Reboot gateway**   
 Enter
 ```shell
 # land@machine.restart
 ```   
 The gateway does not return any information and will restart immediately
-
 Click [Management of Basic Infomation](../com/land/machine.md) to see more
-
 
 #### **Reset gateway(restore default settings)**   
 Enter
 ```shell
 # land@machine.default
 ```
-The gateway does not return any information and will restart immediately
-
+The gateway does not return any information and will restart and default immediately
 Click [Management of Basic Infomation](../com/land/machine.md) to see more
 
-#### **Modify the LTE's APN**   
-Enter
-```shell
-# ifname@lte|{"profile":"enable","profile_cfg":{"apn":"MyCustomAPN"}}
-```   
-Return
-```shell
-ttrue
-```   
-Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
-
-#### **Enable Location function of LTE/NR modem**   
-Enter
-```shell
-# ifname@lte:gnss=enable
-```   
-Return
-```shell
-ttrue
-```   
-Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
 
 
 #### **Enable GNSS function**   
@@ -742,7 +788,8 @@ ttrue
 Click [GNSS NEMA Protocol Management](../com/gnss/nmea.md) to see more
 
 
-#### **Change the SSID name of a wireless hotspot (2.4G)**   
+
+#### **Modify the SSID name of a wireless hotspot (2.4G)**   
 Enter
 ```shell
 # wifi@nssid:ssid=NewSSID
@@ -753,7 +800,7 @@ ttrue
 ```   
 Click [2.4G SSID Management](../com/wifi/nssid.md) to see more
 
-#### **Change the SSID password of a wireless hotspot (2.4G)**   
+#### **Modify the SSID password of a wireless hotspot (2.4G)**   
 Enter
 ```shell
 # wifi@nssid:wpa_key=NewPassword
@@ -764,7 +811,7 @@ ttrue
 ```   
 Click [2.4G SSID Management](../com/wifi/nssid.md) to see more
 
-#### **Change the SSID name and password of the wireless hotspot (2.4G)**   
+#### **Modify the SSID name and password of the wireless hotspot (2.4G)**   
 Enter
 ```shell
 # wifi@nssid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}
@@ -775,7 +822,7 @@ ttrue
 ```   
 Click [2.4G SSID Management](../com/wifi/nssid.md) to see more
 
-#### **Change the SSID name of a wireless hotspot (5.8G)**   
+#### **Modify the SSID name of a wireless hotspot (5.8G)**   
 Enter
 ```shell
 # wifi@assid:ssid=NewSSID
@@ -786,7 +833,7 @@ ttrue
 ```   
 Click [5.8G SSID Management](../com/wifi/assid.md) to see more
 
-#### **Change the SSID password of a wireless hotspot (5.8G)**   
+#### **Modify the SSID password of a wireless hotspot (5.8G)**   
 Enter
 ```shell
 # wifi@assid:wpa_key=NewPassword
@@ -797,7 +844,7 @@ ttrue
 ```   
 Click [5.8G SSID Management](../com/wifi/assid.md) to see more
 
-#### **Change the SSID name and password of the wireless hotspot (5.8G)**   
+#### **Modify the SSID name and password of the wireless hotspot (5.8G)**   
 Enter
 ```shell
 # wifi@assid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}
@@ -809,16 +856,184 @@ ttrue
 Click [5.8G SSID Management](../com/wifi/assid.md) to see more
 
 
-#### **Change the password of the admin user**   
+
+#### **Modify the WISP(2.4G) connect other AP**   
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
 Enter
 ```shell
-# land@auth.modify[,admin,admin,NewPassword]
+# ifname@wisp|{"status":"enable","peer":"NewAP","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Modify the WISP(2.4G) network to disabled**   
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
+Enter
+```shell
+# ifname@wisp:status=disable
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Modify the WISP(2.4G) network to enabled**   
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
+Enter
+```shell
+# ifname@wisp:status=enable
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Disconnect(Shutdown) WISP(2.4G) network**   
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
+Enter
+```shell
+# ifname@wisp.shut
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Connect(Setup) to WISP(2.4G) network**    
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
+Enter
+```shell
+# ifname@wisp.setup
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Modify the WISP(5.8G) connect other AP**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Enter
+```shell
+# ifname@wisp2|{"status":"enable","peer":"NewAP","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Modify the WISP(5.8G) network to disabled**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Enter
+```shell
+# ifname@wisp2:status=disable
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Modify the WISP(5.8G) network to enabled**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Enter
+```shell
+# ifname@wisp2:status=enable
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Disconnect(Shutdown) WISP(5.8G) network**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Enter
+```shell
+# ifname@wisp2.shut
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Connect(Setup) to WISP(5.8G) network**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Enter
+```shell
+# ifname@wisp2.setup
+```   
+Return
+```shell
+ttrue
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+
+
+#### **Modify the password of the admin user**   
+Enter
+```shell
+# land@auth.modify[,admin,OldPassword,NewPassword]
 ```   
 Return
 ```shell
 ttrue
 ```   
 Click [Username/Password and Permission Management](../com/land/auth.md) to see more
+
+
+#### **Add policy-based route rule for force source ip(192.168.8.2.12) route to first LTE/NR, named it senser**   
+Enter
+```shell
+# forward@rule.add[ senser,192.168.2.12, , , , 1, 33000 ]
+```   
+Return
+```shell
+ttrue
+```   
+Click [Policy based routing](../com/forward/rule.md) to see more
+
+#### **Add policy-based route rule for force all ip route to second LTE/NR, named it video**   
+Enter
+```shell
+# forward@rule.add[ video, , , , , 2, 33000 ]
+```   
+Return
+```shell
+ttrue
+```   
+Click [Policy based routing](../com/forward/rule.md) to see more
+
+#### **Delete policy-based route rule named senser**   
+Enter
+```shell
+# forward@rule.delete[ senser ]
+```   
+Return
+```shell
+ttrue
+```   
+Click [Policy based routing](../com/forward/rule.md) to see more
+
+#### **Delete policy-based route rule named video**   
+Enter
+```shell
+# forward@rule.delete[ video ]
+```   
+Return
+```shell
+ttrue
+```   
+Click [Policy based routing](../com/forward/rule.md) to see more
 
 
 

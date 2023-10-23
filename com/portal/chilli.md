@@ -12,30 +12,32 @@ Administration of equipment Management chilli portal web page
     "extern":"extern ifname",                           // [ "ifname@lte", "ifname@lte2", "ifname@wan", ... ], default is the default gateway
     "local":"local ifname",                             // [ "ifname@lan", "ifname@lan2", "ifname@lan3", "wifi@nssid", "wifi@assid, "... ], default is the wifi@nssid
 
-    "ip":"chilli interface ip address",                 // [ ip address ]
-    "mask":"chilli interface netmask",                  // [ netmask ]
-    "network":"chilli interface network",               // [ network ]
-    "dns":"dns server",                                 // [ ip address ]
-    "dns2":"dns server",                                // [ ip address ]
+    "ip":"chilli interface ip address",                 // [ ip address ], HS_UAMLISTEN
+    "mask":"chilli interface netmask",                  // [ netmask ], HS_NETMASK
+    "network":"chilli interface network",               // [ network ], HS_NETWORK
+    "dns":"dns server",                                 // [ ip address ], HS_DNS1
+    "dns2":"dns server",                                // [ ip address ], HS_DNS2
 
-    "port":"chilli service port",                       // [ number ], 1-65535
-    "uiport":"chilli ui port",                          // [ number ], 1-65535
+    "port":"chilli service port",                       // [ number ], 1-65535, HS_UAMPORT
+    "uiport":"chilli ui port",                          // [ number ], 1-65535, HS_UAMUIPORT
 
-    "radius_nasid":"Radius NAS Identify",               // [ string ]
-    "radius_server":"Radius server",                    // [ ip address ]
-    "radius_server2":"Radius server",                   // [ ip address ]
-    "radius_secret":"Radius server key",                // [ string ]
-    "radius_authport":"Radius auth port",               // [ number ], 1-65535
-    "radius_acctport":"Radius account port",            // [ number ], 1-65535
+    "radius_nasip":"Radius NAS IP",                     // [ string ]
+    "radius_nasid":"Radius NAS Identify",               // [ string ], HS_NASID
+    "radius_server":"Radius server",                    // [ ip address ], HS_RADIUS
+    "radius_server2":"Radius server",                   // [ ip address ], HS_RADIUS2
+    "radius_secret":"Radius server key",                // [ string ], HS_RADSECRET
+    "radius_authport":"Radius auth port",               // [ number ], 1-65535, HS_RADAUTH
+    "radius_acctport":"Radius account port",            // [ number ], 1-65535, HS_RADAUTH
     
-    "uam_format":"UMA Portal URL",                      // [ string ]
-    "uam_homepage":"UMA Homepage URL",                  // [ string ]
-    "uam_secret":"UMA secret",
-    "uam_allowed":"UMA allowed address",                // [ string ], Multiple addresses are separated by space
-    "uam_domains":"UMA allowed domain",                 // [ string ], Multiple domains are separated by space
+    "uam_format":"UMA Portal URL",                      // [ string ], HS_UAMFORMAT
+    "uam_homepage":"UMA Homepage URL",                  // [ string ], HS_UAMHOMEPAGE
+    "uam_secret":"UMA secret",                          // [ string ], HS_UAMSECRET
+    "uam_allowed":"UMA allowed address",                // [ string ], HS_UAMALLOW, Multiple addresses are separated by space
+    "uam_domains":"UMA allowed domain",                 // [ string ], HS_UAMDOMAINS, Multiple domains are separated by space
+    "session_timeout":"session timeout",                // [ number ]
 
-    "defaults_opt":"defaults custom options",            // [ string ], Multiple options are separated by semicolons
-    "local_opt":"local.conf custom options"              // [ string ], Multiple options are separated by semicolons
+    "defaults_opt":"defaults custom options",            // [ string ], /etc/chilli/defaults, Multiple options are separated by semicolons
+    "local_opt":"local.conf custom options"              // [ string ], /etc/chilli/local.conf, Multiple options are separated by semicolons
 }
 ```
 
