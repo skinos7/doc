@@ -8,6 +8,10 @@ Accept administrative command from the local network
     "broadcast":"disable or enable listen for broadcast command from the local",  // [ "disable", "enable" ]
     "broadcast_port":"broadcast port",                                            // [ number ], default is 22222
     "broadcast_group":"group name",                                               // [ string ], default is default
+    "broadcast_command":"broadcast command mode",                                 // [ "disable", "query", "all" ], default is disable
+                                                                                        // "disable" for no broadcast command suport
+                                                                                        // "query" for query broadcast command suport
+                                                                                        // "all" for all broadcast command suport
     "broadcast_manager":                              // Only the specified IP address or MAC address is allowed for access
     {
         // "...":"..." You can configure multiple host who can access

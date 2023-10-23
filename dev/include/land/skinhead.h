@@ -173,9 +173,11 @@ typedef int boole;
 #define NRADIO_COM "wifi@n"
 #define NSSID_COM "wifi@nssid"
 #define NSSID2_COM "wifi@nssid2"
+#define NSTA_COM "wifi@nsta"
 #define ARADIO_COM "wifi@a"
 #define ASSID_COM "wifi@assid"
 #define ASSID2_COM "wifi@assid2"
+#define ASTA_COM "wifi@asta"
 
 /** modem management component */
 #define MODEM_PROJECT "modem"             // modem project
