@@ -18,6 +18,7 @@ Management LTE modem
     "lock_band":"lock band",                   // The format varies depending on the module
     "lock_cell":"lock cell",                   // The format varies depending on the module
     "gnss":"gps function",                     // [ "disable", "enable" ]
+    "atport":"atport function",                // [ "disable", "enable" ]
 
     "custom_set":                              // custom at setting list at the modem setup
     {

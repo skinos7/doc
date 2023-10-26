@@ -186,6 +186,7 @@ typedef int boole;
 #define OPERATOR_COM "modem@operator"     // operator management
 #define BSIM_COM "modem@bsim"             // modem backup simcard management
 #define SMS_COM "modem@sms"               // modem sms management
+#define ATPORT_COM "modem@atport"         // modem atport management
 #define LTE_COM "modem@lte"               // modem object
 #define LTE2_COM "modem@lte2"             // modem object
 
