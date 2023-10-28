@@ -1480,8 +1480,8 @@ In the LAN, through the **UDP port 22222** broadcast search and query informatio
 ![avatar](./localport_query_step.png)
 Flow chart (consistent with the figure above, please ignore it if it cannot be displayed)
 ```flow
-device=>end: 2. The gateway that belongs to the corresponding group replies the MAC address, IP address, and WEB port to UDP port 22222 whose IP address is 255.255.255.255: MAC|IP|HE Command1 return,HE Command2 return,HE Command3 return,...|
-data=>operation: 1. The management tool broadcasts to UDP port 22222 whose IP address is 255.255.255.255. Character string: group name,HE Command1,HE Command2,HE Command3,…
+device=>end: 2. The gateway that belongs to the corresponding group replies the MAC address, IP address, and WEB port to UDP port 22222 whose IP address is 255.255.255.255: MAC-HE Command1 return|HE Command2 return|HE Command3 return|...
+data=>operation: 1. The management tool broadcasts to UDP port 22222 whose IP address is 255.255.255.255. Character string: group name+HE Command1|HE Command2|HE Command3|…
 client=>start: Begin
 client->data->device
 ```
@@ -1489,11 +1489,11 @@ client->data->device
 ##### 2. Query network gateway information communication details
 - 1. **management tool** Send a query request to UDP port 22222 whose IP address is 255.255.255.255 to broadcast the group name with 7 characters default plus commas (,) and the HE command. All Intranet gateways can receive this string
     ```
-    default,HE command1,HE command2,HE command3
+    default+HE command1|HE command2|HE command3
     ```
-- 2. **网关** reply
+- 2. **Gateway** reply
     ```
-    MAC|IP|HE command1 return,HE command2 return,HE command3 return
+    MAC-HE command1 return|HE command2 return|HE command3 return
     ```
     Here are some common HE command, See this document for more [HE command](../use/he_command_en.md):
     ```
@@ -1511,15 +1511,15 @@ client->data->device
 - Example
     The following information is sent to query the model and IMEI of all gateways on the LAN:
     ```
-    default,land@machine:model,ifname@lte.status:imei
+    default+land@machine:model|ifname@lte.status:imei
     ```
     For example, if the MAC address is 00:03:7F:12:3A:D0 (IP address is 192.168.8.1), the gateway model A218 responds as follows：
     ```
-    00037F123AD0|192.168.8.1|A218,862107043556307
+    00037F123AD0-A218|862107043556307
     ```
     For example, if the MAC address is 00:03:7F:13:3A:D8 (IP address is 192.168.8.1), the gateway whose model is V519 responds as follows：
     ```
-    00037F133AD08|192.168.8.1|V519,86210704355692
+    00037F133AD08-V519|86210704355692
     ```    
 ##### 3. Use the Windwos tool to test the gateway receiving and sending packets within the inquiry network   
 - On the left, the send tool sends UDP packets to port 22222 of 192.168.8.1 to query the models and CCID numbers of all gateways on the LAN
