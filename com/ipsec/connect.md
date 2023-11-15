@@ -18,6 +18,7 @@ Management of IPSEC connection
     "peer_id":"local ID",                        // [ string ], valid when "peer_idtype" be "custom"
     "peer_network":"peer network",               // [ string ], ex. 10.0.0.0
     "peer_mask":"peer network mask",             // [ string ], ex. 255.0.0.0
+    "peer_networks":"add the more network",      // [ string ], ex. 172.16.0.0/16;192.168.10.0/24
 
     "local":"local ifname",                      // [ "ifname@lan", "ifname@lan2", ... ], default is ifname@lan
     "local_idtype":"local ID type",              // [ "ip", "custom", "any" ], ip for local ip, custom the custom local ID, any for any ID

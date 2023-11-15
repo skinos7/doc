@@ -61,7 +61,12 @@ Manage and parse GNSS nmea data, nmea data can from UART or LTE
         "vcode":"custom the vocde at nmea $PAHYR",       // [ string ]
         "interval":"send interval",                      // [ number ], default is one second
         "content":"sends the specified header"           // [ string ], "ZDA", "GGA", "GLL", "VTG", "GSA", "GSV", "RMC", "GST" ], multiple heads are divided by a semicolon
-    }
+    },
+
+    // configure connect failed to action
+    "failed_action":"connect timeout action",                                          // [ "reconfig", "reboot" ]
+    "failed_timeout":"connect timeout"                                                 // [ number ], the unit is ms, default is 1800, it is 180sec
+
 }
 
 ```

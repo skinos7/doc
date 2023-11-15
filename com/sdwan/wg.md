@@ -16,6 +16,15 @@ Management of WireGuard Interface
                                                                 // "" for is defdault gateway
                                                                 // "ifname@wan", "ifname@lte", ... for specified extern interface
 
+    "date":"check source of the time",           // [ "ntp", "disable", "enable", "set", "lte", "gps" ]
+                                                             // "ntp": need the date from NTP
+                                                             // "disable": disable the date check
+                                                             // "enable": check the date from one of ntp/set/rtc/lte/gps
+                                                             // "set": need the date from set
+                                                             // "rtc": need the date from rtc
+                                                             // "lte": need the date from lte
+                                                             // "gps": need the date from GNSS
+
     "peer":
     {
         "public key":                                     // [ string ]
