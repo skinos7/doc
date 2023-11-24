@@ -81,6 +81,28 @@ param_t     param_build( talk_t json );
  */
 param_t 	param_found( void *pointer, void *pointer2, void *pointer3, void *pointer4 );
 /**
+ * @brief free a parameter
+ * @param[in] parameter
+ * @return none
+ */
+void        param_free( param_t parameter );
+
+
+
+/**
+ * @brief create a structure of parameter and insert the option
+ * @param[out] parameter, calloc a new paramter when this is NULL
+ * @param[in] option will insert to the parameter head
+ * @return parameter
+ * 		@retval parameter for succeed
+ *  	@retval NULL for error, errno will be sets
+ */
+param_t 	param_insert( param_t param, const char *option );
+param_t 	param_into( param_t param, const talk_t option );
+
+
+
+/**
  * @brief create a structure of parameter on json
  * @param[out] parameter, calloc a new paramter when this is NULL
  * @param[in] json will be first and only option
@@ -127,12 +149,6 @@ boole       param_shift( param_t parameter, int number );
  *		@retval negative for failed, the errno code will be sets
  */
 boole       param_unshift( param_t parameter, int number );
-/**
- * @brief free a parameter
- * @param[in] parameter
- * @return none
- */
-void        param_free( param_t parameter );
 
 
 

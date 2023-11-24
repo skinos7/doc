@@ -76,6 +76,13 @@ int     link_size( lhead_t head );
  *		@retval false for error, errno will be set
  */
 boole   link_delete( lhead_t head, link_t elm );
+/**
+ * @brief delete a node from linker queue
+ * @param[in] head pointer of linker queue
+ * @param[in] elm pointer of linker node
+ * @return the next
+ */
+link_t	link_remove( lhead_t head, link_t elm );
 
 
 

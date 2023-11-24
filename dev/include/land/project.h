@@ -21,8 +21,8 @@
  * 		@retval json for succeed
  *          {
  *            // "name":"directory"
- *            "land":"/prj/land/",
- *            "arch":"/prj/arch/"
+ *            "land":"/PRJ/land/",
+ *            "arch":"/PRJ/arch/"
  *            ...
  *          }
  *  	@retval NULL for error, errno will be sets
@@ -34,8 +34,8 @@ talk_t      project_scan( void );
  * 		@retval json for succeed
  *          {
  *            // "name":"path"
- *            "land":"/prj/land",
- *            "arch":"/prj/arch"
+ *            "land":"/PRJ/land",
+ *            "arch":"/PRJ/arch"
  *            ...
  *          }
  *  	@retval NULL for error, errno will be sets

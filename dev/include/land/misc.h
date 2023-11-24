@@ -396,8 +396,12 @@ int talk2fd( int fd, talk_t talk, int errcode, int timeout );
 /**
  * @brief send a json
  * @param[in] sock socket description handler
+ * @param[in] prefix
+ * @param[in] prefix of len
  * @param[in] json a pointer of json
  * @param[in] errocde errno be send when json < TALK_ECODEMAX
+ * @param[in] suffix
+ * @param[in] suffix of len
  * @param[in] timeout <0 for block, >0 for wait timeout in second
  * @param[in] peer peer address
  * @param[in] peerlen peer address size
@@ -405,7 +409,7 @@ int talk2fd( int fd, talk_t talk, int errcode, int timeout );
  *		@retval <0 for succeed
  *		@retval negative for failed, the errno code will be sets
  */
-int talk2sock( int sock, talk_t talk, int errcode, int timeout, struct sockaddr *peer, socklen_t peerlen );
+int talk2sock( int sock, const char *prefix, int prefixlen, talk_t talk, int errcode, const char *suffix, int suffixlen, int timeout, struct sockaddr *peer, socklen_t peerlen );
 
 
 

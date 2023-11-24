@@ -178,14 +178,14 @@ It is generated automatically when the project is created, you can learn his for
 + `register[ <project directory> [, project directory2] [,...] ]` **register project to system**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, register a project
-    land@fpk.register[ /prj/storage ]
+    land@fpk.register[ /PRJ/storage ]
     ttrue
     ```
 
 + `unregister[ <project directory> [, project directory2] [,...] ]` **unregister project from system**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples, register a project
-    land@fpk.unregister[ /prj/storage ]
+    land@fpk.unregister[ /PRJ/storage ]
     ttrue
     ```
 
@@ -205,7 +205,7 @@ It is generated automatically when the project is created, you can learn his for
             "ethcon":"ethernet connect component",
             "ltecon":"lte modem connect component"
         },
-        "path":"/prj/ifname/",
+        "path":"/PRJ/ifname/",
         "size":"55692"
     }
     # examples, list all project infomation
@@ -213,7 +213,7 @@ It is generated automatically when the project is created, you can learn his for
     {
         "arch":
         {
-            "path":"/prj/arch/",
+            "path":"/PRJ/arch/",
             "size":"273739",
             "intro":"mtk mt7621 platform layer for skinos",
             "version":"7.0.0",
@@ -221,7 +221,7 @@ It is generated automatically when the project is created, you can learn his for
         },
         "client":
         {
-            "path":"/prj/client/",
+            "path":"/PRJ/client/",
             "size":"54690",
             "intro":"Client management",
             "version":"7.0.0",
@@ -230,7 +230,7 @@ It is generated automatically when the project is created, you can learn his for
 
         "ifname":
         {
-            "path":"/prj/ifname/",
+            "path":"/PRJ/ifname/",
             "size":"55692",
             "intro":"common network connection",
             "version":"7.0.0",
@@ -238,7 +238,7 @@ It is generated automatically when the project is created, you can learn his for
         },
         "land":
         {
-            "path":"/prj/land/",
+            "path":"/PRJ/land/",
             "size":"145238",
             "intro":"component infrastructure",
             "version":"7.0.0",
@@ -246,7 +246,7 @@ It is generated automatically when the project is created, you can learn his for
         },
         "wui":
         {
-            "path":"/prj/wui/",
+            "path":"/PRJ/wui/",
             "size":"500",
             "intro":"web system basic ui page",
             "version":"7.0.0",
