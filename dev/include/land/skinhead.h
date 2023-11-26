@@ -286,6 +286,14 @@ typedef int boole;
 #define RANDOM_FILENAME  "/var/.urandom"
 #define CRACKID_MAC "00:01:02:03:04:00"
 
+/// system important state
+#define MACHINE_STATE_DOWNLOADING 1
+#define MACHINE_STATE_UPGRADING 2
+#define MACHINE_STATE_RESTORING 3
+#define MACHINE_STATE_RESTARTING 4
+#define MACHINE_STATE_OP_SUCCEED 10
+#define MACHINE_STATE_OP_FAILED -1
+
 
 
 /// include important header file
