@@ -27,7 +27,11 @@ connect to remote server and accept administrative command from the that
     },
 
     "he":"connect to remote for he command",               // [ "disable", "enable" ]
-    "heport":"remote server heport port"                   // [ number ]
+    "heport":"remote server heport port",                  // [ number ]
+    "tcp_keepidle":"idle to keeplive",                    // [ number ], The unit is seconds
+    "tcp_keepintvl":"keeplive interval",                  // [ number ], The unit is seconds
+    "tcp_keepcnt":"keeplive failed time"                  // [ number ]
+
 }
 ```
 Examples, show all the configure
@@ -55,7 +59,10 @@ agent@remote
     },
 
     "he":"disable",
-    "heport":"10001"
+    "heport":"10001",
+    "tcp_keepidle":"20",
+    "tcp_keepintvl":"10",
+    "tcp_keepcnt":"3"
 }
 ```  
 Examples, disable the connecting remote management

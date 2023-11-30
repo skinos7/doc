@@ -11,6 +11,7 @@ all device connect to the service, this service responsible for communication wi
     "status":"enable the function",                       // [ disable, enable ]
     "port":"tcp port",                                    // [ number ]
     "path":"directory for storing device information",    // [ string ]
+
     "post_interval":"device report interval",             // [ number ], The unit is seconds
     "offline_timeout":"timeout to disconnect"             // [ number ], The unit is seconds
 }
