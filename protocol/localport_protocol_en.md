@@ -543,6 +543,109 @@ Receive
 Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
 
 
+#### **Send SMS use LTE/NR modem**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"modem@lte",
+        "op":"sendsms",
+        "1":"+13266606322",
+        "2":"这是一个测试短信"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [LTE/NR Modem Management](../com/modem/lte.md) to see more
+
+
+#### **List all SMS on LTE/NR modem**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"modem@lte",
+        "op":"smslist"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":
+    {
+        "lte.612f6C":
+        {
+            "id":"lte.612f6C",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:50:01",
+            "content":"看下午方便的话可以   "
+        },
+        "lte.Y9kWLV":
+        {
+            "id":"lte.Y9kWLV",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:50:03",
+            "content":"要   现的"
+        },
+        "lte.ovV6nw":
+        {
+            "id":"lte.ovV6nw",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:49:22",
+            "content":"看下午方便的话可以"
+        },
+        "lte.sTQ9x1":
+        {
+            "id":"lte.sTQ9x1",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:51:22",
+            "content":"iiik'帮"
+        },
+        "lte.uKyisL":
+        {
+            "id":"lte.uKyisL",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:51:49",
+            "content":"ss'ddd"
+        }
+    }
+}
+```    
+Click [LTE/NR Modem Management](../com/modem/lte.md) to see more
+
+
+#### **Delete a SMS on LTE/NR modem**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"modem@lte",
+        "op":"smsdel",
+        "1":"lte.612f6C"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [LTE/NR Modem Management](../com/modem/lte.md) to see more
+
+
+
+
+
 
 #### **Obtain client information**   
 Send

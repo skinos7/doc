@@ -366,3 +366,66 @@ ttrue
     ttrue
     ```
 
+
+
++ `smssend[ dest, content ]` **send a sms**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, use LTE1 send a hello to 13266606322
+    modem@lte.smssend[ +8613266606322, hello ]
+    ttrue
+    # examples, use LTE2 send a "hello world" to 13266606322
+    modem@lte2.smssend[ +8613266606322, "hello world" ]
+    ttrue
+    ```
+
++ `smslist[]` **list all sms**, *succeed return talk to describes sms list, failed return NULL, error return terror*
+    ```shell
+    # examples, list all sms on LTE1
+    modem@lte.smslist
+    {
+        "lte.5ugPSw":
+        {
+            "id":"lte.5ugPSw",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:50:30",
+            "content":"看 ddddd"
+        },
+        "lte.Y9kWLV":
+        {
+            "id":"lte.Y9kWLV",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:50:03",
+            "content":"要   现的"
+        },
+        "lte.ovV6nw":
+        {
+            "id":"lte.ovV6nw",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:49:22",
+            "content":"看下午方便的话可以"
+        },
+        "lte.sTQ9x1":
+        {
+            "id":"lte.sTQ9x1",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:51:22",
+            "content":"iiik'帮"
+        },
+        "lte.uKyisL":
+        {
+            "id":"lte.uKyisL",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:51:49",
+            "content":"ss'ddd"
+        }
+    }
+    ```
+
++ `smsdel[ sms id ]` **delete a sms**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```shell
+    # examples, delete a sms on LTE1
+    modem@lte.smsdel[ lte.5ugPSw ]
+    ttrue
+    ```
+
+
