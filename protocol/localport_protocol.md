@@ -610,7 +610,7 @@ enable
 ```    
 
 
-#### 示例-删除一个短信
+#### 示例-删除一条短信
 - 第一个LTE/NR的模块为modem@lte, 给出短信的id号即可删除对应的短信, 点击[LTE/NR Modem Management](../com/modem/lte.md)查看有关smslist接口的介绍
 ```json
 {
