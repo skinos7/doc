@@ -9,6 +9,7 @@ all device connect to the service, this service responsible for communication wi
 // attribute introduction
 {
     "status":"enable the function",                       // [ disable, enable ]
+
     "port":"tcp port",                                    // [ number ]
     "path":"directory for storing device information",    // [ string ]
 

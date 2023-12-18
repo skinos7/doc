@@ -16,6 +16,7 @@ all device connect to the service, this service responsible for forwarding with 
     "tcp_keepidle":"idle to keeplive",                    // [ number ], The unit is seconds
     "tcp_keepintvl":"keeplive interval",                  // [ number ], The unit is seconds
     "tcp_keepcnt":"keeplive failed time",                 // [ number ]
+
     "talk_timeout":"timeout to disconnect"                // [ number ], The unit is seconds
 }
 ```
