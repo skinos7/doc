@@ -550,9 +550,9 @@ Send
     "cmd1":
     {
         "com":"modem@lte",
-        "op":"sendsms",
+        "op":"smssend",
         "1":"+13266606322",
-        "2":"这是一个测试短信"
+        "2":"that is a test SMS"
     }
 }
 ```   

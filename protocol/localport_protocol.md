@@ -511,7 +511,7 @@ enable
 
 
 #### 示例-获取第二个LTE/NR网络(5G)状态信息(对于双模块网关)
-- 第二个TE/NR状态信息由ifname@lte2的status接口返回(在终端中的命令为ifname@lte2.status), 点击[LTE/NR网络管理](../com/ifname/lte.md)及[LTE/NR Modem Management](../com/modem/lte.md)查看有关status接口的介绍
+- 第二个LTE/NR状态信息由ifname@lte2的status接口返回(在终端中的命令为ifname@lte2.status), 点击[LTE/NR网络管理](../com/ifname/lte.md)及[LTE/NR Modem Management](../com/modem/lte.md)查看有关status接口的介绍
 ```json
 {
     "cmd1":
@@ -530,6 +530,104 @@ enable
     }
 }
 ```
+
+
+
+#### 示例-使用第一个LTE/NR模块发送短信
+- 第一个LTE/NR的模块为modem@lte, 点击[LTE/NR Modem Management](../com/modem/lte.md)查看有关smssend接口的介绍
+```json
+{
+    "cmd1":
+    {
+        "com":"modem@lte",
+        "op":"smssend",
+        "1":"+13266606322",
+        "2":"这是一个测试短信"
+    }
+}
+```   
+- 网关返回
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+
+
+#### 示例-列出第一个LTE/NR模块的所有短信
+- 第一个LTE/NR的模块为modem@lte, 点击[LTE/NR Modem Management](../com/modem/lte.md)查看有关smslist接口的介绍
+```json
+{
+    "cmd1":
+    {
+        "com":"modem@lte",
+        "op":"smslist"
+    }
+}
+```   
+- 网关返回
+```json
+{
+    "cmd1":
+    {
+        "lte.612f6C":
+        {
+            "id":"lte.612f6C",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:50:01",
+            "content":"看下午方便的话可以   "
+        },
+        "lte.Y9kWLV":
+        {
+            "id":"lte.Y9kWLV",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:50:03",
+            "content":"要   现的"
+        },
+        "lte.ovV6nw":
+        {
+            "id":"lte.ovV6nw",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:49:22",
+            "content":"看下午方便的话可以"
+        },
+        "lte.sTQ9x1":
+        {
+            "id":"lte.sTQ9x1",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:51:22",
+            "content":"iiik'帮"
+        },
+        "lte.uKyisL":
+        {
+            "id":"lte.uKyisL",
+            "contact":"8617688704240",
+            "date":"23-12-18 22:51:49",
+            "content":"ss'ddd"
+        }
+    }
+}
+```    
+
+
+#### 示例-删除一个短信
+- 第一个LTE/NR的模块为modem@lte, 给出短信的id号即可删除对应的短信, 点击[LTE/NR Modem Management](../com/modem/lte.md)查看有关smslist接口的介绍
+```json
+{
+    "cmd1":
+    {
+        "com":"modem@lte",
+        "op":"smsdel",
+        "1":"lte.612f6C"
+    }
+}
+```   
+- 网关返回
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
 
 
 
