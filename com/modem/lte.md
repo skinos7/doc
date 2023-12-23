@@ -427,5 +427,3 @@ ttrue
     modem@lte.smsdel[ lte.5ugPSw ]
     ttrue
     ```
-
-

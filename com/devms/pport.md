@@ -59,3 +59,57 @@ devms@pport:status=disable
 ttrue
 ```  
 
+#### **Methods**
+
++ `map[ device id, port, local ip, local port ]` **add a port map**, *succeed return tture, failed return tfalse, error return terror*
+
++ `unmap[ device id, port ]` **delete a port map**, *succeed return tture, failed return tfalse, error return terror*
+
++ `device_list[ [username] ]` **get device list**, *succeed return talk to describes, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "user name":"pond number"        [ string ]: [ number ]
+        // more user ...
+    }
+    ```
+
++ `device_info[ device id ]` **get device pond number**, *succeed return string to describes, failed return NULL, error return terror*
+
++ `port_list[ [device id] ]` **get port list**, *succeed return talk to describes, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "port number":                    [ number ]:
+        {
+            "index":"port index",                    [ number ]
+            "macid":"current map device",            [ string ]
+            "hand_ip":"current map local ip",        [ ip address ]
+            "hand_port":"current map local port",    [ port ]
+            "pond":"current pond link"               [ number ]
+        }
+        // more port ...
+    }
+    ```
+
++ `port_info[ port number ]` **get port link list**, *succeed return talk to describes, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "index":"port index",                    [ number ]
+        "macid":"current map device",            [ string ]
+        "hand_ip":"current map local ip",        [ ip address ]
+        "hand_port":"current map local port",    [ port ]
+        "pond":"current pond link",              [ number ]
+        "client ip and client port":             [ string ]:
+        {
+            "ip":"proxy ip",                        [ ip address ]
+            "port":"proxy port",                    [ port ]
+            "tx":"send bytes",                      [ number ]
+            "rx":"receive bytes"                    [ number ]
+        }
+        // more link ...
+    }
+    ```
+
+

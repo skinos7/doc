@@ -36,13 +36,17 @@ ttrue
 
 #### **Methods**
 
++ `path[]` **get the database directory**, *succeed return string to describes, failed return NULL, error return terror*
+
 + `list_user[]` **get the user list of server**, *succeed return talk to describes, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
         "user name":              [ string ]: {}
         {
-            "vcode":"device verify code"        [ string ]
+            "vcode":"device verify code",        [ string ]
+            "lang":"user language",              [ "cn", "en" ]
+            "comment":"user comment"             [ string ]
         }
         // ... more user
     }    
@@ -52,20 +56,15 @@ ttrue
 
 + `delete_user[ username, password ]` **delete a user from server**, *succeed return tture, failed return tfalse, error return terror*
 
-
-
-+ `list[ username, [group] ]` **get the device list of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `get_user[ username ]` **get user configure**, *succeed return talk to describes, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
-        "device mac address":
-        {
-        }
-        // ... more device
-    }    
+        "vcode":"device verify code",        [ string ]
+        "lang":"user language",              [ "cn", "en" ]
+        "comment":"user comment"             [ string ]
+    }
     ```
 
-+ `add[ username, device mac identify, [comment] ]` **add a device to server**, *succeed return tture, failed return tfalse, error return terror*
-
-+ `delete[ username, device mac identify ]` **delete a device from server**, *succeed return tture, failed return tfalse, error return terror*
++ `set_user[ username, {user configure} ]` **set user configure**, *succeed return tture, failed return tfalse, error return terror*
 
