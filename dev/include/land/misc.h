@@ -288,6 +288,12 @@ void insert_module( const char *module );
  * @return none 
  */
 void remove_module( const char *module );
+/**
+ * @brief found the module insmod already
+ * @param[in] module
+ * @return true for insmod already, false for not found 
+ */
+boole ls_module( const char *module );
 
 
 

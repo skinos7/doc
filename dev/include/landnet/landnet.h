@@ -91,11 +91,13 @@ boole txqueue_set_ifname( const char *object, const char *netdev, const char *le
  * @brief set the extern path mtu
  * @param[in] object extern object
  * @param[in] netdev interface name
+ * @param[in] mtu interface mtu
  * @return succeed or failed
  *		@retval true for succeed
  *		@retval false for failed
  */
-boole pmtu_adjust_ifname( const char *object, const char *netdev  );
+boole pmtu_adjust_ifname( const char *object, const char *netdev, const char *mtu  );
+boole pmtu_clear_ifname( const char *object, const char *netdev, const char *mtu  );
 
 
 

@@ -35,8 +35,8 @@ connect to remote server and accept administrative command from the that
     "portc":"connect to remote for port port",            // [ "disable", "enable" ]
     "portcport":"remote server pport port",               // [ number ]
     "tcp_pond":"pond client for tcp port",                // [ nubmer ]
-    "udp_pond":"pond client for tcp port",                // [ nuber ]
-    "check_interval":"check interval for pond",            // [ number ], the unit is second
+    "udp_pond":"pond client for tcp port",                // [ number ]
+    "check_interval":"check interval for pond"            // [ number ], the unit is second
      
 }
 ```

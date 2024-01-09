@@ -10,6 +10,11 @@
 
 
 
+void md5hex2string( unsigned char *md, char *result );
+void ssid_suffix_generate( talk_t v );
+
+
+
 /*
     向远程http服务器post一个JSON并得到http服务器返回的JSON
     url: 远程http服务器地址
