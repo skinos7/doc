@@ -13,6 +13,10 @@ all device connect to the service, this service responsible for forwarding with 
     "control_port":"http port for client connect",        // [ number ]
     "debug_port":"line command port for client connect",  // [ number ]
 
+    "hole_port":"gateway to gateway listen port",         // [ number ]
+    "hole2_port":"branch test port",                      // [ number ]
+    "hole3_port":"master test prot",                      // [ number ]
+
     "tcp_keepidle":"idle to keeplive",                    // [ number ], The unit is seconds
     "tcp_keepintvl":"keeplive interval",                  // [ number ], The unit is seconds
     "tcp_keepcnt":"keeplive failed time",                 // [ number ]
@@ -28,6 +32,10 @@ devms@heport
     "port":"10001",
     "control_port":"10002",
     "debug_port":"10003"
+
+    "hole_port":"10004",
+    "hole2_port":"10005",
+    "hole3_port":"10006",
 
     "tcp_keepidle":"20",
     "tcp_keepintvl":"10",
