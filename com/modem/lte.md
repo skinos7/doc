@@ -11,8 +11,8 @@ Management LTE modem
 // Attributes introduction 
 {
     // lock attributes
-    "lock_imei":"lock imei",                   // [ "disable", "enable", IMEI ], enable: The IMEI detected for the first time will be locked
-    "lock_imsi":"lock imsi",                   // [ "disable", "enable", IMEI ], enable will lock current imei
+    "lock_imei":"lock imei",                   // [ "", "enable", IMEI ], enable: The IMEI detected for the first time will be locked
+    "lock_imsi":"lock imsi",                   // [ "", "enable", IMEI ], enable will lock current imei
     "lock_pin":"simcard pin",                  // [ string ]
     "lock_nettype":"network type",             // [ "2g", "3g", "4g", "nsa", "sa" ]
     "lock_band":"lock band",                   // The format varies depending on the module

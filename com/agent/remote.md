@@ -21,12 +21,13 @@ connect to remote server and accept administrative command from the that
     "report":                                              // report status after connect succeed
     {
         "interval":"report interval",                       // [number ], the unit is second
-        "status":                                           // There are which statuses are being reported
+        "status":                                           // There are which statuses are being reported, vailed when unique empty
         {
             "he command":"",                                // [ string ]: "",  string is he command
             "he command2":""                                // [ string ]: "",  string is he command
             // "...":""
-        }
+        },
+        "unique":"he command"                               // [ string ], only report one json
     },
 
     "he":"connect to remote for he command",              // [ "disable", "enable" ]
