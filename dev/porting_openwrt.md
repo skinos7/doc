@@ -66,7 +66,7 @@ dimmalex@HMS:~/tiger7/project/portal$ cp -r ~/tiger7/smtk2/build_dir/target-mips
 
 ###### 拷贝脚本组件模板到项目中并改名为chilli
 ```
-dimmalex@HMS:~/tiger7/project/portal$ cp ../devtools/component.ash ./chilli.ash
+dimmalex@HMS:~/tiger7/project/portal$ cp ../tmptools/component.ash ./chilli.ash
 ```
 ###### 修改setup/shut函数实现开机运行chilli, 并机结束chilli
 ```
