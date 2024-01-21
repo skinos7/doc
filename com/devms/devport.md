@@ -38,33 +38,51 @@ ttrue
 
 + `path[]` **get the database directory**, *succeed return string to describes, failed return NULL, error return terror*
 
-+ `list_user[]` **get the user list of server**, *succeed return talk to describes, failed return NULL, error return terror*
++ `user_list[]` **get all user**, *succeed return talk to describes, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
-        "user name":              [ string ]: {}
+        "user name":              // [ string ]: {}
         {
-            "vcode":"device verify code",        [ string ]
-            "lang":"user language",              [ "cn", "en" ]
-            "comment":"user comment"             [ string ]
+            "comment":"user comment",                    // [ string ]
+            "vcode":"device verify code",                // [ string ]
+            "lang":"user language"                       // [ "cn", "en" ]
+            // ... more configure, detail same user_get return
         }
         // ... more user
     }    
     ```
 
-+ `add_user[ username, password, [vcode] ]` **add a user to server**, *succeed return tture, failed return tfalse, error return terror*
++ `user_add[ username, password, [vcode], [lang], [comment] ]` **add a user to server**, *succeed return tture, failed return tfalse, error return terror*
 
-+ `delete_user[ username, password ]` **delete a user from server**, *succeed return tture, failed return tfalse, error return terror*
++ `user_delete[ username ]` **delete a user**, *succeed return tture, failed return tfalse, error return terror*
 
-+ `get_user[ username ]` **get user configure**, *succeed return talk to describes, failed return NULL, error return terror*
++ `user_get[ username ]` **get user configure**, *succeed return talk to describes, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
+    // that save at $user/config.json
     {
-        "vcode":"device verify code",        [ string ]
-        "lang":"user language",              [ "cn", "en" ]
-        "comment":"user comment"             [ string ]
+        "comment":"username comment",                         // [ string ]
+        "vcode":"gateway connect vcode",                      // [ string ]
+        "password":"username login password",                 // [ string ]
+        "lang":"webpage username password",                   // [ "cn", "en", ... ]
+        "post_interval":"gateway report default interval",    // [ number ], the unit is second
+        "offline_timeout":"gateway timeout",                  // [ number ], the unit is second
+    
+        "pport":"port map function",                          // [ "enable", "disable" ]
+        "g2gnet":"gateway to gateway function"                // [ "enable", "disable" ]
     }
     ```
 
-+ `set_user[ username, {user configure} ]` **set user configure**, *succeed return tture, failed return tfalse, error return terror*
++ `user_set[ username, {user configure} ]` **set user configure**, *succeed return tture, failed return tfalse, error return terror*
+    ```json
+    // Attributes introduction of talk by the method parameter of {user configure}
+    {
+        "old_password":"old password of the user",  // [ string ], must need
+        "comment":"user comment",                   // [ string ]
+        "vcode":"device verify code",               // [ string ]
+        "lang":"user language"                      // [ "cn", "en" ]
+        // ... more configure, detail same user_get return
+    }
+    ```
 

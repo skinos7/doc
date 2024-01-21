@@ -166,6 +166,7 @@ ttrue
         "mac":"gateway MAC address",
         "macid":"gateway MAC identify or serial id",
         "model":"gateway model",
+        "cmodel":"gateway custom model",
         "magic":"gateway magic identify"
     }    
     ```

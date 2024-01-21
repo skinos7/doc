@@ -41,7 +41,7 @@ connect to remote server and accept administrative command from the that
     "check_interval":"check interval for pond",           // [ number ], the unit is second
     // control by hport 
     "g2g":"gateway to gateway agent function",            // [ "disable", "enable" ]
-    "netid":"network identify",                           // [ string ]
+    "g2gid":"g2g network identify",                           // [ string ]
     "g2gport":"g2g keeplive port",                        // [ number ]
     "g2gport2":"g2g p2p port",                            // [ number ]
     "g2g_interval":"g2g keeplive interval"                // [ number ], the unit is second
@@ -102,7 +102,7 @@ ttrue
         "check_interval":"check interval for pond",           // [ number ], the unit is second
 
         "g2g":"gateway to gateway agent function",            // [ "disable", "enable" ]
-        "netid":"network identify",                           // [ string ]
+        "g2gid":"network identify",                           // [ string ]
         "g2gport":"g2g keeplive port",                        // [ number ]
         "g2gport2":"g2g p2p port",                            // [ number ]
         "g2g_interval":"g2g keeplive interval"                // [ number ], the unit is second

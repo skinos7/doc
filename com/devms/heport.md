@@ -51,7 +51,36 @@ ttrue
 
 #### **Methods**
 
-+ `peer[ peer ]` **set peer to talk or he**, *succeed return talk to describes, failed return NULL, error return terror*
++ `client_list[]` **get all client list**, *succeed return talk to describes, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "file handler number":              // [ number ]: {}
+        {
+            "online":"online time",                    // [ string ]
+            "addr":"client ip",                        // [ ip address ]
+            "port":"client port"                       // [ port ]
+        }
+        // ... more client
+    }    
+    ```
+
++ `device_list[]` **get all gateway list**, *succeed return talk to describes, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "gateway mac identify":              // [ number ]: {}
+        {
+            "online":"online time",                    // [ string ]
+            "fd":"file handler number",                // [ number ]
+            "addr":"gateway connect ip",               // [ ip address ]
+            "port":"gateway connect port",              // [ port ]
+            "user":"gateway username",                 // [ string ]
+            "key":"heport control key"                 // [ string ]
+        }
+        // ... more gateway
+    }    
+    ```
 
 + `talk[ macid, {json command} ]` **talk to peer device**, *succeed return json command return, failed return tfalse, error return terror*
 
