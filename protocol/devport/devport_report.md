@@ -1,7 +1,9 @@
 ***
-# 状态上报说明
 
-通过以下网页可以规定网关上报指定状态, 也可以规定网关上报到什么服务器
+
+# 远程状态上报说明
+
+通过以下网页可以规定网关上报指定状态, 也可以规定网关上报到指定的服务器
 
 ![avatar](./devport_report_config.jpg)
 
@@ -32,9 +34,10 @@
 
     {
         // 属性介绍
-        "macid":"网关的MAC号",
-        "user":"网关所属的帐号",                    // 网页上可配置
-        "vcode":"网关所属的帐号需要的验证码(可选)",    // 网页上可配置
+        "macid":"gateway MAC identify",           // [ string ]
+        "user":"gateway username",                // [ string ], 网页上可配置
+        "vcode":"gateway username vcode",         // [ string [, 网页上可配置
+
         "status":                                 // 表明为状态的内容
         {
             "land@machine.status":                // 网关基本信息, 其下节点属性具体见land@machine组件status接口描述
@@ -55,6 +58,7 @@
                 "custom":"equipment custom identify",
                 "scope":"equipment scope identify",
                 "version":"equipment version",
+                "cfgversion":"gateway configure version",       // [ string ]
                 "livetime":"system running time",               // hour:minute:second:day
                 "current":"current date",                       // hour:minute:second:month:day:year
                 "mac":"equipment MAC address",
