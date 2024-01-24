@@ -25,7 +25,7 @@ void ssid_suffix_generate( talk_t v );
     talktimeout: 交互数据时最大等待时长
     cookiefile: 存储cookie的文件
     成功返回服务器返回的JSON, 服务器无返回则返回NULL , 出错返回tfalse*/
-talk_t easy_rtalk_type( const char *url, const char *type, const char *encrypt, talk_t v, int contimeout, int talktimeout, const char *cookiefile );
+talk_t easy_rtalk_type( const char *url, const char *type, const char *encrypt, const char *start, talk_t v, const char *end, int contimeout, int talktimeout, const char *cookiefile );
 /*
     向远程http服务器post一个JSON并得到http服务器返回的JSON
     url: 远程http服务器地址
@@ -34,7 +34,7 @@ talk_t easy_rtalk_type( const char *url, const char *type, const char *encrypt, 
     talktimeout: 交互数据时最大等待时长
     cookiefile: 存储cookie的文件
     成功返回服务器返回的JSON, 服务器无返回则返回NULL , 出错返回tfalse*/
-talk_t easy_rtalk( const char *url, talk_t v, int contimeout, int talktimeout, const char *cookiefile );
+talk_t easy_rtalk( const char *url, const char *start, talk_t v, const char *end, int contimeout, int talktimeout, const char *cookiefile );
 
 
 

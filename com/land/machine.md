@@ -161,6 +161,8 @@ ttrue
         "custom":"gateway custom identify",
         "scope":"gateway scope identify",
         "version":"gateway version",
+        "cfgversion":"gateway configure version",        // [ string ]
+        "gpversion":"gateway group configure version",   // [ string ]
         "livetime":"system running time",                // hour:minute:second:day
         "current":"current date",                        // hour:minute:second:month:day:year
         "mac":"gateway MAC address",
@@ -182,6 +184,7 @@ ttrue
         "custom":"d228",                                  # gateway custom identify is d228( hint the product name is D228 )
         "scope":"std",                                    # gateway scope identify is std( hint this is a standand release for D228 )
         "version":"tiger7-20220218",                      # gateway version is tiger7-20220218( hint the version publish at 2022.02.18 )
+        "cfgversion":"6",                                 # gateway cfgversion is 6, configure maybe modified 6 times
         "livetime":"00:06:35:0",                          # gateway It has been running for 6 minutes and 35 seconds
         "current":"14:54:30:05:04:2022",                  # current date is 2022.05.04, It's 14:54 and 30 seconds
         "mac":"00:03:7F:12:AA:D0",                        # gateway MAC is 00:03:7F:12:AA:D0

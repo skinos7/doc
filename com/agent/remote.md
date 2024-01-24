@@ -27,7 +27,7 @@ connect to remote server and accept administrative command from the that
             "he command2":""                                // [ string ]: "",  string is he command
             // "...":""
         },
-        "unique":"he command"                               // [ string ], only report one json
+        "unique":"he command"                               // [ string ], only report one json, Priority is higher than status
     },
 
     "he":"connect to remote for he command",              // [ "disable", "enable" ]
@@ -44,6 +44,7 @@ connect to remote server and accept administrative command from the that
     "g2gid":"g2g network identify",                           // [ string ]
     "g2gport":"g2g keeplive port",                        // [ number ]
     "g2gport2":"g2g p2p port",                            // [ number ]
+    "g2g_localport":"g2g listen port",                    // [ number ]
     "g2g_interval":"g2g keeplive interval"                // [ number ], the unit is second
 }
 ```
