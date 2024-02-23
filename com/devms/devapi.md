@@ -6,7 +6,7 @@ component name is devport, user use the component methods to get the gateway rep
 
 #### **Methods**
 
-+ `list[ username, [gateway model] ]` **get the gateway list of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `list[ username, [gateway model], [g2g identify] ]` **get the gateway list of username**, *succeed return talk to describes, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {

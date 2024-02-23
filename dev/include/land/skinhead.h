@@ -89,6 +89,7 @@ typedef int boole;
 #define DATA_COM "arch@data"
 #define CONFIG_COM "arch@config"
 #define FIRMWARE_COM "arch@firmware"
+#define FACTORY_COM "arch@factory"
 /** hardware platform network management component */
 #define NET_CONFIG "arch@net"
 #define ETHERNET_COM "arch@ethernet"

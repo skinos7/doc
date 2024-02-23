@@ -29,6 +29,7 @@ connect to remote server and accept administrative command from the that
             // "...":""
         },
         "unique":"he command"                               // [ string ], only report one json, Priority is higher than status
+        "endnl":"end with a line"                           // [ "disable", "enable" ]
     },
 
     "he":"connect to remote for he command",              // [ "disable", "enable" ]
