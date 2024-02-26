@@ -365,7 +365,7 @@ ttrue
             "available":"824.0K",
             "use":"20%"
         },
-        "int":                                    # interval file system for fpk install
+        "internal":                                    # internal file system for fpk install
         {
             "path":"/tmp/mnt/int",
             "size":"3.8M",
@@ -396,7 +396,7 @@ ttrue
     # examples, get the gateway extension storage filesystem infomation
     land@machine.sginfo
     {
-        "int":                                    # interval file system for fpk install
+        "internal":                                    # internal file system for fpk install
         {
             "path":"/tmp/mnt/int",
             "size":"3.8M",

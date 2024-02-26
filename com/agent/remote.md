@@ -6,7 +6,7 @@ connect to remote server and accept administrative command from the that
 ```json
 {
     "server":"remote server address",                      // [ string ]
-    "resolve":"resolve the server to ip",                  // [ "enable", "disable" ]
+    "resolve":"resolve the server to ip",                  // [ "disable", "enable" ]
     "id":"identify for device",                            // [ string ]
     "user":"username for device",                          // [ string ]
     "vcode":"vcode for device",                            // [ string ]

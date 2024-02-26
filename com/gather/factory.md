@@ -9,7 +9,7 @@ Factory skonos device at the local network
     "status":"beacon for search skinos agent",  // [ "disable", "enable" ]
     "port":"beacon udp port",                   // [ nubmer ]
     "interval":"beacon interval",               // [ nubmer ], the unit is second
-    "group":"search group name",                // [ string ], default is group of "factory"
+    "group":"search group name",                // [ string ], default is group of "default"
     "ip":"beacon network ip",                   // [ IP address ], default is 192.168.200.1
     "mask":"beacon network netmask",            // [ network mask ], default is 255.255.255.0
 
@@ -19,11 +19,12 @@ Factory skonos device at the local network
     "gw":"Assign gateway to found devices",                       // [ IP address ]
     "dns":"Assign dns to found devices"                           // [ IP address ]
 
-    "location":"location of file",      // [ "memory", "interval", "storage", "sda" ]
-                                            // "memory" for stored in the memory and will be lost upon restart
-                                            // "int" for stored in the internal flash. Strong columns are not recommended in the internal program area, which may cause corruption  
-                                            // "storage" for stored in external storage
-                                            // "sda" for sda starts with a specified mount disk
+    "location":"location of firmware",          // [ "memory", "interval", "storage", "sdaxxx" ]
+                                                    // "memory" for stored in the memory and will be lost upon restart
+                                                    // "interval" for stored in the internal flash. Strong columns are not recommended in the internal program area, which may cause corruption  
+                                                    // "storage" for stored in external storage
+                                                    // "sdaxxx" for sda starts with a specified mount disk
+                                                    // stored in xxxx-syslog.txt file in the root directory when "location" is internal, storage, starts with sda
     "sync":"sync the configure and firmware function",   // [ "disable", "enable" ]
     "sync_cfg":                                          // configure and firmware 
     {
@@ -45,15 +46,11 @@ Factory skonos device at the local network
         "tar":"configure file url location"                  // [ string ]
     },
 
-    "check":                                            // need check some item
+    "check":"check the client value",                 // [ "disable", "enable" ]
+    "check_cfg":                                      // need check some item
     {
-        "auth":"need or not",                                // [ "disable", "enable" ]
-        "imei":"need or not",                                // [ "disable", "enable" ]                      
-        "iccid":"need or not",                               // [ "disable", "enable" ] 
-        "lteip":"need or not",                               // [ "disable", "enable" ] 
-        "imei2":"need or not",                               // [ "disable", "enable" ] 
-        "iccid2":"need or not",                              // [ "disable", "enable" ] 
-        "lteip2":"need or not"                               // [ "disable", "enable" ] 
+        "query command":"need or not"                        // [ string ]:[ "disable", "enable" ]
+        // ... more query command
     },
 
     "assignmac":"assign mac function",                   // [ "disable", "enable" ]
@@ -108,6 +105,17 @@ gather@factory
 
         "cfgversion":"skinos23231-202321922323",
         "tar":"tftp://172.16.0.1/mt7628_r600_std_v7.3.0620.tar"
+    },
+    "check":"enable",
+    "check_cfg":                                     // need check some item
+    {
+        "ifname@lte.status:imei":"enable",           // check the LTE IMIE
+        "ifname@lte.status:iccid":"disable",         // don't check the LTE SIMCARD
+        "ifname@lte.status:ip":"disable",            // don't check the LTE online
+        "ifname@lte2.status:imei":"disable",         // don't check the LTE2 IMEI
+        "ifname@lte2.status:iccid":"disable",        // don't check the LTE2 SIMCARD
+        "ifname@lte2.status:ip":"disable",           // don't check the LTE2 online
+        "land@machine.status:factory_mode":"enable"  // check the board on factory mode
     },
     "assignmac":"enable",
     "assignmac_cfg":

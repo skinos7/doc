@@ -5,21 +5,26 @@ Zero touch provision from gather, dhcp, http, mail, U/TF storage
 #### Configuration( agent@ztp )
 ```json
 {
-    "dhcp":"disable or enable listen for ztp from dhcp",            // [ "disable", "enable" ]
-    "dhcp_cfg":
-    {
-    },
-    "storage":"disable or enable listen for ztp from dhcp",         // [ "disable", "enable" ]
-    "storage_cfg":
-    {
-        "path":"ZTP json pathname"                                      // [ string ]
-    },
     "url":"disable or enable url for ztp from remote server",       // [ "disable", "enable" ]
     "url_cfg":
     {
         "location":"ZTP json url location",                              // [ string ]
         "username":"url username",                                       // [ string ]
         "password":"url password"                                        // [ string ]
+    },
+    "dhcp":"disable or enable listen for ztp from dhcp",            // [ "disable", "enable" ]
+    "dhcp_cfg":
+    {
+    },
+    "storage":"disable or enable search the storage for ztp",       // [ "disable", "enable" ]
+    "storage_cfg":
+    {
+        "path":"ZTP json pathname"                                      // [ string ]
+    },
+    "query_cfg":
+    {
+        "query command":""                                              // [ string ]:""
+        // ... more command
     }
 }
 ```
@@ -81,8 +86,13 @@ ttrue
     ttrue
     ```
 
-+ `status[]` **get the equipent ztp infomation**, *succeed return talk to describes basic infomation, failed return NULL, error return terror*
++ `status[ {query json} ]` **get the equipent ztp infomation**, *succeed return talk to describes basic infomation, failed return NULL, error return terror*
     ```json
+    // Attributes introduction of talk that pass to interface
+    {
+        "query command":""                                              // [ string ]:""
+        // ... more command
+    }    
     // Attributes introduction of talk by the method return
     {
         "ip":"ztp ip address",                           // [ ip address ]

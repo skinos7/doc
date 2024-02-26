@@ -41,11 +41,11 @@ Manage system syslog
 
     "size":"log size",                  // [ number ], The unit is kbyte. logs will be overwritten when they exceed the size of the recording pool
 
-    "location":"location of logs",      // [ "memory", "interval", "storage", "sda" ]
+    "location":"location of logs",      // [ "memory", "interval", "storage", "sdaxxx" ]
                                             // "memory" for stored in the memory and will be lost upon restart
-                                            // "int" for stored in the internal flash. Strong columns are not recommended in the internal program area, which may cause corruption  
+                                            // "interval" for stored in the internal flash. Strong columns are not recommended in the internal program area, which may cause corruption  
                                             // "storage" for stored in external storage
-                                            // "sda" for sda starts with a specified mount disk
+                                            // "sdaxxx" for sda starts with a specified mount disk
                                             // stored in xxxx-syslog.txt file in the root directory when "location" is internal, storage, starts with sda
 
     "remote":"Remote Log server",     // [ string ], If this parameter is left blank, the remote log server is disabled
