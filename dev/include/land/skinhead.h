@@ -165,6 +165,7 @@ typedef int boole;
 #define MASQ_CHAIN "masq"
 #define NAT_COM "forward@nat"
 #define FIREWALL_COM "forward@firewall"
+#define HOSTS_COM "network@hosts"
 
 
 
