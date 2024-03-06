@@ -6,7 +6,7 @@ component name is devport, user use the component methods to get the gateway rep
 
 #### **Methods**
 
-+ `list[ username, [gateway model], [g2g identify] ]` **get the gateway list of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `list[ username, [gateway model] ]` **get the gateway list of username**, *succeed return talk to describes, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -163,7 +163,7 @@ component name is devport, user use the component methods to get the gateway rep
 
 
 
-+ `g2g_list[ username ]` **get the g2g network list of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `g2g_list[ username, [g2g network identify]  ]` **get the g2g network list of username**, *succeed return talk to describes, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return  
     // that file save at $user/g2gnet.json
@@ -188,8 +188,11 @@ component name is devport, user use the component methods to get the gateway rep
     }
     ```
 
-+ `g2g_add[ username, g2g network identify ]` **add a g2g network**, *succeed return tture, failed return tfalse, error return terror*
++ `g2g_add[ username, g2g network identify, [network], [netmask] ]` **add a g2g network**, *succeed return tture, failed return tfalse, error return terror*
 
 + `g2g_delete[ username, g2g network identify ]` **delete a g2g network**, *succeed return tture, failed return tfalse, error return terror*
 
++ `g2g_mac_add[ username, g2g network identify, gateway mac identify, [id], [local network], [local netmask], [master] ]` **add a gateway to g2g network**, *succeed return tture, failed return tfalse, error return terror*
+
++ `g2g_mac_delete[ username, g2g network identify, gateway mac identify ]` **delete a gateway from g2g network**, *succeed return tture, failed return tfalse, error return terror*
 
