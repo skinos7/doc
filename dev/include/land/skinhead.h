@@ -166,6 +166,10 @@ typedef int boole;
 #define NAT_COM "forward@nat"
 #define FIREWALL_COM "forward@firewall"
 #define HOSTS_COM "network@hosts"
+/** system location */
+#define ETC_HOSTS_FILE  "/etc/hosts"
+#define ETC_DNS_FILE  "/etc/resolv.conf"
+#define RESOLV_DIR  PROJECT_TMP_DIR"/resolv"
 
 
 
@@ -234,8 +238,14 @@ typedef int boole;
 
 
 
+/** agent g2g component */
+#define AGENT_G2G_COM "agent@g2g"
+/** agent portc component */
+#define AGENT_PORTC_COM "agent@portc"
 /** agent local component */
 #define AGENT_LOCAL_COM "agent@local"
+/** agent local component */
+#define AGENT_REMOTE_COM "agent@remote"
 /** agent factory component */
 #define AGENT_FACTORY_COM "agent@factory"
 

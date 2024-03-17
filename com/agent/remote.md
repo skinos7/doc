@@ -36,18 +36,20 @@ connect to remote server and accept administrative command from the that
     "heport":"remote server heport port",                 // [ number ]
 
     // control by hport 
-    "portc":"connect to remote for port port",            // [ "disable", "enable" ]
-    "portcport":"remote server pport port",               // [ number ]
-    "tcp_pond":"pond client for tcp port",                // [ nubmer ]
-    "udp_pond":"pond client for tcp port",                // [ number ]
-    "check_interval":"check interval for pond",           // [ number ], the unit is second
-    // control by hport 
     "g2g":"gateway to gateway agent function",            // [ "disable", "enable" ]
-    "g2gid":"g2g network identify",                           // [ string ]
-    "g2gport":"g2g keeplive port",                        // [ number ]
-    "g2gport2":"g2g p2p port",                            // [ number ]
-    "g2g_localport":"g2g listen port",                    // [ number ]
-    "g2g_interval":"g2g keeplive interval"                // [ number ], the unit is second
+    "g2g_id":"g2g network identify",                      // [ string ]
+    "g2g_mask":"g2g network mask",                        // [ string ]
+    "g2g_port":"g2g listen port",                         // [ number ]
+    "g2g_keeplive":"g2g keeplive interval",               // [ number ], the unit is second
+    "g2g_hole":"g2g hole port for heport to keeplive",    // [ number ]
+    "g2g_hole2":"g2g p2p port",                           // [ number ]
+
+    // control by hport 
+    "portc":"connect to remote for port port",            // [ "disable", "enable" ]
+    "portc_port":"remote server pport port",              // [ number ]
+    "portc_check":"check interval for pond"               // [ number ], the unit is second
+    "portc_tcppond":"pond client for tcp port",           // [ nubmer ]
+    "portc_udppond":"pond client for tcp port",           // [ number ]
 }
 ```
 Examples, show all the configure
@@ -78,7 +80,17 @@ agent@remote
     },
 
     "he":"disable",
-    "heport":"10001"
+    "heport":"10001",
+
+    "g2g":"disable",
+    "g2g_port":"10004",
+    "g2g_interval":"10",
+    "g2g_hole":"10001",
+    "g2g_hole2":"10002",
+
+    "portc":"disable",
+    "portcport":"10009"
+
 }
 ```  
 Examples, disable the connecting remote management

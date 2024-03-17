@@ -33,9 +33,9 @@ devms@heport
     "control_port":"10002",
     "debug_port":"10003"
 
-    "hole_port":"10004",
-    "hole2_port":"10005",
-    "hole3_port":"10006",
+    "hole_port":"10001",
+    "hole2_port":"10002",
+    "hole3_port":"10003",
 
     "tcp_keepidle":"20",
     "tcp_keepintvl":"10",
@@ -65,22 +65,82 @@ ttrue
     }    
     ```
 
+
+
 + `device_list[]` **get all gateway list**, *succeed return talk to describes, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
         "gateway mac identify":              // [ number ]: {}
         {
-            "online":"online time",                    // [ string ]
+            "online":"online time",                    // [ string ], HH:MM:SS:DAY
             "fd":"file handler number",                // [ number ]
             "addr":"gateway connect ip",               // [ ip address ]
-            "port":"gateway connect port",              // [ port ]
+            "port":"gateway connect port",             // [ port ]
             "user":"gateway username",                 // [ string ]
             "key":"heport control key"                 // [ string ]
         }
         // ... more gateway
     }    
     ```
+
++ `device_info[ macid ]` **get gateway infomation**, *succeed return talk to describes, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "online":"online time",                    // [ string ], HH:MM:SS:DAY
+        "fd":"file handler number",                // [ number ]
+        "addr":"gateway connect ip",               // [ ip address ]
+        "port":"gateway connect port",             // [ port ]
+        "user":"gateway username",                 // [ string ]
+        "key":"heport control key"                 // [ string ]
+    }    
+    ```
+
++ `device_knock[ macid ]` **disconnect the device**, *succeed return ttrue, failed return tfalse, error return terror*
+
+
+
++ `network_list[]` **get all network list**, *succeed return talk to describes, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "network full name":              // [ string]: {}
+        {
+            "net":"network address",                     // [ network ]
+            "mask":"network mask",                       // [ netmask ]
+            "keeplive":"network keeplive interval",      // [ number ]
+            "master":"online master number",             // [ number ]
+            "branch":"online branch number",             // [ number ]
+            "client":"online client number",             // [ number ]
+            "leaf":"online leaf number"                  // [ number ]
+        }
+        // ... more network
+    }    
+    ```
+
++ `network_info[ g2gid full name ]` **get network gateway infomation**, *succeed return talk to describes, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "mac identify":
+        {
+            "attach":"online time",                    // [ string ], HH:MM:SS:DAY
+            "nattype":"gateway nat type",              // [ "8", "4", "2", "1" ]
+            "pubkey":"public key",                     // [ string ]
+            "peer":"gateway ip address",               // [ ip address ]
+            "port":"gateway port",                     // [ number ]
+            "ip":"gateway network ip address"          // [ ip address ]
+        }
+        // ... more gateway
+    }
+    ```
+
++ `network_dirty[ g2gid full name ]` **reload the network gateway configure**, *succeed return ttrue, failed return tfalse, error return terror*
+
++ `network_knock[ g2gid full name ]` **clear the network and disconnect all the network device**, *succeed return ttrue, failed return tfalse, error return terror*
+
+
 
 + `talk[ macid, {json command} ]` **talk to peer device**, *succeed return json command return, failed return tfalse, error return terror*
 

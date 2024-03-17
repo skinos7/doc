@@ -6,9 +6,6 @@
  * @version 1.0
 */
 
-#define ETC_HOSTS_FILE  "/etc/hosts"
-#define ETC_DNS_FILE  "/etc/resolv.conf"
-#define RESOLV_DIR  PROJECT_TMP_DIR"/resolv"
 #define CONNECT_PID_FILE  PROJECT_VAR_DIR"/.connect.pid"
 #define CONNECT_UNIX_FILE PROJECT_VAR_DIR"/.connect.unix"
 
