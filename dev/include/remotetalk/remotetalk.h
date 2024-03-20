@@ -10,7 +10,6 @@
 
 
 
-void md5hex2string( unsigned char *md, char *result );
 void ssid_suffix_generate( talk_t v );
 
 

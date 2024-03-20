@@ -66,6 +66,7 @@ void hex2string( const char *src, char *dest, int len);
 void hex2printf( const char *src, char *dest, int len);
 void char_replace( char *src, char a, char b );
 unsigned long rand_long( void );
+void md5hex2string( unsigned char *md, char *result );
 
 
 
