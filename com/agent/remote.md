@@ -6,18 +6,20 @@ connect to remote server and accept administrative command from the that
 ```json
 {
     "server":"remote server address",                      // [ string ]
-    "resolve":"resolve the server to ip",                  // [ "disable", "enable" ]
     "id":"identify for device",                            // [ string ]
     "user":"username for device",                          // [ string ]
-    "vcode":"vcode for device",                            // [ string ]
-    "con_timeout":"timeout for connect",                   // [ number ], the unit is second
+
     "tcp_keepidle":"idle to keeplive",                     // [ number ], The unit is seconds
     "tcp_keepintvl":"keeplive interval",                   // [ number ], The unit is seconds
     "tcp_keepcnt":"keeplive failed time",                  // [ number ]
 
+
     "status":"enable or disable to connect the remote",    // [ "disable", "enable" ]
     "port":"remote server port",                           // [ number ]
     "path":"remote server path for post",                  // [ string ]
+    "vcode":"vcode for device",                            // [ string ]
+    "resolve":"resolve the server to ip",                  // [ "disable", "enable" ]
+    "con_timeout":"timeout for connect",                   // [ number ], the unit is second
     "talk_timeout":"timeout for wait ack",                 // [ number ], the unit is second
     "report":                                              // report status after connect succeed
     {
@@ -32,17 +34,24 @@ connect to remote server and accept administrative command from the that
         "endnl":"end with a line"                           // [ "disable", "enable" ]
     },
 
+
     "he":"connect to remote for he command",              // [ "disable", "enable" ]
     "heport":"remote server heport port",                 // [ number ]
+    "he_contimeout":"connect to remote server timeout",   // [ number ]
+    "he_keepintval":"remote server keeplive interval",    // [ number ], the unit is second
+    "he_keepfailed":"remote server keeplive failed time", // [ number ]
+
 
     // control by hport 
     "g2g":"gateway to gateway agent function",            // [ "disable", "enable" ]
     "g2g_id":"g2g network identify",                      // [ string ]
     "g2g_mask":"g2g network mask",                        // [ string ]
     "g2g_port":"g2g listen port",                         // [ number ]
-    "g2g_keeplive":"g2g keeplive interval",               // [ number ], the unit is second
     "g2g_hole":"g2g hole port for heport to keeplive",    // [ number ]
     "g2g_hole2":"g2g p2p port",                           // [ number ]
+    "g2g_icmpintval":"g2g icmp keeplive interval",        // [ number ], the unit is second
+    "g2g_icmpfailed":"g2g icmp keeplive failed time",     // [ number ]
+
 
     // control by hport 
     "portc":"connect to remote for port port",            // [ "disable", "enable" ]
@@ -50,6 +59,8 @@ connect to remote server and accept administrative command from the that
     "portc_check":"check interval for pond"               // [ number ], the unit is second
     "portc_tcppond":"pond client for tcp port",           // [ nubmer ]
     "portc_udppond":"pond client for tcp port",           // [ number ]
+    "portc_use_timeout":"use connection timeout time",    // [ number ], the unit is second
+    "portc_nouse_timeout":"idle connection timeout time", // [ number ], the unit is second
 }
 ```
 Examples, show all the configure
@@ -81,6 +92,9 @@ agent@remote
 
     "he":"disable",
     "heport":"10001",
+    "he_contimeout":"20",
+    "he_keepintval":"20",
+    "he_keepfailed":"3",
 
     "g2g":"disable",
     "g2g_port":"10004",
@@ -88,9 +102,13 @@ agent@remote
     "g2g_hole":"10001",
     "g2g_hole2":"10002",
 
-    "portc":"disable",
-    "portcport":"10009"
-
+    "portc":"enable",
+    "portc_port":"10009",
+    "portc_check":"30",                  # 30sec to check the pond already
+    "portc_tcppond":"3"
+    "portc_udppond":"3"
+    "portc_use_timeout":"45",            # 45sec timeout to close the idle connection
+    "portc_nouse_timeout":"120"          # 45sec timeout to close the idle connection
 }
 ```  
 Examples, disable the connecting remote management
@@ -144,23 +162,10 @@ ttrue
                                              // down for the network is down
                                              // online for the cloud is connect succeed
 
-        "portc":"current pport status",   // [ uping, down, online ]
+        "portc":"current pport status"    // [ uping, down, online ]
                                              // uping for connecting
                                              // down for the network is down
                                              // online for the cloud is connect succeed
-        "portc_list":
-        {
-            "connect peer ip and port":   // [ ip:port ]:
-            {
-                "ip":"server ip",                   // [ ip address ]
-                "port":"server port",               // [ port ]
-                "hand_ip":"local connect ip",       // [ ip address ]
-                "hand_port":"local connect port",   // [ port ]
-                "tx":"send bytes",                  // [ number ]
-                "rx":"recive bytes"                 // [ number ]
-            }
-            // more portc link ...
-        }
     }
     ```
     ```shell
@@ -170,28 +175,7 @@ ttrue
         "status":"online",                    // current connect cloud succeed
         "server":"114.132.219.158",           // cloud ip address
         "he":"online",                        // he client connect cloud succeed
-        "portc":"online",                     // port client connect cloud succeed
-        "portc_list":                            // port client list
-        {
-            "111.221.192.143:42638":             // local ip and port
-            {
-                "ip":"114.132.219.158",              // server ip
-                "tx":"72",                           // send bytes
-                "rx":"0"
-            },
-            "111.221.192.143:42469":
-            {
-                "ip":"114.132.219.158",
-                "tx":"72",
-                "rx":"0"
-            },
-            "111.221.192.143:42466":
-            {
-                "ip":"114.132.219.158",
-                "tx":"72",
-                "rx":"0"
-            }
-        }
+        "portc":"online"                      // port client connect cloud succeed
     }
     ```
 

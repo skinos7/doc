@@ -613,6 +613,7 @@ boole socket_keepalive( int sock, int keepalive );
  *		@retval <0 for failed, the errno code will be sets
  */
 int tcp_connect( const char *peer, int port, int timeout );
+int tcp_connectk( const char *peer, int port, int timeout, int idle, int intvl, int cnt );
 /**
  * @brief make udp socket and connect to peer
  * @param[in] peer only support ip address in string

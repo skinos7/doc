@@ -10,6 +10,8 @@ Porxy the local port to gateway local port
 
     "port_satrt":"map port start",           // [ number ]
 
+    "keeplive":"nouse idle to keeplive",     // [ number ], The unit is seconds
+    "timeout":"use connect timeout to close",// [ number ], The unit is seconds
     "tcp_keepidle":"idle to keeplive",       // [ number ], The unit is seconds
     "tcp_keepintvl":"keeplive interval",     // [ number ], The unit is seconds
     "tcp_keepcnt":"keeplive failed time",    // [ number ]
@@ -18,10 +20,9 @@ Porxy the local port to gateway local port
     {
         "port nubmer":                           // [ number ]:{}
         {
-            "macid":"gateway mac identify",            // [ string ]
-            "local":"local address",                   // [ ip address ]
-            "local_port":"local server port",          // [ number ]
-            "desc":"Usage description"
+            "macid":"gateway mac identify",           // [ string ]
+            "hand_ip":"local address",                // [ ip address ]
+            "hand_port":"local server port"           // [ number ]
         }
         // more rule
     }
@@ -31,10 +32,12 @@ Examples, show all the configure
 ```shell
 devms@pport
 {
-    "status":"enable",                // Port port functon enable
-    "port":"10009",                   // server port is 10009
-    "satrt_port":"10010",             // port start at 10010
+    "status":"enable",                # port map port functon enable
+    "port":"10009",                   # server port is 10009
+    "satrt_port":"10010",             # port start at 10010
 
+    "keeplive":"20",                  # 20sec send the keeplive to idle connection
+    "timeout":"120",                  # 120sec no date to close for use connection
     "tcp_keepidle":"20",
     "tcp_keepintvl":"10",
     "tcp_keepcnt":"3"
