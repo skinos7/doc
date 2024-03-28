@@ -127,7 +127,7 @@ long long timestamp( void );
  *		@retval positive for succeed
  *  	@retval 0 for failed
  */
-unsigned int uptime_int( void );
+unsigned long uptime_int( void );
 /**
  * @brief get the system uptime string
  * @param[out] buffer system uptime string store here
