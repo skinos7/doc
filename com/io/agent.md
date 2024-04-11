@@ -65,7 +65,16 @@ manage IO
             "subscribe topic3":"topic3 qos",
             // "subscribe topic":"topic qos"     How many subscribe topic need setting save how many properties
         }
+    }
 
+    // first server,  TCP/UDP server configure
+    "server":
+    {
+        "status":"client status",               // [ "disable", "enable" ]
+        "proto":"client protocol",              // [ "tcp", "udp" ]
+        "port":"server port",                   // [ number ]
+        "interval":"connect failed interval",   // [ number ], the unit is second
+        "timeout":"connect idle timeout"        // [ number ], the unit is second
     }
 
 }

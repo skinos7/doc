@@ -169,6 +169,7 @@ typedef int boole;
 /** system location */
 #define ETC_HOSTS_FILE  "/etc/hosts"
 #define ETC_DNS_FILE  "/etc/resolv.conf"
+#define ETC_DNS6_FILE  "/etc/resolv.conf.ipv6"
 #define RESOLV_DIR  PROJECT_TMP_DIR"/resolv"
 
 
@@ -285,6 +286,7 @@ typedef int boole;
 #define SHELL_METHOD_HEADER PROJECT_DIR"/land/method.sh"
 #define SHELL_SERVICE_HEADER PROJECT_DIR"/land/service.sh"
 #define DAEMON_PID_FILE PROJECT_VAR_DIR"/.daemon.pid"
+#define CONFIG_FILE_POSTFIX ".cfg"
 /// FPK important directory
 #define FPK_LIB_DIR "lib"
 #define FPK_BIN_DIR "bin"
