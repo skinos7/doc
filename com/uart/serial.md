@@ -64,6 +64,15 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
         "pause":"The interval between requests",                  // [ number ], the unit is ms
         "wait":"Time to wait for a response"                      // [ number ], the unit is ms
     },
+
+    // httppost configure vaild when "concom" is uart@httppost
+    "httppost":
+    {
+        "server":"POST server page",                       // [ string ]
+        "content":"content type value in post",            // [ string ]
+        "connect_timeout":"connect timeout for post",      // [ number ], the unit is second
+        "post_timeout":"post timeout"                      // [ number ], the unit is second
+    },
  
     // DTU configure vaild when "concom" is uart@dtu
     "dtu":
@@ -71,7 +80,9 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
         "client":                       // MQTT client
         {
             "status":"client status",               // [ "disable", "enable" ]
-            "proto":"client protocol",              // [ "tcp", "udp", "mqtt" ]
+            "extern":"extern ifname",               // [ "disable", "default", "ifname@wan", "ifname@lte", ... ]
+
+            "proto":"client protocol",              // [ "tcp", "udp", "mqtt" ], MQTT client must be mqtt
             "server":"server address",              // [ string ]
             "port":"server port",                   // [ number ]
     
@@ -91,6 +102,8 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
         "client2":                      // TCP/UDP client
         {
             "status":"client status",               // [ "disable", "enable" ]
+            "extern":"extern ifname",               // [ "disable", "default", "ifname@wan", "ifname@lte", ... ]
+
             "proto":"client protocol",              // [ "tcp", "udp" ]
             "server":"server address",              // [ string ]
             "port":"server port",                   // [ number ]
@@ -124,6 +137,8 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
         "server":                      // TCP/UDP server
         {
             "status":"server status",                      // [ "disable", "enable" ]
+            "extern":"extern ifname",               // [ "disable", "default", "ifname@wan", "ifname@lte", ... ]
+
             "proto":"service tcp",                         // [ "tcp", "udp" ] 
             "port":"service port",                         // [ number ]
             "limit":"concurrence client",                  // [ number ]
@@ -154,15 +169,6 @@ Manage UART. Usually uart@serial is the first UART. If there are multiple UART i
             "frame_end_string":"packet suffix context"     // [ string ], such as 414243 when sending ABC when "frame_end" is hex
     
         }
-    },
-
-    // httppost configure vaild when "concom" is uart@httppost
-    "httppost":
-    {
-        "server":"POST server page",                       // [ string ]
-        "content":"content type value in post",            // [ string ]
-        "connect_timeout":"connect timeout for post",      // [ number ], the unit is second
-        "post_timeout":"post timeout"                      // [ number ], the unit is second
     }
 
 }

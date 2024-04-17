@@ -45,7 +45,13 @@ The network framework defines a three-tier concept to manage network interfaces:
     // This configuration is available only in the case of multiple external connections. It indicates how external connections cooperate when multiple external connections coexist
     "connect":
     {
-        "type":"Multiple link connect type",                          // [ "hot", "cold", "dhdc", "auto" ], "hot" for backup, "dhdc" for load balancing 
+        "type":"Multiple link connect type",                          // [ "cold", "hot", "dhdc", "auto" ]
+                                                                                // "clod" for clod backup at the main and back
+                                                                                // "hot" for hot backup at the main and back
+                                                                                // "spare" for hot backup at the main and back, king
+                                                                                // "backup" for hot backup at the main and back, king, reserve
+                                                                                // "dhdc" for load balancing at the main and back 
+                                                                                // "auto" for load balancing at the main and back, king, reserve
         "concom":"Multiple link connection management components",    // [ string ], You can customize the data scheduling component to implement more personalized requirements
 
         // When type is hot, it is the main connection. When type is dbdc, it is one of the external network connections 

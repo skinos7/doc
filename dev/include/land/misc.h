@@ -628,19 +628,21 @@ int udp_connect( const char *peer, int port, int timeout );
  * @brief make unix socket and connect to peer
  * @param[in] peer
  * @param[in] local
+ * @param[in] type, unix type, SOCK_DGRAM or SOCK_STREAM
  * @return file description handler
  *		@retval >=0 for succeed
  *		@retval <0 for failed, the errno code will be sets
  */
-int unix_connect( const char *peer, const char *local );
+int unix_connect( const char *peer, const char *local, int type );
 /**
  * @brief make unix socket for server
  * @param[in] path
+ * @param[in] type, unix type, SOCK_DGRAM or SOCK_STREAM
  * @return file description handler
  *		@retval >=0 for succeed
  *		@retval <0 for failed, the errno code will be sets
  */
-int unix_listen( const char *path );
+int unix_listen( const char *path, int type );
 
 
 
