@@ -241,14 +241,16 @@ typedef int boole;
 
 
 
-/** agent g2g component */
-#define AGENT_G2G_COM "agent@g2g"
+/** agent network component */
+#define AGENT_NET_COM "agent@g2g"
 /** agent portc component */
 #define AGENT_PORTC_COM "agent@portc"
+/** agent he client component */
+#define AGENT_HECLIENT_COM "agent@heclient"
+/** agent remote component */
+#define AGENT_REMOTE_COM "agent@remote"
 /** agent local component */
 #define AGENT_LOCAL_COM "agent@local"
-/** agent local component */
-#define AGENT_REMOTE_COM "agent@remote"
 /** agent factory component */
 #define AGENT_FACTORY_COM "agent@factory"
 

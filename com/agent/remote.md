@@ -1,84 +1,52 @@
 ***
 ## Accept remote management
-connect to remote server and accept administrative command from the that
+connect to remote server and accept administrative json from the that
 
 #### Configuration( agent@remote )
 ```json
 {
-    "server":"remote server address",                      // [ string ]
-    "id":"identify for device",                            // [ string ]
-    "user":"username for device",                          // [ string ]
-
-    "tcp_keepidle":"idle to keeplive",                     // [ number ], The unit is seconds
-    "tcp_keepintvl":"keeplive interval",                   // [ number ], The unit is seconds
-    "tcp_keepcnt":"keeplive failed time",                  // [ number ]
-
-
     "status":"enable or disable to connect the remote",    // [ "disable", "enable" ]
+
+    "server":"remote server address",                      // [ string ]
+    "user":"username for device",                          // [ string ]
+    "vcode":"vcode for device",                            // [ string ]
+
     "port":"remote server port",                           // [ number ]
     "path":"remote server path for post",                  // [ string ]
-    "vcode":"vcode for device",                            // [ string ]
+    "id":"identify for device",                            // [ string ]
     "resolve":"resolve the server to ip",                  // [ "disable", "enable" ]
     "con_timeout":"timeout for connect",                   // [ number ], the unit is second
     "talk_timeout":"timeout for wait ack",                 // [ number ], the unit is second
+
     "report":                                              // report status after connect succeed
     {
-        "interval":"report interval",                       // [number ], the unit is second
-        "status":                                           // There are which statuses are being reported, vailed when unique empty
+        "interval":"report interval",   // [number ], the unit is second
+        "status":                       // There are which statuses are being reported, vailed when unique empty
         {
-            "he command":"",                                // [ string ]: "",  string is he command
-            "he command2":""                                // [ string ]: "",  string is he command
+            "he command":"",                   // [ string ]: "",  string is he command
+            "he command2":""                   // [ string ]: "",  string is he command
             // "...":""
         },
-        "unique":"he command"                               // [ string ], only report one json, Priority is higher than status
-        "endnl":"end with a line"                           // [ "disable", "enable" ]
-    },
-
-
-    "he":"connect to remote for he command",              // [ "disable", "enable" ]
-    "heport":"remote server heport port",                 // [ number ]
-    "he_contimeout":"connect to remote server timeout",   // [ number ]
-    "he_keepintval":"remote server keeplive interval",    // [ number ], the unit is second
-    "he_keepfailed":"remote server keeplive failed time", // [ number ]
-
-
-    // control by hport 
-    "g2g":"gateway to gateway agent function",            // [ "disable", "enable" ]
-    "g2g_id":"g2g network identify",                      // [ string ]
-    "g2g_mask":"g2g network mask",                        // [ string ]
-    "g2g_port":"g2g listen port",                         // [ number ]
-    "g2g_hole":"g2g hole port for heport to keeplive",    // [ number ]
-    "g2g_hole2":"g2g p2p port",                           // [ number ]
-    "g2g_icmpintval":"g2g icmp keeplive interval",        // [ number ], the unit is second
-    "g2g_icmpfailed":"g2g icmp keeplive failed time",     // [ number ]
-
-
-    // control by hport 
-    "portc":"connect to remote for port port",            // [ "disable", "enable" ]
-    "portc_port":"remote server pport port",              // [ number ]
-    "portc_check":"check interval for pond"               // [ number ], the unit is second
-    "portc_tcppond":"pond client for tcp port",           // [ nubmer ]
-    "portc_udppond":"pond client for tcp port",           // [ number ]
-    "portc_use_timeout":"use connection timeout time",    // [ number ], the unit is second
-    "portc_nouse_timeout":"idle connection timeout time", // [ number ], the unit is second
+        "unique":"he command",          // [ string ], only report one json, Priority is higher than status
+        "endnl":"end with a line"       // [ "disable", "enable" ]
+    }
 }
 ```
 Examples, show all the configure
 ```shell
 agent@remote
 {
-    "server":"http.wmdevice.com",                           # remote server is http://http.wmdevice.com:10101/dev
+    "status":"enable",                                      # Accept remote management is enable
+
+    "server":"devport.ashyelf.com",                         # remote server is devport.ashyelf.com
     "user":"dimmalex@gmail.com",
     "vcode":"123456",
-    "con_timeout":"20",                                     # connect timeout is 20 seccond
-    "tcp_keepidle":"20",
-    "tcp_keepintvl":"10",
-    "tcp_keepcnt":"3"
 
-    "status":"enable",                                      # Accept remote management is enable
     "port":"10000",
     "path":"/dev",
+    "con_timeout":"20",                                     # connect timeout is 20 seccond
     "talk_timeout":"15",                                    # post json timeout is 15 seccond
+
     "report":
     {
         "interval":"30",                                    # report interval is 30 second
@@ -88,30 +56,10 @@ agent@remote
             {
             }
         }
-    },
-
-    "he":"disable",
-    "heport":"10001",
-    "he_contimeout":"20",
-    "he_keepintval":"20",
-    "he_keepfailed":"3",
-
-    "g2g":"disable",
-    "g2g_port":"10004",
-    "g2g_interval":"10",
-    "g2g_hole":"10001",
-    "g2g_hole2":"10002",
-
-    "portc":"enable",
-    "portc_port":"10009",
-    "portc_check":"30",                  # 30sec to check the pond already
-    "portc_tcppond":"3"
-    "portc_udppond":"3"
-    "portc_use_timeout":"45",            # 45sec timeout to close the idle connection
-    "portc_nouse_timeout":"120"          # 45sec timeout to close the idle connection
+    }
 }
 ```  
-Examples, disable the connecting remote management
+Examples, disable the remote client
 ```shell
 agent@remote:status=disable
 ttrue
@@ -120,75 +68,66 @@ ttrue
 
 #### **Methods**
 
-+ `setup[]` **setup the cloud client**, *succeed return ttrue, failed return tfalse, error return terror*
++ `setup[]` **setup the remote client**, *succeed return ttrue, failed return tfalse, error return terror*
 
-+ `shut[]` **shutdown the cloud client**, *succeed return ttrue, failed return tfalse, error return terror*
++ `shut[]` **shutdown the remote client**, *succeed return ttrue, failed return tfalse, error return terror*
 
-+ `adjust[ {json} ]` **adjust the cloud client**, *succeed return ttrue, failed return tfalse, error return terror*
-    ```json
-    // Attributes introduction of json pass to method
-    {
-        "portc":"connect to remote for port port",            // [ "disable", "enable" ]
-        "portcport":"remote server pport port",               // [ number ]
-        "tcp_pond":"pond client for tcp port",                // [ nubmer ]
-        "udp_pond":"pond client for tcp port",                // [ number ]
-        "check_interval":"check interval for pond",           // [ number ], the unit is second
-
-        "g2g":"gateway to gateway agent function",            // [ "disable", "enable" ]
-        "g2gid":"network identify",                           // [ string ]
-        "g2gport":"g2g keeplive port",                        // [ number ]
-        "g2gport2":"g2g p2p port",                            // [ number ]
-        "g2g_interval":"g2g keeplive interval"                // [ number ], the unit is second
-    }
-    ```
-    ```shell
-    # examples, adjust cloud client to run the port client, disable the g2g client
-    agent@remote.adjust[ { "portc":"enable", "g2g":"disable" } ]
-    ttrue
-    ```
-
-+ `status[]` **get the cloud client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `status[]` **get the remote client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
         "status":"current status",        // [ uping, down, online ]
                                              // uping for connecting
                                              // down for the network is down
-                                             // online for the cloud is connect succeed
-        "server":"cloud server ip",       // [ ip address ]
-
-        "he":"current heport status",     // [ uping, down, online ]
-                                             // uping for connecting
-                                             // down for the network is down
-                                             // online for the cloud is connect succeed
-
-        "portc":"current pport status"    // [ uping, down, online ]
-                                             // uping for connecting
-                                             // down for the network is down
-                                             // online for the cloud is connect succeed
+                                             // online for connected
+        "server":"server ip"              // [ remote ip address ]
     }
     ```
     ```shell
-    # examples, get the cloud client infomation
+    # examples, get the remote client infomation
     agent@remote.status
     {
-        "status":"online",                    // current connect cloud succeed
-        "server":"114.132.219.158",           // cloud ip address
-        "he":"online",                        // he client connect cloud succeed
-        "portc":"online"                      // port client connect cloud succeed
+        "status":"online",                    // connect succeed
+        "server":"114.132.219.158"            // remote server ip address
     }
     ```
 
-+ `interval[ report interval ]` **modify the cloud client report interval**, *succeed return netdev, failed return NULL, error return terror*
+
+
++ `reboot[]` **reboot after 5 second and modify the remote client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*
+
++ `default[]` **default and reboot after 5 second and modify the remote client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*
+
++ `upgrade[ file ]` **upgrade the firmware from remote server**, *succeed return ttrue, failed return tfalse, error return terror*
+
+
+
++ `report[]` **show current report configure**, *succeed return json, failed return NULL, error return terror*
     ```shell
-    # examples, modify the cloud client interval to 1 second
-    agent@remote.interval[ 1 ]
-    ttrue
+    # examples, show current remote client report configure
+    agent@remote.report
+    {
+        "interval":"30",
+        "status":
+        {
+            "gnss@nmea.info":""
+        }
+    }
     ```
 
-+ `reboot[]` **reboot after 5 second and report interval 1 second**, *succeed return netdev, failed return NULL, error return terror*
++ `cookie[]` **show current POST cookie**, *succeed return json, failed return NULL, error return terror*
+    ```shell
+    # examples, show current remote client POST cookie
+    agent@remote.cookie
+    ```
 
-+ `default[]` **default and reboot after 5 second and report interval 1 second**, *succeed return netdev, failed return NULL, error return terror*
-
-+ `upgrade[ file ]` **upgrade the firmware from cloud**, *succeed return ttrue, failed return tfalse, error return terror*
++ `interval[ report interval ]` **modify or show the remote client report interval**, *succeed return netdev, failed return NULL, error return terror*
+    ```shell
+    # examples, modify the remote client report interval to 1 second
+    agent@remote.interval[ 1 ]
+    ttrue
+    # examples, show the remote client report interval
+    agent@remote.interval
+    30
+    ```
 

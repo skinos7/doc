@@ -1,7 +1,8 @@
 
 ***
 ## device management service
-all device connect to the service, this service responsible for communication with device
+all device connect to this service, this service responsible for communication with device
+
 
 #### Configuration( devms@devport )
 
@@ -10,27 +11,38 @@ all device connect to the service, this service responsible for communication wi
 {
     "status":"enable the function",                       // [ disable, enable ]
 
-    "port":"tcp port",                                    // [ number ]
-    "path":"directory for storing device information",    // [ string ]
+    "port":"tcp port for device connected",               // [ number ]
+    "sslport":"ssl tcp port for device connected",        // [ number ]
 
-    "post_interval":"device report interval",             // [ number ], The unit is seconds
-    "offline_timeout":"timeout to disconnect"             // [ number ], The unit is seconds
+    "post_interval":"the reporting interval of gateway",  // [ number ], The unit is seconds
+    "offline_timeout":"the offline timeout of gateway",   // [ number ], The unit is seconds
+
+    "path":"directory for storing device information"     // [ string ]
 }
 ```
+
 Examples, show all the configure
 ```shell
-devms@devport
-{
-    "status":"enable",
+devms@devport                          # input at HE terminal
+```
+```json
+{ 
+    "status":"enable",                // current status is enable
+
     "port":"10000",                   // tcp port is 10000
+    "sslport":"10005",                // ssl tcp port is 10005
+
     "post_interval":"10",             // client need post interval is 10 sec
-    "offline_timeout":"35"            // client offline when last report before the 35 sec
+    "offline_timeout":"95"            // client offline when last report before the 95 sec
 }
 ```  
+
 Examples, modify the client timeout to 60 sec
 ```shell
-devms@devport:offline_timeout=60
-ttrue
+devms@devport:offline_timeout=60      # input at HE terminal
+```
+```shell
+ttrue                                 # modify successfully
 ```  
 
 
@@ -38,11 +50,13 @@ ttrue
 
 + `path[]` **get the database directory**, *succeed return string to describes, failed return NULL, error return terror*
 
-+ `user_list[]` **get all user**, *succeed return talk to describes, failed return NULL, error return terror*
+
+
++ `user_list[]` **lists all users in the server that are used to manage devices**, *succeed return talk to describes, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
-        "user name":              // [ string ]: {}
+        "user name":              // [ string ]: { configure }
         {
             "comment":"user comment",                    // [ string ]
             "vcode":"device verify code",                // [ string ]
@@ -53,7 +67,7 @@ ttrue
     }    
     ```
 
-+ `user_add[ username, password, [vcode], [lang], [comment] ]` **add a user to server**, *succeed return tture, failed return tfalse, error return terror*
++ `user_add[ username, password, [vcode], [lang], [comment] ]` **add a user**, *succeed return tture, failed return tfalse, error return terror*
 
 + `user_delete[ username ]` **delete a user**, *succeed return tture, failed return tfalse, error return terror*
 
@@ -64,13 +78,13 @@ ttrue
     {
         "comment":"username comment",                         // [ string ]
         "vcode":"gateway connect vcode",                      // [ string ]
-        "password":"username login password",                 // [ string ]
         "lang":"webpage username password",                   // [ "cn", "en", ... ]
-        "post_interval":"gateway report default interval",    // [ number ], the unit is second
-        "offline_timeout":"gateway timeout",                  // [ number ], the unit is second
+
+        "post_interval":"The reporting interval of the own gateway",    // [ number ], the unit is second
+        "offline_timeout":"the offline timeout of the own gateway",     // [ number ], the unit is second
     
         "pport":"port map function",                          // [ "enable", "disable" ]
-        "g2gnet":"gateway to gateway function"                // [ "enable", "disable" ]
+        "network":"network to network function"               // [ "enable", "disable" ]
     }
     ```
 
@@ -78,11 +92,8 @@ ttrue
     ```json
     // Attributes introduction of talk by the method parameter of {user configure}
     {
-        "old_password":"old password of the user",  // [ string ], must need
-        "comment":"user comment",                   // [ string ]
-        "vcode":"device verify code",               // [ string ]
-        "lang":"user language"                      // [ "cn", "en" ]
-        // ... more configure, detail same user_get return
+        "password":"user password",                 // [ string ]
+        // ... more configure, detail same "user_get" return
     }
     ```
 

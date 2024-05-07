@@ -1,8 +1,8 @@
 ***
-## Device management ui server for user
-web page server for user to management the own device
+## Device management web server for user
+web server for user to management the own device
 
-#### Configuration( devms@devui )
+#### Configuration( devms@webs )
 ```json
 {
     "status":"disable or enable",            // [ "disable", "enable" ]
@@ -12,16 +12,15 @@ web page server for user to management the own device
 ```
 Examples, show all the configure
 ```shell
-devms@devui
+devms@webs
 {
     "status":"enable",
-    "port":"9000",
-    "port":"9001"
+    "port":"9000"
 }
 ```  
 Examples, modify the port to 8009
 ```shell
-devms@devui:port=8009
+devms@webs:port=8009
 ttrue
 ```  
 
