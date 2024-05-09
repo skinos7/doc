@@ -25,7 +25,7 @@ Examples, show all the configure
 ```shell
 agent@heclient
 {
-    "status":"enable",                                      # Accept remote management is enable
+    "status":"enable",                                      # connect to heport server is enable
 
     "server":"devport.ashyelf.com",                         # heport server is devport.ashyelf.com
     "user":"dimmalex@gmail.com",
@@ -52,18 +52,19 @@ ttrue
 
 + `setup[]` **setup the he client**, *succeed return ttrue, failed return tfalse, error return terror*
 
-+ `shut[]` **shutdown the  client**, *succeed return ttrue, failed return tfalse, error return terror*
++ `shut[]` **shutdown the he client**, *succeed return ttrue, failed return tfalse, error return terror*
 
 + `status[]` **get the he client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
-
-        "status":"current heport status",     // [ uping, down, online ]
-                                                 // uping for connecting
-                                                 // down for the network is down
-                                                 // online for connected
-        "server":"server ip"                  // [ heport ip address ]
+        "status":"current status",        // [ "uping", "down", "online", "usererror", "vcodeerror" ]
+                                             // "uping" for connecting
+                                             // "down" for the network is down
+                                             // "online" for connected
+                                             // "usererror" for username wrong
+                                             // "vcodeerror" for username vcode wrong
+        "server":"hepoprt server ip"      // [ ip address ]
     }
     ```
     ```shell
@@ -76,13 +77,12 @@ ttrue
     ```
 
 
-
 + `adjust[ {json} ]` **adjust the other client**, *succeed return ttrue, failed return tfalse, error return terror*
     ```json
     // Attributes introduction of json pass to method
     {
-        "portc":"connect to remote for port port",            // [ "disable", "enable" ]
-        "portc_port":"remote server pport port",              // [ number ]
+        "portc":"connect to server for port proxy",           // [ "disable", "enable" ]
+        "portc_port":"pport server port",                     // [ number ]
         "portc_tcppond":"pond client for tcp port",           // [ nubmer ]
         "portc_udppond":"pond client for tcp port",           // [ number ]
         "portc_interval":"check interval for pond",           // [ number ], the unit is second
@@ -93,7 +93,8 @@ ttrue
         "network_id":"network identify",                      // [ string ]
         "network_net":"network endpoint net",                 // [ network address ]
         "network_mask":"network endpoint netmask",            // [ network address ]
-        "network_keeplive":"network keeplive interval",       // [ number ], the unit is second
+        "network_keepintval":"network keeplive interval",     // [ number ], the unit is second
+        "network_keepfailed":"network keeplive failed"        // [ number ]
     }
     ```
     ```shell
@@ -101,8 +102,6 @@ ttrue
     agent@heclient.adjust[ { "portc":"enable", "network":"disable" } ]
     ttrue
     ```
-
-
 
 + `network[ {json} ]` **update all network status**, *succeed return ttrue, failed return tfalse, error return terror*
     ```json
@@ -157,6 +156,70 @@ ttrue
         "nattype":"device nat type",               // [ "8", "4", "2", "1" ]
         "peer":"device ip address",                // [ ip address ]
         "port":"device port"                       // [ port ]
+    }
+    ```
+
+
+
++ `view_master[]` **get the network client master infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "ip":"endpoint ip address",                   // [ ip address ]
+        "pubkey":"public key",                        // [ string ]
+        "peer":"device ip address",                   // [ ip address ]
+        "port":"device work port",                    // [ port ]
+        "nattype":"device nat type",                  // [ "8", "4", "2", "1" ], exist when device attach
+        "delay":"device to master delay"              // [ number ], the unit is millisecond
+    }
+    ```
+    ```shell
+    # examples, show current network client master infomation
+    agent@heclient.view_master
+    {
+        "ip":"172.16.0.1",
+        "pubkey":"gcDBBaqpCCPyQU4imX74Re8H/k4nOArrrzpTvmghWW4=",
+        "peer":"113.118.159.127",
+        "port":"10004",
+        "nattype":"2",
+        "delay":"101"
+    }
+    ```
+
++ `view_self[]` **get the network client self infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+        "ip":"endpoint ip address",                   // [ ip address ]
+        "pubkey":"public key",                        // [ string ]
+        "peer":"device ip address",                   // [ ip address ]
+        "port":"device work port",                    // [ port ]
+        "nattype":"device nat type"                   // [ "8", "4", "2", "1" ], exist when device attach
+    }
+    ```
+    ```shell
+    # examples, show current network client master infomation
+    agent@heclient.view_self
+    {
+        "ip":"172.16.0.3",
+        "pubkey":"/2qlyCZ+47Zk0zCXqbv71nZ4tRIkfDXm8Z5wxnTAsFc=",
+        "peer":"49.7.89.183",
+        "port":"44232",
+        "nattype":"8"
+    }
+    ```
+
++ `list_network[]` **get the network all endpoint infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
+    }
+    ```
+
++ `list_branch[]` **get the network all branch infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
+    {
     }
     ```
 

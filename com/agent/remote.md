@@ -1,18 +1,18 @@
 ***
-## Accept remote management
-connect to remote server and accept administrative json from the that
+## Accept http management
+connect to http server and accept administrative json from the that
 
 #### Configuration( agent@remote )
 ```json
 {
-    "status":"enable or disable to connect the remote",    // [ "disable", "enable" ]
+    "status":"connect the http server",                    // [ "disable", "enable" ]
 
-    "server":"remote server address",                      // [ string ]
+    "server":"http server address",                        // [ string ]
     "user":"username for device",                          // [ string ]
     "vcode":"vcode for device",                            // [ string ]
 
-    "port":"remote server port",                           // [ number ]
-    "path":"remote server path for post",                  // [ string ]
+    "port":"http server port",                             // [ number ]
+    "path":"http server path for post",                    // [ string ]
     "id":"identify for device",                            // [ string ]
     "resolve":"resolve the server to ip",                  // [ "disable", "enable" ]
     "con_timeout":"timeout for connect",                   // [ number ], the unit is second
@@ -20,15 +20,15 @@ connect to remote server and accept administrative json from the that
 
     "report":                                              // report status after connect succeed
     {
-        "interval":"report interval",   // [number ], the unit is second
-        "status":                       // There are which statuses are being reported, vailed when unique empty
+        "interval":"report interval",          // [number ], the unit is second
+        "status":                              // There are which statuses are being reported, vailed when unique empty
         {
-            "he command":"",                   // [ string ]: "",  string is he command
-            "he command2":""                   // [ string ]: "",  string is he command
-            // "...":""
+            "he command":"",                      // [ string ]: "",  string is he command
+            "he command2":""                      // [ string ]: "",  string is he command
+            // ...more he command
         },
-        "unique":"he command",          // [ string ], only report one json, Priority is higher than status
-        "endnl":"end with a line"       // [ "disable", "enable" ]
+        "unique":"he command",                 // [ string ], only report one json, Priority is higher than status
+        "endnl":"end with a line"              // [ "disable", "enable" ]
     }
 }
 ```
@@ -36,9 +36,9 @@ Examples, show all the configure
 ```shell
 agent@remote
 {
-    "status":"enable",                                      # Accept remote management is enable
+    "status":"enable",                                      # connect to http server for management is enable
 
-    "server":"devport.ashyelf.com",                         # remote server is devport.ashyelf.com
+    "server":"devport.ashyelf.com",                         # http server is devport.ashyelf.com
     "user":"dimmalex@gmail.com",
     "vcode":"123456",
 
@@ -59,7 +59,7 @@ agent@remote
     }
 }
 ```  
-Examples, disable the remote client
+Examples, disable the http client
 ```shell
 agent@remote:status=disable
 ttrue
@@ -68,66 +68,102 @@ ttrue
 
 #### **Methods**
 
-+ `setup[]` **setup the remote client**, *succeed return ttrue, failed return tfalse, error return terror*
++ `setup[]` **setup the http client**, *succeed return ttrue, failed return tfalse, error return terror*
 
-+ `shut[]` **shutdown the remote client**, *succeed return ttrue, failed return tfalse, error return terror*
++ `shut[]` **shutdown the http client**, *succeed return ttrue, failed return tfalse, error return terror*
 
-+ `status[]` **get the remote client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `status[]` **get the http client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
     ```json
     // Attributes introduction of talk by the method return
     {
-        "status":"current status",        // [ uping, down, online ]
-                                             // uping for connecting
-                                             // down for the network is down
-                                             // online for connected
-        "server":"server ip"              // [ remote ip address ]
+        "status":"current status",        // [ "uping", "down", "online", "usererror", "vcodeerror" ]
+                                             // "uping" for connecting
+                                             // "down" for the network is down
+                                             // "online" for connected
+                                             // "usererror" for username wrong
+                                             // "vcodeerror" for username vcode wrong
+        "server":"http server ip"         // [ ip address ]
     }
     ```
     ```shell
-    # examples, get the remote client infomation
+    # examples, get the http client infomation
     agent@remote.status
     {
-        "status":"online",                    // connect succeed
-        "server":"114.132.219.158"            // remote server ip address
+        "status":"online",                    # connect succeed
+        "server":"114.132.219.158"            # http server ip address
     }
     ```
 
 
++ `report[]` **show current http client report configure**, *succeed return json, failed return NULL, error return terror*
+    ```json
+    // Attributes introduction of talk by the method return
 
-+ `reboot[]` **reboot after 5 second and modify the remote client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*
-
-+ `default[]` **default and reboot after 5 second and modify the remote client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*
-
-+ `upgrade[ file ]` **upgrade the firmware from remote server**, *succeed return ttrue, failed return tfalse, error return terror*
-
-
-
-+ `report[]` **show current report configure**, *succeed return json, failed return NULL, error return terror*
+        "interval":"report interval",          // [number ], the unit is second
+        "status":                              // There are which statuses are being reported
+        {
+            "he command":"",                      // [ string ]: "",  string is he command
+            "he command2":""                      // [ string ]: "",  string is he command
+            // ...more he command
+        }
+    }
+    ```
     ```shell
-    # examples, show current remote client report configure
+    # examples, show current http client report configure
     agent@remote.report
     {
-        "interval":"30",
+        "interval":"30",                      # report interval 30 second
         "status":
         {
-            "gnss@nmea.info":""
+            "gnss@nmea.info":""               # only report the GNSS location infomation
         }
     }
     ```
 
-+ `cookie[]` **show current POST cookie**, *succeed return json, failed return NULL, error return terror*
++ `interval[ report interval ]` **modify or show the http client report interval**, *succeed return netdev, failed return NULL, error return terror*
     ```shell
-    # examples, show current remote client POST cookie
-    agent@remote.cookie
-    ```
-
-+ `interval[ report interval ]` **modify or show the remote client report interval**, *succeed return netdev, failed return NULL, error return terror*
-    ```shell
-    # examples, modify the remote client report interval to 1 second
+    # examples, modify the http client report interval to 1 second
     agent@remote.interval[ 1 ]
     ttrue
-    # examples, show the remote client report interval
+    # examples, show the http client report interval
     agent@remote.interval
     30
     ```
+
++ `cookie[]` **show current http client POST cookie**, *succeed return json, failed return NULL, error return terror*
+
+
++ `adjust[ {json} ]` **adjust the other client**, *succeed return ttrue, failed return tfalse, error return terror*
+    ```json
+    // Attributes introduction of json pass to method
+    {
+        "portc":"connect to server for port proxy",           // [ "disable", "enable" ]
+        "portc_port":"pport server port",                     // [ number ]
+        "portc_tcppond":"pond client for tcp port",           // [ nubmer ]
+        "portc_udppond":"pond client for tcp port",           // [ number ]
+        "portc_interval":"check interval for pond",           // [ number ], the unit is second
+
+        "network":"network function",                         // [ "disable", "enable" ]
+        "network_port":"network keeplive port",               // [ port ]
+        "network_port2":"network hole2 port",                 // [ port ]
+        "network_id":"network identify",                      // [ string ]
+        "network_net":"network endpoint net",                 // [ network address ]
+        "network_mask":"network endpoint netmask",            // [ network address ]
+        "network_keepintval":"network keeplive interval",     // [ number ], the unit is second
+        "network_keepfailed":"network keeplive failed"        // [ number ]
+    }
+    ```
+    ```shell
+    # examples, adjust to run the port client, disable the network client
+    agent@remote.adjust[ { "portc":"enable", "network":"disable" } ]
+    ttrue
+    ```
+
++ `reboot[]` **reboot after 5 second and modify the http client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*
+
++ `default[]` **default and reboot after 5 second and modify the http client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*
+
++ `upgrade[ file ]` **upgrade the firmware from http server**, *succeed return ttrue, failed return tfalse, error return terror*
+
+
 
