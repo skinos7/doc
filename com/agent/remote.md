@@ -167,3 +167,8 @@ ttrue
 
 
 
++ `upload[]` **upload all configure to http server(Not supported yet)**, *succeed return ttrue, failed return tfalse, error return terror*
+
++ `config[]` **get all configure from http server(Not supported yet)**, *succeed return ttrue, failed return tfalse, error return terror*
+
+
