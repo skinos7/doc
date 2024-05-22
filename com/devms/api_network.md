@@ -26,8 +26,9 @@ device network management API, depend on heport
         "keepfailed":"keeplive failed times",          // [ number ]
         "master":"network master nubmer",          // [ number ]
         "branch":"network branch number",          // [ number ]
-        "client":"network client number",          // [ number ]
-        "leaf":"network leaf number"               // [ number ]
+        "free":"network free client number",       // [ number ]
+        "limit":"network limit client number",     // [ number ]
+        "dyn":"network dyn client number"          // [ number ]
     }
     ```
 
@@ -40,10 +41,13 @@ device network management API, depend on heport
         {
             "net":"network endpoint net",              // [ network address ]
             "mask":"network endpoint netmask",         // [ netmask address ]
+            "keepintval":"keeplive interval",          // [ number ], the unit is second
+            "keepfailed":"keeplive failed times",      // [ number ]
             "master":"network master nubmer",          // [ number ]
             "branch":"network branch number",          // [ number ]
-            "client":"network client number",          // [ number ]
-            "leaf":"network leaf number"               // [ number ]
+            "free":"network free client number",       // [ number ]
+            "limit":"network limit client number",     // [ number ]
+            "dyn":"network dyn client number"          // [ number ]
         }
         // ... more network
     }
@@ -62,7 +66,7 @@ device network management API, depend on heport
         "device mac identify":                        // [ string ]  
         {
             "id":"gateway identify",                     // [ number ]
-            "master":"Traffic transfer station",         // [ "disable", "enable" ]
+            "type":"gateway type",                       // [ "master", "branch" ]
             "net":"gateway local network",               // [ network ]
             "mask":"gateway local netmask",              // [ netmask ]
 
@@ -80,7 +84,7 @@ device network management API, depend on heport
     }
     ```
 
-+ `network_device_add[ username, network identify, device mac identify, [id/ip], [local network], [local netmask], [master] ]` **add a device to network**, *succeed return tture, failed return tfalse, error return terror*
++ `network_device_add[ username, network identify, device mac identify, [id/ip], [local network], [local netmask], [network type ]` **add a device to network**, *succeed return tture, failed return tfalse, error return terror*
 
 + `network_device_delete[ username, network identify, device mac identify ]` **delete a device from network**, *succeed return tture, failed return tfalse, error return terror*
 
