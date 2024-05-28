@@ -76,13 +76,16 @@ ttrue
     {
         "device mac identify":
         {
-            "nattype":"device nat type",               // [ "8", "4", "2", "1" ], exist when device attach
-            "pubkey":"public key",                     // [ string ], exist when device attach
-            "peer":"device ip address",                // [ ip address ], exist when device attach
-            "port":"device port",                      // [ port ], exist when device attach
-            "ip":"device endpoint ip address",         // [ ip address ]
+            "type":"gateway type",                     // [ "auto", "master", "branch" ], default is "auto"
             "net":"device endpoint network address",   // [ network address ]
-            "mask":"device endpoint netmask address"   // [ netmask address ]
+            "mask":"device endpoint netmask address",  // [ netmask address ]
+
+            "ip":"device endpoint ip address",         // [ ip address ]
+            "pubkey":"public key",                     // [ string ], exist when device attach
+
+            "nattype":"device nat type",               // [ "8", "4", "2" ], exist when device attach
+            "peer":"device ip address",                // [ ip address ], exist when device attach
+            "port":"device port"                       // [ port ], exist when device attach
         }
         // ... more device
     }
@@ -93,12 +96,17 @@ ttrue
     // Attributes introduction of json pass to method
     {
         "macid":"branch mac identify",             // [ string ]
-        "pubkey":"public key",                     // [ string ]
-        "peer":"device ip address",                // [ ip address ]
-        "port":"device port",                      // [ port ]
-        "ip":"device endpoint ip address",         // [ ip address ]
+
+        "type":"gateway type",                     // [ "auto", "master", "branch" ], default is "auto"
         "net":"device endpoint network address",   // [ network address ]
-        "mask":"device endpoint netmask address"   // [ netmask address ]
+        "mask":"device endpoint netmask address",  // [ netmask address ]
+
+        "ip":"device endpoint ip address",         // [ ip address ]
+        "pubkey":"public key",                     // [ string ], exist when device attach
+
+        "nattype":"device nat type",               // [ "8", "4", "2" ], exist when device attach
+        "peer":"device ip address",                // [ ip address ], exist when device attach
+        "port":"device port"                       // [ port ], exist when device attach
     }
     ```
 
@@ -106,13 +114,18 @@ ttrue
     ```json
     // Attributes introduction of json pass to method
     {
-        "macid":"leaf mac identify",               // [ string ]
-        "pubkey":"public key",                     // [ string ]
-        "peer":"device ip address",                // [ ip address ]
-        "port":"device port",                      // [ port ]
-        "ip":"device endpoint ip address",          // [ ip address ]
+        "macid":"branch mac identify",             // [ string ]
+
+        "type":"gateway type",                     // [ "auto", "master", "branch" ], default is "auto"
         "net":"device endpoint network address",   // [ network address ]
-        "mask":"device endpoint netmask address"   // [ netmask address ]
+        "mask":"device endpoint netmask address",  // [ netmask address ]
+
+        "ip":"device endpoint ip address",         // [ ip address ]
+        "pubkey":"public key",                     // [ string ], exist when device attach
+
+        "nattype":"device nat type",               // [ "8", "4", "2" ], exist when device attach
+        "peer":"device ip address",                // [ ip address ], exist when device attach
+        "port":"device port"                       // [ port ], exist when device attach
     }
     ```
 

@@ -88,8 +88,9 @@ ttrue
         "portc_interval":"check interval for pond",           // [ number ], the unit is second
 
         "network":"network function",                         // [ "disable", "enable" ]
-        "network_port":"network keeplive port",               // [ port ]
-        "network_port2":"network hole2 port",                 // [ port ]
+        "network_port":"network service port",                // [ port ]
+        "network_hole":"network server keeplive port",        // [ port ]
+        "network_hole2":"network server hole2 port",          // [ port ]
         "network_id":"network identify",                      // [ string ]
         "network_net":"network endpoint net",                 // [ network address ]
         "network_mask":"network endpoint netmask",            // [ network address ]
@@ -107,19 +108,7 @@ ttrue
     ```json
     // Attributes introduction of json pass to method
     {
-        "device mac identify":
-        {
-            "net":"device endpoint network address",   // [ network address ]
-            "mask":"device endpoint netmask address",  // [ netmask address ]
-
-            "ip":"device endpoint ip address",         // [ ip address ]
-            "pubkey":"public key",                     // [ string ], exist when device connected
-
-            "nattype":"device nat type",               // [ "8", "4", "2", "1" ], exist when device attach
-            "peer":"device ip address",                // [ ip address ], exist when device attach
-            "port":"device port"                       // [ port ], exist when device attach
-        }
-        // ... more device
+        // same "agent@g2g" component "network" method
     }
     ```
 
@@ -127,17 +116,7 @@ ttrue
     ```json
     // Attributes introduction of json pass to method
     {
-        "macid":"branch mac identify",             // [ string ]
-
-        "ip":"device endpoint ip address",         // [ ip address ]
-        "pubkey":"public key",                     // [ string ]
-
-        "net":"device endpoint network address",   // [ network address ]
-        "mask":"device endpoint netmask address",  // [ netmask address ]
-
-        "nattype":"device nat type",               // [ "8", "4", "2", "1" ]
-        "peer":"device ip address",                // [ ip address ]
-        "port":"device port"                       // [ port ]
+        // same "agent@g2g" component "branch" method
     }
     ```
 
@@ -145,17 +124,7 @@ ttrue
     ```json
     // Attributes introduction of json pass to method
     {
-        "macid":"branch mac identify",             // [ string ]
-
-        "ip":"device endpoint ip address",         // [ ip address ]
-        "pubkey":"public key",                     // [ string ]
-
-        "net":"device endpoint network address",   // [ network address ]
-        "mask":"device endpoint netmask address",  // [ netmask address ]
-
-        "nattype":"device nat type",               // [ "8", "4", "2", "1" ]
-        "peer":"device ip address",                // [ ip address ]
-        "port":"device port"                       // [ port ]
+        // same "agent@g2g" component "leaf" method
     }
     ```
 
