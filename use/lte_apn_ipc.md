@@ -32,7 +32,7 @@
 
 ### 设置ICMP检测地址
 
-设置了ICMP检测地址将使得LTE网络更加稳定
+设置了ICMP检测地址将使得LTE网络出现异常时路由器可快速自动恢复
 
 ![avatar](./lte_apn_icmp.png) 
 
