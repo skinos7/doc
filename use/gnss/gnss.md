@@ -72,7 +72,7 @@
 - 通过MQTT协议向MQTT服务器定时发送JSON格式的定位信息
 - 通过HTTP协议向HTTP服务器定时POST JSON格式的定位信息
 - 让其它设备主动连接网关TCP(JSON)服务端口获取JSON格式的定位信息
-- 通过串口获取定位数据
+- 通过串口获取定位信息
 
 ### 通过TCP/UDP协议向其它设备的端口发送原始的NMEA定位数据
 
@@ -219,7 +219,7 @@ ubuntu@VM-0-8-ubuntu:~$ mosquitto_sub -v -t "gatewayGNNS" -h 222.248.230.163 -p 
 
 
 
-### 通过串口获取定位数据
+### 通过串口获取定位信息
 
 ![avatar](./gnss_serial.png) 
 
