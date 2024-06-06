@@ -179,6 +179,7 @@ ubuntu@VM-0-8-ubuntu:~$ mosquitto_sub -v -t "gatewayGNNS" -h 222.248.230.163 -p 
 }
 ```
 *进一步的信息可见 [GNSS NEMA Protocol Management](../../com/gnss/nmea.md) 有关info接口的返回的介绍*
+**只有在设备定位后才会POST定位信息到HTTP服务器**
 **此POST功能支持在无网络的情况下缓存定位信息的JSON, 等到设备上线后再一个一个POST到服务器上, 但如果有此需求请在售后工程师的指导下操作否则将损坏设备**
 
 
