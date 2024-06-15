@@ -1,269 +1,281 @@
 
 
-## 本地被管理协议说明
+## Description of the local managed protocol
 
-网关可接受来自局域网的管理协议, 管理协议通常由批量管理工具或本地的其它设备发出, 通过此协议批量管理工具或其它设备可以实现局域网管理网关
+The gateway can accept the management protocol from the LAN. The management protocol is usually issued by the batch management tool or other local devices. Through this protocol, the batch management tool or other devices can implement the LAN management gateway
 
 
+#### Protocol Type
 
-#### 协议分类
-
-在局域网与网关通信分为三种协议
-- **TCP(JSON)控制协议(端口22220), 用于通过TCP发送JSON指令修改/查询/配置网关**
-- **局域网搜索协议(UDP端口22222), 用于在局域网内搜索所有的网关**
-- **局域网查询协议(UDP端口22222), 用于在局域网内搜索所有的网关并查询所有网关的信息(不常用)**
+The communication on LAN to gateway is divided into three protocols
+- **TCP(JSON) control protocol(TCP PORT:22220), It is used to send JSON commands over TCP to modify, query, or configure the gateway**
+- **Local search protocol(UDP PORT:22222), Used to search for all gateways on a LAN**
+- **Local query protocol(UDP PORT:22222), Used to query basic infomation for all gateways on a LAN**
 
 ![avatar](./localport_protocol.png)
 
 ---
 
-## TCP(JSON)控制协议
-通过 **TCP端口22220** 与网关交互JSON指令， 实现对网关的控制, 使用TCP协议交互, 适合交互各种信息
+## TCP(JSON) control protocol
+Through the **TCP port 22220** to interact with the gateway JSON commands, to implement the control of the gateway, the use of TCP protocol interaction, suitable for interacting with various information
 
-#### 在网关上开启JSON控制协议
+#### Enable the JSON control protocol on the gateway
 
-默认网关不会响应TCP(JSON)控制协议, 需要进入管理网页打开此协议, *打开此协议会存在安全风险，请确保局域网安全*
+The default gateway will not respond to the TCP(JSON) control protocol, you need to go to the management web page to open this protocol, *There is a security risk to open this protocol, please ensure the security of the LAN*
+
 ![avatar](./localport_jsonwui.png)   
 
-或者通过网关终端命令行(SSH/Telnet)打开此协议
+Alternatively, open the protocol through the gateway terminal (SSH/Telnet)
 ```shell
-# agent@local:json           # 查询网关json服务器的状态
+# agent@local:json           # Query the status of the gateway json command
 disable
-# agent@local:json=enable    # 修改网关json服务器的状态为开启
+# agent@local:json=enable    # Change the status of the gateway json command to Enable
 ttrue
-# agent@local:json           # 再次查询修改后的配置
+# agent@local:json           # Query the modified configuration again
 enable
 # 
 ```
 
-#### 与网关的交互流程
-- 如下图所示  
+#### Communication process with the gateway
+ 
 ![avatar](./localport_control.png)
-- 交互简介  
-    每一次的交互都需要建立TCP连接, 然后再发送JSON指令, 网关收到JSON指令将会回复JSON指令的执行结果, 之后将立即关闭TCP连接, 因此, 每一次交互都需要建立一个TCP连接, 也称之为**短连接**, 为保证指令的完整性, 指令被设计成一个完整的JSON对象, 同样回复信息也是一个完整的JSON对象, 对于网关的操作可以分为三种JSON指令：
-	1. 查询配置：用于查询网关当前的配置
-	2. 修改配置：用于修改网关的配置
-	3. 调用方法：用于查看或修改网关的状态等
 
-#### JSON指令格式 --- HE指令模式
-- 直接使用JSON包装HE指令
-    以下是JSON格式包装HE指令格式介绍
+- introduction of communication  
+    Each interaction needs to establish a TCP connection, and then send JSON commands. After receiving JSON commands, the gateway will reply to the execution result of the JSON commands, and then close the TCP connection immediately. Therefore, each interaction needs to establish a TCP connection, also known as the **short connection**. The commands is designed as a complete JSON object, and the reply message is also a complete JSON object, and the operation of the gateway can be divided into three types of JSON instructions：
+	- **Query configuration** Used to query the current configuration of some function
+	- **Modify configuration** Used to modify the configuration of certain gateway components
+	- **Calling component method** Used to perform some functions of the gateway component operations, such as querying status, starting, and disabling
+
+#### JSON Command Format --- HE Command
+- Wrap the HE command directly with JSON
+    The following is the JSON format packaging HE command format introduction
     ```json
     {
-        "cmd1":"HE指令"   // [ 字符串 ]:[ 字符串 ] 属性名可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
-        // 更多指令...
+        "cmd1":"HE Command"   // [ string ]:[ string ] 
+                              // Attribute name can be arbitrarily named, Used to uniquely identify the current command in JSON
+        // more command...
     }
     ```
-    网关跟据HE指令执行的结果返回内容, 格式可为:
-    1. 一个JSON
+    The gateway returns the content based on the result of the HE command. The format can be:
+    - **JSON**
         ```json
         {
-            "cmd1":{JSON格式的配置内容}
+            "cmd1":{ JSON }
         }
         ```
-    2. 一个字符串
+    - **Character string**
         ```json
         {
-            "cmd1":"属性值"
+            "cmd1":" STRING "
         }
         ```
-    3. 空, 表示不存在此项配置
+    - **NULL**, Indicates that this result does not exist
         ```json
         {
             "cmd1":"NULL"
         }
-        ```
-    例1：如查询网关的基本配置的HE指令为 land@machine, 对应的json指令格式为
+        ```   
+    Example 1：the HE command to query the basic configuration of the gateway is land@machine, and the corresponding json command format is
     ```json
     { "cmd1":"land@machine" }
     ```
-    例2：如查询网关名称的HE指令为 land@machine:name, 对应的json指令格式为
+    Example 2：the HE command to query the gateway name is land@machine:name, and the corresponding json command format is
     ```json
     { "cmd1":"land@machine:name" }
     ```
-    例2：如查询网关工作模式的HE指令为 land@machine:mode, 对应的json指令格式为
+    Example 3：the HE command for querying the working mode of the gateway is land@machine:mode, and the corresponding json command format is
     ```json
     { "cmd1":"land@machine:mode" }
     ```
-    例3：如查询网关LTE的配置的HE指令为 ifname@lte, 对应的json指令格式为
+    Example 4：the HE command to query the LTE/NR configuration of the gateway is ifname@lte, and the corresponding json command format is
     ```json
     { "cmd1":"ifname@lte" }
     ```    
-    例4：如查询网关LTE的状态的HE指令为 ifname@lte.status, 对应的json指令格式为
+    Example 5：the HE command to query the LTE/NR status of the gateway is ifname@lte.status, and the corresponding json command format is
     ```json
     { "cmd1":"ifname@lte.status" }
     ```
-    例5：如调用clock@date(时间管理)的ntpsync方法实现与ntp1.aliyun.com的NTP对时的HE指令为clock@date.ntpsync[ntp1.aliyun.com], 对应的json指令格式为
+    Example 6：call the ntpsync method of clock@date(System Date) to synchronize time by NTP with ntp1.aliyun.com HE command is clock@date.ntpsync[ntp1.aliyun.com], and the corresponding json command format is
     ```json
     { "cmd1":"clock@date.ntpsync[ntp1.aliyun.com]" }
     ```
-    例6：也可以同时执行多条HE指令, 如果重启一下LTE的网络先执行ifname@lte.shut再执行ifname@lte.setup, 对应的json指令格式为
+    Example 7：You can also run multiple HE commands at the same time. If you restart the LTE network, run ifname@lte.shut and then ifname@lte.setup, and the corresponding json command format is
     ```json
-    { "cmd1":"ifname@lte.shut", "cmd2":"ifname@lte.setup" }
-    ```
-    *更多HE终端指令介绍见此文档 [HE指令介绍](../use/he_command.md)*
+    { "1":"ifname@lte.shut", "2":"ifname@lte.setup" }
+    ```   
+    **See this document for more command lines [HE command](https://github.com/skinos7/doc/blob/master/use/he_command_en.md)**
+
 
     
-#### JSON指令格式 --- JSON模式
+#### JSON Command Format --- JSON Command
 
-- 查询网关配置交互格式介绍, 查询网关配置的终端指令格式为 ***组件名称[:属性/属性/...]***
-    以下是JSON指令格式介绍
+- The format of the HE command for querying the gateway configuration is **Component name[:attribute/attribute/...]**
+    The following is an introduction to the JSON command format
     ```json
     {
-        "cmd1":   // [ 字符串 ]:{} 可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
+        "cmd1":   // [ string ]:{} Can be named freely, unique identification of the current command
         {
-            "com":"组件名称",       // [ 字符串 ], 组件名称用于指定网关的功能项, 如agent@remote为网关的远程管理, land@machine为网关的基本配置
-            "ab":"属性[/属性/…]"    // [ 字符串 ], 可选, 组件名称对应的功能项的配置都是一个完整的JSON, 通过此属性可只查询指定的属性, 无表示查询组件名称对应功能项所有配置
+            "com":"Component name",          // [ string ]
+            "ab":"attribute[/attribute/…]"   // [ string ], optional
         }
-        // 更多指令...
+        // more...
     }
     ```
-    跟据网关的实际配置返回值的格式可为：
-    1. 一个JSON
+    The gateway returns the content based on the result of the JSON command. The format can be:
+    - **JSON**
         ```json
         {
-            "cmd1":{JSON格式的配置内容}
+            "cmd1":{ JSON }
         }
         ```
-    2. 一个字符串， 查询时"ab"有指定属性
+    - **Character string**
         ```json
         {
-            "cmd1":"属性值"
+            "cmd1":" STRING "
         }
         ```
-    3. 空, 表示不存在此项配置
+    - **NULL**, Indicates that this result does not exist
         ```json
         {
             "cmd1":"NULL"
         }
-        ```
-    例1：如查询网关的基本配置的HE指令为 land@machine , 对应的json指令格式为
+        ```   
+    Example 1：the HE command to query the basic configuration of the gateway is land@machine, and the corresponding json command format is
     ```json
-    { "cmd1": { "com":"land@machine" } }
+    { "cmd1":{ "com":"land@machine" } }
     ```
-    例2：如查询网关名称的HE指令为 land@machine:name , 对应的json指令格式为
+    Example 2：the HE command to query the gateway name is land@machine:name, and the corresponding json command format is
     ```json
     { "cmd1": { "com":"land@machine","ab":"name" } }
     ```
-    例2：如查询网关工作模式的HE指令为 land@machine:mode , 对应的json指令格式为
+    Example 3：the HE command for querying the working mode of the gateway is land@machine:mode, and the corresponding json command format is
     ```json
     { "cmd1": { "com":"land@machine","ab":"mode" } }
     ```
-    例3：如查询网关LTE的配置的HE指令为 ifname@lte , 对应的json指令格式为
+    Example 4：the HE command to query the LTE/NR configuration of the gateway is ifname@lte, and the corresponding json command format is
     ```json
     { "cmd1": { "com":"ifname@lte" } }
+    ```    
+    Example 5：the HE command to query the IP address settings of the gateway is ifname@lan:static/ip, and the corresponding json command format is
+    ```json
+    { "cmd1": { "com":"ifname@lan","ab":"static/ip" } }
     ```
 
-- 修改网关配置交互格式介绍, 修改网关配置的HE指令格式为 ***组件名称[:属性/属性/...]=值***
-    以下是JSON指令格式介绍 --- 当值为字符串时
+
+- The format of the HE command for modifying the gateway configuration is **Component name[:attribute/attribute/...]=value**
+    The following is an introduction to the JSON command format --- when the value is string
     ```json
     {
-        "cmd1": // [ 字符串 ]:{} 可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
+        "cmd1":   // [ string ]:{} Can be named freely, unique identification of the current command
         {
-            "com":"组件名称",       // [ 字符串 ], 组件名称用于指定网关的功能项, 如agent@remote为网关的远程管理, land@machine为网关的基本配置
-            "ab":"属性[/属性/…]",   // [ 字符串 ], 可选, 组件名称对应的功能项的配置都是一个完整的JSON, 通过此属性可只查询指定的属性, 无表示查询组件名称对应功能项所有配置
-	        "op":"=",              // 指定操作为赋值
-	        "v":"值"               // [ 字符串 ]
+            "com":"Component name",          // [ string ]
+            "ab":"attribute[/attribute/…]"   // [ string ], optional
+	        "op":"=",                        // The operation is an assignment
+	        "v":"value of string"            // [ string ], optional
         }
+        // more...
     }
     ```
-    以下是JSON指令格式介绍 --- 当值为JSON对象时
+    The following is an introduction to the JSON command format --- when the value is JSON
     ```json
     {
-        "cmd1":                    // [ 字符串 ]:{} 可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
+        "cmd1":   // [ string ]:{} Can be named freely, unique identification of the current command
         {
-            "com":"组件名称",       // [ 字符串 ], 组件名称用于指定网关的功能项, 如agent@remote为网关的远程管理, land@machine为网关的基本配置
-            "ab":"属性[/属性/…]",   // [ 字符串 ], 可选, 组件名称对应的功能项的配置都是一个完整的JSON, 通过此属性可只查询指定的属性, 无表示查询组件名称对应功能项所有配置
-	        "op":"=",              // 指定操作为赋值
-	        "v":{JSON格式的值}      // [ JSON ]
+            "com":"Component name",          // [ string ]
+            "ab":"attribute[/attribute/…]"   // [ string ], optional
+	        "op":"=",                        // The operation is an assignment
+	        "v":{value of JSON}              // [ JSON ], optional
         }
+        // more...
     }
     ```
-    网关返回值成功为ttrue, 失败时为tfalse：
-    1. 返回ttrue
+    The gateway returns a value of ttrue on success and tfalse on failure:
+    1. return ttrue
         ```json
         {
             "cmd1":"ttrue"
         }
         ```
-    2. 返回tfalse
+    2. return tfalse
         ```json
         {
             "cmd1":"tfalse"
         }
-        ```
-    例1：如修改网关语言的HE指令为 land@machine:language=en , 对应的json指令格式为
+        ```   
+    Example 1：the HE command of the gateway language is changed to english land@machine:language=en, the corresponding JSON command format is
     ```json
     { "cmd1": { "com":"land@machine", "ab":"language", "op":"=", "v":"en" } }
     ```
-    例2：如修改网关名称的HE指令为 land@machine:name=NewName , 对应的json指令格式为
+    Example 2：The HE command to change the gateway name is land@machine:name=NewName, and the corresponding json command format is
     ```json
     { "cmd1": { "com":"land@machine","ab":"name", "op":"=", "v":"NewName" } }
     ```
 
 
-- 调用网关接口交互格式介绍, 调用网关接口的HE指令格式为 ***组件名称.接口名称[ 参数1, 参数2, 参数3 ]***
-    以下是JSON指令格式介绍
+- - The format of the HE command for calling component method of gateway is **Component name.method name[ parameter1, parameter2, parameter3, ... ]**
+    The following is an introduction to the JSON command format
     ```json
     {
-        "cmd1": // [ 字符串 ]:{} 可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
+        "cmd1":   // [ string ]:{} Can be named freely, unique identification of the current command
         {
-            "com":"组件名称",       // [ 字符串 ], 组件名称用于指定网关的功能项，如ifname@lte为网关的LTE网络, network@frame为网关的网络连接框架
-	        "op":"接口名称",        // [ 字符串 ]，指定调用组件什么接口, 不通的接口有不同的功能, 如ifname@lte的status接口返回LTE网络状态, ifname@lte的shut接口表示断开LTE的连接
-	        "1":"参数1",            // [ 字符串 ]，可选, 参数可为字符串(即引号开头及引号结尾), 也可以为JSON(即{开头}结尾)
-	        "2":"参数2",            // [ 字符串 ]，可选, 参数可为字符串(即引号开头及引号结尾), 也可以为JSON(即{开头}结尾)
-            "3":"参数3"             // [ 字符串 ]，可选, 参数可为字符串(即引号开头及引号结尾), 也可以为JSON(即{开头}结尾)
+            "com":"Component name",    // [ string ]
+	        "op":"method name",        // [ string ]
+	        "1":"parameter1",               // [ string ], optional, The parameter can be a string or JSON
+	        "2":"parameter2",               // [ string ], optional, The parameter can be a string or JSON
+            "3":"parameter3"                // [ string ], optional, The parameter can be a string or JSON
+            // "4", "5", ...
         }
+        // more...
     }
     ```
-    跟据调用接口不同, 网关返回值可分为以下五种：
-    1. 返回ttrue, 通常用于表示操作成功
+    Different from those returned by the calling method, gateway return values can be divided into the following five types：
+    1. Return ttrue, which is usually used to indicate that the operation succeeded
         ```json
         {
             "cmd1":"ttrue"
         }
         ```
-    2. 返回tfalse, 通常用于表示操作失败
+    2. Return tfalse, which is usually used to indicate that the operation failed
         ```json
         {
             "cmd1":"tfalse"
         }
         ```
-    3. 返回JSON, 通常表示操作的返回信息
+    3. Return JSON, which usually represents the return information of the operation
         ```json
         {
-            "cmd1":{返回JSON内容}
+            "cmd1":{value of JSON}
         }
         ```
-    4. 返回字符串, 通常表示操作的返回信息
+    4. Return STRING, which usually represents the return information of the operation
         ```json
         {
-            "cmd1":"返回字符串内容"
+            "cmd1":"value of STRING"
         }
         ```
-    5. 无返回, 有的接口不返回任何信息
+    5. NULL return. Some method do not return any information
         ```json
         {
             "cmd1":"NULL"
         }
-        ```
-    例1：如查询网关基本状态的HE指令为 land@machine.status , 对应的json指令格式为
+        ```   
+    Example 1：the HE command to query the basic gateway status is land@machine.status, the corresponding JSON command format is
     ```json
     { "cmd1": { "com":"land@machine", "op":"status" } }
     ```
-    例2：如查询网关LTE网络状态的HE指令为 ifname@lte.status , 对应的json指令格式为
+    Example 2：The HE command to query the LTE network status of the gateway is ifname@lte.status, the corresponding JSON command format is
     ```json
     { "cmd1": { "com":"ifname@lte", "op":"status" } }
     ```
-    例3：如查询网关GPS信息的HE指令为 gnss@nmea.info , 对应的json指令格式为
+    Example 3：The HE command for querying the GPS information of the gateway is gnss@nmea.info, the corresponding JSON command format is
     ```json
     { "cmd1": { "com":"gnss@nmea", "op":"info" } }
     ```
 
 
 
-#### 示例-获取网关基本信息配置
-- 网关基本信息在land@machine组件的配置中, 发送查询land@machine配置指令即可(在终端中的命令为land@machine), 点击 [Management of Basic Infomation](../com/land/machine.md) 查看有关配置的介绍
+#### **Obtain the basic gateway configuration**   
+Send
 ```json
 {
     "cmd1":
@@ -271,26 +283,27 @@ enable
         "com":"land@machine"
     }
 }
-```
-- 网关返回示例
+```   
+Receive
 ```json
 {
     "cmd1":
     {
-        "mode":"gateway",                              // 网关工作模式为宽带路由
-        "name":"5228-128870",                          // 网关名称为5228-128870
-        "mac":"00:03:7F:12:88:70",                     // 网关MAC为00:03:7F:12:88:70
-        "macid":"00037F128870",                        // 网关ID为00037F128870
-        "language":"cn",                               // 网关语言为chinese
-        "cfgversion":"134"                             // 网关配置版本为134(暗示网关配置被修改过134次)
+        "mode":"gateway",                              // operation mode
+        "name":"5228-128870",                          // name is 5228-128870
+        "mac":"00:03:7F:12:88:70",                     // mac 00:03:7F:12:88:70
+        "macid":"00037F128870",                        // id 00037F128870
+        "language":"cn",                               // language is chinese
+        "cfgversion":"134"                             // configure version is 134
     }
 }
-```
-使用TCP客户端工具测试:   
+```   
+Click [Management of Basic Infomation](../com/land/machine.md) to see more
+Test using the TCP client tool:   
 ![avatar](./localport_jsontest.png)
 
-#### 示例-获取网关基本状态
-- 网关基本状态由land@machine组件的status接口返回, 发送调用land@machine组件status方法指令即可(在终端中的命令为land@machine.status), 点击 [Management of Basic Infomation](../com/land/machine.md) 查看有关status接口的介绍
+#### **Obtain the basic gateway status**   
+Send
 ```json
 {
     "cmd1":
@@ -299,35 +312,33 @@ enable
         "op":"status"
     }
 }
-```
-- 网关返回
+```    
+Receive
 ```json
 {
     "cmd1":
     {
-        "mode":"gateway",                     // 网关工作模式为宽带路由
-        "name":"5228-128870",                 // 网关名称为5228-128870
-        "platform":"smtk2",
-        "hardware":"mt7621",
-        "custom":"d228",                      // 产品编号
-        "scope":"std",
-        "version":"v7.2.1231",                // 软件版本
-        "livetime":"12:06:00:2",              // 在线时长  时：分：秒：天
-        "current":"15:36:52:03:02:2023",      // 当前时间  时:分:秒:月:日:年
-        "mac":"00:03:7F:12:88:70",            // 网关MAC为00:03:7F:12:88:70
-        "macid":"00037F128870",
-        "model":"5228",                       // 产品型号
-        "cmodel":"",
-        "magic":"0E82CEC20232FFFF",
-        "cfgversion":"134"                    // 网关配置版本为134(暗示网关配置被修改过134次)
+        "mode":"nmisp",                    // gateway operator mode Next Mobile(NR/LTE) Internet Service Provider connection
+        "name":"ASHYELF-12AAD0",           // gateway name is ASHYELF-12AAD0
+        "platform":"smtk2",                // gateway platform identify is smtk2( hint the basic sdk is second release of smtk )
+        "hardware":"mt7621",               // gateway hardware identify is mt7621( hint the chip is MT7621 )
+        "custom":"d228",                   // gateway custom identify is d228( hint the product name is D228 )
+        "scope":"std",                     // gateway scope identify is std( hint this is a standand release for D228 )
+        "version":"tiger7-20220218",       // gateway version is tiger7-20220218( hint the version publish at 2022.02.18 )
+        "livetime":"00:06:35:0",           // gateway It has been running for 6 minutes and 35 seconds
+        "current":"14:54:30:05:04:2022",   // current date is 2022.05.04, It's 14:54 and 30 seconds
+        "mac":"00:03:7F:12:AA:D0",         // gateway MAC is 00:03:7F:12:AA:D0
+        "macid":"00037F12AAD0",            // gateway serial id is 00037F12AAD0
+        "model":"5228"                     // gateway model is 5228
     }
 }
-```
+```    
+Click [Management of Basic Infomation](../com/land/machine.md) to see more
 
 
 
-#### 示例-获取LTE网络状态信息
-- LTE状态信息由ifname@lte的status接口返回, 点击 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 查看有关status接口的介绍
+#### **Obtain LTE/NR network status information**   
+Send
 ```json
 {
     "cmd1":
@@ -336,182 +347,51 @@ enable
         "op":"status"
     }
 }
-```
-- 网关返回
+```    
+Receive
 ```json
 {
     "cmd1":
     {
-        "mode":"dhcpc",                    // IPv4的连接模式为DHCP
-        "netdev":"usb0",                   // 网络设备为usb0
-        "gw":"10.137.89.118",              // 网关为10.137.89.118, 只有连接成功后才出现
-        "dns":"120.80.80.80",              // DNS为120.80.80.80,, 只有连接成功后才出现
-        "dns2":"221.5.88.88",              // 备用DNS为221.5.88.88, 只有连接成功后才出现
-        "status":"up",                     // "up"表示连接成功
-                                                 // [ "setup", "register", "ready", "nodevice", "reset", "down", "up" ]
-                                                 // "setup" 为正在初始化模块
-                                                 // "register" 为正在注册网络
-                                                 // "ready" 为链路正常准备发起连网, 此状态暗示信号/网络/SIM卡都已检测到
-                                                 // "nodevice" 为没有找到对应的LTE模组
-                                                 // "reset" 为正在重置LTE模组
-                                                 // "down" 为网络未连接
-                                                 // "up" 为连接成功
-        "ip":"10.137.89.117",              // IP地址为10.137.89.117, 只有连接成功后才出现
-        "mask":"255.255.255.252",          // 掩码为255.255.255.252, 只有连接成功后才出现
-        "livetime":"00:15:50:0",           // 表示已上线15分钟50秒, 只有连接成功后才出现
-        "rx_bytes":"1256",                 // 收到了1256字节, 只有连接成功后才出现
-        "rx_packets":"4",                  // 收到了4包, 只有连接成功后才出现
-        "tx_bytes":"1320",                 // 发送了1320字节, 只有连接成功后才出现
-        "tx_packets":"4",                  // 发送了4包, 只有连接成功后才出现
-        "mac":"02:50:F4:00:00:00",         // MAC地址为02:50:F4:00:00:00
-        "method":"slaac",                  // IPv6地址模式为slaac
-        "addr":"fe80::50:f4ff:fe00:0",     // IPv6的地址为fe80::50:f4ff:fe00:0
-        "imei":"867160040494084",          // IMEI号为867160040494084
-        "imsi":"460015356123463",          // IMSI为460015356123463
-        "iccid":"89860121801097564807",    // SIM卡的ICCID为89860121801097564807
-                                                 // [ number, "nosim", "pin", "puk" ]
-                                                 // 数字为SIM卡的ICCID号
-                                                 // "nosim" 为未找到SIM卡
-                                                 // "pin" 为SIM卡需要PIN码
-                                                 // "puk" 为SIM卡PIN码错误
-
-        "csq":"14",                        // CSQ为14
-        "signal":"3",                      // 信号格数为3格
-                                                 // [ "0", "1", "2", "3", "4" ],
-                                                 // "0" 为无信号
-                                                 // "1" 为一格信号, 为最弱的信号
-                                                 // "4" 为四格信号, 为最强的信号
-        "plmn":"46001",                    // PLMN为46001
-        "nettype":"WCDMA",                 // 网络制式为WCDMA
-        "rssi":"-107",                     // 信号强度为-107
-        "operator":"中国联通",              // 运营商的名称为中国联通
-        "operator_advise":                 // 针对 中国联通 建议的配置
+        "mode":"dhcpc",                    // IPv4 connect mode is DHCP
+        "netdev":"usb0",                   // netdev is usb0
+        "gw":"10.137.89.118",              // gateway is 10.137.89.118
+        "dns":"120.80.80.80",              // dns is 120.80.80.80
+        "dns2":"221.5.88.88",              // backup dns is 221.5.88.88
+        "status":"up",                     // connect is succeed
+        "ip":"10.137.89.117",              // ip address is 10.137.89.117
+        "mask":"255.255.255.252",          // network mask is 255.255.255.252
+        "livetime":"00:15:50:0",           // already online 15 minute and 50 second
+        "rx_bytes":"1256",                 // receive 1256 bytes
+        "rx_packets":"4",                  // receive 4 packets
+        "tx_bytes":"1320",                 // send 1320 bytes
+        "tx_packets":"4",                  // send 4 packets
+        "mac":"02:50:F4:00:00:00",         // netdev MAC address is 02:50:F4:00:00:00
+        "method":"slaac",                  // IPv6 address mode is slaac
+        "addr":"fe80::50:f4ff:fe00:0",     // local IPv6 address is fe80::50:f4ff:fe00:0
+        "imei":"867160040494084",          // imei is 867160040494084
+        "imsi":"460015356123463",          // imei is 460015356123463
+        "iccid":"89860121801097564807",    // imei is 89860121801097564807
+        "csq":"3",                         // CSQ nubmer is 3
+        "signal":"3",                      // signal level is 3
+        "state":"connect",                 // state is connect to the internet
+        "plmn":"46001",                    // plmn is 46001
+        "nettype":"WCDMA",                 // nettype is WCDMA
+        "rssi":"-107",                     // signal intensity is -107
+        "operator":"ChinaUnion",           // operator name is ChinaUnion
+        "operator_advise":                 // recommended profile for ChinaUnion
         {
-            "dial":"*99#",                    // 拨号号码为*99#
-            "apn":"3gnet"                     // APN为3gnet
+            "name":"ChinaUnion",               // name is ChinaUnion
+            "dial":"*99#",                     // dial number is *99#
+            "apn":"3gnet"                      // APN is 3gnet
         }
     }
 }
-```
+```    
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
 
-
-
-#### 示例-断开LTE网络, 必须要有LTE网络的工作模式下才有效(如在4G/5G路由器或混合模式下)
-- 断开LTE网络连接调用ifname@lte组件的shut接口(在终端中的命令为ifname@lte.shut), 点击 [LTE/NR Network Management](../com/ifname/lte.md) 查看shut接口介绍
-```json
-{
-    "cmd1":
-    {
-        "com":"ifname@lte",             // LTE网络组件
-        "op":"shut"                     // 调用shut接口断开
-    }
-}
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
-```json
-{
-    "cmd1":"ttrue"
-}
-```
-
-#### 示例-发起LTE连网, 必须要有LTE网络的工作模式下才有效(如在4G/5G路由器或混合模式下)
-- 启用LTE网络连接调用ifname@lte组件的setup接口(在终端中的命令为ifname@lte.setup), 点击 [LTE/NR Network Management](../com/ifname/lte.md) 查看setup接口介绍
-```json
-{
-    "cmd1":
-    {
-        "com":"ifname@lte",              // LTE网络组件
-        "op":"setup"                    // 调用setup接口发起连接
-    }
-}
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
-```json
-{
-    "cmd1":"ttrue"
-}
-```
-
-
-
-#### 示例-设置禁用LTE连网(禁用后重启后也会保持禁用), 将改变网关的配置不建议频繁使用
-- 设置禁用LTE网络即是将ifname@lte配置中的status属性改为disable即可(在终端中的命令为ifname@lte:status=disable), 点击 [LTE/NR Network Management](../com/ifname/lte.md) 查看配置介绍
-```json
-{
-    "cmd1":
-    {
-        "com":"ifname@lte",             // LTE网络组件
-        "ab":"status",                  // 指定修改status属性
-        "op":"=",                       // 赋值操作
-        "v":"disable"                   // 将status属性的值改为disable即禁用
-    }
-}
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
-```json
-{
-    "cmd1":"ttrue"
-}
-```
-
-#### 示例-设置启用LTE连网(启用后重启后也会保持启用), 将改变网关的配置不建议频繁使用
-- 设置启用LTE网络即是将ifname@lte配置中的status属性改为enable即可(在终端中的命令为ifname@lte:status=enable), 点击 [LTE/NR Network Management](../com/ifname/lte.md) 查看配置介绍
-```json
-{
-    "cmd1":
-    {
-        "com":"ifname@lte",             // LTE网络组件
-        "ab":"status",                  // 指定修改status属性
-        "op":"=",                       // 赋值操作
-        "v":"enable"                    // 将status属性的值改为enable即启用
-    }
-}
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
-```json
-{
-    "cmd1":"ttrue"
-}
-```
-
-
-#### 示例-设置LTE网络的拨号APN相关的配置
-- 修改ifname@lte的配置即可, 修改APN需要先打开APN自定义, 然后设置APN相关的信息, 整个指令需要修改多项属性值, 点击 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE模块管理](../com/modem/lte.md) 相关的配置介绍
-```json
-{
-    "cmd1":
-    {
-        "com":"ifname@lte",            // LTE网络
-        "op":"|",                      // 或操作, 即只修改以下给出的属性的值, ifname@lte组件配置中其它未在v中给出的属性保留原来的值(如果op的值为=号将会删除其它的属性)
-        "v":
-        {
-            "profile":"enable",        // 打开APN自定义
-            "profile_cfg":             // 自定义APN的信息
-            {
-                "dial":"*99#",          // 拨号号码
-                "apn":"NewAPN",         // APN
-                "user":"ctnet",         // 用户名
-                "passwd":"234352"       // 密码
-            }
-        }
-    }
-}
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
-```json
-{
-    "cmd1":"ttrue"
-}
-```
-
-
-#### 示例-获取第二个LTE/NR网络(5G)状态信息(对于双模块网关)
-- 第二个LTE/NR状态信息由ifname@lte2的status接口返回(在终端中的命令为ifname@lte2.status), 点击[LTE/NR网络管理](../com/ifname/lte.md)及[LTE/NR Modem Management](../com/modem/lte.md)查看有关status接口的介绍
+#### **Get the second LTE/NR network status information**   
+Send
 ```json
 {
     "cmd1":
@@ -520,21 +400,151 @@ enable
         "op":"status"
     }
 }
-```
-- 网关返回
+```    
+Receive
 ```json
 {
     "cmd1":
     {
-        ... // 内容与 6 相同
+        Same as the return for ifname@lte
     }
 }
-```
+```    
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
+
+#### **Disconnect(Shutdown) LTE/NR network**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"ifname@lte",
+        "op":"shut"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) to see more
+
+#### **Connect(Setup) to LTE/NR network**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"ifname@lte",
+        "op":"setup"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [LTE/NR Network Management](../com/ifname/lte.md) to see more
+
+#### **Modify the LTE/NR network to disabled**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"ifname@lte",
+        "ab":"status",
+        "op":"=",
+        "v":"disable"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```   
+Click [LTE/NR Network Management](../com/ifname/lte.md) to see more
+
+#### **Modify the LTE/NR network to enabled**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"ifname@lte",
+        "ab":"status",
+        "op":"=",
+        "v":"enable"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [LTE/NR Network Management](../com/ifname/lte.md) to see more
+
+#### **Modify the LTE/NR modem dail APN/Username/Password**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"ifname@lte",
+        "op":"|",
+        "v":
+        {
+            "profile":"enable",
+            "profile_cfg":
+            {
+                "apn":"NewAPN",
+                "user":"NewUser",
+                "passwd":"NewPassword"
+            }
+        }
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
+
+#### **Enable Location function of LTE/NR modem**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"ifname@lte",
+        "ab":"gnss",
+        "op":"=",
+        "v":"enable"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [LTE/NR Network Management](../com/ifname/lte.md) and [LTE/NR Modem Management](../com/modem/lte.md) to see more
 
 
-
-#### 示例-使用第一个LTE/NR模块发送短信
-- 第一个LTE/NR的模块为modem@lte, 点击[LTE/NR Modem Management](../com/modem/lte.md)查看有关smssend接口的介绍
+#### **Send SMS use LTE/NR modem**   
+Send
 ```json
 {
     "cmd1":
@@ -542,20 +552,21 @@ enable
         "com":"modem@lte",
         "op":"smssend",
         "1":"+13266606322",
-        "2":"这是一个测试短信"
+        "2":"that is a test SMS"
     }
 }
 ```   
-- 网关返回
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
 ```    
+Click [LTE/NR Modem Management](../com/modem/lte.md) to see more
 
 
-#### 示例-列出第一个LTE/NR模块的所有短信
-- 第一个LTE/NR的模块为modem@lte, 点击[LTE/NR Modem Management](../com/modem/lte.md)查看有关smslist接口的介绍
+#### **List all SMS on LTE/NR modem**   
+Send
 ```json
 {
     "cmd1":
@@ -565,7 +576,7 @@ enable
     }
 }
 ```   
-- 网关返回
+Receive
 ```json
 {
     "cmd1":
@@ -608,10 +619,11 @@ enable
     }
 }
 ```    
+Click [LTE/NR Modem Management](../com/modem/lte.md) to see more
 
 
-#### 示例-删除一条短信
-- 第一个LTE/NR的模块为modem@lte, 给出短信的id号即可删除对应的短信, 点击[LTE/NR Modem Management](../com/modem/lte.md)查看有关smslist接口的介绍
+#### **Delete a SMS on LTE/NR modem**   
+Send
 ```json
 {
     "cmd1":
@@ -622,19 +634,21 @@ enable
     }
 }
 ```   
-- 网关返回
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
 ```    
+Click [LTE/NR Modem Management](../com/modem/lte.md) to see more
 
 
 
 
 
-#### 示例-获取网关的客户端信息
-- 网关上的客户端信息由client@station组件的list接口返回(在终端中的命令为client@station.list), 点击 [Management of Client Access](../com/client/station.md) 查看有关list接口的介绍
+
+#### **Obtain client information**   
+Send
 ```json
 {
     "cmd1":
@@ -643,41 +657,41 @@ enable
         "op":"list"
     }
 }
-```
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":
     {
-        "00:E0:4C:68:2A:8B":                           // 客户端MAC地址
+        "04:CF:8C:39:91:7A":            // first client
         {
-            "ip":"192.168.1.250",                        // IP地址
-            "netdev":"lan",                              // 接入的网络接口
-            "ifname":"ifname@lan",                       // 接入的网络连接
-            "livetime":"00:40:25:0"                      // 连接时间
+            "ip":"192.168.31.140",                        // ip is 192.168.31.140
+            "name":"xiaomi-aircondition-ma2_mibt917A",    // hostname is xiaomi-aircondition-ma2_mibt917A
+            "tx_bytes":"1779693",                         // sent 1779693 byte
+            "rx_bytes":"1375610",                         // recived 1375610 byte
+            "livetime":"14:39:34:1"                       // livetime is 1 day 14 hour 39 minute 34 second
         },
-        "FC:87:43:DC:6F:B4":                          // 客户端MAC地址
+        "40:31:3C:B5:6D:4C":            // second client
         {
-            "ip":"192.168.1.248",                        // IP地址
-            "netdev":"lan",                              // 接入的网络接口
-            "ifname":"ifname@lan",                       // 接入的网络连接
-            "livetime":"00:40:11:0",                     // 连接时间
-            "ifdev":"wifi@assid",                        // 接入的连接网关
-            "rssi":"-73",                                // 信号强度, 只有连接网关热点的设备才有此属性
-            "name":"HUAWEI_P30_Pro-9f13d2ee6f",          // 客户端名称
-            "tx_bytes":"610528",                         // 发送字节
-            "rx_bytes":"1653658"                         // 接收字节
+            "ip":"192.168.31.61",
+            "name":"minij-washer-v5_mibt6D4C",
+            "livetime":"14:39:26:1"
+        },
+        "14:13:46:C9:97:C7":            // third client
+        {
+            "ip":"192.168.31.9",
+            "name":"",
+            "livetime":"14:39:27:1"
         }
     }
 }
-```
+```    
+Click [Management of Client Access](../com/client/station.md) to see more
 
 
 
-
-
-#### 示例-获取GPS信息(对应的网关必须有GPS功能并且配置正确)
-- GPS信息由gnss@nmea组件的info接口返回(在终端中的命令为gnss@nmea.info), 点击 [GNSS NEMA Protocol Management](../com/gnss/nmea.md) 查看有关info接口的介绍
+#### **Obtain location information**   
+Send
 ```json
 {
     "cmd1":
@@ -686,35 +700,32 @@ enable
         "op":"info"
     }
 }
-```
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":
     {
-        "step":"located",                           // 表示已定位到
-                                                          // [ "setup", "search", "located" ]
-                                                          // "setup" 为初始化中
-                                                          // "search" 为搜索中
-                                                          // "located" 为已定位到
-        "utc":"7:55:22:7:12:2021",                  // UTC时间
-        "lon":"11356.56400",                        // 经度为11356.56400, 已定位到后才出现
-        "lat":"2240.80119",                         // 纬度为2240.80119, 已定位到后才出现
-        "longitude":"113.94273",                    // 经度(十进制), 已定位到后才出现
-        "latitude":"22.68001",                      // 纬度(十进制), 已定位到后才出现
-        "speed":"0.34",                             // 速度, 已定位到后才出现
-        "elv":"77.90",                              // 高度为77.90, 单位为米, 已定位到后才出现
+        "step":"located",                           // already located
+        "utc":"7:55:22:7:12:2021",                  // UTC
+        "lon":"11356.56400",
+        "lat":"2240.80119",
+        "longitude":"113.94273",                    // longitude is 113.94
+        "latitude":"22.68001",                      // latitude is 22.68
+        "speed":"0.34",
+        "elv":"77.90",
         "direction":"",
         "declination":"",
-        "inuse":"5"                                 // 可使用的卫星数为5个
+        "inuse":"8"                                 // 8 sat in use
     }
 }
-```
+```   
+Click [GNSS NEMA Protocol Management](../com/gnss/nmea.md) to see more
 
 
 
-#### 示例-获取网关LAN口状态信息
-- 网关LAN口信息由ifname@lan组件的status接口返回(在终端中的命令为ifname@lan.status), 点击查看 [LAN Network Management](../com/ifname/lan.md) 查看有关status接口的介绍
+#### **Obtain the information about the gateway LAN network**   
+Send
 ```json
 {
     "cmd1":
@@ -723,34 +734,34 @@ enable
         "op":"status"
     }
 }
-```
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":
     {
-        "mode":"static",                   // IPv4的连接模式为静态设置
-        "netdev":"lan",                    // 网络设备为lan
-        "status":"up",                     // 接口已上线
-        "ip":"192.168.8.1",                // IP地址为192.168.8.1
-        "mask":"255.255.255.0",            // 掩码为255.255.255.0
-        "livetime":"01:15:50:0",           // 已上线1小时15分钟50秒
-        "rx_bytes":"1256",                 // 接收了1256字节
-        "rx_packets":"4",                  // 接收了4包
-        "tx_bytes":"1320",                 // 发送了1320字节
-        "tx_packets":"4",                  // 发送了4包
-        "mac":"02:50:F4:00:00:00",         // MAC地址为02:50:F4:00:00:00
-        "method":"slaac",                  // IPv6地址模式为slaac
-        "addr":"fe80::50:f4ff:fe00:0"      // 本地IPv6地址为fe80::50:f4ff:fe00:0
+        "mode":"static",                   // IPv4 connect mode is static
+        "netdev":"lan",                    // netdev is lan
+        "status":"up",                     // connect is succeed
+        "ip":"192.168.1.1",                // ip address is 192.168.1.1
+        "mask":"255.255.255.0",            // network mask is 255.255.255.0
+        "livetime":"01:15:50:0",           // already online 1 hour and 15 minute and 50 second
+        "rx_bytes":"1256",                 // receive 1256 bytes
+        "rx_packets":"4",                  // receive 4 packets
+        "tx_bytes":"1320",                 // send 1320 bytes
+        "tx_packets":"4",                  // send 4 packets
+        "mac":"02:50:F4:00:00:00",         // netdev MAC address is 02:50:F4:00:00:00
+        "method":"slaac",                  // IPv6 address mode is slaac
+        "addr":"fe80::50:f4ff:fe00:0"      // local IPv6 address is fe80::50:f4ff:fe00:0
     }
 }
-```
+```   
+Click [LAN Network Management](../com/ifname/lan.md) to see more
 
 
 
-
-#### 示例-重启网关
-- 对应终端中的命令land@machine.restart, 点击 [Management of Basic Infomation](../com/land/machine.md) 查看有关restart接口的介绍
+#### **Reboot gateway**   
+Send
 ```json
 {
     "cmd1":
@@ -759,16 +770,12 @@ enable
         "op":"restart"
     }
 }
-```
-- 网关返回如下后将会在3至15秒内重启
-```json
-{
-    "cmd1":"ttrue"
-}
-```
+```   
+The gateway does not return any information and will restart immediately
+Click [Management of Basic Infomation](../com/land/machine.md) to see more
 
-#### 示例-重置网关(恢复默认设置)
-- 对应终端中的命令land@machine.default, 点击查看 [Management of Basic Infomation](../com/land/machine.md) 查看有关default接口的介绍
+#### **Reset gateway(restore default settings)**   
+Send
 ```json
 {
     "cmd1":
@@ -777,45 +784,37 @@ enable
         "op":"default"
     }
 }
-```
-- 网关返回如下后将会在3至15秒内重启
-```json
-{
-    "cmd1":"ttrue"
-}
-```
+```   
+The gateway does not return any information and will restart and default immediately
+Click [Management of Basic Infomation](../com/land/machine.md) to see more
 
-#### 示例-修改网关admin用户的密码
-- 用户及密码管理在land@auth组件中, 修改密码使用modify的接口, 以下示例修改用户名admin的密码为123456, 点击 [Username/Password and Permission Management](../com/land/auth.md) 查看modify接口介绍
+
+
+#### **Enable GNSS function**   
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"land@auth",             // 帐号密码及权限管理组件
-        "op":"modify",                 // 调用修改接口
-        "1":"",                        // 要修改的域, 空为默认所有域
-        "2":"admin",                   // 要修改的用户名
-        "3":"admin",                   // 原密码
-        "4":"123456"                   // 新密码
+        "com":"gnss@nmea",
+        "ab":"status",
+        "op":"=",
+        "v":"enable"
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
+```    
+Click [GNSS NEMA Protocol Management](../com/gnss/nmea.md) to see more
 
 
 
-
-
-
-
-#### 示例-修改2.4G无线热点的SSID名称
-- 2.4G无线热点的配置在组件wifi@nssid中, ssid属性的值为SSID名称, 以下示例修改SSID名称为NewSSID(在终端中的命令为wifi@nssid:ssid=NewSSID), 点击 [2.4G Station Management](../com/wifi/nssid.md) 查看配置介绍
+#### **Modify the SSID name of a wireless hotspot (2.4G)**   
+Send
 ```json
 {
     "cmd1":
@@ -826,448 +825,628 @@ enable
         "v":"NewSSID"
     }
 }
-```
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
+```    
+Click [2.4G SSID Management](../com/wifi/nssid.md) to see more
 
-#### 示例-同时修改2.4G无线热点的SSID名称及密码
-- 同时修改两个及以上的属性需要使用**或操作**, 以下示例修改SSID名称为NewSSID并将密码修改为NewPassword(在终端中的命令为wifi@nssid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [2.4G Station Management](../com/wifi/nssid.md) 查看配置介绍
+#### **Modify the SSID password of a wireless hotspot (2.4G)**   
 ```json
 {
     "cmd1":
     {
-        "com":"wifi@nssid",            // 2.4G无线热点组件
-        "op":"|",                      // 或操作, 即只修改以下给出的属性的值, wifi@nssid组件配置中其它未在v中给出的属性保留原来的值(如果op的值为=号将会删除其它的属性)
+        "com":"wifi@nssid",
+        "op":"|",
         "v":
         {
-            "ssid":"NewSSID",          // SSID的名称改为NewSSID
-            "secure":"wpapskwpa2psk",  // 安全方式改为WPA自动
-            "wpa_key":"NewPassword"    // WPA的密码改为NewPassword
+            "secure":"wpapskwpa2psk",
+            "wpa_key":"NewPassword"
         }
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
+```    
+Click [2.4G SSID Management](../com/wifi/nssid.md) to see more
 
-#### 示例-同时修改5.8G无线热点的SSID名称及密码
-- 5.8G无线热点配置在组件wifi@assid中, 以下示例修改SSID名称为NewSSID-5G并将密码修改为NewPassword(在终端中的命令为wifi@assid|{"ssid":"NewSSID-5G","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [5.8G Station Management](../com/wifi/assid.md) 查看配置介绍
+#### **Modify the SSID name and password of the wireless hotspot (2.4G)**   
 ```json
 {
     "cmd1":
     {
-        "com":"wifi@assid",            // 5.8G无线热点组件
-        "op":"|",                      // 或操作, 即只修改以下给出的属性的值, wifi@assid组件配置中其它未在v中给出的属性保留原来的值(如果op的值为=号将会删除其它的属性)
+        "com":"wifi@nssid",
+        "op":"|",
         "v":
         {
-            "ssid":"NewSSID-5G",          // SSID的名称改为NewSSID-5G
-            "secure":"wpapskwpa2psk",  // 安全方式改为WPA自动
-            "wpa_key":"NewPassword"    // WPA的密码改为NewPassword
+            "ssid":"NewSSID",
+            "secure":"wpapskwpa2psk",
+            "wpa_key":"NewPassword"
         }
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
+```    
+Click [2.4G SSID Management](../com/wifi/nssid.md) to see more
 
-
-
-
-
-
-
-#### 示例-设置2.4G无线连网连接指定的SSID, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
-- 2.4G无线连网配置在组件ifname@wisp中, 设置2.4G无线连网需要同时修改两个以上的属性, 因此使用**或操作**, 以下示例设置连接SSID为CMCC密码为CMCC@passwd的2.4G网络(在终端的命令为ifname@wisp|{"peer":"CMCC","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看配置介绍
+#### **Modify the SSID name of a wireless hotspot (5.8G)**   
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"ifname@wisp",            // 2.4G无线连网组件
-        "op":"|",                       // 或操作, 即只修改以下给出的属性的值, ifname@wisp组件配置中其它未在v中给出的属性保留原来的值(如果op的值为=号将会删除其它的属性)
+        "com":"wifi@assid",
+        "ab":"ssid",
+        "op":"=",
+        "v":"NewSSID"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [5.8G SSID Management](../com/wifi/assid.md) to see more
+
+#### **Modify the SSID password of a wireless hotspot (5.8G)**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"wifi@assid",
+        "op":"|",
         "v":
         {
-            "status":"enable",          // 启用此连接
-            "peer":"CMCC",              // 连接的SSID为CMCC
-            "secure":"wpapskwpa2psk",   // 安全方式改为WPA自动
-            "wpa_key":"CMCC@passwd"     // WPA的密码改为CMCC@passwd
+            "secure":"wpapskwpa2psk",
+            "wpa_key":"NewPassword"
         }
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
+```    
+Click [5.8G SSID Management](../com/wifi/assid.md) to see more
 
-#### 示例-设置禁用2.4G无线连网, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
-- 2.4G无线连网配置在组件ifname@wisp中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp:status=disable), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看配置介绍
+#### **Modify the SSID name and password of the wireless hotspot (5.8G)**   
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"ifname@wisp",            // 2.4G无线连网组件
-        "ab":"status",                  // 指定修改status属性
-        "op":"=",                       // 赋值操作
-        "v":"disable"                   // 将status属性的值改为disable即禁用
-    }
-}
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
-```json
-{
-    "cmd1":"ttrue"
-}
-```
-
-#### 示例-断开2.4G无线连网, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
-- 断开2.4G无线连接调用ifname@wisp的shut接口(在终端中的命令为ifname@wisp.shut), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看shut接口介绍
-```json
-{
-    "cmd1":
-    {
-        "com":"ifname@wisp",            // 2.4G无线连网组件
-        "op":"shut"                     // 调用shut接口断开2.4G无线连网
-    }
-}
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
-```json
-{
-    "cmd1":"ttrue"
-}
-```
-
-#### 示例-发起2.4G无线连网, 必须有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)， 并已配置好相关的2.4G无线连网的参数且被断开过
-- 发起2.4G无线连网调用ifname@wisp的setup接口(在终端中的命令为ifname@wisp.setup), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看setup接口介绍
-```json
-{
-    "cmd1":
-    {
-        "com":"ifname@wisp",            // 2.4G无线连网组件
-        "op":"setup"                    // 调用setup接口让2.4G无线连网发起连接
-    }
-}
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
-```json
-{
-    "cmd1":"ttrue"
-}
-```
-
-
-
-
-
-#### 示例-设置5.8G无线连网连接指定的SSID, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
-- 5.8G无线连网配置在组件ifname@wisp2中, 以下示例设置连接SSID为CMCC-5G密码为CMCC@passwd的5.8G网络(在终端中的命令为ifname@wisp2|{"peer":"CMCC-5G","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看配置介绍
-```json
-{
-    "cmd1":
-    {
-        "com":"ifname@wisp2",            // 5.8G无线连网组件
-        "op":"|",                        // 或操作, 即只修改以下给出的属性的值, ifname@wisp组件配置中其它未在v中给出的属性保留原来的值(如果op的值为=号将会删除其它的属性)
+        "com":"wifi@assid",
+        "op":"|",
         "v":
         {
-            "status":"enable",           // 启用此连接
-            "peer":"CMCC-5G",            // 连接的SSID为CMCC-5G
-            "secure":"wpapskwpa2psk",    // 安全方式改为WPA自动
-            "wpa_key":"CMCC@passwd"      // WPA的密码改为CMCC@passwd
+            "ssid":"NewSSID",
+            "secure":"wpapskwpa2psk",
+            "wpa_key":"NewPassword"
         }
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
+```    
+Click [5.8G SSID Management](../com/wifi/assid.md) to see more
 
-#### 示例-设置禁用5.8G无线连网, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
-- 5.8G无线连网配置在组件ifname@wisp2中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp2:status=disable), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看配置介绍
+
+
+#### **Modify the WISP(2.4G) connect other AP**   
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"ifname@wisp2",            // 5.8G无线连网组件
-        "ab":"status",                   // 指定修改status属性
-        "op":"=",                        // 赋值操作
-        "v":"disable"                    // 将status属性的值改为disable即禁用
+        "com":"ifname@wisp",
+        "op":"|",
+        "v":
+        {
+            "status":"enable",
+            "peer":"NewAP",
+            "secure":"wpapskwpa2psk",
+            "wpa_key":"NewPassword"
+        }
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
+```    
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
 
-#### 示例-断开5.8G无线连网, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
-- 5.8G无线连网管理在组件ifname@wisp2中, 断开5.8G无线连接调用shut接口(在终端中的命令为ifname@wisp2.shut), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看shut接口介绍
+#### **Modify the WISP(2.4G) network to disabled**   
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"ifname@wisp2",            // 5.8G无线连网组件
-        "op":"shut"                      // 调用shut接口断开5.8G无线连网
+        "com":"ifname@wisp",
+        "ab":"status",
+        "op":"=",
+        "v":"disable"
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
+```    
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
 
-#### 示例-发起5.8G无线连网, 必须有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)， 并已配置好相关的5.8G无线连网的参数且被断开
-- 5.8G无线连网管理在组件ifname@wisp2中, 发起5.8G无线连网调用setup接口(在终端中的命令为ifname@wisp2.setup), 点击 [WISP Network Management](../com/ifname/wisp.md) 查看setup接口介绍
+#### **Modify the WISP(2.4G) network to enabled**   
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"ifname@wisp2",            // 5.8G无线连网组件
-        "op":"setup"                     // 调用setup接口让5.8G无线连网发起连接
+        "com":"ifname@wisp",
+        "ab":"status",
+        "op":"=",
+        "v":"enable"
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
+```    
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
 
-
-
-
-
-
-#### 示例-添加新策略路由, 指定源地址为192.168.2.12走第一个LTE
-- 策略路由管理在组件forward@rule中, 添加策略路由由add接口操作, 点击 [Policy based routing](../com/forward/rule.md) 查看接口add相关介绍
+#### **Disconnect(Shutdown) WISP(2.4G) network**   
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"forward@rule",             // 策略路由组件
-        "op":"add",                       // 调用add接口添加规则, 此规则的名称为senser, 此规则要求源地址为192.168.2.12的数据走第一个LTE
-        "1":"senser",                         // 规则名称
-        "2":"192.168.2.12",                   // 源地址
-        "3":"",                               // 掩码
-        "4":"",                               // 源接口名称
-        "5":"",                               // mark id
-        "6":"1",                              // 指定路由表, 1通常为第一个LTE, 2通常为第二个LTE, 3通常为有线宽带， 4为第二个有线宽带, 5为2.4G无线连网, 6为5.8G无线连网
-        "7":"33000"                           // 优先级, 通常优先级需在32766至35000之间
+        "com":"ifname@wisp",
+        "op":"shut"
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
-#### 示例-添加新策略路由, 指定所有数据走第二个LTE
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Connect(Setup) to WISP(2.4G) network**    
+the gateway operation mode must be **WISP(2.4G)** or **Mix**
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"forward@rule",             // 策略路由组件
-        "op":"add",                       // 调用add接口添加规则, 此规则的名称为video, 此规则要求所有的数据走第二个LTE
-        "1":"video",                         // 规则名称
-        "2":"",                              // 源地址
-        "3":"",                              // 掩码
-        "4":"",                              // 源接口名称
-        "5":"",                              // mark id
-        "6":"2",                             // 指定路由表, 1通常为第一个LTE, 2通常为第二个LTE, 3通常为有线宽带， 4为第二个有线宽带, 5为2.4G无线连网, 6为5.8G无线连网
-        "7":"33300"                          // 优先级, 通常优先级需在32766至35000之间
+        "com":"ifname@wisp",
+        "op":"setup"
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
-#### 示例-删除原设置的名为video的策略路由规则
-- 删除策略路由由delete接口操作, 
+```    
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Modify the WISP(5.8G) connect other AP**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"forward@rule",             // 策略路由组件
-        "op":"delete",                    // 调用delete接口添加规则, 此规则的名称为video
-        "1":"video"                          // 规则名称
+        "com":"ifname@wisp2",
+        "op":"|",
+        "v":
+        {
+            "status":"enable",
+            "peer":"NewAP",
+            "secure":"wpapskwpa2psk",
+            "wpa_key":"NewPassword"
+        }
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue"
 }
-```
-#### 示例-同时添加两条策略路由, 指定源地址为192.168.2.12走第一个LTE, 并指定其它所有数据走第二个LTE
+```    
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Modify the WISP(5.8G) network to disabled**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"forward@rule",             // 策略路由组件
-        "op":"add",                       // 调用add接口添加规则, 此规则的名称为senser, 此规则要求源地址为192.168.2.12的数据走第一个LTE
-        "1":"senser",                         // 规则名称
-        "2":"192.168.2.12",                   // 源地址
-        "3":"",                               // 掩码
-        "4":"",                               // 源接口名称
-        "5":"",                               // mark id
-        "6":"1",                              // 指定路由表, 1通常为第一个LTE, 2通常为第二个LTE, 3通常为有线宽带， 4为第二个有线宽带, 5为2.4G无线连网, 6为5.8G无线连网
-        "7":"33000"                           // 优先级, 通常优先级需在32766至35000之间
+        "com":"ifname@wisp2",
+        "ab":"status",
+        "op":"=",
+        "v":"disable"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Modify the WISP(5.8G) network to enabled**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"ifname@wisp2",
+        "ab":"status",
+        "op":"=",
+        "v":"enable"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Disconnect(Shutdown) WISP(5.8G) network**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"ifname@wisp2",
+        "op":"shut"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```   
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+#### **Connect(Setup) to WISP(5.8G) network**   
+the gateway operation mode must be **WISP(5.8G)** or **Mix** and the gateway have 5.8G radio
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"ifname@wisp2",
+        "op":"setup"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [WISP Network Management](../com/ifname/wisp.md) to see more
+
+
+
+#### **Modify the password of the admin user**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"land@auth",
+        "op":"modify",
+        "1":"",
+        "2":"admin",
+        "3":"OldPassword",
+        "4":"NewPassword"
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [Username/Password and Permission Management](../com/land/auth.md) to see more
+
+
+
+#### **Add policy-based route rule for force source ip(192.168.8.2.12) route to first LTE/NR, named it senser**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"forward@rule",
+        "op":"add",                 // method is add
+        "1":"senser",               // rule name is senser
+        "2":"192.168.2.12",         // source ip
+        "3":"",                     // mask is space
+        "4":"",                     // source interface is space
+        "5":"",                     // mark id is space
+        "6":"1",                    // route table id
+                                            // 1 is first LTE/NR
+                                            // 2 is second LTE/NR
+                                            // 3 is first WAN
+                                            // 4 is second WAN
+                                            // 5 is WISP(2.4G)
+                                            // 6 is WISP(5.8G)
+        "7":"33000"                 // priority, Usually the priority needs to be between 32766 and 35000
+    }
+}
+```   
+Receive
+```json
+{
+    "cmd1":"ttrue"
+}
+```    
+Click [Policy based routing](../com/forward/rule.md) to see more
+
+#### **Add policy-based route rule for force all ip route to second LTE/NR, named it video**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"forward@rule",
+        "op":"add",                 // method is add
+        "1":"video",                // rule name is video
+        "2":"",                     // source ip is space
+        "3":"",                     // mask is space
+        "4":"",                     // source interface is space
+        "5":"",                     // mark id is space
+        "6":"2",                    // route table id
+                                            // 1 is first LTE/NR
+                                            // 2 is second LTE/NR
+                                            // 3 is first WAN
+                                            // 4 is second WAN
+                                            // 5 is WISP(2.4G)
+                                            // 6 is WISP(5.8G)
+        "7":"33000"                 // priority, Usually the priority needs to be between 32766 and 35000
+    }
+}
+```   
+```json
+{
+    "cmd1":"ttrue"
+}
+```   
+Click [Policy based routing](../com/forward/rule.md) to see more
+
+#### **Delete policy-based route rule named senser**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"forward@rule",
+        "op":"delete",                 // method is delete
+        "1":"senser"                    // rule name is senser
+    }
+}
+```   
+```json
+{
+    "cmd1":"ttrue"
+}
+```   
+Click [Policy based routing](../com/forward/rule.md) to see more
+
+#### **Delete policy-based route rule named video**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"forward@rule",
+        "op":"delete",                 // method is delete
+        "1":"video"                    // rule name is video
+    }
+}
+```   
+```json
+{
+    "cmd1":"ttrue"
+}
+```   
+Click [Policy based routing](../com/forward/rule.md) to see more
+
+#### **Add policy-based route rule for force source ip(192.168.8.2.12) route to first LTE/NR, and Add policy-based route rule for force other ip route to second LTE/NR**   
+Send
+```json
+{
+    "cmd1":
+    {
+        "com":"forward@rule",
+        "op":"add",                 // method is add
+        "1":"senser",               // rule name is senser
+        "2":"192.168.2.12",         // source ip
+        "3":"",                     // mask is space
+        "4":"",                     // source interface is space
+        "5":"",                     // mark id is space
+        "6":"1",                    // route table id
+                                            // 1 is first LTE/NR
+                                            // 2 is second LTE/NR
+                                            // 3 is first WAN
+                                            // 4 is second WAN
+                                            // 5 is WISP(2.4G)
+                                            // 6 is WISP(5.8G)
+        "7":"33000"                 // priority, Usually the priority needs to be between 32766 and 35000
     },
     "cmd2":
     {
-        "com":"forward@rule",             // 策略路由组件
-        "op":"add",                       // 调用add接口添加规则, 此规则的名称为video, 此规则要求所有的数据走第二个LTE
-        "1":"video",                         // 规则名称
-        "2":"",                              // 源地址
-        "3":"",                              // 掩码
-        "4":"",                              // 源接口名称
-        "5":"",                              // mark id
-        "6":"2",                             // 指定路由表, 1通常为第一个LTE, 2通常为第二个LTE, 3通常为有线宽带， 4为第二个有线宽带, 5为2.4G无线连网, 6为5.8G无线连网
-        "7":"33300"                          // 优先级, 通常优先级需在32766至35000之间
+        "com":"forward@rule",
+        "op":"add",                 // method is add
+        "1":"video",                // rule name is senser
+        "2":"",                     // source ip is space
+        "3":"",                     // mask is space
+        "4":"",                     // source interface is space
+        "5":"",                     // mark id is space
+        "6":"2",                    // route table id
+                                            // 1 is first LTE/NR
+                                            // 2 is second LTE/NR
+                                            // 3 is first WAN
+                                            // 4 is second WAN
+                                            // 5 is WISP(2.4G)
+                                            // 6 is WISP(5.8G)
+        "7":"33000"                 // priority, Usually the priority needs to be between 32766 and 35000
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue",
     "cmd2":"ttrue"
 }
-```
-#### 示例-删除原添加的名为senser及名为video的策略路由规则
+```    
+Click [Policy based routing](../com/forward/rule.md) to see more
 
+#### **Delete policy-based route rule named senser and video**   
+Send
 ```json
 {
     "cmd1":
     {
-        "com":"forward@rule",             // 策略路由组件
-        "op":"delete",                    // 调用delete接口添加规则, 此规则的名称为video
-        "1":"senser"                          // 规则名称
+        "com":"forward@rule",
+        "op":"delete",                 // method is delete
+        "1":"senser"                    // rule name is senser
     },
     "cmd2":
     {
-        "com":"forward@rule",             // 策略路由组件
-        "op":"delete",                    // 调用delete接口添加规则, 此规则的名称为video
-        "1":"video"                          // 规则名称
+        "com":"forward@rule",
+        "op":"delete",                 // method is delete
+        "1":"video"                    // rule name is video
     }
 }
-```
-***注意, 实际发送时不允许包含注解***
-- 网关返回
+```   
+Receive
 ```json
 {
     "cmd1":"ttrue",
     "cmd2":"ttrue"
 }
-```
+```   
+Click [Policy based routing](../com/forward/rule.md) to see more
 
 
 
-## 对照组件文档使用TCP(JSON)协议管理
 
-有两种方式可以查询到所有组件文档, 通过这些组件文档可以管理到网关的每一个功能
-- 访问 [在线组件文档](../com/) 查看组件文档, 此在线文件会随着开发新的功能动态增加及修订
-- 资询技术支持人员
 
-#### 组件文档要点
+## Reference the component documentation to manage the gateway using the JSON command
 
-- 在 [在线组件文档](../com/) 中首先以行的形式列出了系统中常用的项目, 每个项目下包含了组件文档
-- 点击项目进入项目中, 会以行的形式列出此项目下所有的组件文档
-- 点击组件打开组件文档, 组件文件首先是抬头, 抬头是组件名称介绍
-- 组件文档首先是介绍此组件的功能, 然后就是 **Configuration**, 配置是JSON格式, 可以在JSON控制协议或命令行中查询或修改这些配置, 通常文档中会给出修改及查询示例
-- 组件文档 **Configuration** 之后通常是介绍此组件的 **Methods**, 可以在JSON控制协议或命令行中调用这些方法
+There are two ways to query all component documentation, Each function of the gateway can be managed through these component documents
+- Access [Online component documentation](../com/) View component documentation, an online file that is dynamically added and revised as new features are developed
+- Contact technical support
 
-#### 对照组件文档查询组件配置
+#### Component documentation points   
+- In [Online component documentation](../com/) projects in the system are listed in the form of a directory, and each project contains component documents
+- Clicking on a project to enter the project will list all the component documents under this project
+- Click on the component to open the component document, which begins with a function description
+- Then there is **Configuration**. Configuration is in JSON format, There are also examples of queries or modifications, The configuration can be queried or modified in the HE command
+- This is usually followed by an introduction to the **Methods** of this component, There are also examples of calls, which can be called in the HE command
 
-在组件文档的抬头中会指出组件名, 比如 [Syslog Management](../com/land/syslog.md) 的组件名为 **land@syslog**
-- 发送JOSN查询指令, 对应的HE指令为land@syslog
-```json
-{
-    "cmd1":
+#### Reference document query component configuration   
+The component name is given in the **Configuration**, for example [Syslog Management](../com/land/syslog.md) component name is **land@syslog**
+
+- Send **component name** all configurations for this component are returned, The attributes and examples of each configuration are described detailedly in **Configuration** in the component documentation
+    ```json
     {
-        "com":"land@syslog"
+        "cmd1":
+        {
+            "com":"land@syslog"
+        }
     }
-}
-```
-
-网关将返回如下, cmd1的属性即是land@syslog的配置
-```json
-{
-    "cmd1":
+    ```   
+    Receive, cmd1 is the land@syslog' configuration
+    ```json
     {
-        "status":"enable",               // 开启syslog
-        "type":"init|serv|joint|default",// 记录启动项及关机项, 服务, 事件及其它默认类型相关的日志
-        "level":"info",                  // 只记录通知级别的日志
-        "trace":"enable",                // 记录代码位置及进程ID
-        "size":"20",                     // 记录池为20k
-        "remote":"192.168.8.100",        // 远程日志服务器地址为192.168.8.100
-        "port":"514"                     // 远程日志服务器的端口为514
+        "cmd1":
+        {
+            "status":"enable",                // enable the syslog functions
+            "location":"memory",              // logs stored in memory, restart will be lost
+            "type":"arch|land|default",       // log the arch, land, default log
+            "level":"info",                   // log level is normal infomation
+            "trace":"disable",                // disable the code information
+            "size":"100",                     // log buffer is 100k
+            "remote":"192.168.8.250",         // send the syslog to remote server 192.168.8.250
+            "port":"514"                      // send the syslog to remote server port 514
+        }
     }
-}
-```
+    ```
 
-- 也可以在发送JOSN指令中查询组件配置中指定的属性, 只需要增加 **ab**属性, 在 **ab** 属性的值中给出指定的属性
-```json
-{
-    "cmd1":
+- Queries the attributes specified in the component configuration, You only need to give the specified attribute in **ab**
+    ```json
     {
-        "com":"land@syslog",
-        "ab":"size"
+        "cmd1":
+        {
+            "com":"land@syslog",
+            "ab":"size"
+        }
     }
-}
-```
+    ```   
+    Receive, cmd1 is the land@syslog' configuration
+    ```json
+    {
+        "cmd1":"100"
+    }
+    ```
 
-网关将返回如下, cmd1的属性值即是land@syslog配置下size属性的值
-```json
-{
-    "cmd1":"100"
-}
-```
-
-#### 对照组件文档修改组件配置
-
-接以上 [Syslog Management](../com/land/syslog.md) 的组件文档, 在文档的 **Configuration** 中描述属性可以在JOSN指令协议中修改
-- 通过JSON指令协议修改land@syslog的远程日志服务器(remote属性值)为192.168.8.230
+#### Refer to the component documentation to modify the component configuration   
+Refer to [Syslog Management](../com/land/syslog.md), The attributes described in **Configuration** of the document can be modified in the JSON command by given **ab** and **v**, with **op** be **=** or **op** be **|**
+- Modify the remote attribute of the land@syslog remote log server
     ```json
     {
         "cmd1":
@@ -1275,19 +1454,18 @@ enable
 	        "com":"land@syslog",
 	        "ab":"remote",
 	        "op":"=",
-	        "v":"192.168.8.230"
+	        "v":"192.168.8.250"
         }
     }
-    ```
-
-    网关将返回如下, cmd1的属性值指示是否成功, 成功返厍ttrue, 失败返回tfalse
+    ```   
+    Receive
     ```json
     {
         "cmd1":"ttrue"
     }
     ```
 
-- 通过JSON指令协议同时修改land@syslog的多个属性值, 以下同时修改remote及port两个属性, 并不对其它的属性产生任何影响
+- Modify multiple attributes of land@syslogd on the JSON command at the same time. Modifying the remote and port attributes does not affect other attributes
     ```json
     {
         "cmd1":
@@ -1296,21 +1474,20 @@ enable
 	        "op":"|",
 	        "v":
             {
-                "remote":"192.168.8.231",
-                "port":"510"
+                "remote":"192.168.8.250",
+                "port":"500"
             }
         }
     }
-    ```
-
-    网关将返回如下, cmd1的属性值指示是否成功, 成功返厍ttrue, 失败返回tfalse
+    ```   
+    Receive
     ```json
     {
         "cmd1":"ttrue"
     }
     ```
 
-- 通过JSON指令协议修改land@syslog的所有配置, 组件配置都是一个JSON, 如要修改所有的配置必须同样的给出一个JSON
+- Set land@syslogd in the JSON command. All configurations and component configurations are JSON. To modify all configurations, you must provide the same JSON
     ```json
     {
         "cmd1":
@@ -1330,19 +1507,17 @@ enable
             }
         }
     }
-    ```
-
-    网关将返回如下, cmd1的属性值指示是否成功, 成功返厍ttrue, 失败返回tfalse
+    ```   
+    Receive
     ```json
     {
         "cmd1":"ttrue"
     }
     ```
 
-#### 对照组件文档调用组件接口
-
-接以上 [Syslog Management](../com/land/syslog.md) 的组件文档, 在文档的 **Methods** 中描述方法都可以在JSON指令协议中调用
-- 在JSON指令协议中调用组件land@syslog的clear接口清除日志
+#### call a component method by referring to the component documentation   
+Refer to [Syslog Management](../com/land/syslog.md), Methods described in the documentation **Methods** can be calle on the JSON command by given **op**
+- Call the clear method of component land@syslog to clear all current logs
     ```json
     {
         "cmd1":
@@ -1351,9 +1526,8 @@ enable
 	        "op":"clear"
         }
     }
-    ```
-
-    网关将返回如下, cmd1的属性值指示是否成功, 成功返厍ttrue, 失败返回tfalse
+    ```   
+    Receive
     ```json
     {
         "cmd1":"ttrue"
@@ -1362,102 +1536,99 @@ enable
 
 
 
-
-
 ---
+## Local search protocol
+All gateways in the network are searched by broadcasting to **UDP port 22222** on the LAN
 
-
-
-## 局域网搜索协议
-在局域网通过向 **UDP端口22222** 广播搜索网内的所有网关
-##### 1. 搜索网内网关交互流程
-图示
+##### 1. Search gateway communication process   
 ![avatar](./localport_search_step.png)
-流程图（与上图一致, 如无法显示请忽略）
+Flow chart (consistent with the figure above, please ignore it if it cannot be displayed)
 ```flow
-device=>end: 2. 属于对应 组 的网关向IP为255.255.255.255的UDP端口22222回复MAC及IP及WEB端口: MAC地址|IP地址|管理网页端口|
-data=>operation: 1. 管理工具向IP为255.255.255.255的UDP端口22222广播字符串: 组名
-client=>start: 开始
+device=>end: 2. The gateway that belongs to the corresponding group replies the MAC address, IP address, and WEB port to UDP port 22222 whose IP address is 255.255.255.255: MAC|IP|port|
+data=>operation: 1. The management tool broadcasts to UDP port 22222 whose IP address is 255.255.255.255. Character string: group name
+client=>start: Begin
 client->data->device
 ```
-*注: 所有网关默认都属于default组（可通过网页修改）, 向UDP端口22222广播default即可搜索局域网内所有的网关*
 
-##### 2. 搜索网内的网关交互详解
-- 1. **管理工具** 发送搜索请求
-    即向IP为255.255.255.255的UDP端口22222广播组名7个字符default, 所有在网内网关都能收到这个字符串
+##### 2. Search the gateway interaction details in the network
+- 1. **management tool** send the search string
+    That is, broadcast the group name with seven characters default to UDP port 22222 whose IP address is 255.255.255.255. All in-network gateways can receive this string
     ```
     default
     ```
-- 2. **网关** 回复
-    网内所有网关收到default字符串后会向UDP端口22222广播回复自已的MAC地址、IP地址及管理网页的端口, 格式为: 
+- 2. **gateway** reply
+    After receiving the default string, all gateways on the network will broadcast their MAC address, IP address, and WEB port to UDP port 22222 in the format of:
     ```
-    MAC地址|IP地址|管理网页端口
+    MAC|IP|PORT
     ```
-- 示例: 如网关的MAC为00:03:7F:12:BB:80、IP为192.168.8.1、WEB管理服务器端口为80, 回复数据将为如下32个字符加上十六进制的0x0结尾:
+- Example: if the MAC address of the gateway is 00:03:7F:12:BB:80, IP address is 192.168.8.1, and the port number of the WEB management server is 80, the reply data will contain the following 32 characters and end with 0x0 in hexadecimal:
     ```
     00037F12BB80|192.168.8.1|80
     ```
-##### 3. 使用Windwos工具使用局域网搜索协议测试搜索网内的网关
-- 左边为发送工具, 向192.168.8.1的22222端口发送UDP包(广播是需要向255.255.255.255的22222端口发UDP包,此工具不支持广播所以使用单播方式代替演示)
-- 右边为接收工具, 在当前PC机(192.168.8.250)上的22222端口上接收网关的回复包
+
+##### 3. Use the Windwos tool to test the gateway within the search network using the LAN search protocol
+- On the left is the send tool, which sends UDP packets to port 22222 of 192.168.8.1. (Broadcast needs to send UDP packets to port 22222 of 255.255.255.255. This tool does not support broadcast, so unicast mode is used instead of demonstration.)
+- On the right is the receiving tool, which receives the gateway reply packet on port 22222 on the current PC (192.168.8.250)
 ![avatar](./localport_search.png)
-*注意: 因未找到合适的广播工具而用单播工具代替演示, 在实际开发过程中通过向UDP的22222端口广播相同的数据将产生相同的结果*
+
+*Note: Using a unicast tool instead of a demonstration because a suitable broadcast tool could not be found, broadcasting the same data to UDP port 22222 during actual development would produce the same result packet*
 
 
-## 局域网查询协议
-在局域网通过向 **UDP端口22222** 广播搜索并查询网内的所有网关的信息, 因使用UDP协议所以当交互数据过大时会出现丢包的问题, 不合适做信息量较大的交互
 
-##### 1. 查询网内网关基本信息交互流程
-图示
+---
+## Local query protocol
+In the LAN, through the **UDP port 22222** broadcast search and query information of all gateways in the network, because the use of UDP protocol, when the interaction data is too large, there will be a packet loss problem, it is not suitable to do a large amount of information interaction
+
+##### 1. Querying the communication process of the gateway on a network
 ![avatar](./localport_query_step.png)
-流程图（与上图一致, 如无法显示请忽略）
+Flow chart (consistent with the figure above, please ignore it if it cannot be displayed)
 ```flow
-device=>end: 2. 属于对应 组 的网关向IP为255.255.255.255的UDP端口22222回复: MAC地址-指令回复1|指令回复2|指令回复2|...
-data=>operation: 1. 管理工具向IP为255.255.255.255的UDP端口22222广播字符串: 组名+查询指令1|查询指令2|查询指令3|…
-client=>start: 开始
+device=>end: 2. The gateway that belongs to the corresponding group replies the MAC address, IP address, and WEB port to UDP port 22222 whose IP address is 255.255.255.255: MAC-HE Command1 return|HE Command2 return|HE Command3 return|...
+data=>operation: 1. The management tool broadcasts to UDP port 22222 whose IP address is 255.255.255.255. Character string: group name+HE Command1|HE Command2|HE Command3|…
+client=>start: Begin
 client->data->device
 ```
-*注: 所有网关默认都属于default组（可通过网页修改）, 广播default即可搜索局域网内所有的网关*
 
-##### 2. 查询网内网关基本信息交互详解
-- 1. **管理工具** 发送查询请求, 即向IP为255.255.255.255的UDP端口22222广播组名7个字符default加逗号及以逗号间隔的指令, 所有在网内网关都能收到这个字符串
+##### 2. Query network gateway information communication details
+- 1. **management tool** Send a query request to UDP port 22222 whose IP address is 255.255.255.255 to broadcast the group name with 7 characters default plus commas (,) and the HE command. All Intranet gateways can receive this string
     ```
-    default+HE查询指令1|HE查询指令2|HE查询指令3
+    default+HE command1|HE command2|HE command3
     ```
-- 2. **网关** 回复, 所有网关收到后会向UDP端口22222广播回复自已的MAC地址、IP地址及指令的执行结果, 格式为: 
+- 2. **Gateway** reply
     ```
-    MAC地址-HE查询指令1回复|HE查询指令2回复|HE查询指令3回复
+    MAC-HE command1 return|HE command2 return|HE command3 return
     ```
-    以下列举几个常用的HE指令, HE指令格式介绍见 [HE指令介绍](../use/he_command.md) , 具体更多的指令可以参看网关组件对应的介绍文档:
+    Here are some common HE command, See this document for more [HE command](../use/he_command_en.md):
     ```
-    land@machine:model           //  查询网关的型号
-    land@machine:version         //  查询网关的软件版本
-    land@machine:mode            //  查询网关的工作模式
-    ifname@lte.status:imei       //  查询LTE的IMEI号
-    ifname@lte.status:iccid      //  查询LTE的CCID号
-    ifname@lte.status:signal     //  查询LTE的信号
-    ifname@lte.status:rssi       //  查询LTE的信号强度
-    ifname@lte.status:rsrp       //  查询LTE的RSRP
-    gnss@nmea.info:step          //  查询GPS状态
+    land@machine:model           //  query the model of gateway
+    land@machine:version         //  query the version of gateway
+    land@machine:mode            //  query the operation mode of gateway
+    ifname@lte.status:imei       //  query the LTE/NR IMEI of gateway
+    ifname@lte.status:iccid      //  query the LTE/NR ICCID of gateway
+    ifname@lte.status:signal     //  query the LTE/NR signal level of gateway
+    ifname@lte.status:rssi       //  query the LTE/NR rssi of gateway
+    ifname@lte.status:rsrp       //  query the LTE/NR rsrp of gateway
+    gnss@nmea.info:step          //  query the location status of gateway
     ```
 
-- 示例
-    如要查询局域网所有网关的型号及IMEI号将发送如下:
+- Example
+    The following information is sent to query the model and IMEI of all gateways on the LAN:
     ```
     default+land@machine:model|ifname@lte.status:imei
     ```
-    如MAC为00:03:7F:12:3A:D0型号为A218的网关将回复如下：
+    For example, if the MAC address is 00:03:7F:12:3A:D0 (IP address is 192.168.8.1), the gateway model A218 responds as follows：
     ```
     00037F123AD0-A218|862107043556307
     ```
-    如MAC为00:03:7F:13:3A:D8型号为V519的网关将回复如下：
+    For example, if the MAC address is 00:03:7F:13:3A:D8 (IP address is 192.168.8.1), the gateway whose model is V519 responds as follows：
     ```
     00037F133AD08-V519|86210704355692
     ```    
-##### 3. 使用Windwos工具测试查询网内的网关收发包
-- 左边为发送工具, 向192.168.8.1的22222端口发送UDP包, 查询局域网内所有网关的型号及CCID号
-- 右边为接收工具, 在当前PC机(192.168.8.250)上的22222端口上接收网关的回复包, MAC为88:12:4E:30:91:A0的网关回复自已的型号为A219, CCID号为89860117851138508772
+##### 3. Use the Windwos tool to test the gateway receiving and sending packets within the inquiry network   
+- On the left, the send tool sends UDP packets to port 22222 of 192.168.8.1 to query the models and CCID numbers of all gateways on the LAN
+- On the right, the receiver tool receives the reply packet from the gateway on port 22222 of the current PC (192.168.8.250). The gateway whose MAC address is 88:12:4E:30:91:A0 returns its model number to A219 and CCID number to 89860117851138508772
 ![avatar](./localport_query.png)
-*注意: 因未找到合适的广播工具而用单播工具代替演示, 在实际开发过程中通过向UDP的22222端口广播相同的数据将产生相同的结果*
+
+*Note: Using a unicast tool instead of a demonstration because a suitable broadcast tool could not be found, broadcasting the same data to UDP port 22222 during actual development would produce the same result packet*
 
 

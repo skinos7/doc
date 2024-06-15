@@ -5,17 +5,17 @@
 可通过几种方式登录网关使用HE指令:
 - 通过Telnet客户端连接网关登录后使用
 - 通过SSH客户端连接网关登录后使用
-- 通过TTL串口连接网关后可以直接使用(串口波特率通常为57600/8位数据位/1位停止位/无流控及校验)
-- 通过RS232串口连接网关后可以直接使用(串口波特率通常为57600/8位数据位/1位停止位/无流控及校验)
-- 通过RS485串口连接网关后可以直接使用(串口波特率通常为57600/8位数据位/1位停止位/无流控及校验)
+- 通过TTL串口连接网关后使用
+- 通过RS232串口连接网关后使用
+- 通过RS485串口连接网关后使用
 
 ##### Telnet客户端下使用HE指令   
 1. 首先在网关管理网页下的 **<系统>** 下的 **<Telnet服务器>** 界面中打开 **Telnet服务器**
-2. 通过Telnet客户端使用 用户名及密码 登录网关后即可进入终端界面
+2. 通过Telnet客户端使用 用户名 及 密码 登录网关后即可进入终端界面
 
 ##### SSH客户端下使用HE指令   
 1. 首先在网关管理网页下的 **<系统>** 下的 **<SSH服务器>** 界面中打开 **SSH服务器**
-2. 通过SSH客户端使用 用户名及密码 登录后即可进入终端界面
+2. 通过SSH客户端使用 用户名 及 密码 登录后即可进入终端界面
 
 ##### TTL/RS232/RS485串口下使用HE指令   
 1. 首先在网关管理网页下的 **<应用>** 下的 **<串口1>** 或 **<串口2>**(具体跟据你使用的串口定) 界面中启用 **状态**, 并修改 **模式** 为 **终端命令行** 模式后后应用
@@ -52,20 +52,20 @@
 
 #### **HE指令介绍**   
 + 每条命令占一行, 以回车结尾, 终端命令可分为三种类型:
-	+ **查询配置**               用于查询网关某些功能组件当前的一些配置信息
-	+ **修改配置**               用于修改网关某些功能组件的配置
-	+ **调用组件方法**            用于执行网关某些功能组件操作, 通常如查询状态/启动/禁用等都属于此类型
+	+ **查询配置**               用于查询网关某些功能当前的一些配置信息
+	+ **修改配置**               用于修改网关某些功能的配置
+	+ **调用功能项的接口(API)**   用于执行网关某些功能操作, 通常如获取状态/启动/禁用等都属于此类型
 + 命令的返回类型
-	+ **字符串**              用于表示单一的信息(被调用的方法返回talk_t类型的字符串), *以换行符结尾后并以#加一个空格在新行提示*
+	+ **字符串**               用于表示单一的信息(被调用的接口返回talk_t类型的字符串), *以换行符结尾后并以#加一个空格在新行提示*
 	+ **ttrue** 或 **tfalse** ttrue通常用于表示操作成功, tfalse表示操作失败, *以换行符结尾后并以#加一个空格在新行提示*
-	+ **{JSON}**              用于表示一些复杂的信息, 所含多种信息, 以{开头并以}结尾的JSON对象(被调用的方法返回talk_t类型的json结构), *以换行符结尾后并以#加一个空格在新行提示*
-	+ **空**                  用于表示未得到可用信息(被调用的方法返回NULL时为空), *以换行符结尾后并以#加一个空格在新行提示*
+	+ **{JSON}**              用于表示一些复杂的信息, 所含多种信息, 以{开头并以}结尾的JSON对象(被调用的接口返回talk_t类型的json结构), *以换行符结尾后并以#加一个空格在新行提示*
+	+ **空**                  用于表示未得到可用信息(被调用的接口返回NULL时为空), *以换行符结尾后并以#加一个空格在新行提示*
 
 #### **查询配置**   
-+ 查询网关对应组件的所有配置时给出对应的 **组件名称** 回车即可
++ 查询网关某项功能的所有配置时给出功能对应的 **组件名称** 回车即可
 通常返回值是一个JSON
     ```shell
-    # land@machine                    # 查询land@machine组件(设备基本信息)的配置
+    # land@machine                    # 查询设备基本信息(land@machine组件)的所有配置
     {                                 # 返回一个完整的JSON对象
         "mode":"nmisp",                   # 工作模式
         "name":"ASHYELF-12AAD0",          # 网关名称
@@ -76,40 +76,41 @@
     }
     # 
     ```   
-    > 具体设备基本信息的配置参数介绍参见 *[Management of Basic Infomation](../com/land/machine.md)*
+    > 具体设备基本信息的配置参数介绍参见 *[设备基本信息](../com/land/machine.md)*
 
-+ 查询组件配置指定的属性时给出 **组件名称:属性路径** 回车即可
++ 如果只查询功能配置中的某项属性时需要给出属性, 即 **组件名称:属性路径** 回车即可
 返回值可以为一个字符串也可以为一个JSON, 具体看对应的属性的值
     ```shell
-    # land@machine:name              # 查询land@machine组件配置下的name属性的值
+    # land@machine:name              # 查询设备基本信息中主机名称, 即land@machine配置中的name属性的值
     A218-120108                      # 返回一个字符串
     # 
     ```   
-+ 当组件的属性有很多层次时, **属性路径** 就会以 **/** 号分隔多层的属性名, 属性路径用于定位属性, 如下
+
++ 当功能配置的属性有很多层次时, **属性路径** 就会以 **/** 号分隔多层的属性名, 属性路径用于定位属性, 如下
     ```shell
-    # ifname@lan:static              # 查询ifname@lan(LAN口管理)组件配置下的static属性的值
+    # ifname@lan:static              # 查询LAN口(ifname@lan)配置中的static属性的值
     {
         "ip":"192.168.8.1",
         "mask":"255.255.255.0"
     }
-    # ifname@lan:static/ip           # 查询ifname@lan(LAN口管理)组件配置下的static属性下ip属性的值
+    # ifname@lan:static/ip           # 查询LAN口(ifname@lan)配置中的static属性下ip属性的值
     192.168.8.1
     # 
     ```   
-    > 具体本地网络的配置参数介绍参见 *[LAN Network Management](../com/ifname/lan.md)*
+    > 具体本地网络的配置参数介绍参见 *[本地网络(LAN)](../com/ifname/lan.md)*
 
     以上示例通过 **属性/下级属性/下级属性/…** 这种路径式的方式来定位多次层属性
 
 #### **修改配置**   
-+ 修改组件配置时与查询组件配置相似，首先给出 **组件名称**， 然后给出修改属性的 **属性路径**，最后就是给出 **值**
-    当修改整个组件的值时:
++ 修改网关某项功能的配置与查询相似，首先给出功能对应的 **组件名称**， 然后给出修改属性的 **属性路径**，最后就是给出 **值**
+    当修改整个功能的配置时:
     ```shell
     组件名称=值
     ```   
-    修改整个组件的值时, 通常值必须为一个JSON(即以{开头并以}结尾)
+    修改整个功能配置的值时, 值必须为一个JSON(即以{开头并以}结尾)
     修改成功返回 **ttrue**, 失败返回 **tfalse**, 见以下示例
     ```shell
-    # forward@alg               # 查询ALG的配置
+    # forward@alg               # 查询应用层网关(forward@alg)的配置
     {
         "amanda":"disable",
         "ftp":"enable",
@@ -124,34 +125,27 @@
         "udplite":"disable"
     }
     #
-    # forward@alg={"amanda":"enable","ftp":"enable","h323":"enable","irc":"enable","pptp":"enable","gre":"enable""rtsp":"enable","sip":"enable","snmp":"enable","tftp":"enable","udplite":"enable"}   # 修改整个ALG配置
+    # forward@alg={"amanda":"enable","ftp":"enable","h323":"enable","irc":"enable"}   # 修改整个应用层网关(forward@alg)的配置
     ttrue                          # 返回ttrue表示修改成功
     # forward@alg                  # 修改后再次查看配置, 已发生变化
     {
         "amanda":"enable",
         "ftp":"enable",
         "h323":"enable",
-        "irc":"enable",
-        "pptp":"enable",
-        "gre":"enable",
-        "rtsp":"enable",
-        "sip":"enable",
-        "snmp":"enable",
-        "tftp":"enable",
-        "udplite":"enable"
+        "irc":"enable"
     }
     # 
     ```   
-    > 具体应用层网关的配置参数介绍参见 *[Management of Application Layer Gateway](../com/forward/alg.md)*
+    > 具体应用层网关的配置参数介绍参见 *[应用层网关](../com/forward/alg.md)*
 
-+ 当修改组件指定属性时:
++ 只修改功能配置指定的属性时, 给出 **组件名称** 时给出 **属性路径** :
     ```shell
     组件名称:属性路径=值
     ```   
     值可以为一个JSON(即以{开头并以}结尾), 也可以为一个字符串
     而返回值如果是 **ttrue** 表示修改成功, 或是 **tfalse** 表示修改失败,见以下示列
     ```shell
-    # gnss@nmea                               # 查询gnss@nmea(GPS管理)配置
+    # gnss@nmea                               # 查询全球定位(gnss@nmea)所有的配置
     {
         "status":"enable",
         "client":
@@ -195,7 +189,7 @@
             "limit":"5"
         }
     }
-	# gnss@nmea:client                        # 查询gnss@nmea(GPS管理)配置下的client属性的值
+	# gnss@nmea:client                        # 查询全球定位(gnss@nmea)配置中的client属性的值
     {
         "status":"disable",
         "proto":"tcp",
@@ -211,9 +205,9 @@
         "frame_end":"disable",
         "frame_end_string":""
     }
-	# gnss@nmea:client={"status":"enable","server":"192.168.8.250","port":"8000","interval":"30","id":"2232"}  # 修改gnss@nmea(GPS管理)下的client属性
+	# gnss@nmea:client={"status":"enable","server":"192.168.8.250","port":"8000","interval":"30","id":"2232"}  # 修改全球定位(gnss@nmea)配置中的client属性
 	ttrue
-	# gnss@nmea:client                       # 查询gnss@nmea(GPS管理)下client属性修改后的结果
+	# gnss@nmea:client                       # 查询全球定位(gnss@nmea)配置中client属性修改后的结果
     {
         "status":"enable",
         "server":"192.168.8.250",
@@ -221,7 +215,7 @@
         "interval":"30",
         "id":"2232"
     }
-	# gnss@nmea:client/server=192.168.8.251  # 修改gnss@nmea(GPS管理)client属性下server属性的值
+	# gnss@nmea:client/server=192.168.8.251  # 修改全球定位(gnss@nmea)配置中client属性下server属性的值
 	ttrue
 	# gnss@nmea:client                       # 查询修改后的结果
 	{
@@ -231,7 +225,7 @@
 	    "interval":"30",
 	    "id":"2232"
 	}
-	# gnss@nmea                              # 查询gnss@nmea(GPS管理)所有的配置
+	# gnss@nmea                              # 查询全球定位(gnss@nmea)所有的配置
     {
         "status":"enable",
         "client":
@@ -269,16 +263,16 @@
     }
 	# 
     ```   
-    > 具体GNSS定位的配置参数介绍参见 *[GNSS NEMA Protocol Management](../com/gnss/nmea.md)*
+    > 具体全球定位的配置参数介绍参见 *[全球定位](../com/gnss/nmea.md)*
  
-+ 当修改指定的几个属性而不影响其它属性时:
++ 当修改功能配置中指定的几个属性而不影响其它属性时:
     ```shell
     组件名称|{“属性1”:”值1”, “属性2”:”值2” , “属性3”:”值3”}
     ```   
     值1, 值2, 值3通常为一个字符串
     而返回值如果是 **ttrue** 表示修改成功, 或是 **tfalse** 表示修改失败,见以下示列
     ```shell
-	# gnss@nmea:client                      # 查询gnss@nmea(GPS管理)的client属性的值
+	# gnss@nmea:client                      # 查询全球定位(gnss@nmea)中client属性的值
 	{
 	    "status":"enable",
 	    "server":"192.168.8.251",
@@ -286,28 +280,28 @@
 	    "interval":"30",
 	    "id":"2232"
 	}
-	# gnss@nmea:client|{"status":"disable","server":"192.168.2.11","proto":"tcp"}  # 修改gnss@nmea(GPS管理)的client属性的值
+	# gnss@nmea:client|{"status":"disable","server":"192.168.2.11","proto":"tcp"}  # 修改全球定位(gnss@nmea)中client属性的值, 但不影响其它未给出的属性
 	ttrue
 	# gnss@nmea:client                      # 再次查询时指定的几项属性已改变, 未指定的属性未发生变化
 	{
-        "status":"disable",
-        "server":"192.168.2.11",
-        "port":"8000",
-        "interval":"30",
-        "id":"2232",
-        "proto":"tcp"
+        "status":"disable",                 # 已修改
+        "server":"192.168.2.11",            # 已修改
+        "port":"8000",                      # 未变化
+        "interval":"30",                    # 未变化
+        "id":"2232",                        # 未变化
+        "proto":"tcp"                       # 已添加
 	}
 	# 
     ```   
-    > 具体GNSS定位的配置参数介绍参见 *[GNSS NEMA Protocol Management](../com/gnss/nmea.md)*
+    > 具体全球定位的配置参数介绍参见 *[全球定位](../com/gnss/nmea.md)*
  
-+ 当要清除组件配置的某个属性时可以在=号后直接回车即可:
++ 当要清除功能配置的某个属性时可以在=号后直接回车即可:
     ```shell
     组件名称:属性路径=
     ```   
     而返回值如果是 **ttrue** 表示清除成功, 或是 **tfalse** 表示清除失败,见以下示列
     ```shell
-    # gnss@nmea                         # 查询gnss@nmea(GPS管理)配置
+    # gnss@nmea                         # 查询全球定位(gnss@nmea)所有的配置
     {
         "status":"enable",
         "client":
@@ -344,9 +338,9 @@
             "limit":"5"
         }
     }
-	# gnss@nmea:client=                 # 清除gnss@nmea(GPS管理)的client属性
+	# gnss@nmea:client=                 # 清除全球定位(gnss@nmea)中client属性
 	ttrue
-	# gnss@nmea                         # 再次查询gnss@nmea(GPS管理)时已无client属性
+	# gnss@nmea                         # 再次查询全球定位(gnss@nmea)所有的配置时已无client属性
     {
         "status":"enable",
         "client2":
@@ -376,16 +370,19 @@
     }
 	# 
     ```   
-    > 具体GNSS定位的配置参数介绍参见 *[GNSS NEMA Protocol Management](../com/gnss/nmea.md)*
- 
-#### **调用组件方法**   
-调用组件方法需要给出组件名称及方法名称, 如有参数时还需要带入参数
-+ 当调用组件方法不带参数时    
+    > 具体全球定位的配置参数介绍参见 *[全球定位](../com/gnss/nmea.md)*
+
+
+#### **调用功能项的接口(API)**   
+
+调用功能项的接口(API)需要给出功能项对应的组件名称及接口名称(API), 如有参数时还需要带入参数
+
++ 当调用功能项接口(API)不带参数时    
     ```shell
     组件名称.接口名称
     ```   
     ```shell
-    # client@station.list                     # 调用client@station(客户端管理)的list方法获取当前客户端例表
+    # client@station.list                     # 调用终端管理(client@station)的list接口(API)获取当前客户端例表
     {
         "B4:2E:99:3F:ED:12":
         {
@@ -395,27 +392,27 @@
     }
     # 
     ```   
-    > 具体客户端管理的方法介绍参见 *[Management of Client Access](../com/client/station.md)*
+    > 具体终端管理的API介绍参见 *[终端管理](../com/client/station.md)*
  
-+ 当调用组件方法带参数时
++ 当调用功能项接口(API)带参数时
     ```shell
     组件名称.接口名称[ 参数 ]
     ```   
     ```shell
-    # clock@date.ntpsync[ntp1.aliyun.com]       # 调用clock@date(时间管理)的ntpsync方法实现与ntp1.aliyun.com的NTP对时
+    # clock@date.ntpsync[ntp1.aliyun.com]       # 调用系统时间(clock@date)的ntpsync接口(API)实现与ntp1.aliyun.com的NTP对时
     ttrue
     # 
     ```   
-    > 具体时间管理的方法介绍参见 *[Manage System Date](../com/clock/date.md)*
+    > 具体时间管理的API介绍参见 *[系统时间](../com/clock/date.md)*
 
-+ 当调用组件方法带多个参数时
++ 当调用功能项接口(API)带多个参数时
     ```shell
     组件名称.接口名称[ 参数1, 参数2, 参数3, … ]
     ```   
     ```shell
-    # land@auth.add[,xiaomi,4431232]  # 调用land@auth(帐号密码及权限管理)的add接口来添加帐号, 第一个参数域为空(无), 第二个参数帐号为xiaomi, 第三个参数密码为4431232
+    # land@auth.add[,xiaomi,4431232]  # 调用帐号密码及权限(land@auth)的add接口(API)来添加帐号, 第一个参数域为空(无), 第二个参数帐号为xiaomi, 第三个参数密码为4431232
     ttrue
-    # land@auth.list                  # 调用and@auth(帐号密码及权限管理)的list接口来获取当前所有的帐号
+    # land@auth.list                  # 调用帐号密码及权限(land@auth)的list接口(API)来获取当前所有的帐号
     {
         "admin":
         {
@@ -427,14 +424,14 @@
         }
     }
     ```   
-    > 具体用户管理的方法介绍参见 *[Username/Password and Permission Management](../com/land/auth.md)*
+    > 具体用户管理的接口介绍参见 *[用户名密码及权限](../com/land/auth.md)*
 
-+ 当调用组件方法返回JSON时, 可要求只返回JSON中指定的属性值
++ 当调用的功能项接口(API)返回JSON时, 可以要求只返回JSON中指定的属性值
     ```shell
     组件名称.接口名称:属性路径
     ```   
     ```shell
-    # ifname@lte.status  # 调用ifname@lte的status接口, 即查询系统中第一个LTE的状态
+    # ifname@lte.status                     # 调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态
     {
         "mode":"dhcpc",
         "ifname":"ifname@lte",
@@ -483,24 +480,25 @@
         },
         "state":"connected"
     }
-    # ifname@lte.status:ip                   # 调用ifname@lte的status接口, 即查询系统中第一个LTE的状态中的ip地址
+    # ifname@lte.status:ip                   # 调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并要求只返回状态中的ip地址
     10.33.13.103
-    # ifname@lte.status:operator_advise      # 调用ifname@lte的status接口, 即查询系统中第一个LTE的状态中的有关运营商的建议配置
+    # ifname@lte.status:operator_advise      # 调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并要求只返回状态中有关运营商的建议配置
     {
         "name":"中国联通",
         "dial":"*99#",
         "apn":"3gnet"
     }
-    # ifname@lte.status:operator_advise/apn  # 调用ifname@lte的status接口, 即查询系统中第一个LTE的状态中的有关运营商的建议的APN的配置
+    # ifname@lte.status:operator_advise/apn  # 调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并要求只返回状态中有关运营商的建议的APN的配置
     3gnet
     ```   
-    > 具体LTE网络管理的方法介绍参见 *[LTE/NR Network Management](../com/ifname/lte.md)*
+    > 具体LTE/NR网络管理的接口(API)介绍参见 *[LTE/NR(4G/5G)网络](../com/ifname/lte.md)*
 
 
 
 ---
+
 ## 常用的HE指令
-以下介绍常用的HE指令， 如查询LTE/NR信息， GNSS信息及重置网关等指令， 更多指令可参看各个组件的接口文档
+以下介绍常用的HE指令， 如查询LTE/NR信息， 全球定位及重置网关等指令，更多指令可参看各个功能组件的接口文档
 
 #### **获取网关基本配置**   
 输入
@@ -526,12 +524,12 @@
     "cfgversion":"44"                    # 配置版本
 }
 ```   
-点击 [Management of Basic Infomation](../com/land/machine.md) 查看更多
+点击 [设备基本信息](../com/land/machine.md) 查看更多
 
 #### **获取网关基本状态**   
 输入
 ```shell
-# 调用land@machine(设备基本信息)组件的status方法
+# 调用land@machine组件的status接口
 # land@machine.status
 ```   
 返回
@@ -551,13 +549,13 @@
     "current":"01:41:15:01:01:2016"      # 当前时间  时:分:秒:月:日:年
 }
 ```   
-点击 [Management of Basic Infomation](../com/land/machine.md) 查看更多
+点击 [设备基本信息](../com/land/machine.md) 查看更多
 
 
-#### **获取LTE/NR网络状态信息**   
+#### **获取LTE/NR(4G/5G)网络状态**   
 输入
 ```shell
-// 调用ifname@lte(4G网络管理)组件的status方法
+// 调用ifname@lte组件的status接口
 # ifname@lte.status
 ```   
 返回
@@ -589,27 +587,27 @@
     "operator":"中国联通"               # 运营商名称
 }
 ```   
-点击查看 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 介绍
+点击查看 [(LTE/NR(4G/5G)网络)](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 介绍
 
-#### **获取第二个4G状态信息**   
+#### **获取第二个LTE/NR(4G/5G)网络状态**   
 输入
 ```shell
-// 调用ifname@lte2(第二个4G网络管理)组件的status方法
+// 调用ifname@lte2组件的status接口
 # ifname@lte2.status
 ```   
 返回
 ```shell
 {
-    与 获取4G状态信息 的返回相同
+    与 ifname@lte.status 的返回相同
 }
 ```   
-点击查看 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 介绍
+点击查看 [(LTE/NR(4G/5G)网络)](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 介绍
 
 
 #### **获取客户端信息**   
 输入
 ```shell
-// 调用client@station(客户端管理)组件的list方法
+// 调用client@station组件的list接口
 # client@station.list
 ```   
 返回
@@ -638,12 +636,12 @@
     }
 }
 ```   
-点击查看 [Management of Client Access](../com/client/station.md) 介绍
+点击查看 [终端管理](../com/client/station.md) 介绍
 
 #### **获取定位信息**   
 输入
 ```shell
-// 调用gnss@nmea(GPS管理)组件的info方法
+// 调用gnss@nmea组件的info接口
 # gnss@nmea.info
 ```
 返回
@@ -660,13 +658,13 @@
     "sat":""               # 卫星数
 }
 ```   
-点击查看 [GNSS NEMA Protocol Management](../com/gnss/nmea.md) 介绍
+点击查看 [全球定位](../com/gnss/nmea.md) 介绍
 
 
-#### **获取网关LAN口信息**   
+#### **获取LAN口信息**   
 输入
 ```shell
-// 调用ifname@lan(LAN口管理)组件的status方法
+// 调用ifname@lan组件的status接口
 # ifname@lan.status
 ```   
 返回
@@ -684,152 +682,152 @@
     "livetime":"00:04:37:0"               # 在线时长 时:分:秒:天
 }
 ```   
-点击查看 [LAN Network Management](../com/ifname/lan.md) 介绍
+点击查看 [本地网络(LAN)](../com/ifname/lan.md) 介绍
 
 #### **重启网关**   
 输入
 ```shell
-// 调用land@machine(设备基本信息)组件的restart方法
+// 调用land@machine组件的restart接口
 # land@machine.restart
 ```   
 网关不返回任何信息， 将会立即重启
-点击查看 [Management of Basic Infomation](../com/land/machine.md) 介绍
+点击查看 [设备基本信息](../com/land/machine.md) 介绍
 
 #### **重置网关(恢复默认设置)**   
 输入
 ```shell
-// 调用land@machine(设备基本信息)组件的default方法
+// 调用land@machine组件的default接口
 # land@machine.default
 ```   
 网关不返回任何信息， 将会立即重启并重置所有配置
-点击查看 [Management of Basic Infomation](../com/land/machine.md) 介绍
+点击查看 [设备基本信息](../com/land/machine.md) 介绍
 
 
-#### **修改LTE/NR的APN**   
+#### **修改LTE/NR(4G/5G)的APN**   
 输入
 ```shell
-// 修改ifname@lte(4G网络管理)组件配置的属性下的profile属性的值为enable(表示自定义APN), 并且在profile_cfg下的apn属性的值中给出APN, 以下就是修改APN为MyCustomAPN
+// 修改ifname@lte组件配置的属性下的profile属性的值为enable(表示自定义APN), 并且在profile_cfg下的apn属性的值中给出APN, 以下就是修改APN为MyCustomAPN
 # ifname@lte|{"profile":"enable","profile_cfg":{"apn":"MyCustomAPN"}}
 ```   
 返回
 ```shell
 ttrue
 ```   
-点击查看 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 介绍
+点击查看 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 介绍
 
-#### **开启LTE/NR的GPS功能**   
+#### **开启LTE/NR(4G/5G)的定位功能**   
 输入
 ```shell
-// 修改ifname@lte(4G网络管理)组件配置的gnss属性下的status属性的值为enable
+// 修改ifname@lte组件配置的gnss的值为enable
 # ifname@lte:gnss=enable
 ```   
 返回
 ```shell
 ttrue
 ```   
-点击查看 [LTE/NR Network Management](../com/ifname/lte.md) 及 [LTE/NR Modem Management](../com/modem/lte.md) 介绍
+点击查看 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 介绍
 
-#### **开启定位功能**   
+#### **开启全球定位功能**   
 输入
 ```shell
-// 修改gnss@nmea(GPS管理)组件配置的status的值为enable
+// 修改gnss@nmea组件配置的status的值为enable
 # gnss@nmea:status=enable
 ```   
 返回
 ```shell
 ttrue
 ```   
-点击查看 [GNSS NEMA Protocol Management](../com/gnss/nmea.md) 介绍
+点击查看 [全球定位](../com/gnss/nmea.md) 介绍
 
-#### **修改无线热点(2.4G)的SSID名称**   
+#### **修改无线2.4G热点的SSID名称**   
 输入
 ```shell
-// 修改wifi@nssid(无线热点2.4G)组件配置的ssid的值为NewSSID
+// 修改wifi@nssid组件配置的ssid的值为NewSSID
 # wifi@nssid:ssid=NewSSID
 ```   
 返回
 ```shell
 ttrue
 ```   
-点击查看 [2.4G SSID Management](../com/wifi/nssid.md) 介绍
+点击查看 [2.4G热点](../com/wifi/nssid.md) 介绍
 
-#### **修改无线热点(2.4G)的密码**   
+#### **修改无线2.4G热点的密码**   
 输入
 ```shell
-// 修改wifi@nssid(无线热点2.4G)组件配置的wpa_key的值为NewPassword
+// 修改wifi@nssid组件配置的wpa_key的值为NewPassword
 # wifi@nssid:wpa_key=NewPassword
 ```   
 返回
 ```shell
 ttrue
 ```   
-点击查看 [2.4G SSID Management](../com/wifi/nssid.md) 介绍
+点击查看 [2.4G热点](../com/wifi/nssid.md) 介绍
 
-#### **同时修改无线热点(2.4G)的SSID名称及密码**   
+#### **同时修改无线2.4G热点的SSID名称及密码**   
 输入
 ```shell
-// 修改wifi@nssid(无线热点2.4G)组件的配置中的ssid, secure及wpa_key三个属性的值 
+// 修改wifi@nssid组件的配置中的ssid, secure及wpa_key三个属性的值 
 # wifi@nssid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}
 ```
 返回
 ```shell
 ttrue
 ```   
-点击查看 [2.4G SSID Management](../com/wifi/nssid.md) 介绍
+点击查看 [2.4G热点](../com/wifi/nssid.md) 介绍
 
-#### **修改无线热点(5.8G)的SSID名称**   
+#### **修改无线5.8G热点的SSID名称**   
 输入
 ```shell
-// 修改wifi@assid(无线热点5.8G)组件配置的ssid的值为NewSSID
+// 修改wifi@assid组件配置的ssid的值为NewSSID
 # wifi@assid:ssid=NewSSID
 ```   
 返回
 ```shell
 ttrue
 ```   
-点击查看 [5.8G SSID Management](../com/wifi/assid.md) 介绍
+点击查看 [5.8G热点](../com/wifi/assid.md) 介绍
 
-#### **修改无线热点(5.8G)的密码**   
+#### **修改无线5.8G热点的密码**   
 输入
 ```shell
-// 修改wifi@assid(无线热点5.8G)组件配置的wpa_key的值为NewPassword
+// 修改wifi@assid组件配置的wpa_key的值为NewPassword
 # wifi@assid:wpa_key=NewPassword
 ```   
 返回
 ```shell
 ttrue
 ```   
-点击查看 [5.8G SSID Management](../com/wifi/assid.md) 介绍
+点击查看 [5.8G热点](../com/wifi/assid.md) 介绍
 
-#### **同时修改无线热点(5.8G)的SSID名称及密码**   
+#### **同时修改无线5.8G热点的SSID名称及密码**   
 输入
 ```shell
-// 修改wifi@assid(无线热点5.8G)组件的配置中的ssid, secure及wpa_key三个属性的值 
+// 修改wifi@assid组件的配置中的ssid, secure及wpa_key三个属性的值 
 # wifi@assid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}
 ```   
 返回
 ```shell
 ttrue
 ```   
-点击查看 [5.8G SSID Management](../com/wifi/assid.md) 介绍
+点击查看 [5.8G热点](../com/wifi/assid.md) 介绍
 
 
 #### **修改admin用户的密码**   
 输入
 ```shell
-// 调用land@auth(帐号密码及权限管理组件)的modify方法, 参数1域表示为空, 参数2用户名为admin, 参数3原密码为admin, 参数4新密码为NewPassword
+// 调用land@auth的modify接口, 参数1域表示为空, 参数2用户名为admin, 参数3原密码为admin, 参数4新密码为NewPassword
 # land@auth.modify[,admin,admin,NewPassword]
 ```   
 返回
 ```shell
 ttrue
 ```   
-点击查看 [Username/Password and Permission Management](../com/land/auth.md) 介绍
+点击查看 [用户名密码及权限](../com/land/auth.md) 介绍
 
 
 
 ---
-##  参照组件文档使用HE指令管理网关
+##  参照功能组件文档使用HE指令管理网关
 
 有两种方式可以查询所有组件文档, 通过这些组件文档可以管理网关的每一个功能
 - 访问 [在线组件文档](../com/) 查看组件文档, 此在线文件会随着开发新的功能动态增加及修订
@@ -841,11 +839,11 @@ ttrue
 - 点击项目进入项目中, 会以行的形式列出此项目下所有的组件文档
 - 点击组件打开组件文档, 文件开始是功能介绍
 - 然后就是 **Configuration**, 配置是JSON格式, 其中还有查询或修改的示例, 可以在HE指令中查询或修改这些配置
-- 之后通常是介绍此组件的 **Methods**, 其中还有调用的示例, 可以在HE指令中调用这些方法
+- 之后通常是介绍此组件的 **Methods**, 即接口(API), 其中还有调用的示例, 可以在HE指令中调用这些接口
 
-#### 参照组件文档查询组件配置
+#### 参照功能组件文档查询组件配置
 
-在组件 **Configuration** 中会给出组件名, 比如 [Syslog Management](../com/land/syslog.md) 的组件名为 **land@syslog**
+在组件 **Configuration** 中会给出组件名, 比如 [日志管理](../com/land/syslog.md) 的组件名为 **land@syslog**
 
 - 在终端中输入 **组件名** 回车即会返回此组件的所有配置, 而在组件文档中的 **Configuration** 中会详细介绍每个配置的属性及示例
     ```shell
@@ -869,9 +867,9 @@ ttrue
     #
     ```
 
-#### 参照组件文档修改组件配置
+#### 参照功能组件文档修改组件配置
 
-接以上 [Syslog Management](../com/land/syslog.md) 的组件文档, 在文档的 **Configuration** 中描述属性可以在终端中通过 **组件名** 后加 **:属性** 加 **=值** 来修改
+接以上 [日志管理](../com/land/syslog.md) 的组件文档, 在文档的 **Configuration** 中描述属性可以在终端中通过 **组件名** 后加 **:属性** 加 **=值** 来修改
 - 在终端中修改land@syslog的远程日志服务器remote属性
     ```shell
     # land@syslog:remote=192.168.8.250       # 将land@syslog的远程日志服务器改为192.168.8.250
@@ -893,10 +891,10 @@ ttrue
     #
     ```
 
-#### 参照组件文档调用组件方法
+#### 参照功能组件文档调用组件接口
 
-接以上 [Syslog Management](../com/land/syslog.md) 的组件文档, 在文档 **Methods** 中描述的方法都可以在终端中通过 **组件名** 后加 **.方法** 来调用
-- 在终端中调用组件land@syslog的show方法显示当前日志
+接以上 [日志管理](../com/land/syslog.md) 的组件文档, 在文档 **Methods** 中描述的接口都可以在终端中通过 **组件名** 后加 **.接口** 来调用
+- 在终端中调用组件land@syslog的show接口显示当前日志
     ```shell
     # land@syslog.show
     Dec 15 15:47:20 V520-12CC70 user.warn syslog: modem@lte check simcard failed 102 times
@@ -917,15 +915,12 @@ ttrue
     Dec 15 15:48:35 V520-12CC70 user.warn syslog: modem@lte check simcard failed 117 times
     #
     ```
-- 在终端中调用组件land@syslog的clear方法清除当前所有日志
+- 在终端中调用组件land@syslog的clear接口清除当前所有日志
     ```shell
     # land@syslog.clear
     ttrue
     #
     ```
-`
-
-
 
 
 ##  在终端中如何进入Linux的Shell命令行
