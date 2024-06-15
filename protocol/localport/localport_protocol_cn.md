@@ -91,7 +91,7 @@
     ```json
     { "cmd1":"ifname@lte.shut", "cmd2":"ifname@lte.setup" }
     ```
-    *更多HE终端指令介绍见此文档 [HE指令介绍](../use/he/he_command_cn.md)*
+    *更多HE终端指令介绍见此文档 [HE指令介绍](../../use/he/he_command_cn.md)*
 
     
 #### JSON指令格式 --- JSON模式
@@ -253,7 +253,7 @@
 
 
 #### 示例-获取网关基本信息配置
-- 网关基本信息在land@machine组件的配置中, 发送查询land@machine配置指令即可(在终端中的命令为land@machine), 点击 [设备基本信息](../com/land/machine.md) 查看有关配置的介绍
+- 网关基本信息在land@machine组件的配置中, 发送查询land@machine配置指令即可(在终端中的命令为land@machine), 点击 [设备基本信息](../../com/land/machine.md) 查看有关配置的介绍
 ```json
 {
     "cmd1":
@@ -280,7 +280,7 @@
 ![avatar](./localport_jsontest.png)
 
 #### 示例-获取网关基本状态
-- 网关基本状态由land@machine组件的status接口返回, 发送调用land@machine组件status方法指令即可(在终端中的命令为land@machine.status), 点击 [设备基本信息](../com/land/machine.md) 查看有关status接口的介绍
+- 网关基本状态由land@machine组件的status接口返回, 发送调用land@machine组件status方法指令即可(在终端中的命令为land@machine.status), 点击 [设备基本信息](../../com/land/machine.md) 查看有关status接口的介绍
 ```json
 {
     "cmd1":
@@ -317,7 +317,7 @@
 
 
 #### 示例-获取LTE/NR(4G/5G)网络状态信息
-- LTE/NR(4G/5G)状态信息由ifname@lte的status接口返回, 点击 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 查看有关status接口的介绍
+- LTE/NR(4G/5G)状态信息由ifname@lte的status接口返回, 点击 [LTE/NR(4G/5G)网络](../../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../../com/modem/lte.md) 查看有关status接口的介绍
 ```json
 {
     "cmd1":
@@ -387,7 +387,7 @@
 
 
 #### 示例-断开LTE/NR(4G/5G)网络, 必须要有LTE/NR(4G/5G)网络的工作模式下才有效(如在4G/5G路由器或混合模式下)
-- 断开LTE网络连接调用ifname@lte组件的shut接口(在终端中的命令为ifname@lte.shut), 点击 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 查看shut接口介绍
+- 断开LTE网络连接调用ifname@lte组件的shut接口(在终端中的命令为ifname@lte.shut), 点击 [LTE/NR(4G/5G)网络](../../com/ifname/lte.md) 查看shut接口介绍
 ```json
 {
     "cmd1":
@@ -406,7 +406,7 @@
 ```
 
 #### 示例-发起LTE/NR(4G/5G)连网, 必须要有LTE/NR(4G/5G)网络的工作模式下才有效(如在4G/5G路由器或混合模式下)
-- 启用LTE/NR(4G/5G)连网调用ifname@lte组件的setup接口(在终端中的命令为ifname@lte.setup), 点击 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 查看setup接口介绍
+- 启用LTE/NR(4G/5G)连网调用ifname@lte组件的setup接口(在终端中的命令为ifname@lte.setup), 点击 [LTE/NR(4G/5G)网络](../../com/ifname/lte.md) 查看setup接口介绍
 ```json
 {
     "cmd1":
@@ -427,7 +427,7 @@
 
 
 #### 示例-设置禁用LTE/NR(4G/5G)网络(禁用后重启后也会保持禁用), 将改变网关的配置不建议频繁使用
-- 设置禁用LTE/NR(4G/5G)网络即是将ifname@lte配置中的status属性改为disable即可(在终端中的命令为ifname@lte:status=disable), 点击 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 查看配置介绍
+- 设置禁用LTE/NR(4G/5G)网络即是将ifname@lte配置中的status属性改为disable即可(在终端中的命令为ifname@lte:status=disable), 点击 [LTE/NR(4G/5G)网络](../../com/ifname/lte.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -448,7 +448,7 @@
 ```
 
 #### 示例-设置启用LTE/NR(4G/5G)连网(启用后重启后也会保持启用), 将改变网关的配置不建议频繁使用
-- 设置启用LTE/NR(4G/5G)网络即是将ifname@lte配置中的status属性改为enable即可(在终端中的命令为ifname@lte:status=enable), 点击 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 查看配置介绍
+- 设置启用LTE/NR(4G/5G)网络即是将ifname@lte配置中的status属性改为enable即可(在终端中的命令为ifname@lte:status=enable), 点击 [LTE/NR(4G/5G)网络](../../com/ifname/lte.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -470,7 +470,7 @@
 
 
 #### 示例-设置LTE/NR(4G/5G)网络的拨号APN相关的配置
-- 修改ifname@lte的配置即可, 修改APN需要先打开APN自定义, 然后设置APN相关的信息, 整个指令需要修改多项属性值, 点击 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 相关的配置介绍
+- 修改ifname@lte的配置即可, 修改APN需要先打开APN自定义, 然后设置APN相关的信息, 整个指令需要修改多项属性值, 点击 [LTE/NR(4G/5G)网络](../../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../../com/modem/lte.md) 相关的配置介绍
 ```json
 {
     "cmd1":
@@ -501,7 +501,7 @@
 
 
 #### 示例-获取第二个LTE/NR(4G/5G)网络状态信息(对于双模块网关)
-- 第二个LTE/NR状态信息由ifname@lte2的status接口返回(在终端中的命令为ifname@lte2.status), 点击[LTE/NR(4G/5G)网络](../com/ifname/lte.md)及[LTE/NR(4G/5G)基带](../com/modem/lte.md)查看有关status接口的介绍
+- 第二个LTE/NR状态信息由ifname@lte2的status接口返回(在终端中的命令为ifname@lte2.status), 点击[LTE/NR(4G/5G)网络](../../com/ifname/lte.md)及[LTE/NR(4G/5G)基带](../../com/modem/lte.md)查看有关status接口的介绍
 ```json
 {
     "cmd1":
@@ -524,7 +524,7 @@
 
 
 #### 示例-使用第一个LTE/NR(4G/5G)模块发送短信
-- 第一个LTE/NR的模块为modem@lte, 点击[LTE/NR(4G/5G)基带](../com/modem/lte.md)查看有关smssend接口的介绍
+- 第一个LTE/NR的模块为modem@lte, 点击[LTE/NR(4G/5G)基带](../../com/modem/lte.md)查看有关smssend接口的介绍
 ```json
 {
     "cmd1":
@@ -545,7 +545,7 @@
 
 
 #### 示例-获取第一个LTE/NR(4G/5G)模块的所有短信
-- 第一个LTE/NR的模块为modem@lte, 点击[LTE/NR(4G/5G)基带](../com/modem/lte.md)查看有关smslist接口的介绍
+- 第一个LTE/NR的模块为modem@lte, 点击[LTE/NR(4G/5G)基带](../../com/modem/lte.md)查看有关smslist接口的介绍
 ```json
 {
     "cmd1":
@@ -601,7 +601,7 @@
 
 
 #### 示例-删除一条短信
-- 第一个LTE/NR的模块为modem@lte, 给出短信的id号即可删除对应的短信, 点击[LTE/NR(4G/5G)基带](../com/modem/lte.md)查看有关smslist接口的介绍
+- 第一个LTE/NR的模块为modem@lte, 给出短信的id号即可删除对应的短信, 点击[LTE/NR(4G/5G)基带](../../com/modem/lte.md)查看有关smslist接口的介绍
 ```json
 {
     "cmd1":
@@ -624,7 +624,7 @@
 
 
 #### 示例-获取网关的客户端信息
-- 网关上的客户端信息由client@station组件的list接口返回(在终端中的命令为client@station.list), 点击 [终端管理](../com/client/station.md) 查看有关list接口的介绍
+- 网关上的客户端信息由client@station组件的list接口返回(在终端中的命令为client@station.list), 点击 [终端管理](../../com/client/station.md) 查看有关list接口的介绍
 ```json
 {
     "cmd1":
@@ -667,7 +667,7 @@
 
 
 #### 示例-获取全球定位信息(对应的网关必须有全球定位功能并且配置正确)
-- 定位信息由gnss@nmea组件的info接口返回(在终端中的命令为gnss@nmea.info), 点击 [全球定位](../com/gnss/nmea.md) 查看有关info接口的介绍
+- 定位信息由gnss@nmea组件的info接口返回(在终端中的命令为gnss@nmea.info), 点击 [全球定位](../../com/gnss/nmea.md) 查看有关info接口的介绍
 ```json
 {
     "cmd1":
@@ -704,7 +704,7 @@
 
 
 #### 示例-获取网关本地网络(LAN)状态信息
-- 网关LAN口信息由ifname@lan组件的status接口返回(在终端中的命令为ifname@lan.status), 点击查看 [本地网络(LAN)](../com/ifname/lan.md) 查看有关status接口的介绍
+- 网关LAN口信息由ifname@lan组件的status接口返回(在终端中的命令为ifname@lan.status), 点击查看 [本地网络(LAN)](../../com/ifname/lan.md) 查看有关status接口的介绍
 ```json
 {
     "cmd1":
@@ -740,7 +740,7 @@
 
 
 #### 示例-重启网关
-- 对应终端中的命令land@machine.restart, 点击 [设备基本信息](../com/land/machine.md) 查看有关restart接口的介绍
+- 对应终端中的命令land@machine.restart, 点击 [设备基本信息](../../com/land/machine.md) 查看有关restart接口的介绍
 ```json
 {
     "cmd1":
@@ -758,7 +758,7 @@
 ```
 
 #### 示例-重置网关(恢复默认设置)
-- 对应终端中的命令land@machine.default, 点击查看 [设备基本信息](../com/land/machine.md) 查看有关default接口的介绍
+- 对应终端中的命令land@machine.default, 点击查看 [设备基本信息](../../com/land/machine.md) 查看有关default接口的介绍
 ```json
 {
     "cmd1":
@@ -776,7 +776,7 @@
 ```
 
 #### 示例-修改网关admin用户的密码
-- 用户及密码管理在land@auth组件中, 修改密码使用modify的接口, 以下示例修改用户名admin的密码为123456, 点击 [用户名密码及权限](../com/land/auth.md) 查看modify接口介绍
+- 用户及密码管理在land@auth组件中, 修改密码使用modify的接口, 以下示例修改用户名admin的密码为123456, 点击 [用户名密码及权限](../../com/land/auth.md) 查看modify接口介绍
 ```json
 {
     "cmd1":
@@ -805,7 +805,7 @@
 
 
 #### 示例-修改2.4G无线热点的SSID名称
-- 2.4G无线热点的配置在组件wifi@nssid中, ssid属性的值为SSID名称, 以下示例修改SSID名称为NewSSID(在终端中的命令为wifi@nssid:ssid=NewSSID), 点击 [2.4G热点](../com/wifi/nssid.md) 查看配置介绍
+- 2.4G无线热点的配置在组件wifi@nssid中, ssid属性的值为SSID名称, 以下示例修改SSID名称为NewSSID(在终端中的命令为wifi@nssid:ssid=NewSSID), 点击 [2.4G热点](../../com/wifi/nssid.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -825,7 +825,7 @@
 ```
 
 #### 示例-同时修改2.4G无线热点的SSID名称及密码
-- 同时修改两个及以上的属性需要使用**或操作**, 以下示例修改SSID名称为NewSSID并将密码修改为NewPassword(在终端中的命令为wifi@nssid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [2.4G热点](../com/wifi/nssid.md) 查看配置介绍
+- 同时修改两个及以上的属性需要使用**或操作**, 以下示例修改SSID名称为NewSSID并将密码修改为NewPassword(在终端中的命令为wifi@nssid|{"ssid":"NewSSID","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [2.4G热点](../../com/wifi/nssid.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -850,7 +850,7 @@
 ```
 
 #### 示例-同时修改5.8G无线热点的SSID名称及密码
-- 5.8G无线热点配置在组件wifi@assid中, 以下示例修改SSID名称为NewSSID-5G并将密码修改为NewPassword(在终端中的命令为wifi@assid|{"ssid":"NewSSID-5G","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [5.8G热点](../com/wifi/assid.md) 查看配置介绍
+- 5.8G无线热点配置在组件wifi@assid中, 以下示例修改SSID名称为NewSSID-5G并将密码修改为NewPassword(在终端中的命令为wifi@assid|{"ssid":"NewSSID-5G","secure":"wpapskwpa2psk","wpa_key":"NewPassword"}), 点击 [5.8G热点](../../com/wifi/assid.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -881,7 +881,7 @@
 
 
 #### 示例-设置2.4G无线连网连接指定的SSID, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
-- 2.4G无线连网配置在组件ifname@wisp中, 设置2.4G无线连网需要同时修改两个以上的属性, 因此使用**或操作**, 以下示例设置连接SSID为CMCC密码为CMCC@passwd的2.4G网络(在终端的命令为ifname@wisp|{"peer":"CMCC","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [无线连网(WISP)](../com/ifname/wisp.md) 查看配置介绍
+- 2.4G无线连网配置在组件ifname@wisp中, 设置2.4G无线连网需要同时修改两个以上的属性, 因此使用**或操作**, 以下示例设置连接SSID为CMCC密码为CMCC@passwd的2.4G网络(在终端的命令为ifname@wisp|{"peer":"CMCC","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [无线连网(WISP)](../../com/ifname/wisp.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -907,7 +907,7 @@
 ```
 
 #### 示例-设置禁用2.4G无线连网, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
-- 2.4G无线连网配置在组件ifname@wisp中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp:status=disable), 点击 [无线连网(WISP)](../com/ifname/wisp.md) 查看配置介绍
+- 2.4G无线连网配置在组件ifname@wisp中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp:status=disable), 点击 [无线连网(WISP)](../../com/ifname/wisp.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -928,7 +928,7 @@
 ```
 
 #### 示例-断开2.4G无线连网, 必须要有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)
-- 断开2.4G无线连接调用ifname@wisp的shut接口(在终端中的命令为ifname@wisp.shut), 点击 [无线连网(WISP)](../com/ifname/wisp.md) 查看shut接口介绍
+- 断开2.4G无线连接调用ifname@wisp的shut接口(在终端中的命令为ifname@wisp.shut), 点击 [无线连网(WISP)](../../com/ifname/wisp.md) 查看shut接口介绍
 ```json
 {
     "cmd1":
@@ -947,7 +947,7 @@
 ```
 
 #### 示例-发起2.4G无线连网, 必须有WISP接口的工作模式下才有效(如在2.4G无线连网或混合模式下)， 并已配置好相关的2.4G无线连网的参数且被断开过
-- 发起2.4G无线连网调用ifname@wisp的setup接口(在终端中的命令为ifname@wisp.setup), 点击 [无线连网(WISP)](../com/ifname/wisp.md) 查看setup接口介绍
+- 发起2.4G无线连网调用ifname@wisp的setup接口(在终端中的命令为ifname@wisp.setup), 点击 [无线连网(WISP)](../../com/ifname/wisp.md) 查看setup接口介绍
 ```json
 {
     "cmd1":
@@ -970,7 +970,7 @@
 
 
 #### 示例-设置5.8G无线连网连接指定的SSID, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
-- 5.8G无线连网配置在组件ifname@wisp2中, 以下示例设置连接SSID为CMCC-5G密码为CMCC@passwd的5.8G网络(在终端中的命令为ifname@wisp2|{"peer":"CMCC-5G","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [无线连网(WISP)](../com/ifname/wisp.md) 查看配置介绍
+- 5.8G无线连网配置在组件ifname@wisp2中, 以下示例设置连接SSID为CMCC-5G密码为CMCC@passwd的5.8G网络(在终端中的命令为ifname@wisp2|{"peer":"CMCC-5G","secure":"wpapskwpa2psk","wpa_key":"CMCC@passwd"}), 点击 [无线连网(WISP)](../../com/ifname/wisp.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -996,7 +996,7 @@
 ```
 
 #### 示例-设置禁用5.8G无线连网, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
-- 5.8G无线连网配置在组件ifname@wisp2中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp2:status=disable), 点击 [无线连网(WISP)](../com/ifname/wisp.md) 查看配置介绍
+- 5.8G无线连网配置在组件ifname@wisp2中, 修改status属性改为disable即可(在终端中的命令为ifname@wisp2:status=disable), 点击 [无线连网(WISP)](../../com/ifname/wisp.md) 查看配置介绍
 ```json
 {
     "cmd1":
@@ -1017,7 +1017,7 @@
 ```
 
 #### 示例-断开5.8G无线连网, 必须要有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)
-- 5.8G无线连网管理在组件ifname@wisp2中, 断开5.8G无线连接调用shut接口(在终端中的命令为ifname@wisp2.shut), 点击 [无线连网(WISP)](../com/ifname/wisp.md) 查看shut接口介绍
+- 5.8G无线连网管理在组件ifname@wisp2中, 断开5.8G无线连接调用shut接口(在终端中的命令为ifname@wisp2.shut), 点击 [无线连网(WISP)](../../com/ifname/wisp.md) 查看shut接口介绍
 ```json
 {
     "cmd1":
@@ -1036,7 +1036,7 @@
 ```
 
 #### 示例-发起5.8G无线连网, 必须有WISP2接口的工作模式下才有效(如在5.8G无线连网或混合模式下)， 并已配置好相关的5.8G无线连网的参数且被断开
-- 5.8G无线连网管理在组件ifname@wisp2中, 发起5.8G无线连网调用setup接口(在终端中的命令为ifname@wisp2.setup), 点击 [无线连网(WISP)](../com/ifname/wisp.md) 查看setup接口介绍
+- 5.8G无线连网管理在组件ifname@wisp2中, 发起5.8G无线连网调用setup接口(在终端中的命令为ifname@wisp2.setup), 点击 [无线连网(WISP)](../../com/ifname/wisp.md) 查看setup接口介绍
 ```json
 {
     "cmd1":
@@ -1060,7 +1060,7 @@
 
 
 #### 示例-添加新策略路由, 指定源地址为192.168.2.12走第一个LTE
-- 策略路由管理在组件forward@rule中, 添加策略路由由add接口操作, 点击 [Policy based routing](../com/forward/rule.md) 查看接口add相关介绍
+- 策略路由管理在组件forward@rule中, 添加策略路由由add接口操作, 点击 [Policy based routing](../../com/forward/rule.md) 查看接口add相关介绍
 ```json
 {
     "cmd1":
@@ -1196,12 +1196,12 @@
 ## 对照组件文档使用TCP(JSON)协议管理
 
 有两种方式可以查询到所有组件文档, 通过这些组件文档可以管理到网关的每一个功能
-- 访问 [在线组件文档](../com/) 查看组件文档, 此在线文件会随着开发新的功能动态增加及修订
+- 访问 [在线组件文档](../../com/) 查看组件文档, 此在线文件会随着开发新的功能动态增加及修订
 - 资询技术支持人员
 
 #### 组件文档要点
 
-- 在 [在线组件文档](../com/) 中首先以行的形式列出了系统中常用的项目, 每个项目下包含了组件文档
+- 在 [在线组件文档](../../com/) 中首先以行的形式列出了系统中常用的项目, 每个项目下包含了组件文档
 - 点击项目进入项目中, 会以行的形式列出此项目下所有的组件文档
 - 点击组件打开组件文档, 组件文件首先是抬头, 抬头是组件名称介绍
 - 组件文档首先是介绍此组件的功能, 然后就是 **Configuration**, 配置是JSON格式, 可以在JSON控制协议或命令行中查询或修改这些配置, 通常文档中会给出修改及查询示例
@@ -1209,7 +1209,7 @@
 
 #### 对照功能组件文档查询组件配置
 
-在组件文档的抬头中会指出组件名, 比如 [日志管理](../com/land/syslog.md) 的组件名为 **land@syslog**
+在组件文档的抬头中会指出组件名, 比如 [日志管理](../../com/land/syslog.md) 的组件名为 **land@syslog**
 
 - 发送JOSN查询指令, 对应的HE指令为land@syslog
 ```json
@@ -1257,7 +1257,7 @@
 
 #### 对照组件文档修改组件配置
 
-接以上 [日志管理](../com/land/syslog.md) 的组件文档, 在文档的 **Configuration** 中描述属性可以在JOSN指令协议中修改
+接以上 [日志管理](../../com/land/syslog.md) 的组件文档, 在文档的 **Configuration** 中描述属性可以在JOSN指令协议中修改
 - 通过JSON指令协议修改land@syslog的远程日志服务器(remote属性值)为192.168.8.230
     ```json
     {
@@ -1332,7 +1332,7 @@
 
 #### 对照组件文档调用组件接口
 
-接以上 [日志管理](../com/land/syslog.md) 的组件文档, 在文档的 **Methods** 中描述接口(API)都可以在JSON指令协议中调用
+接以上 [日志管理](../../com/land/syslog.md) 的组件文档, 在文档的 **Methods** 中描述接口(API)都可以在JSON指令协议中调用
 - 在JSON指令协议中调用组件land@syslog的clear接口清除日志
     ```json
     {
