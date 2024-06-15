@@ -76,7 +76,7 @@
     }
     # 
     ```   
-    > 具体设备基本信息的配置参数介绍参见 *[设备基本信息](../com/land/machine.md)*
+    > 具体设备基本信息的配置参数介绍参见 *[设备基本信息](../../com/land/machine.md)*
 
 + 如果只查询功能配置中的某项属性时需要给出属性, 即 **组件名称:属性路径** 回车即可
 返回值可以为一个字符串也可以为一个JSON, 具体看对应的属性的值
@@ -97,7 +97,7 @@
     192.168.8.1
     # 
     ```   
-    > 具体本地网络的配置参数介绍参见 *[本地网络(LAN)](../com/ifname/lan.md)*
+    > 具体本地网络的配置参数介绍参见 *[本地网络(LAN)](../../com/ifname/lan.md)*
 
     以上示例通过 **属性/下级属性/下级属性/…** 这种路径式的方式来定位多次层属性
 
@@ -136,7 +136,7 @@
     }
     # 
     ```   
-    > 具体应用层网关的配置参数介绍参见 *[应用层网关](../com/forward/alg.md)*
+    > 具体应用层网关的配置参数介绍参见 *[应用层网关](../../com/forward/alg.md)*
 
 + 只修改功能配置指定的属性时, 给出 **组件名称** 时给出 **属性路径** :
     ```shell
@@ -263,7 +263,7 @@
     }
 	# 
     ```   
-    > 具体全球定位的配置参数介绍参见 *[全球定位](../com/gnss/nmea.md)*
+    > 具体全球定位的配置参数介绍参见 *[全球定位](../../com/gnss/nmea.md)*
  
 + 当修改功能配置中指定的几个属性而不影响其它属性时:
     ```shell
@@ -293,7 +293,7 @@
 	}
 	# 
     ```   
-    > 具体全球定位的配置参数介绍参见 *[全球定位](../com/gnss/nmea.md)*
+    > 具体全球定位的配置参数介绍参见 *[全球定位](../../com/gnss/nmea.md)*
  
 + 当要清除功能配置的某个属性时可以在=号后直接回车即可:
     ```shell
@@ -370,7 +370,7 @@
     }
 	# 
     ```   
-    > 具体全球定位的配置参数介绍参见 *[全球定位](../com/gnss/nmea.md)*
+    > 具体全球定位的配置参数介绍参见 *[全球定位](../../com/gnss/nmea.md)*
 
 
 #### **调用功能项的接口(API)**   
@@ -392,7 +392,7 @@
     }
     # 
     ```   
-    > 具体终端管理的API介绍参见 *[终端管理](../com/client/station.md)*
+    > 具体终端管理的API介绍参见 *[终端管理](../../com/client/station.md)*
  
 + 当调用功能项接口(API)带参数时
     ```shell
@@ -403,7 +403,7 @@
     ttrue
     # 
     ```   
-    > 具体时间管理的API介绍参见 *[系统时间](../com/clock/date.md)*
+    > 具体时间管理的API介绍参见 *[系统时间](../../com/clock/date.md)*
 
 + 当调用功能项接口(API)带多个参数时
     ```shell
@@ -424,7 +424,7 @@
         }
     }
     ```   
-    > 具体用户管理的接口介绍参见 *[用户名密码及权限](../com/land/auth.md)*
+    > 具体用户管理的接口介绍参见 *[用户名密码及权限](../../com/land/auth.md)*
 
 + 当调用的功能项接口(API)返回JSON时, 可以要求只返回JSON中指定的属性值
     ```shell
@@ -491,7 +491,7 @@
     # ifname@lte.status:operator_advise/apn  # 调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并要求只返回状态中有关运营商的建议的APN的配置
     3gnet
     ```   
-    > 具体LTE/NR网络管理的接口(API)介绍参见 *[LTE/NR(4G/5G)网络](../com/ifname/lte.md)*
+    > 具体LTE/NR网络管理的接口(API)介绍参见 *[LTE/NR(4G/5G)网络](../../com/ifname/lte.md)*
 
 
 
@@ -524,7 +524,7 @@
     "cfgversion":"44"                    # 配置版本
 }
 ```   
-点击 [设备基本信息](../com/land/machine.md) 查看更多
+点击 [设备基本信息](../../com/land/machine.md) 查看更多
 
 #### **获取网关基本状态**   
 输入
@@ -549,7 +549,7 @@
     "current":"01:41:15:01:01:2016"      # 当前时间  时:分:秒:月:日:年
 }
 ```   
-点击 [设备基本信息](../com/land/machine.md) 查看更多
+点击 [设备基本信息](../../com/land/machine.md) 查看更多
 
 
 #### **获取LTE/NR(4G/5G)网络状态**   
@@ -587,7 +587,7 @@
     "operator":"中国联通"               # 运营商名称
 }
 ```   
-点击查看 [(LTE/NR(4G/5G)网络)](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 介绍
+点击查看 [(LTE/NR(4G/5G)网络)](../../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../../com/modem/lte.md) 介绍
 
 #### **获取第二个LTE/NR(4G/5G)网络状态**   
 输入
@@ -601,7 +601,7 @@
     与 ifname@lte.status 的返回相同
 }
 ```   
-点击查看 [(LTE/NR(4G/5G)网络)](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 介绍
+点击查看 [(LTE/NR(4G/5G)网络)](../../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../../com/modem/lte.md) 介绍
 
 
 #### **获取客户端信息**   
@@ -636,7 +636,7 @@
     }
 }
 ```   
-点击查看 [终端管理](../com/client/station.md) 介绍
+点击查看 [终端管理](../../com/client/station.md) 介绍
 
 #### **获取定位信息**   
 输入
@@ -658,7 +658,7 @@
     "sat":""               # 卫星数
 }
 ```   
-点击查看 [全球定位](../com/gnss/nmea.md) 介绍
+点击查看 [全球定位](../../com/gnss/nmea.md) 介绍
 
 
 #### **获取LAN口信息**   
@@ -682,7 +682,7 @@
     "livetime":"00:04:37:0"               # 在线时长 时:分:秒:天
 }
 ```   
-点击查看 [本地网络(LAN)](../com/ifname/lan.md) 介绍
+点击查看 [本地网络(LAN)](../../com/ifname/lan.md) 介绍
 
 #### **重启网关**   
 输入
@@ -691,7 +691,7 @@
 # land@machine.restart
 ```   
 网关不返回任何信息， 将会立即重启
-点击查看 [设备基本信息](../com/land/machine.md) 介绍
+点击查看 [设备基本信息](../../com/land/machine.md) 介绍
 
 #### **重置网关(恢复默认设置)**   
 输入
@@ -700,7 +700,7 @@
 # land@machine.default
 ```   
 网关不返回任何信息， 将会立即重启并重置所有配置
-点击查看 [设备基本信息](../com/land/machine.md) 介绍
+点击查看 [设备基本信息](../../com/land/machine.md) 介绍
 
 
 #### **修改LTE/NR(4G/5G)的APN**   
@@ -713,7 +713,7 @@
 ```shell
 ttrue
 ```   
-点击查看 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 介绍
+点击查看 [LTE/NR(4G/5G)网络](../../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../../com/modem/lte.md) 介绍
 
 #### **开启LTE/NR(4G/5G)的定位功能**   
 输入
@@ -725,7 +725,7 @@ ttrue
 ```shell
 ttrue
 ```   
-点击查看 [LTE/NR(4G/5G)网络](../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../com/modem/lte.md) 介绍
+点击查看 [LTE/NR(4G/5G)网络](../../com/ifname/lte.md) 及 [LTE/NR(4G/5G)基带](../../com/modem/lte.md) 介绍
 
 #### **开启全球定位功能**   
 输入
@@ -737,7 +737,7 @@ ttrue
 ```shell
 ttrue
 ```   
-点击查看 [全球定位](../com/gnss/nmea.md) 介绍
+点击查看 [全球定位](../../com/gnss/nmea.md) 介绍
 
 #### **修改无线2.4G热点的SSID名称**   
 输入
@@ -749,7 +749,7 @@ ttrue
 ```shell
 ttrue
 ```   
-点击查看 [2.4G热点](../com/wifi/nssid.md) 介绍
+点击查看 [2.4G热点](../../com/wifi/nssid.md) 介绍
 
 #### **修改无线2.4G热点的密码**   
 输入
@@ -761,7 +761,7 @@ ttrue
 ```shell
 ttrue
 ```   
-点击查看 [2.4G热点](../com/wifi/nssid.md) 介绍
+点击查看 [2.4G热点](../../com/wifi/nssid.md) 介绍
 
 #### **同时修改无线2.4G热点的SSID名称及密码**   
 输入
@@ -773,7 +773,7 @@ ttrue
 ```shell
 ttrue
 ```   
-点击查看 [2.4G热点](../com/wifi/nssid.md) 介绍
+点击查看 [2.4G热点](../../com/wifi/nssid.md) 介绍
 
 #### **修改无线5.8G热点的SSID名称**   
 输入
@@ -785,7 +785,7 @@ ttrue
 ```shell
 ttrue
 ```   
-点击查看 [5.8G热点](../com/wifi/assid.md) 介绍
+点击查看 [5.8G热点](../../com/wifi/assid.md) 介绍
 
 #### **修改无线5.8G热点的密码**   
 输入
@@ -797,7 +797,7 @@ ttrue
 ```shell
 ttrue
 ```   
-点击查看 [5.8G热点](../com/wifi/assid.md) 介绍
+点击查看 [5.8G热点](../../com/wifi/assid.md) 介绍
 
 #### **同时修改无线5.8G热点的SSID名称及密码**   
 输入
@@ -809,7 +809,7 @@ ttrue
 ```shell
 ttrue
 ```   
-点击查看 [5.8G热点](../com/wifi/assid.md) 介绍
+点击查看 [5.8G热点](../../com/wifi/assid.md) 介绍
 
 
 #### **修改admin用户的密码**   
@@ -822,7 +822,7 @@ ttrue
 ```shell
 ttrue
 ```   
-点击查看 [用户名密码及权限](../com/land/auth.md) 介绍
+点击查看 [用户名密码及权限](../../com/land/auth.md) 介绍
 
 
 
@@ -830,12 +830,12 @@ ttrue
 ##  参照功能组件文档使用HE指令管理网关
 
 有两种方式可以查询所有组件文档, 通过这些组件文档可以管理网关的每一个功能
-- 访问 [在线组件文档](../com/) 查看组件文档, 此在线文件会随着开发新的功能动态增加及修订
+- 访问 [在线组件文档](../../com/) 查看组件文档, 此在线文件会随着开发新的功能动态增加及修订
 - 资询技术支持人员
 
 #### 组件文档要点
 
-- 在 [在线组件文档](../com/) 中以目录的形式列出了系统中常用的项目, 每个项目下包含了组件文档
+- 在 [在线组件文档](../../com/) 中以目录的形式列出了系统中常用的项目, 每个项目下包含了组件文档
 - 点击项目进入项目中, 会以行的形式列出此项目下所有的组件文档
 - 点击组件打开组件文档, 文件开始是功能介绍
 - 然后就是 **Configuration**, 配置是JSON格式, 其中还有查询或修改的示例, 可以在HE指令中查询或修改这些配置
@@ -843,7 +843,7 @@ ttrue
 
 #### 参照功能组件文档查询组件配置
 
-在组件 **Configuration** 中会给出组件名, 比如 [日志管理](../com/land/syslog.md) 的组件名为 **land@syslog**
+在组件 **Configuration** 中会给出组件名, 比如 [日志管理](../../com/land/syslog.md) 的组件名为 **land@syslog**
 
 - 在终端中输入 **组件名** 回车即会返回此组件的所有配置, 而在组件文档中的 **Configuration** 中会详细介绍每个配置的属性及示例
     ```shell
@@ -869,7 +869,7 @@ ttrue
 
 #### 参照功能组件文档修改组件配置
 
-接以上 [日志管理](../com/land/syslog.md) 的组件文档, 在文档的 **Configuration** 中描述属性可以在终端中通过 **组件名** 后加 **:属性** 加 **=值** 来修改
+接以上 [日志管理](../../com/land/syslog.md) 的组件文档, 在文档的 **Configuration** 中描述属性可以在终端中通过 **组件名** 后加 **:属性** 加 **=值** 来修改
 - 在终端中修改land@syslog的远程日志服务器remote属性
     ```shell
     # land@syslog:remote=192.168.8.250       # 将land@syslog的远程日志服务器改为192.168.8.250
@@ -893,7 +893,7 @@ ttrue
 
 #### 参照功能组件文档调用组件接口
 
-接以上 [日志管理](../com/land/syslog.md) 的组件文档, 在文档 **Methods** 中描述的接口都可以在终端中通过 **组件名** 后加 **.接口** 来调用
+接以上 [日志管理](../../com/land/syslog.md) 的组件文档, 在文档 **Methods** 中描述的接口都可以在终端中通过 **组件名** 后加 **.接口** 来调用
 - 在终端中调用组件land@syslog的show接口显示当前日志
     ```shell
     # land@syslog.show
