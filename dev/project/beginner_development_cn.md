@@ -70,7 +70,7 @@ dimmalex@ubuntu18:~/tiger7$ ls ./project/verify/
 Makefile  prj.json
 dimmalex@ubuntu18:~/tiger7$
 ```
-其中**prj.json**为项目配置文件, 对于其它更详细的介绍可见[ FPK包管理 ](../com/land/fpk.md)中有关prj.inf文件的介绍
+其中**prj.json**为项目配置文件, 对于其它更详细的介绍可见[ FPK包管理 ](../../com/land/fpk.md)中有关prj.inf文件的介绍
 **Makefile**为对应产品开发环境的编译说明文件, 它会跟据产品开发环境的不同而不同
 
 
@@ -822,7 +822,7 @@ dimmalex@ubuntu18:~/tiger7$ make menuconfig
 #### 调试组件
 
 ##### 1. 命令行调试组件接口
-通过HE终端可以直接调用的到组件的接口, HE终端相关的格式及命令介绍见[终端HE指令使用说明](../use/he_command.md)
+通过HE终端可以直接调用的到组件的接口, HE终端相关的格式及命令介绍见[终端HE指令使用说明](../../use/he/he_command_cn.md)
 
 - 示例: 调用组件_setup函数的接口
 
@@ -851,7 +851,7 @@ dimmalex@ubuntu18:~/tiger7$ make menuconfig
 	```
 
 ##### 2. 命令行调试组件的服务类接口
-- 示例: 查看verify@telecom4g中_setup函数注册的服务是否有运行, 更多有关服务管理的接口见[服务管理组件](../com/land/service.md)
+- 示例: 查看verify@telecom4g中_setup函数注册的服务是否有运行, 更多有关服务管理的接口见[服务管理组件](../../com/land/service.md)
 
 	```shell
 	# service.info[ verify@telecom4g ]
@@ -869,7 +869,7 @@ dimmalex@ubuntu18:~/tiger7$ make menuconfig
 
 ##### 3 . 组件使用日志调试
 
-- 示例: 显示当前日志, 即可以当前日志中查询是否有verify@telecom4g组件打印的日志, 更多有关日志管理的接口见[日志管理组件](../com/land/syslog.md)
+- 示例: 显示当前日志, 即可以当前日志中查询是否有verify@telecom4g组件打印的日志, 更多有关日志管理的接口见[日志管理组件](../../com/land/syslog.md)
 
 	```shell
 	# log.show
