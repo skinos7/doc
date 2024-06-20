@@ -13,7 +13,7 @@
 
 
 #### 管理界面介绍
-管理界面分为六个区域, 管理界面的菜单分为九个大类
+管理界面分为六个区域, 管理界面的菜单分为十几个大类
 
 ![avatar](./admin_cn.png) 
 
@@ -82,27 +82,30 @@
 
 - 连接普通的4G(LTE)网络
     1. 网关插上SIM卡后
-    2. 将设备的 **工作模式** 设置为 **4G网关**
+    2. 将设备的 **工作模式** 设置为 **4G网关**, 4G网关默认即为此模式
+
     网关就会自动通过4G(LTE)连上互联网, 不需要任何设置, 将终端设备或电脑通过有线或无线连接网关即可访问互联网
 
 - 连接普通的5G(NR)网络
     1. 网关插上SIM卡后
-    2. 将设备的 **工作模式** 设置为 **4G/5G网关**, 
+    2. 将设备的 **工作模式** 设置为 **4G/5G网关**, 4G网关默认即为此模式
+    
     网关就会自动通过5G(NR)连上互联网, 不需要任何设置, 将终端设备或电脑通过有线或无线连接网关即可访问互联网
 
-- **[4G/5G(LTE/NR)接入虚拟专用网络(VPDN/APN)](./lte/lte_apn_cn.md)** 介绍使用LTE/NR接入VPDN网络  
+- **[4G/5G(LTE/NR)接入虚拟专用网络(VPDN/APN)](./lte/lte_apn_cn.md)** 介绍使用LTE/NR接入VPDN/APN网络  
 
 - **[4G/5G(LTE/NR)双SIM卡](./lte/lte_bsim_cn.md)** 介绍LTE/NR双卡的使用  
 
-- **[4G/5G(LTE/NR)短信功能](./lte/lte_sms_cm.md)** 介绍LTE/NR短信的使用  
+- **[4G/5G(LTE/NR)短信功能](./lte/lte_sms_cn.md)** 介绍LTE/NR短信的使用  
+
 
 #### 有线宽带上网设置
 
-- **[PPPOE拨号上网](./wan/wan_pppoe.md)**
+- **[PPPOE拨号上网](./wan/wan_pppoe_cn.md)**
 
-- **[自动获取(DHCP)上网](./wan/wan_dhcp.md)**
+- **[自动获取(DHCP)上网](./wan/wan_dhcp_cn.md)**
 
-- **[静态地址上网](./wan/wan_static.md)**
+- **[静态地址上网](./wan/wan_static_cn.md)**
 
 #### 2.4G/5.8G无线连网上网设置
 
@@ -233,6 +236,13 @@
 - **[LTE/NR模块AT代理](./lte/lte_apn_setup.md)**
 
 - **[自定议LTE/NR模块的AT指令](./lte/lte_apn_setup.md)**
+
+
+
+
+## 行业中常用的配置案例
+
+- **[将摄象头接入虚拟专用网络(VPDN/APN)的快速设置](./lte/lte_apn_ipc_cn.md)**
 
 
 

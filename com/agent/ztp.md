@@ -12,15 +12,19 @@ Zero touch provision from gather, dhcp, http, mail, U/TF storage
         "username":"url username",                                       // [ string ]
         "password":"url password"                                        // [ string ]
     },
+
     "dhcp":"disable or enable listen for ztp from dhcp",            // [ "disable", "enable" ]
     "dhcp_cfg":
     {
     },
+
     "storage":"disable or enable search the storage for ztp",       // [ "disable", "enable" ]
     "storage_cfg":
     {
         "path":"ZTP json pathname"                                      // [ string ]
     },
+
+    // query infomation for ztp.status return
     "query_cfg":
     {
         "query command":""                                              // [ string ]:""
@@ -46,23 +50,21 @@ ttrue
     ```json
     // Attributes introduction of talk that pass to interface
     {
-        "language":"equipment language",                 // [ "cn", "en", "jp", ... ], language code in two letter
-
         "scope":"equipment scope identify",              // [ string ]
         "version":"equipment version",                   // [ string ]
         "zz":"firmware url",                             // [ URL ]
         "zz_username":"firmware url username",           // [ string ]
         "zz_password":"firmware url password",           // [ string ]
     
-        "oem":"oem size",                                // [ number ]
-        "dtar":"oem url",                                // [ URL ]
-        "dtar_username":"oem url username",              // [ string ]
-        "dtar_password":"oem url username",              // [ string ]
-    
         "cfgversion":"configure version",                // [ string ]
         "tar":"configure url",                           // [ URL ]
         "tar_username":"configure url username",         // [ string ]
         "tar_password":"configure url password",         // [ string ]
+    
+        "oem":"oem size",                                // [ number ]
+        "dtar":"oem url",                                // [ URL ]
+        "dtar_username":"oem url username",              // [ string ]
+        "dtar_password":"oem url username",              // [ string ]
     
         "mode":"equipment operator mode"                 // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
                                                             // "ap": access point
@@ -78,7 +80,7 @@ ttrue
     ```
     ```shell
     # examples, configure a device by ztp json
-    agent@ztp.config[ {"language":"cn"} ]
+    agent@ztp.config[ {"mode":"gateway"} ]
     ttrue
     ```
     # examples, configure a device by location of ztp json
@@ -96,20 +98,22 @@ ttrue
     // Attributes introduction of talk by the method return
     {
         "ip":"ztp ip address",                           // [ ip address ]
-        "mac":"equipment MAC address",                   // < MAC address >
+
         "sn":"equipment serial number",                  // [ string ]
+        "mac":"equipment MAC address",                   // < MAC address >
 
         "datacode":"equipment date of manufacture",      // [ string ]
-        "cmodel":"equipment model",                      // [ string ]
+        "model":"equipment model",                       // [ string ]
+        "cmodel":"equipment custom model",               // [ string ]
         "features":"equipment features",                 // < string >
         "language":"equipment language",                 // [ cn, en, jp, ... ], language code in two letter
 
         "scope":"equipment scope identify",              // [ string ]
         "version":"equipment version",                   // [ string ]
 
-        "oem":"oem size",                                // [ number ]
-    
         "cfgversion":"configure version",                // [ string ]
+
+        "oem":"oem size",                                // [ number ]
         
         "mode":"equipment operator mode"              // < "ap", "wisp", "nwisp", "gateway", "dgateway", "misp", "nmisp", "dmisp", "mix" >
                                                          // "ap": access point
@@ -128,6 +132,7 @@ ttrue
     agent@ztp.status
     {
         "mac":"00:03:7F:12:00:00",
+        "model":"D218P",
         "cmodel":"ICR-W402",
         "language":"cn",
         "scope":"std",
