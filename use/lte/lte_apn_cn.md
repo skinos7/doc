@@ -6,7 +6,7 @@
 
 ## 使用APN专网SIM卡接入虚拟专用网络(VPDN/APN)
 
-![avatar](./lte_apn.png) 
+![avatar](./lte_apn.jpg) 
 
 常用的物联网卡或一些运营商APN卡都可用于让网关接入虚拟专用网络(这种SIM卡一般无法上互联网), 这种专用的SIM卡又分为两种:
 
