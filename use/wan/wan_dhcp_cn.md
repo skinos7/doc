@@ -6,7 +6,7 @@
 
 - 有支持DHCP分配IP地址服务的网线, 即上一端路由器出来的网口
 
-![avatar](./wan_dhcp.png) 
+![avatar](./wan_dhcp.jpg) 
 
 
 #### 切换网关的工作模式

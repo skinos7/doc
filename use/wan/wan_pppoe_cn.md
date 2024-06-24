@@ -8,7 +8,7 @@ PPPOE拨号上网需要以下二个前提:
 
 - 有PPPOE拨号上网的帐号跟密码
 
-![avatar](./wan_pppoe.png) 
+![avatar](./wan_pppoe.jpg) 
 
 
 #### 切换网关的工作模式
