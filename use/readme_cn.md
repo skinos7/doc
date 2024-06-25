@@ -78,7 +78,7 @@
 
 ## 常用的功能使用说明
 
-#### 4G/5G上网设置
+#### 4G/5G联网设置
 
 - 连接普通的4G(LTE)网络
     1. 网关插上SIM卡后
@@ -98,24 +98,24 @@
 
 - **[4G/5G(LTE/NR)短信功能](./lte/lte_sms_cn.md)** 介绍LTE/NR短信的使用  
 
-#### 有线宽带上网设置
+#### 有线宽带联网设置
 
-- **[PPPOE拨号上网](./wan/wan_pppoe_cn.md)**
+- **[PPPOE拨号联网](./wan/wan_pppoe_cn.md)**
 
-- **[自动获取(DHCP)上网](./wan/wan_dhcp_cn.md)**
+- **[自动获取(DHCP)联网](./wan/wan_dhcp_cn.md)**
 
-- **[静态地址上网](./wan/wan_static_cn.md)**
+- **[静态地址联网](./wan/wan_static_cn.md)**
 
-#### 2.4G/5.8G无线连网上网设置
+#### 2.4G/5.8G无线连网联网设置
 
-- **[无线连网自动获取(DHCP)上网](./wisp/wisp_dhcp_cn.md)**
+- **[无线连网自动获取(DHCP)使用](./wisp/wisp_dhcp_cn.md)**
 
-- **[无线连网静态地址上网](./wisp/wisp_static_cn.md)**
+- **[无线连网静态地址使用](./wisp/wisp_static_cn.md)**
 
-- **[无线连网PPPOE拨号上网](./wisp/wisp_pppoe_cn.md)**
+- **[无线连网PPPOE拨号使用](./wisp/wisp_pppoe_cn.md)**
 
 
-#### 使用4G/5G, 有线宽带, 2.4G/5.8G无线连网多个连接同时上网
+#### 使用4G/5G, 有线宽带, 2.4G/5.8G无线连网多个连接同时联网
 
 - **[双4G/5G网关模式的使用](./mix-mode/dmisp.md)**
 
@@ -127,11 +127,24 @@
 
 - **[无线热点模式使用](./ap/ap_cn.md)**
 
-- **[无线热点模式下中继其它热点](./ap/ap_repeater_cn.md)**
+- **[无线热点模式下中继其它热点](./ap/repeater_cn.md)**
 
 #### 4G5G猫(Modem)工作模式
 
-- **[4G5G猫(Modem)模式使用](./mbridge/mbridge_cn.md)**
+- **[4G5G猫(Modem)模式使用](./ap/mbridge_cn.md)**
+
+
+
+***
+
+
+
+
+
+
+
+
+
 
 
 
