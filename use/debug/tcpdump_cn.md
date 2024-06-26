@@ -42,7 +42,7 @@
 
 2. 使用tcpdump指定 **本地网络(LAN)** 接口抓包
 
-    输入 **tcpdump -i lan** 将开始抓包
+    输入 **tcpdump -i lan** 回车将开始抓包
 
     ![avatar](./tcpdump_lan.jpg) 
 
@@ -50,7 +50,7 @@
 
 3. 使用tcpdump指定 **本地网络(LAN)** 接口抓包并保存成可下载
 
-    输入 **tcpdump -i lan -w tcpdump.cap** 将开始抓包, 并且抓包数据保存到可下载的文件中
+    输入 **tcpdump -i lan -w tcpdump.cap** 回车将开始抓包, 并且抓包数据保存到可下载的文件中
 
     ![avatar](./tcpdump_lan_save.jpg) 
 
@@ -77,13 +77,13 @@
 
 2. 使用tcpdump指定 **4G(LTE)网络** 接口抓包
 
-    输入 **tcpdump -i usb0** 将开始抓包
+    输入 **tcpdump -i usb0** 回车将开始抓包
 
     **Ctrl+c** 中断抓包
 
 3. 使用tcpdump指定 **4G(LTE)网络** 接口抓包并保存成可下载
 
-    输入 **tcpdump -i usb -w tcpdump.cap** 将开始抓包, 并且抓包数据保存到可下载的文件中
+    输入 **tcpdump -i usb -w tcpdump.cap** 回车将开始抓包, 并且抓包数据保存到可下载的文件中
 
     **Ctrl+c** 中断抓包
 

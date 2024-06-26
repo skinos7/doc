@@ -275,6 +275,8 @@
 
 ## 行业中常用的配置案例
 
+- **[抓包使用说明](./debug/tcpdump_cn.md)**
+
 - **[将摄象头接入虚拟专用网络(VPDN/APN)的快速设置](./lte/lte_apn_ipc_cn.md)**
 
 
