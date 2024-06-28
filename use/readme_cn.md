@@ -244,11 +244,14 @@
 
 
 
+## VPN功能使用
 
+- **[设置两台网关Wireguard实现互通示例](./sdwan/wireguard.md)**
 
 
 
 ## 高级功能使用说明
+
 
 - **[全球定位的使用](./lte/lte_apn_setup.md)**
 
