@@ -119,11 +119,11 @@
 
 #### 使用4G/5G, 有线宽带, 2.4G/5.8G无线连网多个连接同时联网
 
-- **[双4G/5G网关模式的使用](./mix-mode/dmisp.md)**
+- **[双4G/5G网关模式的使用](./mix-mode/dmisp_cn.md)**
 
 - **[双WAN口网关模式的使用](./mix-mode/dgateway.md)**
 
-- **[混合模式的使用](./mix-mode/mix.md)**
+- **[混合模式的使用](./mix-mode/mix_cn.md)**
 
 #### 2.4G/5.8G无线热点工作模式
 
