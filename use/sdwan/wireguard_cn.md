@@ -1,10 +1,10 @@
 ***
 
-## 设置两台网关Wireguard实现互通示例
+## 设置两台网关WireGuard实现互通示例
 
-在网关上设置Wireguard可实现两个网关本地网络(子网网段)之间加密通信, 前提是需要其中一台网关有公网地址   
+在网关上设置WireGuard可实现两个网关本地网络(子网网段)之间加密通信, 前提是需要其中一台网关有公网地址   
 
-- 基于以下拓扑图示例设置Wireguard实现两台网关本地网络下 **电脑192.168.8.250** 与 **电脑192.168.31.231** 互通    
+- 基于以下拓扑图示例设置WireGuard实现两台网关本地网络下 **电脑192.168.8.250** 与 **电脑192.168.31.231** 互通    
 
 - 其中 **公网地址网关(Gateway)** 使用有线宽带上网, 公网地址为 **111.221.193.120**    
 
@@ -20,7 +20,7 @@
 
 ## 设置公网地址网关(Gateway)
 
-#### 1. 获取4G网关(LTE Gateway)的Wireguard公钥
+#### 1. 获取4G网关(LTE Gateway)的WireGuard公钥
 
 登录 **4G网关(LTE Gateway)** 的 **管理界面**(以上拓扑图示的本地地址为192.168.8.1, 连接 **4G网关(LTE Gateway)** 后打开浏览器在地址栏输入 http://192.168.8.1 回车即可登录)
 
@@ -36,7 +36,7 @@
 
 以上图示 **4G网关(LTE Gateway)** 公钥为 **V/5rKxb9AgAAgyqdOx5j2AdRnqnh0O4mIkSzGSHeXF4=**, 下一步设置 **公网地址网关(Gateway)** 需要用到此公钥
 
-#### 2. 设置公网地址网关(Gateway)的Wireguard
+#### 2. 设置公网地址网关(Gateway)的WireGuard
 
 登录 **公网地址网关(Gateway)** 的 **管理界面**(以上拓扑图示的本地地址为192.168.31.1, 连接 **公网地址网关(Gateway)** 后打开浏览器在地址栏输入 http://192.168.31.1 回车即可)
 
@@ -54,12 +54,12 @@
 - 在 **红框5** 的 **接口掩码** 设置 **公网地址网关(Gateway)** 的WireGuard接口掩码, 基于以上拓扑图为255.255.255.0   
 - 在 **红框5** 的 **监听端口** 设置WireGuard的监听端口为6800, 此端口即为的WireGuard服务端口, 需保证 **4G网关(LTE Gateway)** 可直接访问   
 
-以上即完成了对 **公网地址网关(Gateway)** Wireguard基本的配置   
+以上即完成了对 **公网地址网关(Gateway)** WireGuard基本的配置   
 并且也可以看到 **公网地址网关(Gateway)** 的公钥, 此公钥 **20F73jCxcFJzjf2yvYHLgbj/egKG0YLiA3KPNd7X7ls=**, 之后设置 **4G网关(LTE Gateway)** 需要用到此公钥
 
-#### 3. 在公网地址网关(Gateway)的Wireguard中添加4G网关(LTE Gateway)的信息
+#### 3. 在公网地址网关(Gateway)的WireGuard中添加4G网关(LTE Gateway)的信息
 
-在 **公网地址网关(Gateway)** 的Wireguard中添加 **4G网关(LTE Gateway)** 的信息后, 确保允许 **4G网关(LTE Gateway)** 的接入
+在 **公网地址网关(Gateway)** 的WireGuard中添加 **4G网关(LTE Gateway)** 的信息后, 确保允许 **4G网关(LTE Gateway)** 的接入
 
 ![avatar](./wireguard_gateway_peer_cn.jpg) 
 
@@ -99,17 +99,17 @@
 ![avatar](./wireguard_gateway_firewall_cn.jpg) 
 
 
-以上即完成了对 **公网地址网关(Gateway)** 的Wireguard的所有配置   
+以上即完成了对 **公网地址网关(Gateway)** 的WireGuard的所有配置   
 
 
 
 ## 设置4G网关(LTE Gateway)
 
-#### 1. 查看公网地址网关(Gateway)的Wireguard公钥
+#### 1. 查看公网地址网关(Gateway)的WireGuard公钥
 
-基于以上 **[设置公网地址网关(Gateway)的Wireguard](./wireguard_cn.md#2.设置公网地址网关(Gateway)的Wireguard)** 操作时得到了其公钥为 **20F73jCxcFJzjf2yvYHLgbj/egKG0YLiA3KPNd7X7ls=**   
+基于以上 **[设置公网地址网关(Gateway)的WireGuard](./wireguard_cn.md#2.设置公网地址网关(Gateway)的WireGuard)** 操作时得到了其公钥为 **20F73jCxcFJzjf2yvYHLgbj/egKG0YLiA3KPNd7X7ls=**   
 
-#### 2. 设置4G网关(LTE Gateway)的Wireguard
+#### 2. 设置4G网关(LTE Gateway)的WireGuard
 
 登录 **4G网关(LTE Gateway)** 的 **管理界面**(以上拓扑图示的本地地址为192.168.8.1, 连上 **4G网关(LTE Gateway)** 后打开浏览器在地址栏输入 http://192.168.8.1 回车即可)
 
@@ -126,9 +126,9 @@
 - 在 **红框5** 的 **接口地址** 设置 **4G网关(LTE Gateway)** 的WireGuard接口IP, 基于以上拓扑图为172.16.1.10   
 - 在 **红框5** 的 **接口掩码** 设置 **4G网关(LTE Gateway)** 的WireGuard接口掩码, 基于以上拓扑图为255.255.255.0   
 
-以上即完成了对 **4G网关(LTE Gateway)** Wireguard基本的配置   
+以上即完成了对 **4G网关(LTE Gateway)** WireGuard基本的配置   
 
-#### 3. 在4G网关(LTE Gateway)的Wireguard中添加公网地址网关(Gateway)的信息
+#### 3. 在4G网关(LTE Gateway)的WireGuard中添加公网地址网关(Gateway)的信息
 
 ![avatar](./wireguard_ltegateway_peer_cn.jpg) 
 
@@ -148,4 +148,4 @@
 - 点击 **红框12** 提交即可    
 - 以上所有的配置好后点击 **红框13** 应用即可   
 
-以上即完成了对 **4G网关(LTE Gateway)** 的Wireguard的所有配置, 如网络正常 **电脑192.168.8.250** 与 **电脑192.168.31.231** 即可互通
+以上即完成了对 **4G网关(LTE Gateway)** 的WireGuard的所有配置, 如网络正常 **电脑192.168.8.250** 与 **电脑192.168.31.231** 即可互通
