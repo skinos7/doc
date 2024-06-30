@@ -143,13 +143,12 @@
 
 ### 用户(9000端口)网页源文件中调用HE Control(10002端口)的介绍
 
-- 通过点击 **红框3** 进入远程实时管理网关的界面
-
 ![avatar](../../use/cloud/gateway_cn.jpg)
 
-- 其对应的网页源代码位于 **/usr/prj/devms/wui/content** 目录下
+- 通过点击 **红框3** 进入远程实时管理网关的界面, 其对应的网页源代码位于 **/usr/prj/devms/wui/content** 目录下
 
 - 此目录下的源代码通过向 **HE Control(10002端口)** 的 **/he** POST一个JSON格式的 **HE指令** 来实现对网关的实时管理
+
 
 ### 向HE Control(10002端口)上提交JSON指令格式的介绍
 
