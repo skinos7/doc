@@ -135,30 +135,21 @@
 
 - **[4G5G猫(Modem)模式使用](./ap/mbridge_cn.md)**
 
+#### 本地网络设置
+
+- **[本地网络地址设置](./lan/lan_ip_cn.md)**
+
+- **[本地网络设置多个地址](./lan/lan_mip_cn.md)**
+
+- **[本地网络分配地址段设置](./lan/dhcps_cn.md)**
+
+- **[为终端分配指定的IP地址](./client/bind_ip_cn.md)**
+
 
 
 ***
 
 
-
-
-
-
-
-
-
-
-
-
-#### 本地网络设置
-
-- **[本地地址设置](./lan/lan_ip.md)**
-
-- **[设置多个本地地址](./lan/lan_mip.md)**
-
-- **[本地分配地址段设置](./lan/dhcps.md)**
-
-- **[给终端分配指定的IP地址](./client/bind_ip.md)**
 
 #### Hosts文件配置
 
