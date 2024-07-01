@@ -162,7 +162,7 @@ Web Server会在两个端口服务
 为了与此WEB服务器交互需要三步:   
  - 第一步是登录 **用户界面服务器**, 登录完成后即可获取 **Cookie**,  此登录的源代码在 **/usr/prj/devms/wui/login.html**   
  - 获取Cookie后进入第二步与Ubuntu SkinOS交互 **HE指令( He command )**, 通过调用Ubuntu SkinOS的 **devms@devapi.device_listv** 接口获取帐号下的 **网关macid** 及 **网关Token**
- - 使用 **网关macid** 及 **网关Token** 向 **HE Control** POST一个JSON格式的 **HE指令** 来实现对网关的实时管理 
+ - 第三步即可使用 **网关macid** 及 **网关Token** 向 **HE Control** POST一个JSON格式的 **HE指令** 来实现对网关的实时管理 
 ![avatar](./he_control.jpg)
 
 以下是与 **HE Control** 交互 **HE指令( He command )** 实现实时管理网关的网页源代码介绍  
