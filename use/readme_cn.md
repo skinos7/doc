@@ -96,6 +96,8 @@
 
 - **[4G/5G(LTE/NR)接入虚拟专用网络(VPDN/APN)](./lte/lte_apn_cn.md)** 介绍使用LTE/NR接入VPDN/APN网络  
 
+- **[4G/5G(LTE/NR)接入自建基站网络](./lte/lte_spec_cn.md)** 介绍使用LTE/NR接入自建基站网络  
+
 - **[4G/5G(LTE/NR)双SIM卡](./lte/lte_bsim_cn.md)** 介绍LTE/NR双卡的使用  
 
 - **[4G/5G(LTE/NR)短信功能](./lte/lte_sms_cn.md)** 介绍LTE/NR短信的使用  
@@ -108,7 +110,9 @@
 
 - **[静态地址联网](./wan/wan_static_cn.md)**
 
-#### 2.4G/5.8G无线连网联网设置
+- **[纯路由模式下有线宽带联网](./wan/wan_nonat_cn.md)**
+
+#### 2.4G/5.8G无线连网设置
 
 - **[无线连网自动获取(DHCP)使用](./wisp/wisp_dhcp_cn.md)**
 
@@ -116,6 +120,7 @@
 
 - **[无线连网PPPOE拨号使用](./wisp/wisp_pppoe_cn.md)**
 
+- **[纯路由模式下无线连网](./wisp/wisp_nonat_cn.md)**
 
 #### 使用4G/5G, 有线宽带, 2.4G/5.8G无线连网多个连接同时联网
 

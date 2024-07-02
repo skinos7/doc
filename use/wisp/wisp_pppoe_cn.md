@@ -4,7 +4,7 @@
 
 无线连网PPPOE拨号需要以下前提:
 
-- 有PPPOE拨号上网的无线热点, 即ADSL猫(Modem)支持WIFI热点
+- 有PPPOE拨号上网的无线热点, 即 **ADSL猫(Modem)** 支持WIFI热点
 
 - 有PPPOE拨号上网的帐号跟密码
 

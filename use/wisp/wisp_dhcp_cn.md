@@ -4,7 +4,7 @@
 
 无线连网自动获取(DHCP)需要以下前提:
 
-- 有支持DHCP分配IP地址服务的无线热点, 即 **上一级路由器** 提供WIFI热点服务
+- 有支持DHCP分配IP地址服务的无线热点, 即 **上一级路由器(Router)** 提供WIFI热点服务
 
 ![avatar](./wisp_dhcp.jpg) 
 
