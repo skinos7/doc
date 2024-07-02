@@ -146,8 +146,41 @@
 - **[为终端分配指定的IP地址](./client/bind_ip_cn.md)**
 
 
+#### 系统管理
+
+- **[修改网关的名称](./system/name_cn.md)**
+
+- **[重启网关](./system/reboot_cn.md)**
+
+- **[重置网关配置(恢复出厂设置)](./system/reset_cn.md)**
+
+- **[管理网关的时间及时区](./system/date_cn.md)**
+
+- **[开启NTP服务为本地设备授时](./system/ntps_cn.md)**
+
+- **[网关配置备份及导入](./system/configure_cn.md)**
+
+- **[网关固件升级](./upgrade/upgrade_cn.md)**
+
+- **[网关网页强制升级](./upgrade/boot_web_upgrade_cn.md)**
+
+- **[网关TFTP强制升级](./upgrade/boot_tftp_upgrade_cn.md)**
+
+- **[管理员密码修改](./system/password_cn.md)**
+
+- **[设置网关定时重启](./system/restart_cn.md)**
+
+- **[Telnet服务器](./system/telnetd_cn.md)**
+
+- **[SSH服务器](./system/sshd_cn.md)**
+
+- **[FTP服务器](./system/ftps_cn.md)**
+
+- **[WEB服务器(管理界面)](./system/webs_cn.md)**
+
 
 ***
+
 
 
 
@@ -206,8 +239,6 @@
 
 #### 软件管理
 
-- **[固件升级](./firmware/upgrade.md)**
-- **[强制升级](./firmware/force_upgrade.md)**
 
 
 #### 配置管理
@@ -224,9 +255,7 @@
 
 #### 服务器管理
 
-- **[Telnet服务器](./service/telnetd.md)**
-- **[SSH服务器](./service/sshd.md)**
-- **[WEB服务器](./service/webs.md)**
+
 - **[FTP服务器](./service/ftps.md)**
 
 #### 指示灯管理
