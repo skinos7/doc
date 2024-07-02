@@ -178,8 +178,34 @@
 
 - **[WEB服务器(管理界面)](./system/webs_cn.md)**
 
+- **[LED指示灯管理](./system/led_cn.md)**
+
 
 ***
+
+
+#### 无线热点
+
+- **[无线热点名称及密码修改](./wifi/ssid.md)**
+
+- **[无线热点黑白名单设置](./wifi/acl.md)**
+
+- **[中继其它热点](./wifi/sta.md)**
+
+#### 终端管理
+
+- **[为所有的终端设置访问权限](./client/acl.md)**
+
+- **[为指定的终端设置访问权限](./client/client_acl.md)**
+
+- **[网络白名单设置](./client/black.md)**
+
+- **[网络黑名单设置](./client/white.md)**
+
+- **[为所有的终端设置上网权限](./client/internet.md)**
+
+- **[为指定的终端设置上网权限](./client/client_internet.md)**
+
 
 
 
@@ -209,60 +235,6 @@
 - **[基于源地址的路由设置](./route/src_route.md)**
 
 - **[基于端口的路由设置](./route/port_route.md)**
-
-#### 无线热点
-
-- **[无线热点名称及密码修改](./wifi/ssid.md)**
-
-- **[无线热点黑白名单设置](./wifi/acl.md)**
-
-- **[中继其它热点](./wifi/sta.md)**
-
-
-#### 终端管理
-
-- **[为所有的终端设置访问权限](./client/acl.md)**
-
-- **[为指定的终端设置访问权限](./client/client_acl.md)**
-
-- **[网络白名单设置](./client/black.md)**
-
-- **[网络黑名单设置](./client/white.md)**
-
-- **[为所有的终端设置上网权限](./client/internet.md)**
-
-- **[为指定的终端设置上网权限](./client/client_internet.md)**
-
-#### 网关时间管理
-
-- **[时间管理](./date/date.md)**
-
-#### 软件管理
-
-
-
-#### 配置管理
-
-- **[恢复及导入配置](./config/backup.md)**
-
-#### 用户名密码管理
-
-- **[admin用户的密码修改](./password/password.md)**
-
-#### 自动重启
-
-- **[自动重启](./restart/restart.md)**
-
-#### 服务器管理
-
-
-- **[FTP服务器](./service/ftps.md)**
-
-#### 指示灯管理
-
-- **[LED灯关闭](./indicate/led.md)**
-
-
 
 ## VPN功能使用
 
