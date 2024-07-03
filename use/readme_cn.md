@@ -212,13 +212,6 @@
 - **[为指定的终端设置上网权限](./client/client_internet.md)**
 
 
-
-
-
-#### Hosts文件配置
-
-- **[域名劫持设置](./hosts/hosts.md)**
-
 #### 防火墙
 
 - **[允许外网访问路由器指定的服务](./firewall/allow_access.md)**
@@ -227,9 +220,7 @@
 
 - **[端口映射使用说明](./portmap/portmap.md)**
 
-#### 端口代理
 
-- **[端口代理使用说明](./portproxy/portproxy.md)**
 
 #### 路由表
 
@@ -240,6 +231,18 @@
 - **[基于源地址的路由设置](./route/src_route.md)**
 
 - **[基于端口的路由设置](./route/port_route.md)**
+
+
+
+#### Hosts文件配置
+
+- **[域名劫持设置](./hosts/hosts.md)**
+
+
+#### 端口代理
+
+- **[端口代理使用说明](./portproxy/portproxy.md)**
+
 
 ## VPN功能使用
 
