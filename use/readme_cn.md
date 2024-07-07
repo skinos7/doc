@@ -150,7 +150,6 @@
 
 - **[为终端分配指定的IP地址](./client/bind_ip_cn.md)**
 
-
 #### 系统管理
 
 - **[修改网关的名称](./system/name_cn.md)**
@@ -185,17 +184,18 @@
 
 - **[LED指示灯管理](./system/led_cn.md)**
 
-
-***
-
-
 #### 无线热点
 
-- **[无线热点名称及密码修改](./wifi/ssid.md)**
+- **[无线热点名称及密码信道等设置](./wifi/ssid_cn.md)**
 
-- **[无线热点黑白名单设置](./wifi/acl.md)**
+- **[无线热点黑白名单设置](./wifi/acl_cn.md)**
 
-- **[中继其它热点](./wifi/sta.md)**
+- **[中继其它热点](./wifi/sta_cn.md)**
+
+
+
+
+***
 
 #### 终端管理
 
@@ -211,7 +211,6 @@
 
 - **[为指定的终端设置上网权限](./client/client_internet.md)**
 
-
 #### 防火墙
 
 - **[允许外网访问路由器指定的服务](./firewall/allow_access.md)**
@@ -219,8 +218,6 @@
 #### 端口映射
 
 - **[端口映射使用说明](./portmap/portmap.md)**
-
-
 
 #### 路由表
 
@@ -232,26 +229,19 @@
 
 - **[基于端口的路由设置](./route/port_route.md)**
 
-
-
 #### Hosts文件配置
 
 - **[域名劫持设置](./hosts/hosts.md)**
-
 
 #### 端口代理
 
 - **[端口代理使用说明](./portproxy/portproxy.md)**
 
-
 ## VPN功能使用
 
 - **[设置两台网关Wireguard实现互通示例](./sdwan/wireguard.md)**
 
-
-
 ## 高级功能使用说明
-
 
 - **[全球定位的使用](./lte/lte_apn_setup.md)**
 
@@ -272,9 +262,6 @@
 - **[LTE/NR模块AT代理](./lte/lte_apn_setup.md)**
 
 - **[自定议LTE/NR模块的AT指令](./lte/lte_apn_setup.md)**
-
-
-
 
 ## 行业中常用的配置案例
 
