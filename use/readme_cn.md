@@ -69,10 +69,10 @@
 - **[4G/5G(LTE/NR)接入自建基站网络](./lte/lte_spec_cn.md)** 介绍使用LTE/NR接入自建基站网络   
 - **[4G/5G(LTE/NR)双SIM卡](./lte/lte_bsim_cn.md)** 介绍LTE/NR双卡的使用   
 - **[4G/5G(LTE/NR)短信功能](./lte/lte_sms_cn.md)** 介绍LTE/NR短信的使用   
-
-- ***[4G/5G(LTE/NR)锁定SIM卡](./lte/lte_lock_cn.md)**(编写中)*, 锁SIM卡后换卡无法工作   
-- ***[4G/5G(LTE/NR)锁模块](./lte/lte_lock_cn.md)**(编写中)*, 锁定模块后换模块无法工作   
-- ***[4G/5G(LTE/NR)自定义指令实现锁频段](./lte/lte_lock_cn.md)**(编写中)*    
+- **[锁定SIM卡](./lte/lte_lockimsi_cn.md)**, 锁定后更换SIM卡无法工作   
+- **[锁定4G/5G(LTE/NR)模组](./lte/lte_lockimei_cn.md)**, 锁定后更换4G/5G(LTE/NR)模组无法工作   
+- **[常用模块锁定频段](./lte/lte_lockband_cn.md)**    
+- **[自定义指定AT指令](./lte/lte_customat_cn.md)**    
 - ***[打开4G/5G(LTE/NR)定位功能及使用](./lte/lte_lock_cn.md)**(编写中)*   
 - ***[打开4G/5G(LTE/NR)模组的AT指令服务器及使用](./lte/lte_lock_cn.md)**(编写中)*   
 

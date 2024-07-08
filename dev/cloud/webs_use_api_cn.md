@@ -2,7 +2,7 @@
 
 # 网关管理平台结构
 
-![avatar](../../use/cloud/devms.png)
+![avatar](./../../use/cloud/devms.png)
 
 **** 
 
