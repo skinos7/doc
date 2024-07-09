@@ -73,8 +73,8 @@
 - **[锁定4G/5G(LTE/NR)模组](./lte/lte_lockimei_cn.md)**, 锁定后更换4G/5G(LTE/NR)模组无法工作   
 - **[常用模块锁定频段](./lte/lte_lockband_cn.md)**    
 - **[自定义指定AT指令](./lte/lte_customat_cn.md)**    
-- ***[打开4G/5G(LTE/NR)定位功能及使用](./lte/lte_lock_cn.md)**(编写中)*   
-- ***[打开4G/5G(LTE/NR)模组的AT指令服务器及使用](./lte/lte_lock_cn.md)**(编写中)*   
+- **[AT指令网络透传使用](./lte/lte_atserver_cn.md)**, 实现一个服务器或客户端透传来自网络的AT指令到4G/5G(LTE/NR)模组中   
+- ***[打开4G/5G(LTE/NR)定位功能及使用](./lte/lte_gnss_cn.md)**(编写中)*   
 
 ### 有线宽带联网设置   
 - **[PPPOE拨号联网](./wan/wan_pppoe_cn.md)**    
@@ -134,11 +134,11 @@
 - **[中继其它热点](./wifi/sta_cn.md)**   
 
 ### 防火墙   
-- ***[允许外网访问路由器指定的服务](./firewall/allow_access.md)***   
+- ***[允许外网访问路由器指定的服务](./firewall/allow_access.md)**(编写中)*   
 
 ### 端口映射或代理   
-- ***[端口映射使用说明](./portmap/portmap.md)***   
-- ***[端口代理使用说明](./portproxy/portproxy.md)***
+- ***[端口映射使用说明](./portmap/portmap.md)**(编写中)*   
+- ***[端口代理使用说明](./portproxy/portproxy.md)**(编写中)*
 
 ### 终端管理   
 - ***[限制所有的终端访问权限](./client/acl.md)**(编写中)*      
