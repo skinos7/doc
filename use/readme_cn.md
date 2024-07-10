@@ -123,10 +123,10 @@
 - **[FTP服务器](./system/ftps_cn.md)**   
 - **[WEB服务器(管理界面)](./system/webs_cn.md)**   
 - **[LED指示灯管理](./system/led_cn.md)**   
-- ***[Hosts文件配置](./hosts/hosts.md)**(编写中)*      
-- ***[锁定网关配置](./hosts/hosts.md)**(编写中)*, 锁定配置后不再允许用户修改网关配置       
-- ***[锁定升级](./hosts/hosts.md)**(编写中)*, 锁定升级后不再允许用户升级网关              
-- ***[锁定重启](./hosts/hosts.md)**(编写中)*, 锁定重启后不再允许用户重启网关     
+- **[Hosts文件配置](./system/hosts_cn.md)**      
+- ***[锁定网关配置](./custom/lockconfig_cn.md)**(不公开防止误操作)*, 锁定配置后不再允许用户修改网关配置       
+- ***[锁定升级](./custom/lockupdate_cn.md)**(不公开防止误操作)*, 锁定升级后不再允许用户升级网关              
+- ***[锁定重启](./custom/lockreboot_cn.md)**(不公开防止误操作)*, 锁定重启后不再允许用户重启网关     
 
 ### 无线热点   
 - **[无线热点名称及密码信道等设置](./wifi/ssid_cn.md)**   
@@ -137,7 +137,7 @@
 - ***[允许外网访问路由器指定的服务](./firewall/allow_access.md)**(编写中)*   
 
 ### 端口映射或代理   
-- ***[端口映射使用说明](./portmap/portmap.md)**(编写中)*   
+- **[端口映射使用说明](./portmap/portmap_cn.md)**   
 - ***[端口代理使用说明](./portproxy/portproxy.md)**(编写中)*
 
 ### 终端管理   
