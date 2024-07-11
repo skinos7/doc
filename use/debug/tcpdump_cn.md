@@ -30,6 +30,8 @@
 输入 **cd /var/wui** 回车   
 ![avatar](./cd_tmp.jpg) 
 
+注意, 如果无法进入/var/wui目录则可能系统不存在此目录, 则执行 **mkdir /var/wui** 创建后再进入即可
+
 
 #### 抓本地网络(LAN)接口上的包
 

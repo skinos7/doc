@@ -159,6 +159,8 @@
 - ***[日志的使用](./hosts/hosts.md)**(编写中)*, 可调整日志存放位置, 记录等级, 保存大小, 远程日志等      
 - ***[ping连通性测试](./debug/tcpdump_cn.md)**(编写中)*   
 - ***[iperf打流带宽测试](./debug/tcpdump_cn.md)**(编写中)*      
+- **[有互联网的远程协助](./debug/internet_remote_cn.md)**, 用于让网关接入调试云平台, 技术人员可通过调试云平台连接网关      
+- **[无互联网的远程协助](./debug/nointernet_remote_cn.md)**, 用于让技术人员远程连接电脑调试网关      
 
 
 ## VPN功能使用   
