@@ -196,12 +196,12 @@
 
 
 ## 定位功能使用   
-- ***[全球定位的使用](./lte/lte_apn_setup.md)**(编写中)*   
-- ***[GPS/BD定位数据(NMEA)TCP/UDP协议上报](./lte/lte_apn_setup.md)**(编写中)*   
-- ***[GPS/BD定位信息MQTT协议上报](./lte/lte_apn_setup.md)**(编写中)*   
-- ***[GPS/BD定位信息HTTP协议上报](./lte/lte_apn_setup.md)**(编写中)*   
-- ***[GPS/BD定位信息JT/T808协议上报](./lte/lte_apn_setup.md)**(编写中)*   
-- ***[本地设备获取GPS/BD定位信息](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[全球定位的使用](./gnss/gnss_setup_cn.md)**(编写中)*   
+- ***[GPS/BD定位数据(NMEA)TCP/UDP协议上报](./gnss/gnss_tcpudp_cn.md)**(编写中)*   
+- ***[GPS/BD定位信息MQTT协议上报](./gnss/gnss_mqtt_cn.md)**(编写中)*   
+- ***[GPS/BD定位信息HTTP协议上报](./gnss/gnss_http_cn.md)**(编写中)*   
+- ***[GPS/BD定位信息JT/T808协议上报](./gnss/gnss_jt808_cn.md)**(编写中)*   
+- ***[本地设备获取GPS/BD定位信息](./gnss/gnss_tcpjson_setup.md)**(编写中)*   
 
 
 ## I2C功能的使用   
