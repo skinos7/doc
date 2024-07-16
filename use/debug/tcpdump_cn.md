@@ -17,27 +17,19 @@
 
 
 
-#### 2. 进入Shell
+#### 2. 创建抓包目录
 
-- **红框1** 输入 **elf** 回车   
-- **红框4** 看到Shell终端命令介绍表示登录成功   
+输入 **mkdir /var/wui** 回车   
+![avatar](./mkdir_wui.jpg) 
 
-![avatar](./shell.jpg) 
-
-
-#### 3. 进入抓包目录
-
-输入 **cd /var/wui** 回车   
-![avatar](./cd_tmp.jpg) 
-
-注意, 如果无法进入/var/wui目录则可能系统不存在此目录, 则执行 **mkdir /var/wui** 创建后再进入即可
+如果目录已存在则会报错, 请忽略报错  
 
 
 #### 抓本地网络(LAN)接口上的包
 
 1. 获取 **本地网络(LAN)** 的接口
 
-    输入 **he ifname@lan.netdev** 回车显示本地网络(LAN)接口, 以下显示为 **lan**
+    输入 **ifname@lan.netdev** 回车显示本地网络(LAN)接口, 以下显示为 **lan**
 
     ![avatar](./lan_netdev.jpg) 
 
@@ -52,7 +44,7 @@
 
 3. 使用tcpdump指定 **本地网络(LAN)** 接口抓包并保存成可下载
 
-    输入 **tcpdump -i lan -w tcpdump.cap** 回车将开始抓包, 并且抓包数据保存到可下载的文件中
+    输入 **tcpdump -i lan -w /var/wui/tcpdump.cap** 回车将开始抓包, 并且抓包数据保存到可下载的文件中
 
     ![avatar](./tcpdump_lan_save.jpg) 
 
@@ -71,7 +63,7 @@
 
 1. 获取 **4G(LTE)网络** 的接口
 
-    输入 **he ifname@lte.netdev** 回车显示4G(LTE)网络接口, 以下显示为 **usb0**
+    输入 **ifname@lte.netdev** 回车显示4G(LTE)网络接口, 以下显示为 **usb0**
 
     ![avatar](./lte_netdev.jpg) 
 
@@ -85,7 +77,7 @@
 
 3. 使用tcpdump指定 **4G(LTE)网络** 接口抓包并保存成可下载
 
-    输入 **tcpdump -i usb -w tcpdump.cap** 回车将开始抓包, 并且抓包数据保存到可下载的文件中
+    输入 **tcpdump -i usb -w /var/wui/tcpdump.cap** 回车将开始抓包, 并且抓包数据保存到可下载的文件中
 
     **Ctrl+c** 中断抓包
 
@@ -102,9 +94,9 @@
 
 - 抓取其它网络接口的方式跟以上 **抓4G(LTE)网络接口上的包**, 区别就是获取的网络接口的区别   
 - 以下只给出获取其它网络接口的指令, 跟据指令的返回来输入tcpdump -i后的参数抓包即可   
-    - 获取 **4G/5G(LTE/NR)** 网络接口的指令为 he ifname@lte2.netdev   
-    - 获取 **有线宽带** 网络接口的指令为 he ifname@wan.netdev   
-    - 获取 **2.4G无线连网** 网络接口的指令为 he ifname@wisp.netdev   
-    - 获取 **5.8G无线连网** 网络接口的指令为 he ifname@wisp2.netdev   
+    - 获取 **4G/5G(LTE/NR)** 网络接口的指令为 **ifname@lte2.netdev**   
+    - 获取 **有线宽带** 网络接口的指令为 **ifname@wan.netdev**   
+    - 获取 **2.4G无线连网** 网络接口的指令为 **ifname@wisp.netdev**   
+    - 获取 **5.8G无线连网** 网络接口的指令为 **ifname@wisp2.netdev**   
 
 
