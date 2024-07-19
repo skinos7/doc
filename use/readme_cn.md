@@ -142,7 +142,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - **[端口映射使用说明](./portmap/portmap_cn.md)**   
 - ***[端口代理使用说明](./portproxy/portproxy.md)**(编写中)*
 
-### 终端管理   
+### 终端管理及访问控制   
 - ***[限制所有的终端访问权限](./client/acl.md)**(编写中)*      
 - ***[限制指定的终端访问权限](./client/client_acl.md)**(编写中)*      
 - ***[上网白名单设置](./client/black.md)**(编写中)*      
@@ -262,16 +262,21 @@ SkinOS网关管理平台用于安装在Ubuntu等Linux发行版中, 所有的Skin
 
 ### 管理接入的网关   
 
-- ***[实时管理网关配置](./wifi/ssid_cn.md)**(编写中)*    
+- **[实时管理网关配置](./cloud/gateway_config_manage_cn.md)**    
+- **[远程访问网关的网页管理界面](./cloud/gateway_config_ui_cn.md)**    
+- **[远程访问网关的终端命令行](./cloud/gateway_config_cmd_cn.md)**    
+- **[远程访问网关下设备的网页](./cloud/gateway_device_ui_cn.md)**
+    通过此操作可以直接访问网关下如摄象头或是PLC等各种设备的管理界面等   
+- **[远程访问网关下设备的Telnet服务](./cloud/gateway_device_telnet_cn.md)**
+    通过此操作可以直接访问网关下如摄象头或是PLC等各种设备的Telnet服务, 实现远程命令行管理网关下的设备    
+- **[远程访问网关下设备的SSH服务](./cloud/gateway_device_ssh_cn.md)**
+    通过此操作可以直接访问网关下如摄象头或是PLC等各种设备的SSH服务, 实现远程命令行管理网关下的设备   
+
 - ***[实时操作网关的上的IO口](./wifi/ssid_cn.md)**(编写中)*   
 - ***[获取网关上传感器的数据](./wifi/ssid_cn.md)**(编写中)*    
 - ***[获取网关串口数据](./wifi/ssid_cn.md)**(编写中)*   
 - ***[获取网关定位数据](./wifi/ssid_cn.md)**(编写中)*   
-- ***[远程打开网关的网页管理界面](./wifi/ssid_cn.md)**(编写中)*    
-- ***[远程打开网关的终端命令行](./wifi/ssid_cn.md)**(编写中)*    
-- ***[远程打开网关下设备的网页](./wifi/ssid_cn.md)**(编写中)*    
-- ***[远程打开网关下设备的Telnet服务](./wifi/ssid_cn.md)**(编写中)*    
-- ***[远程打开网关下设备的SSH服务](./wifi/ssid_cn.md)**(编写中)*    
+
 
 ### 网关内网穿透配置    
 
