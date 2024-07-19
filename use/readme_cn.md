@@ -258,6 +258,7 @@ SkinOS网关管理平台用于安装在Ubuntu等Linux发行版中, 所有的Skin
 ## 常用的功能使用说明   
 
 ### 管理接入的网关   
+- **[修改管理云平台上网关的名称](./cloud/gateway_name_cn.md)**   
 - **[实时管理网关配置](./cloud/gateway_config_manage_cn.md)**   
 - **[远程访问网关的网页管理界面](./cloud/gateway_config_ui_cn.md)**   
 - **[远程访问网关的终端命令行](./cloud/gateway_config_cmd_cn.md)**   
