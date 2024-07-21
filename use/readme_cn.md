@@ -140,14 +140,13 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - **[端口映射使用说明](./portmap/portmap_cn.md)**   
 - ***[端口代理使用说明](./portproxy/portproxy.md)**(编写中)*
 
-### 终端管理及访问控制   
-- ***[限制所有的终端访问权限](./client/acl.md)**(编写中)*      
-- ***[限制指定的终端访问权限](./client/client_acl.md)**(编写中)*      
-- ***[上网白名单设置](./client/black.md)**(编写中)*      
-- ***[上网黑名单设置](./client/white.md)**(编写中)*      
-- ***[为所有的终端设置上网权限](./client/internet.md)**(编写中)*      
-- ***[为指定的终端设置上网权限](./client/client_internet.md)**(编写中)*      
-- ***[让访问权限或上网权限定时生效](./client/internet.md)**(编写中)*      
+### 终端访问控制及管理   
+- 通过 **[限制终端访问](./acl/access_control_cn.md)** 实现对接入终端访问互联网的目的地或内容进行管控    
+- 通过 **[限制终端上网](./acl/internet_control_cn.md)**  实现对客户端访问互联网的权限或时间进行管控   
+- *通过 **[上网白名单设置](./acl/internet_whitelist_cn.md)**  实现白名单式的管控(编写中)*   
+- *通过 **[上网黑名单设置](./acl/internet_blacklist_cn.md)**  实现黑名单式的管控(编写中)*   
+- *通过 **[为访问及上网规则添加时间限定](./acl/control_timer_cn.md)** 实现设置的规则定时生效(编写中)*    
+- ***[为终端自定义名称](./client/bind_name_cn.md)**(编写中)*   
 
 ### 路由功能   
 - ***[路由表管理](./route/route.md)**(编写中)*      
@@ -260,6 +259,7 @@ SkinOS网关管理平台用于安装在Ubuntu等Linux发行版中, 所有的Skin
 ### 管理接入的网关   
 - **[修改管理云平台上网关的名称](./cloud/gateway_name_cn.md)**   
 - **[实时管理网关配置](./cloud/gateway_config_manage_cn.md)**   
+- **[重启网关](./cloud/gateway_reboot_cn.md)**   
 - **[远程访问网关的网页管理界面](./cloud/gateway_config_ui_cn.md)**   
 - **[远程访问网关的终端命令行](./cloud/gateway_config_cmd_cn.md)**   
 - **[远程访问网关下设备的网页](./cloud/gateway_device_ui_cn.md)**   
@@ -288,7 +288,7 @@ SkinOS网关管理平台用于安装在Ubuntu等Linux发行版中, 所有的Skin
 - **[查看自组网的状态](./cloud/network_status_cn.md)**    
 
 ### 升级网关   
-- ***[上传固件升级网关](./wifi/ssid_cn.md)**(编写中)*    
+- **[上传固件升级网关](./cloud/gateway_update_cn.md)**    
 
 
 **(编写中)的功能都已实现, 使用文档暂未上传, 如有需要可资询技术人员上传**
