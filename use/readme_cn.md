@@ -143,10 +143,10 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 ### 终端访问控制及管理   
 - 通过 **[限制终端访问](./acl/access_control_cn.md)** 实现对接入终端访问互联网的目的地或内容进行管控    
 - 通过 **[限制终端上网](./acl/internet_control_cn.md)**  实现对客户端访问互联网的权限或时间进行管控   
-- *通过 **[上网白名单设置](./acl/internet_whitelist_cn.md)**  实现白名单式的管控(编写中)*   
-- *通过 **[上网黑名单设置](./acl/internet_blacklist_cn.md)**  实现黑名单式的管控(编写中)*   
-- *通过 **[为访问及上网规则添加时间限定](./acl/control_timer_cn.md)** 实现设置的规则定时生效(编写中)*    
-- ***[为终端自定义名称](./client/bind_name_cn.md)**(编写中)*   
+- 通过 **[上网白名单设置](./acl/access_whitelist_cn.md)**  实现白名单式的管控   
+- 通过 **[上网黑名单设置](./acl/access_blacklist_cn.md)**  实现黑名单式的管控   
+- 通过 **[为访问及上网规则添加指定时间生效](./acl/control_timer_cn.md)** 实现设置的规则定时生效   
+- **[为终端自定义名称](./client/bind_name_cn.md)**   
 
 ### 路由功能   
 - ***[路由表管理](./route/route.md)**(编写中)*      
