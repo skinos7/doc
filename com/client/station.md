@@ -11,6 +11,7 @@ Management of specified client access
         "ifname":"specify on interface name",                 // [ string ], defdault the ifname@lan
         "name":"specify hostname",                            // [ string ]
         "bindip":"specify ip address on dhcp assignment",     // [ string ]
+        "arpbind":"bind ip set the arp table",                // [ "disable", "enable" ]
         "lease":"specify lease on dhcp assignment",           // [ number ]
 
         // access internet privilege

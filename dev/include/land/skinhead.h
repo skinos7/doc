@@ -173,6 +173,8 @@ typedef int boole;
 #define ETC_DNS_FILE  "/etc/resolv.conf"
 #define ETC_DNS6_FILE  "/etc/resolv.conf.ipv6"
 #define RESOLV_DIR  PROJECT_TMP_DIR"/resolv"
+#define PROC_ARP_FILE "/proc/net/arp"
+
 
 
 
@@ -233,6 +235,8 @@ typedef int boole;
 #define STATION_COM "client@station"
 #define STATION_GLOBAL_COM "client@global"
 #define STATION_DEFAULT_COM "client@default"
+#define STATION_ARP_COM "client@arp"
+#define STATION_IPCAT_COM "client@ipcat"
 #define STATION_DHCPS_COM "client@dhcps"
 #define STATION_ACL_COM "client@acl"
 #define STATION_LIMIT_COM "client@limit"
