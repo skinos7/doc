@@ -82,6 +82,7 @@ Management LTE modem
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
         "failover":"backup simcard usage duration",                                      // [ number ], the unit is second
+        "keeplive_switch":"keeplive faeild to switch",                                   // [ "disable", "enable" ]
 
         // backup simcard lock attributes
         "lock_imei":"lock imei",                   // [ "disable", "enable", IMEI ], "enable": The IMEI detected for the first time will be locked
