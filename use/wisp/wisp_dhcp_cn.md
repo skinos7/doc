@@ -20,6 +20,17 @@
 具体切换为 **2.4G无线连网网关** 还是 **5.8G无线连网网关** 取决于要连接的SSID是 **2.4G** 的还是 **5.8G** 的热点    
 在 **2.4G无线连网网关**(或**5.8G无线连网网关**) 模式下, 网关的WAN/LAN口及无线都在同一个广播域, 在使用中WAN口与LAN口无区别    
 
+```shell
+# 命令行操作
+# network@frame:mode            // 查询当前工作模式
+gateway                               // gateway表示为有线网关
+# network@frame:mode=wisp       // 切换无线连网模式
+ttrue                                 // ttrue表示成功
+# network@frame:mode            // 再次查询当前工作模式
+wisp                                  // wisp表示为2.4G无线连网关
+# land@machine.restart         // 重启系统
+```
+
 
 #### 2. 设置无线连网自动获取(DHCP)地址
 
@@ -42,6 +53,67 @@
     - **红框5** 用于填写多个安全方式完全相同的SSID, 网关将连接他们之中的SSID   
     - **红框6** 用于锁定最强信号, 当连接的SSID有多个设备或连接多个SSID时(红框5)时必须点选   
     - **红框B** 用于当热点列表中未显示对应的SSID时可点 **重新扫描** 直到能显示需要连接的SSID   
+
+```shell
+# 命令行操作
+# ifname@wisp.aplist                 // 扫描当前附近2.4G的无线热点
+{
+    "86:31:AF:BB:E0:7D":
+    {
+        "ssid":"dimmalex-mobile",
+        "channel":"6",
+        "secure":"wpa2psk",
+        "wpa_encrypt":"aes",
+        "sig":"34",
+        "signal":"2",
+        "chext":"none",
+        "mode":"11b/g/n"
+    },
+    "00:03:7F:12:09:10":
+    {
+        "ssid":"dimmalex-home",
+        "channel":"11",
+        "secure":"wpapskwpa2psk",
+        "wpa_encrypt":"aes",
+        "sig":"55",
+        "signal":"3",
+        "chext":"none",
+        "mode":"11b/g/n"
+    }
+}
+# ifname@wisp|{"mode":"dhcpc","peer":"dimmalex-mobile","secure":"wpa2psk","wpa_encrypt":"aes","wpa_key":"cf8k2bn519","strong":"enable"}    // 设置连接名为dimmalex-mobile的SSID
+ttrue
+# ifname@wisp.status                 // 查询状态, 显示连接成功
+{
+    "mode":"dhcpc",
+    "ifname":"ifname@wisp",
+    "netdev":"apcli0",
+    "gw":"192.168.110.8",
+    "dns":"192.168.110.8",
+    "dns2":"",
+    "ifdev":"wifi@nsta",
+    "ontime":"00:48:17:0",
+    "metric":"10",
+    "status":"up",
+    "ip":"192.168.110.60",
+    "mask":"255.255.255.0",
+    "livetime":"00:49:30:0",
+    "rx_bytes":"0",
+    "rx_packets":"0",
+    "tx_bytes":"0",
+    "tx_packets":"0",
+    "mac":"02:03:7F:02:46:70",
+    "tid":"5",
+    "state":"up",
+    "peer":"dimmalex-mobile",
+    "peermac":"86:31:AF:BB:E0:7D",
+    "channel":"1",
+    "rate":"300",
+    "sig":"34",
+    "signal":"2"
+}
+#
+```
 
 
 #### 无线连网的可用性检测介绍

@@ -37,13 +37,14 @@ Factory skonos device at the local network
         "scope":"current upgrade firmware scope"             // [ string ]
         "version":"current upgrade firmware version",        // [ string ]
         "zz":"current upgrade firmware",                     // [ string ]
-        "eeprom":"current upgrade eeprom",                   // [ string ]
+
+        "cfgversion":"configure version",                    // [ string ]
+        "tar":"configure file url location",                 // [ string ]
 
         "oem":"oem file size",                               // [ string ]
         "dtar":"oem file url location",                      // [ string ]
 
-        "cfgversion":"configure version",                    // [ string ]
-        "tar":"configure file url location"                  // [ string ]
+        "eeprom":"current upgrade eeprom"                    // [ string ]
     },
     "check":"check the client value",                 // [ "disable", "enable" ]
     "check_cfg":                                      // need check some item
@@ -97,13 +98,14 @@ gather@factory
         "scope":"std",
         "version":"v7.3.0620",
         "zz":"tftp://172.16.0.1/mt7628_r600_std_v7.3.0620_wlinkr320.zz",
-        "eeprom":"tftp://172.16.0.1/mt7628_r600_std_v7.3.0620.art",
+
+        "cfgversion":"skinos23231-202321922323",
+        "tar":"tftp://172.16.0.1/mt7628_r600_std_v7.3.0620.tar",
 
         "oem":"1341",
         "dtar":"tftp://172.16.0.1/mt7628_r600_std_v7.3.0620.dtar",
 
-        "cfgversion":"skinos23231-202321922323",
-        "tar":"tftp://172.16.0.1/mt7628_r600_std_v7.3.0620.tar"
+        "eeprom":"tftp://172.16.0.1/mt7628_r600_std_v7.3.0620.art"
     },
     "check":"enable",
     "check_cfg":                                     // need check some item
