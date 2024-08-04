@@ -10,7 +10,7 @@
 ### 第二种, 需要输入运营商指定的APN号才可接入虚拟专用网络   
 - 命令行设置4G网络输入 **set ifname@lte** 回车, 设置4G/5G网络输入 **set ifname@lte2** 回车    
 ```shell
-$ set ifname@lte            // 设置4G网络
+$ set ifname@lte            // 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
@@ -72,11 +72,11 @@ ttrue
 ICMP是所有可用性检测中最有效的机制, **强烈建议使用**, 但如APN专网中不能提供能PING通且稳定的服务器则无法使用些模式   
 - 命令行设置4G网络输入 **set ifname@lte** 回车, 设置4G/5G网络输入 **set ifname@lte2** 回车    
 ```shell
-$ set ifname@lte            // 设置4G网络
+$ set ifname@lte            // 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               // 开始设置提示  
+$ ifname@lte:               // 开始修改提示  
 ```   
 - 修改可用性检测为 **ICMP**   
 ```shell
@@ -135,11 +135,11 @@ $ ifname@lte:keeplive/type=disable      // 禁用可用性检测
 专门为 **使用APN专网SIM卡接入虚拟专用网络(VPDN/APN)** 时 **无长期稳定可PING通的IP地址** 而设计的   
 - 命令行设置4G网络输入 **set ifname@lte** 回车, 设置4G/5G网络输入 **set ifname@lte2** 回车    
 ```shell
-$ set ifname@lte            // 设置4G网络
+$ set ifname@lte            // 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               // 开始设置提示  
+$ ifname@lte:               // 开始修改提示  
 ```   
 - 修改可用性检测为 **接收包计数**   
 ```shell
@@ -184,11 +184,11 @@ ttrue
 通过向LTE/NR网络上的DNS服务器发送DNS的查询包, 以是否能收到DNS的回应来确认连接是否有效   
 - 命令行设置4G网络输入 **set ifname@lte** 回车, 设置4G/5G网络输入 **set ifname@lte2** 回车    
 ```shell
-$ set ifname@lte            // 设置4G网络
+$ set ifname@lte            // 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               // 开始设置提示  
+$ ifname@lte:               // 开始修改提示  
 ```   
 - 修改可用性检测为 **UDP&UDP**   
 ```shell
