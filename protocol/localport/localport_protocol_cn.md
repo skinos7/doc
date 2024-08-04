@@ -1,103 +1,95 @@
 
 
-## 本地被管理协议说明
-
+# 本地被管理协议说明   
 网关可接受来自局域网的管理协议, 管理协议通常由批量管理工具或本地的其它设备发出, 通过此协议批量管理工具或其它设备可以实现局域网管理网关
 
+### 协议分类   
+在局域网与网关通信分为三种协议   
+- **TCP(JSON)控制协议(端口22220), 用于通过TCP发送JSON指令管理网关**   
+- **局域网搜索协议(UDP端口22222), 用于在局域网内搜索所有的网关**   
+- **局域网查询协议(UDP端口22222), 用于在局域网内搜索所有的网关并查询所有网关的信息(不常用)**   
 
-
-#### 协议分类
-
-在局域网与网关通信分为三种协议
-- **TCP(JSON)控制协议(端口22220), 用于通过TCP发送JSON指令管理网关**
-- **局域网搜索协议(UDP端口22222), 用于在局域网内搜索所有的网关**
-- **局域网查询协议(UDP端口22222), 用于在局域网内搜索所有的网关并查询所有网关的信息(不常用)**
-
-![avatar](./localport_protocol.png)
+![avatar](./localport_protocol.png)   
 
 ---
+# TCP(JSON)控制协议   
+通过 **TCP端口22220** 与网关交互JSON指令, 实现对网关的控制, 使用TCP协议交互, 适合交互各种信息   
 
-## TCP(JSON)控制协议
-通过 **TCP端口22220** 与网关交互JSON指令， 实现对网关的控制, 使用TCP协议交互, 适合交互各种信息
-
-#### 在网关上开启JSON控制协议
-
-默认网关不会响应TCP(JSON)控制协议, 需要进入管理网页打开此协议, *打开此协议会存在安全风险，请确保局域网安全*
+### 在网关上开启JSON控制协议   
+默认网关不会响应TCP(JSON)控制协议, 需要进入管理网页打开此协议, *打开此协议会存在安全风险，请确保局域网安全*   
 ![avatar](./localport_jsonwui.png)   
 
+### 与网关的交互流程   
+如下图所示   
+![avatar](./localport_control.png)   
+交互简介   
+- 每一次的交互都需要建立TCP连接, 然后再发送JSON指令, 网关收到JSON指令将会回复JSON指令的执行结果, 之后将立即关闭TCP连接   
+- 每一次交互都需要建立一个TCP连接, 也称之为**短连接**, 为保证指令的完整性, 指令被设计成一个完整的JSON对象, 同样回复信息也是一个完整的JSON对象   
+- 对于网关的操作可以分为三种JSON指令:   
+    1. 查询配置：用于查询网关的配置   
+	2. 修改配置：用于修改网关的配置   
+	3. 调用功能接口(API)：用于获取或操作网关的状态等   
 
-#### 与网关的交互流程
-- 如下图所示  
-![avatar](./localport_control.png)
-- 交互简介  
-    每一次的交互都需要建立TCP连接, 然后再发送JSON指令, 网关收到JSON指令将会回复JSON指令的执行结果, 之后将立即关闭TCP连接, 因此, 每一次交互都需要建立一个TCP连接, 也称之为**短连接**, 为保证指令的完整性, 指令被设计成一个完整的JSON对象, 同样回复信息也是一个完整的JSON对象, 对于网关的操作可以分为三种JSON指令：
-	1. 查询配置：用于查询网关的配置
-	2. 修改配置：用于修改网关的配置
-	3. 调用功能接口(API)：用于获取或修改网关的状态等
-
-#### JSON指令格式 --- HE指令模式
-- 直接使用JSON包装HE指令
-    以下是JSON格式包装HE指令格式介绍
+### JSON指令格式 --- HE指令模式   
+直接使用JSON格式发送HE指令, **更多HE终端指令介绍见此文档 [终端管理命令行使用介绍](../../use/he/he_command_cn.md)**   
+以下是JSON格式发送HE指令格式介绍   
+```json
+{
+    "cmd1":"HE指令"   // [ 字符串 ]:[ 字符串 ] 属性名可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
+    // 更多指令...
+}
+```   
+网关跟据HE指令执行的结果返回内容, 格式可为:   
+1. 一个JSON   
     ```json
     {
-        "cmd1":"HE指令"   // [ 字符串 ]:[ 字符串 ] 属性名可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
-        // 更多指令...
+        "cmd1":{JSON格式的配置内容}
     }
-    ```
-    网关跟据HE指令执行的结果返回内容, 格式可为:
-    1. 一个JSON
-        ```json
-        {
-            "cmd1":{JSON格式的配置内容}
-        }
-        ```
-    2. 一个字符串
-        ```json
-        {
-            "cmd1":"属性值"
-        }
-        ```
-    3. 空, 表示不存在此项配置
-        ```json
-        {
-            "cmd1":"NULL"
-        }
-        ```
-    例1：如查询网关的基本配置的HE指令为 land@machine, 对应的json指令格式为
+    ```   
+2. 一个字符串   
     ```json
-    { "cmd1":"land@machine" }
-    ```
-    例2：如查询网关名称的HE指令为 land@machine:name, 对应的json指令格式为
+    {
+        "cmd1":"属性值"
+    }
+    ```   
+3. 空, 表示不存在此项配置   
     ```json
-    { "cmd1":"land@machine:name" }
-    ```
-    例2：如查询网关工作模式的HE指令为 land@machine:mode, 对应的json指令格式为
-    ```json
-    { "cmd1":"land@machine:mode" }
-    ```
-    例3：如查询网关LTE/NR(4G/5G)网络的配置的HE指令为 ifname@lte, 对应的json指令格式为
-    ```json
-    { "cmd1":"ifname@lte" }
-    ```    
-    例4：如查询网关LTE/NR(4G/5G)网络的状态的HE指令为 ifname@lte.status, 对应的json指令格式为
-    ```json
-    { "cmd1":"ifname@lte.status" }
-    ```
-    例5：如调用clock@date(系统时间)的ntpsync方法实现与ntp1.aliyun.com的NTP对时的HE指令为clock@date.ntpsync[ntp1.aliyun.com], 对应的json指令格式为
-    ```json
-    { "cmd1":"clock@date.ntpsync[ntp1.aliyun.com]" }
-    ```
-    例6：也可以同时执行多条HE指令, 如果重启一下LTE/NR(4G/5G)网络先执行ifname@lte.shut再执行ifname@lte.setup, 对应的json指令格式为
-    ```json
-    { "cmd1":"ifname@lte.shut", "cmd2":"ifname@lte.setup" }
-    ```
-    *更多HE终端指令介绍见此文档 [HE指令介绍](../../use/he/he_command_cn.md)*
+    {
+        "cmd1":"NULL"
+    }
+    ```   
+例1：如查询网关的基本配置的HE指令为 land@machine, 对应的json指令格式为   
+```json
+{ "cmd1":"land@machine" }
+```   
+例2：如查询网关名称的HE指令为 land@machine:name, 对应的json指令格式为   
+```json
+{ "cmd1":"land@machine:name" }
+```   
+例2：如查询网关工作模式的HE指令为 land@machine:mode, 对应的json指令格式为   
+```json
+{ "cmd1":"land@machine:mode" }
+```   
+例3：如查询网关LTE/NR(4G/5G)网络的配置的HE指令为 ifname@lte, 对应的json指令格式为   
+```json
+{ "cmd1":"ifname@lte" }
+```    
+例4：如查询网关LTE/NR(4G/5G)网络的状态的HE指令为 ifname@lte.status, 对应的json指令格式为   
+```json
+{ "cmd1":"ifname@lte.status" }
+```   
+例5：如调用clock@date(系统时间)的ntpsync方法实现与ntp1.aliyun.com的NTP对时的HE指令为clock@date.ntpsync[ntp1.aliyun.com], 对应的json指令格式为   
+```json
+{ "cmd1":"clock@date.ntpsync[ntp1.aliyun.com]" }
+```   
+例6：也可以同时执行多条HE指令, 如果重启一下LTE/NR(4G/5G)网络先执行ifname@lte.shut再执行ifname@lte.setup, 对应的json指令格式为   
+```json
+{ "cmd1":"ifname@lte.shut", "cmd2":"ifname@lte.setup" }
+```   
 
-    
-#### JSON指令格式 --- JSON模式
-
-- 查询网关配置交互格式介绍, 查询网关配置的终端指令格式为 ***组件名称[:属性/属性/...]***
-    以下是JSON指令格式介绍
+### JSON指令格式 --- JSON模式   
+- 查询网关配置交互格式介绍   
+    查询网关配置的终端指令格式为 **组件名称[:属性/属性/...]**, 以下是JSON指令格式介绍   
     ```json
     {
         "cmd1":   // [ 字符串 ]:{} 可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
@@ -107,45 +99,46 @@
         }
         // 更多指令...
     }
-    ```
-    跟据网关的实际配置返回值的格式可为：
+    ```   
+    跟据网关的实际配置返回值的格式可为：   
     1. 一个JSON
         ```json
         {
             "cmd1":{JSON格式的配置内容}
         }
-        ```
-    2. 一个字符串， 查询时"ab"有指定属性
+        ```   
+    2. 一个字符串， 查询时"ab"有指定属性   
         ```json
         {
             "cmd1":"属性值"
         }
-        ```
-    3. 空, 表示不存在此项配置
+        ```   
+    3. 空, 表示不存在此项配置   
         ```json
         {
             "cmd1":"NULL"
         }
-        ```
-    例1：如查询网关的基本配置的HE指令为 land@machine , 对应的json指令格式为
+        ```   
+    例1：如查询网关的基本配置的HE指令为 land@machine , 对应的json指令格式为   
     ```json
     { "cmd1": { "com":"land@machine" } }
-    ```
-    例2：如查询网关名称的HE指令为 land@machine:name , 对应的json指令格式为
+    ```   
+    例2：如查询网关名称的HE指令为 land@machine:name , 对应的json指令格式为   
     ```json
     { "cmd1": { "com":"land@machine","ab":"name" } }
-    ```
-    例2：如查询网关工作模式的HE指令为 land@machine:mode , 对应的json指令格式为
+    ```   
+    例2：如查询网关工作模式的HE指令为 land@machine:mode , 对应的json指令格式为   
     ```json
     { "cmd1": { "com":"land@machine","ab":"mode" } }
-    ```
-    例3：如查询网关LTE/NR(4G/5G)网络的配置的HE指令为 ifname@lte , 对应的json指令格式为
+    ```   
+    例3：如查询网关LTE/NR(4G/5G)网络的配置的HE指令为 ifname@lte , 对应的json指令格式为   
     ```json
     { "cmd1": { "com":"ifname@lte" } }
-    ```
+    ```   
 
-- 修改网关配置交互格式介绍, 修改网关配置的HE指令格式为 ***组件名称[:属性/属性/...]=值***
-    以下是JSON指令格式介绍 --- 当值为字符串时
+- 修改网关配置交互格式介绍   
+    修改网关配置的HE指令格式为 **组件名称[:属性/属性/...]=值**   
+    以下是JSON指令格式介绍 --- 当值为字符串时   
     ```json
     {
         "cmd1": // [ 字符串 ]:{} 可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
@@ -156,8 +149,8 @@
 	        "v":"值"               // [ 字符串 ]
         }
     }
-    ```
-    以下是JSON指令格式介绍 --- 当值为JSON对象时
+    ```   
+    以下是JSON指令格式介绍 --- 当值为JSON对象时   
     ```json
     {
         "cmd1":                    // [ 字符串 ]:{} 可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
@@ -168,32 +161,32 @@
 	        "v":{JSON格式的值}      // [ JSON ]
         }
     }
-    ```
-    网关返回值成功为ttrue, 失败时为tfalse：
-    1. 返回ttrue
+    ```   
+    网关返回值成功为ttrue, 失败时为tfalse：   
+    1. 返回ttrue   
         ```json
         {
             "cmd1":"ttrue"
         }
-        ```
-    2. 返回tfalse
+        ```   
+    2. 返回tfalse   
         ```json
         {
             "cmd1":"tfalse"
         }
-        ```
-    例1：如修改网关语言的HE指令为 land@machine:language=en , 对应的json指令格式为
+        ```   
+    例1：如修改网关语言的HE指令为 land@machine:language=en , 对应的json指令格式为   
     ```json
     { "cmd1": { "com":"land@machine", "ab":"language", "op":"=", "v":"en" } }
-    ```
-    例2：如修改网关名称的HE指令为 land@machine:name=NewName , 对应的json指令格式为
+    ```   
+    例2：如修改网关名称的HE指令为 land@machine:name=NewName , 对应的json指令格式为   
     ```json
     { "cmd1": { "com":"land@machine","ab":"name", "op":"=", "v":"NewName" } }
-    ```
+    ```   
 
-
-- 调用网关接口交互格式介绍, 调用网关接口的HE指令格式为 ***组件名称.接口名称[ 参数1, 参数2, 参数3 ]***
-    以下是JSON指令格式介绍
+- 调用网关接口交互格式介绍   
+    调用网关接口的HE指令格式为 **组件名称.接口名称[ 参数1, 参数2, 参数3 ]**   
+    以下是JSON指令格式介绍   
     ```json
     {
         "cmd1": // [ 字符串 ]:{} 可随意命名, 用于在JSON中唯一的标识当前指令, 由此可实现在一个交互中多个指令, 网关回复时也以此指令命名标识其回复
@@ -205,54 +198,343 @@
             "3":"参数3"             // [ 字符串 ]，可选, 参数可为字符串(即引号开头及引号结尾), 也可以为JSON(即{开头}结尾)
         }
     }
-    ```
-    跟据调用接口不同, 网关返回值可分为以下五种：
-    1. 返回ttrue, 通常用于表示操作成功
+    ```   
+    跟据调用接口不同, 网关返回值可分为以下五种：   
+    1. 返回ttrue, 通常用于表示操作成功   
         ```json
         {
             "cmd1":"ttrue"
         }
-        ```
-    2. 返回tfalse, 通常用于表示操作失败
+        ```   
+    2. 返回tfalse, 通常用于表示操作失败   
         ```json
         {
             "cmd1":"tfalse"
         }
-        ```
-    3. 返回JSON, 通常表示操作的返回信息
+        ```   
+    3. 返回JSON, 通常表示操作的返回信息   
         ```json
         {
             "cmd1":{返回JSON内容}
         }
-        ```
-    4. 返回字符串, 通常表示操作的返回信息
+        ```   
+    4. 返回字符串, 通常表示操作的返回信息   
         ```json
         {
             "cmd1":"返回字符串内容"
         }
-        ```
-    5. 无返回, 有的接口不返回任何信息
+        ```   
+    5. 无返回, 有的接口不返回任何信息   
         ```json
         {
             "cmd1":"NULL"
         }
-        ```
-    例1：如获取网关基本状态的HE指令为 land@machine.status , 对应的json指令格式为
+        ```   
+    例1：如获取网关基本状态的HE指令为 land@machine.status , 对应的json指令格式为   
     ```json
     { "cmd1": { "com":"land@machine", "op":"status" } }
-    ```
-    例2：如获取网关LTE/NR(4G/5G)网络状态的HE指令为 ifname@lte.status , 对应的json指令格式为
+    ```   
+    例2：如获取网关LTE/NR(4G/5G)网络状态的HE指令为 ifname@lte.status , 对应的json指令格式为   
     ```json
     { "cmd1": { "com":"ifname@lte", "op":"status" } }
-    ```
-    例3：如查询网关定位信息的HE指令为 gnss@nmea.info , 对应的json指令格式为
+    ```   
+    例3：如查询网关定位信息的HE指令为 gnss@nmea.info , 对应的json指令格式为   
     ```json
     { "cmd1": { "com":"gnss@nmea", "op":"info" } }
-    ```
+    ```   
+
+
+---
+# TCP(JSON)控制协议管理网关说明   
+
+## SkinOS工作模式简介   
+针于不同的应用场景网关可提供不同的工作方式, 网关常用的工作模式如下:   
+
+**4G网关**: 通过3G/4G连接互联网的网关模式, TCP(JSON)控制协议发送如下设置为此模式   
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[misp]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```   
+**4G/5G网关**: 通过4G/5G连接互联网的网关模式, TCP(JSON)控制协议发送如下设置为此模式   
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[nmisp]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```   
+**4G5G猫**: 提供4G/5G猫的功能, 完成与4G/5G网络连接但不获取IP地址, 需要其它的客户端通过DHCP协议获取4G/5G的IP地址, TCP(JSON)控制协议发送如下设置为此模式   
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[mbridge]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```   
+**双4G/5G网关**：通过两个4G/5G连接互联网的网关模式, 只有在有两个4G/5G基带的产品上才支持, TCP(JSON)控制协议发送如下设置为此模式   
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[dmisp]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```   
+**有线网关**：通过有线WAN口连接互联网的网关模式, TCP(JSON)控制协议发送如下设置为此模式    
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[gateway]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```   
+**双WAN口网关**：通过两个有线WAN口连接互联网的网关模式, TCP(JSON)控制协议发送如下设置为此模式   
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[dgateway]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```   
+**2.4G无线连网网关**：通过2.4G无线客户端连接其它WIFI网络的网关模式, TCP(JSON)控制协议发送如下设置为此模式   
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[wisp]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```   
+**5.8G无线连网网关**：通过5.8G无线客户端连接其它WIFI网络的网关模式, TCP(JSON)控制协议发送如下设置为此模式   
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[nwisp]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```   
+**无线热点**：相当于带无线功能的交换机, 此模式下默认不会分配IP地址, 通常用于放置在路由器的下一级, TCP(JSON)控制协议发送如下设置为此模式   
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[ap]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```   
+**混合**：此模式下可使用4G/5G、有线WAN口、无线连网三种模式中组合上网, 实现多种上网方式同时存在并相互备份或负载均衡, TCP(JSON)控制协议发送如下设置为此模式   
+```json
+{
+    "cmd1":
+    {
+        "com":"land@machine.mode[mix]"       // 切换
+    }, 
+    "cmd2":
+    {
+        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+    }
+}
+```     
+
+## 常用的功能操作说明   
+
+### 4G/5G联网设置   
+- **连接普通的4G(LTE)网络**   
+    1. 网关插上SIM卡后   
+    2. 将设备的 **工作模式** 设置为 **4G网关**, 通常4G网关默认即为此模式    
+    网关就会自动通过4G(LTE)连上互联网, 不需要任何设置, 将终端设备或电脑通过有线或无线连接网关即可访问互联网   
+- **连接普通的5G(NR)网络**   
+    1. 网关插上SIM卡后    
+    2. 将设备的 **工作模式** 设置为 **4G/5G网关**, 通常5G网关默认即为此模式     
+    网关就会自动通过5G(NR)连上互联网, 不需要任何设置, 将终端设备或电脑通过有线或无线连接网关即可访问互联网   
+- **[4G/5G(LTE/NR)接入虚拟专用网络(VPDN/APN)](./lte/he_lte_apn_cn.md)** 介绍使用LTE/NR接入VPDN/APN网络   
+- ***[4G/5G(LTE/NR)接入自建基站网络](./lte/lte_spec_cn.md)**(编写中)* 介绍使用LTE/NR接入自建基站网络   
+- ***[4G/5G(LTE/NR)双SIM卡](./lte/lte_bsim_cn.md)**(编写中)* 介绍LTE/NR双卡的使用   
+- ***[4G/5G(LTE/NR)短信功能](./lte/lte_sms_cn.md)**(编写中)* 介绍LTE/NR短信的使用   
+- ***[锁定SIM卡](./lte/lte_lockimsi_cn.md)**(编写中)*, 锁定后更换SIM卡无法工作   
+- ***[锁定4G/5G(LTE/NR)模组](./lte/lte_lockimei_cn.md)**(编写中)*, 锁定后更换4G/5G(LTE/NR)模组无法工作   
+- ***[常用模块锁定频段](./lte/lte_lockband_cn.md)**(编写中)*   
+- ***[自定义指定AT指令](./lte/lte_customat_cn.md)**(编写中)*   
+- ***[AT指令网络透传使用](./lte/lte_atport_cn.md)**(编写中)*, 实现一个服务器或客户端透传来自网络的AT指令到4G/5G(LTE/NR)模组中   
+- ***[4G/5G(LTE/NR)定位功能及使用](./lte/lte_gnss_cn.md)**(编写中)*   
+### 有线宽带联网设置   
+- ***[PPPOE拨号联网](./wan/wan_pppoe_cn.md)**(编写中)*   
+- ***[自动获取(DHCP)联网](./wan/wan_dhcp_cn.md)**(编写中)*   
+- ***[静态地址联网](./wan/wan_static_cn.md)**(编写中)*   
+- ***[纯路由模式下有线宽带联网](./wan/wan_nonat_cn.md)**(编写中)*   
+### 2.4G/5.8G无线连网设置   
+- ***[无线连网自动获取(DHCP)使用](./wisp/wisp_dhcp_cn.md)**(编写中)*   
+- ***[无线连网静态地址使用](./wisp/wisp_static_cn.md)**(编写中)*   
+- ***[无线连网PPPOE拨号使用](./wisp/wisp_pppoe_cn.md)**(编写中)*   
+- ***[纯路由模式下无线连网](./wisp/wisp_nonat_cn.md)**(编写中)*   
+### 使用4G/5G, 有线宽带, 2.4G/5.8G无线连网多个连接同时联网   
+- ***[双4G/5G网关模式的使用](./mix-mode/dmisp_cn.md)**(编写中)*, 实现双4G/5G同时联网, 双4G/5G间实现备份或是负载均衡   
+- ***[双WAN口网关模式的使用](./mix-mode/dgateway.md)**(编写中)*, 实现双WAN口连接同时联网, 双WAN口连接间实现备份或是负载均衡   
+- ***[混合模式的使用](./mix-mode/mix_cn.md)**(编写中)*, 混合模式下实现多种连接同时联网, 各种连接间实现备份或是负载均衡   
+### 2.4G/5.8G无线热点工作模式   
+- ***[无线热点模式使用](./ap/ap_cn.md)**(编写中)*   
+- ***[无线热点模式下中继其它热点](./ap/repeater_cn.md)**(编写中)*   
+### 4G5G猫(Modem)工作模式   
+- ***[4G5G猫(Modem)模式使用](./ap/mbridge_cn.md)**(编写中)*   
+### 本地网络设置   
+- ***[本地网络地址设置](./lan/lan_ip_cn.md)**(编写中)*   
+- ***[本地网络设置多个地址](./lan/lan_mip_cn.md)**(编写中)*   
+- ***[本地网络分配地址段(DHCP服务器)设置](./lan/dhcps_cn.md)**(编写中)*   
+- ***[为终端分配(绑定)指定的IP地址](./client/bind_ip_cn.md)**(编写中)*   
+### 系统管理   
+- ***[修改网关的名称](./system/name_cn.md)**(编写中)*   
+- ***[重启网关](./system/reboot_cn.md)**(编写中)*   
+- ***[重置网关配置(恢复出厂设置)](./system/reset_cn.md)**(编写中)*   
+- ***[管理网关的时间及时区](./system/date_cn.md)**(编写中)*   
+- ***[开启NTP服务为本地设备授时](./system/ntps_cn.md)**(编写中)*   
+- ***[网关配置备份及导入](./system/configure_cn.md)**(编写中)*   
+- ***[网关固件升级](./upgrade/upgrade_cn.md)**(编写中)*   
+- ***[网关网页强制升级](./upgrade/boot_web_upgrade_cn.md)**(编写中)*   
+- ***[网关TFTP强制升级](./upgrade/boot_tftp_upgrade_cn.md)**(编写中)*   
+- ***[管理员密码修改](./system/password_cn.md)**(编写中)*   
+- ***[设置网关定时重启](./system/restart_cn.md)**(编写中)*   
+- ***[Telnet服务器](./system/telnetd_cn.md)**(编写中)*   
+- ***[SSH服务器](./system/sshd_cn.md)**(编写中)*   
+- ***[FTP服务器](./system/ftps_cn.md)**(编写中)*   
+- ***[WEB服务器(管理界面)](./system/webs_cn.md)**(编写中)*   
+- ***[LED指示灯管理](./system/led_cn.md)**(编写中)*   
+- ***[Hosts文件配置](./system/hosts_cn.md)**(编写中)*      
+- ***[锁定网关配置](./custom/lockconfig_cn.md)**(不公开防止误操作)*, 锁定配置后不再允许用户修改网关配置       
+- ***[锁定升级](./custom/lockupdate_cn.md)**(不公开防止误操作)*, 锁定升级后不再允许用户升级网关              
+- ***[锁定重启](./custom/lockreboot_cn.md)**(不公开防止误操作)*, 锁定重启后不再允许用户重启网关     
+### 无线热点   
+- ***[无线热点名称及密码信道等设置](./wifi/ssid_cn.md)**(编写中)*   
+- ***[无线热点黑白名单设置](./wifi/acl_cn.md)**(编写中)*   
+- ***[中继其它热点](./wifi/sta_cn.md)**(编写中)*   
+### 防火墙  
+- **防火墙** 用于控制 **通过外网口访问网关或内网终端** 的权限, 跟 **访问控制** 相反, **访问控制** 则用于控制 **内网终端访问外网** 的权限   
+- ***[允许外网访问网关指定的服务](./firewall/allow_access_cn.md)**(编写中)*   
+### 端口映射或代理   
+- ***[端口映射使用说明](./portmap/portmap_cn.md)**(编写中)*   
+- ***[端口代理使用说明](./portproxy/portproxy.md)**(编写中)*   
+### 终端访问控制及管理   
+- **访问控制** 用于控制 **内网终端访问外网** 的权限, 跟 **防火墙** 相反, **防火墙** 则用于控制 **通过外网口访问网关或内网终端** 的权限   
+- 通过 ***[限制终端访问](./acl/access_control_cn.md)**(编写中)* 实现对接入终端访问互联网的目的地或内容进行管控    
+- 通过 ***[限制终端上网](./acl/internet_control_cn.md)**(编写中)*  实现对客户端访问互联网的权限或时间进行管控   
+- 通过 ***[上网白名单设置](./acl/access_whitelist_cn.md)**(编写中)*  实现白名单式的管控   
+- 通过 ***[上网黑名单设置](./acl/access_blacklist_cn.md)**(编写中)*  实现黑名单式的管控   
+- 通过 ***[为访问及上网规则添加指定时间生效](./acl/control_timer_cn.md)**(编写中)* 实现设置的规则定时生效   
+- ***[为终端自定义名称](./client/bind_name_cn.md)**(编写中)*   
+### 路由功能   
+- ***[路由表管理](./route/route.md)**(编写中)*      
+- ***[基于源地址的路由设置](./route/src_route.md)**(编写中)*      
+- ***[基于端口的路由设置](./route/port_route.md)**(编写中)*      
+### 调试功能   
+- ***[抓包使用说明](./debug/tcpdump_cn.md)**(编写中)*   
+- ***[日志的使用](./hosts/hosts.md)**(编写中)*, 可调整日志存放位置, 记录等级, 保存大小, 远程日志等      
+- ***[ping连通性测试](./debug/tcpdump_cn.md)**(编写中)*   
+- ***[iperf打流带宽测试](./debug/tcpdump_cn.md)**(编写中)*      
+- ***[有互联网的远程协助](./debug/internet_remote_cn.md)**(编写中)*, 用于让网关接入调试云平台, 技术人员可通过调试云平台连接网关      
+- ***[无互联网的远程协助](./debug/nointernet_remote_cn.md)**(编写中)*, 用于让技术人员远程连接电脑调试网关      
+
+## VPN功能使用   
+- ***[设置两台网关Wireguard实现互通示例](./sdwan/wireguard_cn.md)**(编写中)*   
+- ***[L2TP客户端的使用](./sdwan/wireguard.md)**(编写中)*   
+- ***[PPTP客户端的使用](./sdwan/wireguard.md)**(编写中)*   
+- ***[GRE隧道的使用](./sdwan/wireguard.md)**(编写中)*   
+- ***[OpenVPN客户端的使用](./sdwan/wireguard.md)**(编写中)*   
+- ***[IPSEC的使用](./sdwan/wireguard.md)**(编写中)*   
+
+## 串口功能使用   
+- ***[串口透传的使用](./uart/uart_tcp_cn.md)**(编写中)*   
+- ***[串口MQTT透传](./uart/uart_mqtt_cn.md)**(编写中)*   
+- ***[串口Modbus透传](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[串口HTTP透传](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[串口终端命令行模式](./lte/lte_apn_setup.md)**(编写中)*, 此模式下可实现通过串口控制并管理网关   
+- ***[串口外接GPS/BD模块](./lte/lte_apn_setup.md)**(编写中)*, 此模式下让外接的GPS/BD模块提示定位数据源   
+- ***[本地设备获取串口数据](./lte/lte_apn_setup.md)**(编写中)*   
+
+## 串口外接Modbus传感器   
+- ***[串口Modbus主控模式下外接各种传感器](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[传感器信息HTTP上报](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[本地设备获取感器信息](./lte/lte_apn_setup.md)**(编写中)*   
+
+## IO功能使用   
+- ***[通过TCP/UDP协议远程控制IO](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[通过MQTT协议远程控制IO](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[通过短信(SMS)远程控制IO](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[本地设备控制IO](./lte/lte_apn_setup.md)**(编写中)*   
+
+## 定位功能使用   
+- ***[全球定位的使用](./gnss/gnss_setup_cn.md)**(编写中)*   
+- ***[GPS/BD定位数据(NMEA)TCP/UDP协议上报](./gnss/gnss_tcpudp_cn.md)**(编写中)*   
+- ***[GPS/BD定位信息MQTT协议上报](./gnss/gnss_mqtt_cn.md)**(编写中)*   
+- ***[GPS/BD定位信息HTTP协议上报](./gnss/gnss_http_cn.md)**(编写中)*   
+- ***[GPS/BD定位信息JT/T808协议上报](./gnss/gnss_jt808_cn.md)**(编写中)*   
+- ***[本地设备获取GPS/BD定位信息](./gnss/gnss_tcpjson_setup.md)**(编写中)*   
+
+## I2C功能的使用   
+- ***[外接I2C显示屏](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[外接I2C电量板实现读取电量信息](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[I2C电量板的电量信息HTTP协议上报](./lte/lte_apn_setup.md)**(编写中)*    
+- ***[本地设备获取I2C电量板的电量信息](./lte/lte_apn_setup.md)**(编写中)*  
+
+## 高级应用    
+- ***[本地控制网关](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[网关通过HTTP上报状态](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[通过短信控制网关](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[SNMP的使用及自定义OID](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[动态路由协议使用](./lte/lte_apn_setup.md)**(编写中)*   
+- ***[高可用性(VRRP)的使用](./lte/lte_apn_setup.md)**(编写中)*   
+
+**(编写中)的功能都已实现, 使用文档暂未上传, 如有需要可资询技术人员上传**
 
 
 
-#### 示例-获取网关基本信息配置
+---
+# TCP(JSON)控制协议常用示例   
+
+#### 示例-获取网关基本信息配置   
 - 网关基本信息在land@machine组件的配置中, 发送查询land@machine配置指令即可(在终端中的命令为land@machine), 点击 [设备基本信息](../../com/land/machine.md) 查看有关配置的介绍
 ```json
 {
