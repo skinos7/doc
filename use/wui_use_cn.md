@@ -38,7 +38,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 
 
 ---
-## SkinOS工作模式简介   
+## SkinOS工作模式   
 针于不同的应用场景网关可提供不同的工作方式, 网关常用的工作模式如下：   
 **4G网关**: 通过3G/4G连接互联网的网关模式   
 **4G/5G网关**: 通过4G/5G连接互联网的网关模式   
@@ -57,7 +57,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 
 
 ---
-## 常用的功能操作说明   
+## 常用的功能使用说明   
 
 ### 4G/5G联网设置   
 - **连接普通的4G(LTE)网络**   
@@ -78,37 +78,30 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - **[自定义指定AT指令](./lte/lte_customat_cn.md)**   
 - **[AT指令网络透传使用](./lte/lte_atport_cn.md)**, 实现一个服务器或客户端透传来自网络的AT指令到4G/5G(LTE/NR)模组中   
 - ***[4G/5G(LTE/NR)定位功能及使用](./lte/lte_gnss_cn.md)**(编写中)*   
-
 ### 有线宽带联网设置   
 - **[PPPOE拨号联网](./wan/wan_pppoe_cn.md)**   
 - **[自动获取(DHCP)联网](./wan/wan_dhcp_cn.md)**   
 - **[静态地址联网](./wan/wan_static_cn.md)**   
 - **[纯路由模式下有线宽带联网](./wan/wan_nonat_cn.md)**   
-
 ### 2.4G/5.8G无线连网设置   
 - **[无线连网自动获取(DHCP)使用](./wisp/wisp_dhcp_cn.md)**   
 - **[无线连网静态地址使用](./wisp/wisp_static_cn.md)**   
 - **[无线连网PPPOE拨号使用](./wisp/wisp_pppoe_cn.md)**   
 - **[纯路由模式下无线连网](./wisp/wisp_nonat_cn.md)**   
-
 ### 使用4G/5G, 有线宽带, 2.4G/5.8G无线连网多个连接同时联网   
 - **[双4G/5G网关模式的使用](./mix-mode/dmisp_cn.md)**, 实现双4G/5G同时联网, 双4G/5G间实现备份或是负载均衡   
 - **[双WAN口网关模式的使用](./mix-mode/dgateway.md)**, 实现双WAN口连接同时联网, 双WAN口连接间实现备份或是负载均衡   
 - **[混合模式的使用](./mix-mode/mix_cn.md)**, 混合模式下实现多种连接同时联网, 各种连接间实现备份或是负载均衡   
-
 ### 2.4G/5.8G无线热点工作模式   
 - **[无线热点模式使用](./ap/ap_cn.md)**   
 - **[无线热点模式下中继其它热点](./ap/repeater_cn.md)**   
-
 ### 4G5G猫(Modem)工作模式   
 - **[4G5G猫(Modem)模式使用](./ap/mbridge_cn.md)**   
-
 ### 本地网络设置   
 - **[本地网络地址设置](./lan/lan_ip_cn.md)**   
 - **[本地网络设置多个地址](./lan/lan_mip_cn.md)**   
 - **[本地网络分配地址段(DHCP服务器)设置](./lan/dhcps_cn.md)**   
 - **[为终端分配(绑定)指定的IP地址](./client/bind_ip_cn.md)**   
-
 ### 系统管理   
 - **[修改网关的名称](./system/name_cn.md)**   
 - **[重启网关](./system/reboot_cn.md)**   
@@ -130,20 +123,16 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - ***[锁定网关配置](./custom/lockconfig_cn.md)**(不公开防止误操作)*, 锁定配置后不再允许用户修改网关配置       
 - ***[锁定升级](./custom/lockupdate_cn.md)**(不公开防止误操作)*, 锁定升级后不再允许用户升级网关              
 - ***[锁定重启](./custom/lockreboot_cn.md)**(不公开防止误操作)*, 锁定重启后不再允许用户重启网关     
-
 ### 无线热点   
 - **[无线热点名称及密码信道等设置](./wifi/ssid_cn.md)**   
 - **[无线热点黑白名单设置](./wifi/acl_cn.md)**   
 - **[中继其它热点](./wifi/sta_cn.md)**   
-
 ### 防火墙  
 - **防火墙** 用于控制 **通过外网口访问网关或内网终端** 的权限, 跟 **访问控制** 相反, **访问控制** 则用于控制 **内网终端访问外网** 的权限   
 - **[允许外网访问网关指定的服务](./firewall/allow_access_cn.md)**   
-
 ### 端口映射或代理   
 - **[端口映射使用说明](./portmap/portmap_cn.md)**   
 - ***[端口代理使用说明](./portproxy/portproxy.md)**(编写中)*
-
 ### 终端访问控制及管理   
 - **访问控制** 用于控制 **内网终端访问外网** 的权限, 跟 **防火墙** 相反, **防火墙** 则用于控制 **通过外网口访问网关或内网终端** 的权限   
 - 通过 **[限制终端访问](./acl/access_control_cn.md)** 实现对接入终端访问互联网的目的地或内容进行管控    
@@ -152,12 +141,10 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - 通过 **[上网黑名单设置](./acl/access_blacklist_cn.md)**  实现黑名单式的管控   
 - 通过 **[为访问及上网规则添加指定时间生效](./acl/control_timer_cn.md)** 实现设置的规则定时生效   
 - **[为终端自定义名称](./client/bind_name_cn.md)**   
-
 ### 路由功能   
 - ***[路由表管理](./route/route.md)**(编写中)*      
 - ***[基于源地址的路由设置](./route/src_route.md)**(编写中)*      
 - ***[基于端口的路由设置](./route/port_route.md)**(编写中)*      
-
 ### 调试功能   
 - **[抓包使用说明](./debug/tcpdump_cn.md)**   
 - ***[日志的使用](./hosts/hosts.md)**(编写中)*, 可调整日志存放位置, 记录等级, 保存大小, 远程日志等      
@@ -166,7 +153,6 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - **[有互联网的远程协助](./debug/internet_remote_cn.md)**, 用于让网关接入调试云平台, 技术人员可通过调试云平台连接网关      
 - **[无互联网的远程协助](./debug/nointernet_remote_cn.md)**, 用于让技术人员远程连接电脑调试网关      
 
-
 ## VPN功能使用   
 - **[设置两台网关Wireguard实现互通示例](./sdwan/wireguard_cn.md)**   
 - ***[L2TP客户端的使用](./sdwan/wireguard.md)**(编写中)*   
@@ -174,7 +160,6 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - ***[GRE隧道的使用](./sdwan/wireguard.md)**(编写中)*   
 - ***[OpenVPN客户端的使用](./sdwan/wireguard.md)**(编写中)*   
 - ***[IPSEC的使用](./sdwan/wireguard.md)**(编写中)*   
-
 
 ## 串口功能使用   
 - **[串口透传的使用](./uart/uart_tcp_cn.md)**   
@@ -185,19 +170,16 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - ***[串口外接GPS/BD模块](./lte/lte_apn_setup.md)**(编写中)*, 此模式下让外接的GPS/BD模块提示定位数据源   
 - ***[本地设备获取串口数据](./lte/lte_apn_setup.md)**(编写中)*   
 
-
 ## 串口外接Modbus传感器   
 - ***[串口Modbus主控模式下外接各种传感器](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[传感器信息HTTP上报](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[本地设备获取感器信息](./lte/lte_apn_setup.md)**(编写中)*   
-
 
 ## IO功能使用   
 - ***[通过TCP/UDP协议远程控制IO](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[通过MQTT协议远程控制IO](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[通过短信(SMS)远程控制IO](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[本地设备控制IO](./lte/lte_apn_setup.md)**(编写中)*   
-
 
 ## 定位功能使用   
 - ***[全球定位的使用](./gnss/gnss_setup_cn.md)**(编写中)*   
@@ -207,13 +189,11 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - ***[GPS/BD定位信息JT/T808协议上报](./gnss/gnss_jt808_cn.md)**(编写中)*   
 - ***[本地设备获取GPS/BD定位信息](./gnss/gnss_tcpjson_setup.md)**(编写中)*   
 
-
 ## I2C功能的使用   
 - ***[外接I2C显示屏](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[外接I2C电量板实现读取电量信息](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[I2C电量板的电量信息HTTP协议上报](./lte/lte_apn_setup.md)**(编写中)*    
 - ***[本地设备获取I2C电量板的电量信息](./lte/lte_apn_setup.md)**(编写中)*  
-
 
 ## 高级应用    
 - ***[本地控制网关](./lte/lte_apn_setup.md)**(编写中)*   
@@ -222,7 +202,6 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - ***[SNMP的使用及自定义OID](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[动态路由协议使用](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[高可用性(VRRP)的使用](./lte/lte_apn_setup.md)**(编写中)*   
-
 
 ## 配合摄象头的使用   
 - **[将摄象头接入虚拟专用网络(VPDN/APN)的快速设置](./lte/lte_apn_ipc_cn.md)**   

@@ -307,44 +307,35 @@ ifname@lte
 Example, modify the keeplive to icmp for first LTE network  
 ```shell
 ifname@lte:keeplive/type=icmp
-ttrue
 ```   
 
 Example, modify the mode to ppp for first LTE network  
 ```shell
 ifname@lte:mode=ppp
-ttrue
 ```   
 
 Example, modify the icmp keeplive destination address for first LTE network  
 ```shell
 ifname@lte:keeplive/icmp/dest/test=8.8.8.8            # modify the icmp keeplive first destination address to 8.8.8.8
-ttrue
 ifname@lte:keeplive/icmp/dest/test2=8.8.4.4           # modify the icmp keeplive second destination address to 8.8.4.4 
-ttrue
 ifname@lte:keeplive/icmp/dest/test3=114.114.114.114   # modify the icmp keeplive third destination address to 114.114.114.114
-ttrue
 # You can also use one command to complete the operation of the above three command
 ifname@lte:keeplive/icmp/dest|{"test":"8.8.8.8", "test2":"8.8.4.4", "test3":"114.114.114.114"}
-ttrue
 ```   
 
 Example, disable the first LTE network   
 ```shell
 ifname@lte:status=disable
-ttrue
 ```   
 
 Example, modify the keeplive to icmp for second LTE/NR network  
 ```shell
 ifname@lte2:keeplive/type=icmp
-ttrue
 ```   
 
 Examples, enable the GNSS for first LTE modem   
 ```shell
 ifname@lte:gnss=enable
-ttrue
 ```   
 
 #### **Methods**   

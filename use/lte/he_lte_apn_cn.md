@@ -10,42 +10,20 @@
 ### 第二种, 需要输入运营商指定的APN号才可接入虚拟专用网络   
 - 命令行设置4G网络输入 **set ifname@lte** 回车, 设置4G/5G网络输入 **set ifname@lte2** 回车    
 ```shell
-$ set ifname@lte            // 要求修改4G网络
+$ set ifname@lte            # 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               // 开始修改提示  
-```   
-- 修改IPv4模式为点对点
-```shell
-$ ifname@lte: mode=ppp
-```   
-- 修改APN自定义启用
-```shell
-$ ifname@lte: profile=enable
-```   
-- 修改APN为xxxxxjj.vpdn.xj
-```shell
-$ ifname@lte: profile_cfg/apn=xxxxxjj.vpdn.xj
-```   
-- 修改APN的用户名为22323232222@xxxxxjj.vpdn.xj
-```shell
-$ ifname@lte: profile_cfg/user=22323232222@xxxxxjj.vpdn.xj
-``` 
-- 修改APN的密码为111111
-```shell
-$ ifname@lte: profile_cfg/passwd=111111
-```   
-- 设置以上所有的修改   
-```shell
-$ ifname@lte: s
-ttrue
-$ 
-```   
-- 设置完成后查询LTE上线后的IP地址   
-```shell
-$ ifname@lte.status:ip
-10.83.1.27
+$ ifname@lte:               # 开始修改提示  
+$ ifname@lte: mode=ppp                                     # 修改IPv4模式为点对点
+$ ifname@lte: profile=enable                               # 修改APN自定义启用
+$ ifname@lte: profile_cfg/apn=xxxxxjj.vpdn.xj              # 修改APN为xxxxxjj.vpdn.xj
+$ ifname@lte: profile_cfg/user=22323232222@xxxxxjj.vpdn.xj # 修改APN的用户名为22323232222@xxxxxjj.vpdn.xj
+$ ifname@lte: profile_cfg/passwd=111111                    # 修改APN的密码为111111
+$ ifname@lte: s             # 设置以上所有的修改
+ttrue                       # 返回ttrue表示设置成功
+$ ifname@lte.status:ip      # 查询LTE上线后的IP地址
+10.83.1.27                  # 如果成功上线返回上线后的IP地址
 $ 
 ```   
 - 也可使用 **HE指令** 一次完成以上所有设置   
@@ -72,44 +50,20 @@ ttrue
 ICMP是所有可用性检测中最有效的机制, **强烈建议使用**, 但如APN专网中不能提供能PING通且稳定的服务器则无法使用些模式   
 - 命令行设置4G网络输入 **set ifname@lte** 回车, 设置4G/5G网络输入 **set ifname@lte2** 回车    
 ```shell
-$ set ifname@lte            // 要求修改4G网络
+$ set ifname@lte            # 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               // 开始修改提示  
-```   
-- 修改可用性检测为 **ICMP**   
-```shell
-$ ifname@lte: keeplive/type=icmp
-```   
-- 修改ICMP第一个 **检测地址**   
-```shell
-$ ifname@lte: keeplive/icmp/dest/test=114.114.114.114
-```   
-- 修改ICMP第二个 **检测地址**   
-```shell
-$ ifname@lte: keeplive/icmp/dest/test2=8.8.8.8
-```   
-- 修改ICMP第三个 **检测地址**   
-```shell
-$ ifname@lte: keeplive/icmp/dest/test3=8.8.4.4
-```    
-- 修改ICMP检测的 **单次检测超时**, 即每次发送PING包后等待回复的超时时长, 超过这个时长未收到PING包的回复表示 ***检测失败***, 单位为秒   
-```shell
-$ ifname@lte: keeplive/icmp/timeout=10             # 修改为10秒
-```    
-- 修改ICMP **检测次数**, ***检测失败*** 超过这个次数即表示连接不可用, 网关将会断开并重新连接   
-```shell
-$ ifname@lte: keeplive/icmp/failed=6               # 修改为6次
-```    
-- 修改ICMP **检测间隔**, 即每次PING包 ***检测成功*** 后等待一定的时间再进行下一次检测, 单位为秒   
-```shell
-$ ifname@lte: keeplive/icmp/interval=2             # 修改为2秒
-```    
-- 设置以上所有的修改   
-```shell
-$ ifname@lte: s
-ttrue
+$ ifname@lte:               # 开始修改提示  
+$ ifname@lte: keeplive/type=icmp                        # 修改可用性检测为 ICMP
+$ ifname@lte: keeplive/icmp/dest/test=114.114.114.114   # 修改ICMP 第一个检测地址 为114.114.114.114
+$ ifname@lte: keeplive/icmp/dest/test2=8.8.8.8          # 修改ICMP 第二个检测地址 为8.8.8.8
+$ ifname@lte: keeplive/icmp/dest/test3=8.8.4.4          # 修改ICMP 第三个检测地址 为8.8.4.4
+$ ifname@lte: keeplive/icmp/timeout=10                  # 修改ICMP 单次检测超时 为10秒 
+$ ifname@lte: keeplive/icmp/failed=6                    # 修改ICMP 检测次数 为6次
+$ ifname@lte: keeplive/icmp/interval=2                  # 修改ICMP 检测间隔 为2秒 
+$ ifname@lte: s            # 设置以上所有的修改 
+ttrue                      # 返回ttrue表示设置成功
 $ 
 ```   
 - 也可使用 **HE指令** 一次完成所有设置   
@@ -125,7 +79,7 @@ ttrue
 - 在ICMP模式下, 这种问题一般是填写的三个 **检测地址** 都无法PING通造成的
 - 出现这种问题时可以先 **禁用可用性检测**  
 ```shell
-$ ifname@lte:keeplive/type=disable      // 禁用可用性检测
+$ ifname@lte:keeplive/type=disable      # 禁用可用性检测
 ```   
 - 然后等网关连接成功后通过电脑测试下 **检测地址** 是否可以PING通, 找到可以长期稳定能PING通的IP地址作为 **检测地址**   
 
@@ -135,32 +89,17 @@ $ ifname@lte:keeplive/type=disable      // 禁用可用性检测
 专门为 **使用APN专网SIM卡接入虚拟专用网络(VPDN/APN)** 时 **无长期稳定可PING通的IP地址** 而设计的   
 - 命令行设置4G网络输入 **set ifname@lte** 回车, 设置4G/5G网络输入 **set ifname@lte2** 回车    
 ```shell
-$ set ifname@lte            // 要求修改4G网络
+$ set ifname@lte            # 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               // 开始修改提示  
-```   
-- 修改可用性检测为 **接收包计数**   
-```shell
-$ ifname@lte: keeplive/type=recv
-```   
-- 修改接收包计数的 **统计时间段**, 以秒为单位   
-```shell
-$ ifname@lte: keeplive/recv/timeout=20
-```   
-- 修改接收包计数统计时间段内 **要求包数**, 以个为单位   
-```shell
-$ ifname@lte: keeplive/recv/packets=1
-```   
-- 修改接收包计数的 **检测次数**   
-```shell
-$ ifname@lte: keeplive/recv/failed=30
-```   
-- 设置以上所有的修改   
-```shell
-$ ifname@lte: s
-ttrue
+$ ifname@lte:               # 开始修改提示  
+$ ifname@lte: keeplive/type=recv        # 修改可用性检测为 接收包计数
+$ ifname@lte: keeplive/recv/timeout=20  # 修改接收包计数的 统计时间段 为20秒
+$ ifname@lte: keeplive/recv/packets=1   # 修改接收包计数统计时间段内 要求包数 为1个
+$ ifname@lte: keeplive/recv/failed=30   # 修改接收包计数的 检测次数 为30次
+$ ifname@lte: s            # 设置以上所有的修改 
+ttrue                      # 返回ttrue表示设置成功
 $ 
 ```   
 - 也可使用 **HE指令** 一次完成所有设置   
@@ -184,32 +123,17 @@ ttrue
 通过向LTE/NR网络上的DNS服务器发送DNS的查询包, 以是否能收到DNS的回应来确认连接是否有效   
 - 命令行设置4G网络输入 **set ifname@lte** 回车, 设置4G/5G网络输入 **set ifname@lte2** 回车    
 ```shell
-$ set ifname@lte            // 要求修改4G网络
+$ set ifname@lte            # 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               // 开始修改提示  
-```   
-- 修改可用性检测为 **UDP&UDP**   
-```shell
-$ ifname@lte: keeplive/type=dns
-```   
-- 修改DNS查询的 **单次检测超时**, 即每次发送DNS查询后等待回复的超时时长, 超过这个时长未收到DNS查询的回复表示 ***检测失败***, 单位为秒   
-```shell
-$ ifname@lte: keeplive/recv/timeout=8             # 修改为10秒
-```    
-- 修改DNS **检测次数**, ***检测失败*** 超过这个次数即表示连接不可用, 网关将会断开并重新连接   
-```shell
-$ ifname@lte: keeplive/recv/failed=6               # 修改为6次
-```    
-- 修改DNS **检测间隔**, 即每次DNS查询 ***检测成功*** 后等待一定的时间再进行下一次检测, 单位为秒   
-```shell
-$ ifname@lte: keeplive/recv/interval=2             # 修改为2秒
-```    
-- 设置以上所有的修改   
-```shell
-$ ifname@lte: s
-ttrue
+$ ifname@lte:               # 开始修改提示  
+$ ifname@lte: keeplive/type=dns          # 修改可用性检测为 UDP&UDP
+$ ifname@lte: keeplive/recv/timeout=8    # 修改DNS查询的 单次检测超时 为8秒
+$ ifname@lte: keeplive/recv/failed=6     # 修改DNS 检测次数 为6次
+$ ifname@lte: keeplive/recv/interval=2   # 修改DNS 检测间隔 为2秒
+$ ifname@lte: s            # 设置以上所有的修改 
+ttrue                      # 返回ttrue表示设置成功
 $ 
 ```   
 - 也可使用 **HE指令** 一次完成所有设置   
@@ -227,7 +151,7 @@ ttrue
 ### 查看当前4G/5G(LTE/NR)网络的基本状态   
 命令行查看4G网络状态输入 **ifname@lte.status** 回车, 查看4G/5G网络状态输入 **ifname@lte2.status** 回车  
 ```shell
-$ ifname@lte.status
+$ ifname@lte.status         # 查询4G网络的状态
 {
     "mode":"ppp",
     "netdev":"ppp0",
