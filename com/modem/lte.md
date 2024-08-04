@@ -10,6 +10,9 @@ Management LTE modem
 ```json
 // Attributes introduction 
 {
+    // Status for baseband
+    "status":"start at system startup",    // [ "enable", "disable" ]
+
     // lock attributes
     "lock_imei":"lock imei",                   // [ "", "enable", IMEI ], enable: The IMEI detected for the first time will be locked
     "lock_imsi":"lock imsi",                   // [ "", "enable", IMEI ], enable will lock current imei
@@ -17,9 +20,12 @@ Management LTE modem
     "lock_nettype":"network type",             // [ "2g", "3g", "4g", "nsa", "sa" ]
     "lock_band":"lock band",                   // The format varies depending on the module
     "lock_cell":"lock cell",                   // The format varies depending on the module
+
+    // UART other function
     "gnss":"gps function",                     // [ "disable", "enable" ]
     "atport":"atport function",                // [ "disable", "enable" ]
 
+    // custom at command
     "custom_set":                              // custom at setting list at the modem setup
     {
         "AT command":"AT exeucte result"             // [ string ]:[ string ]
@@ -37,7 +43,7 @@ Management LTE modem
     "simcard_failed_threshold2":"second failed to reset time",                                 // [ number ]
     "simcard_failed_threshold3":"third failed to reset time",                                  // [ number ]
     "simcard_failed_everytime":"every failed to reset time",                                   // [ number ]
-    
+
     // signal dial attributes
     "need_plmn":"must register to plmn",                                                       // [ "enable", "disable" ]
     "need_signal":"Signal must be effectivity",                                                // [ "enable", "disable" ]
@@ -78,12 +84,14 @@ Management LTE modem
     "bsim":"backup simcard function",                         // [ "disable", "enable" ]
     "bsim_cfg":                                               // settings of backup simcard save here, the json be used when "bsim" value is enable
     {
-        "mode":"Specify the simcard",                                                    // [ "auto", "bsim", "msim", "detect" ], "bsim" for backup simcard, "msim" for main simcard, "detect" the IO for auto that need detect IO support
+        "mode":"Specify the simcard",                               // [ "auto", "bsim", "msim", "detect" ]
+                                                                        // "bsim" for backup simcard
+                                                                        // "msim" for main simcard
+                                                                        // "detect" the IO for auto that need detect IO support
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
         "failover":"backup simcard usage duration",                                      // [ number ], the unit is second
         "keeplive_switch":"keeplive faeild to switch",                                   // [ "disable", "enable" ]
-
         // backup simcard lock attributes
         "lock_imei":"lock imei",                   // [ "disable", "enable", IMEI ], "enable": The IMEI detected for the first time will be locked
         "lock_imsi":"lock imsi",                   // [ "disable", "enable", IMEI ], enable will lock current imei
@@ -91,7 +99,6 @@ Management LTE modem
         "lock_netmode":"network type",             // [ "2g", "3g", "4g", "nsa", "sa" ]
         "lock_band":"lock band",                   // The format varies depending on the module
         "lock_cell":"lock cell",                   // The format varies depending on the module
-
         // backup profile attributes
         "profile":"custom the profile",            // [ "disable", "enable" ]
         "profile_cfg":                             // custom profile save here, the json be used when "profile" value is enable
@@ -112,7 +119,7 @@ Management LTE modem
                     "user":"user name",                       // [ string ]
                     "passwd":"user password",                 // [ string ]
                 }
-                //"CID nubmer ":{ CID profile }     How many CID profile need setting save how many properties
+                // ... more CID profile
             }
         }
     },
@@ -121,12 +128,16 @@ Management LTE modem
     "ssim":"soft backup simcard function",                         // [ "disable", "enable" ]
     "ssim_cfg":                                                    // settings of soft backup simcard save here, the json be used when "ssim" value is enable
     {
-        "mode":"Specify the operator",                                                   // [ "signal", "plmn" ], "signal" for test and use the The best signal operator, "46000" for china mobile, "46001" china union, "46003" for china telecom
+        "mode":"Specify the operator",                                   // [ "signal", "plmn" ]
+                                                                            // "signal" for test and use the The best signal operator
+                                                                            // "46000" for china mobile
+                                                                            // "46001" china union
+                                                                            // "46003" for china telecom
         "signal_failed":"Check the signal failed how many times to switch the simcard",  // [ number ]
         "dial_failed":"connect to internet failed how many times to switch the simcard", // [ number ]
     },
 
-    // SMS
+    // SMS configure
     "sms":"SMS function enable or disable",
     "sms_cfg":
     {
@@ -139,7 +150,7 @@ Management LTE modem
 }
 ```
 
-Examples, show all the first lte modem configure
+Examples, show all the first LTE modem configure
 ```shell
 modem@lte
 {
@@ -149,45 +160,19 @@ modem@lte
 
     "gnss":"enable",                   # enbale the GPS function
 
-    "profile":"enable",                # custom the profile
+    "profile":"enable",                # custom the APN profile
     "profile_cfg":
     {
         "dial":"*99#",                     # dial number is *99#
-        "cid":"1",                         # dial CID is 1
         "type":"ipv4v6",                   # ip address type is ipv4 and ipv6
         "apn":"internet",                  # APN is internet
         "user":"card",                     # username is card
-        "passwd":"card",                   # password is card
-        "cids":"enable",                   # enable the settings for multi-CID
-        "cids_cfg":                               # settings of multi-CID save here, the json be used when "cids" value is enable
-        {
-            "2":                                      # CID2 profile
-            {
-                "type":"ipv4v6",                         # CID2 ip address type is ipv4 and ipv6
-                "apn":"internet2",                       # CID2 APN is internet2
-                "user":"card",                           # CID2 username is card
-                "passwd":"card",                         # CID2 password is card
-            },
-            "3":                                      # CID3 profile
-            {
-                "type":"ipv4v6",                        # CID3 ip address type is ipv4 and ipv6
-                "apn":"internet3",                      # CID3 APN is internet3
-                "user":"card",                          # CID3 username is card
-                "passwd":"card",                        # CID3 password is card
-            },
-            "4":                                      # CID4 profile
-            {
-                "type":"ipv4v6",                        # CID4 ip address type is ipv4 and ipv6
-                "apn":"internet4",                      # CID4 APN is internet4
-                "user":"card",                          # CID4 username is card
-                "passwd":"card",                        # CID4 password is card
-            }                        
-        }
+        "passwd":"card"                    # password is card
     }
 }
 ```  
 
-Examples, enable the GNSS for first lte modem
+Examples, enable the GNSS for first LTE modem
 ```shell
 modem@lte:gnss=enable
 ttrue
@@ -216,7 +201,6 @@ ttrue
                                                 // "nosim" for cannot found the simcard
                                                 // "pin" for the simcard need PIN code
                                                 // "puk" for the simcard pin error
-
         "plmn":"MCC and MNC",           // [ number, "noreg", "dereg" ]
                                                 // number for MCC and MNC
                                                 // "noreg" for cannot register to opeartor
@@ -227,8 +211,6 @@ ttrue
                                          // 2G usually shows GSM, GPRS, EDGE, CDMA
                                          // 3G usually shows WCDMA, EVDO, TDSCDMA, HSPA, HSDPA, HSUPA
                                          // 4G usually shows LTE, FDD, TDD
-
-        
         "signal":"signal level",         // [ "0", "1", "2", "3", "4" ], "0" for no signal, "1" for weakest signal , "4" for strongest signal
         "csq":"CSQ number",              // [ number ]
         "rssi":"signal intensity",       // [ number ], the unit is dBm
@@ -237,7 +219,6 @@ ttrue
         "sinr":"sinr value",             // Optional, The format varies depending on the module 
         "band":"current band",           // Optional, The format varies depending on the module
         "pcid":"Physical Cell ID",       // [ number ], Optional
-
         "operator":"operator name",      // [ string ]
         "operator_advise":               // Recommended profile for PLMN
         {
