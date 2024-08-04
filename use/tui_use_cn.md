@@ -43,9 +43,9 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
  <com>:<config> ---------- Get component configure attribute
  <com>:<config>=<value> -- Set component configure attribute
  -----------------------------------------------------------
- # 
+ $ 
 ```   
-看到以上简介或出现# 号命令行输入提示符即表示成功登录 **终端管理命令行**   
+看到以上简介或出现$ 号命令行输入提示符即表示成功登录 **终端管理命令行**   
 
 
 
@@ -67,7 +67,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 + 查询网关某项功能所有配置时给出功能对应的 **组件名称** 即可 
 通常返回值是一个 **{JSON}**, 包括这个功能项所有的配置信息   
     ```shell
-    # land@machine                    # 终端管理命令行中查询网关基本信息(land@machine组件)所有配置
+    $ land@machine                    # 终端管理命令行中查询网关基本信息(land@machine组件)所有配置
     {                                 # 返回一个完整的JSON对象
         "mode":"nmisp",                   # 工作模式
         "name":"ASHYELF-12AAD0",          # 网关名称
@@ -76,28 +76,28 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
         "language":"cn",                  # 语言
         "cfgversion":"1"                  # 配置版本
     }
-    # 
+    $ 
     ```   
     > 具体网关基本信息的配置参数介绍参见 *[网关基本信息](../com/land/machine.md)*   
 
 + 如果只查询功能配置中的某项属性时需要给出属性, 即 **组件名称:属性路径** 即可   
 返回值可以为一个 **字符串** 也可以为一个 **{JSON}**, 具体看配置对应属性的值   
     ```shell
-    # land@machine:name              # 终端管理命令行中查询网关基本信息中主机名称, 即land@machine配置中的name属性的值
+    $ land@machine:name              # 终端管理命令行中查询网关基本信息中主机名称, 即land@machine配置中的name属性的值
     A218-120108                      # 返回一个字符串
-    # 
+    $ 
     ```   
 
 + 当功能配置的属性有很多层次时, **属性路径** 就会以 **/** 号分隔多层的属性名, 属性路径用于定位属性值, 如下:   
     ```shell
-    # ifname@lan:static              # 查终端管理命令行中询LAN口(ifname@lan)配置中的static属性的值
+    $ ifname@lan:static              # 查终端管理命令行中询LAN口(ifname@lan)配置中的static属性的值
     {
         "ip":"192.168.8.1",
         "mask":"255.255.255.0"
     }
-    # ifname@lan:static/ip           # 终端管理命令行中查询LAN口(ifname@lan)配置中的static属性下ip属性的值
+    $ ifname@lan:static/ip           # 终端管理命令行中查询LAN口(ifname@lan)配置中的static属性下ip属性的值
     192.168.8.1
-    # 
+    $ 
     ```   
     > 具体本地网络的配置参数介绍参见 *[本地网络(LAN)](../com/ifname/lan.md)*   
 
@@ -112,7 +112,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
     修改整个功能配置的值时, 值必须为一个 **{JSON}**, 即以{开头并以}结尾   
     修改成功返回 **ttrue**, 失败返回 **tfalse**, 见以下示例   
     ```shell
-    # forward@alg               # 终端管理命令行中查询应用层网关(forward@alg)的配置
+    $ forward@alg               # 终端管理命令行中查询应用层网关(forward@alg)的配置
     {
         "amanda":"disable",
         "ftp":"enable",
@@ -126,17 +126,17 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
         "tftp":"disable",
         "udplite":"disable"
     }
-    #
-    # forward@alg={"amanda":"enable","ftp":"enable","h323":"enable","irc":"enable"}   # 终端管理命令行中修改整个应用层网关(forward@alg)的配置
+    $
+    $ forward@alg={"amanda":"enable","ftp":"enable","h323":"enable","irc":"enable"}   # 终端管理命令行中修改整个应用层网关(forward@alg)的配置
     ttrue                          # 返回ttrue表示修改成功
-    # forward@alg                  # 修改后再次查看配置, 已发生变化
+    $ forward@alg                  # 修改后再次查看配置, 已发生变化
     {
         "amanda":"enable",
         "ftp":"enable",
         "h323":"enable",
         "irc":"enable"
     }
-    # 
+    $ 
     ```   
     > 具体应用层网关的配置参数介绍参见 *[应用层网关](../com/forward/alg.md)*   
 
@@ -147,7 +147,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
     值可以为 **{JSON}**(即以{开头并以}结尾), 也可以为 **字符串**   
     而返回值如果是 **ttrue** 表示修改成功, 或是 **tfalse** 表示修改失败,见以下示列   
     ```shell
-    # gnss@nmea                               # 终端管理命令行中查询全球定位(gnss@nmea)所有配置
+    $ gnss@nmea                               # 终端管理命令行中查询全球定位(gnss@nmea)所有配置
     {
         "status":"enable",
         "client":
@@ -191,7 +191,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
             "limit":"5"
         }
     }
-	# gnss@nmea:client                        # 终端管理命令行中查询全球定位(gnss@nmea)配置中的client属性的值
+	$ gnss@nmea:client                        # 终端管理命令行中查询全球定位(gnss@nmea)配置中的client属性的值
     {
         "status":"disable",
         "proto":"tcp",
@@ -207,9 +207,9 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
         "frame_end":"disable",
         "frame_end_string":""
     }
-	# gnss@nmea:client={"status":"enable","server":"192.168.8.250","port":"8000","interval":"30","id":"2232"}  # 终端管理命令行中修改全球定位(gnss@nmea)配置中的client属性
+	$ gnss@nmea:client={"status":"enable","server":"192.168.8.250","port":"8000","interval":"30","id":"2232"}  # 终端管理命令行中修改全球定位(gnss@nmea)配置中的client属性
 	ttrue
-	# gnss@nmea:client                       # 终端管理命令行中查询全球定位(gnss@nmea)配置中client属性修改后的结果
+	$ gnss@nmea:client                       # 终端管理命令行中查询全球定位(gnss@nmea)配置中client属性修改后的结果
     {
         "status":"enable",
         "server":"192.168.8.250",
@@ -217,9 +217,9 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
         "interval":"30",
         "id":"2232"
     }
-	# gnss@nmea:client/server=192.168.8.251  # 终端管理命令行中修改全球定位(gnss@nmea)配置中client属性下server属性的值
+	$ gnss@nmea:client/server=192.168.8.251  # 终端管理命令行中修改全球定位(gnss@nmea)配置中client属性下server属性的值
 	ttrue
-	# gnss@nmea:client                       # 终端管理命令行中查询修改后的结果
+	$ gnss@nmea:client                       # 终端管理命令行中查询修改后的结果
 	{
 	    "status":"enable",
 	    "server":"192.168.8.251",
@@ -227,7 +227,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 	    "interval":"30",
 	    "id":"2232"
 	}
-	# gnss@nmea                              # 终端管理命令行中查询全球定位(gnss@nmea)所有的配置
+	$ gnss@nmea                              # 终端管理命令行中查询全球定位(gnss@nmea)所有的配置
     {
         "status":"enable",
         "client":
@@ -263,7 +263,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
             "limit":"5"
         }
     }
-	# 
+	$ 
     ```   
     > 具体全球定位的配置参数介绍参见 *[全球定位](../com/gnss/nmea.md)*   
  
@@ -274,7 +274,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
     值1, 值2, 值3通常为 **字符串**    
     而返回值如果是 **ttrue** 表示修改成功, 或是 **tfalse** 表示修改失败,见以下示列   
     ```shell
-	# gnss@nmea:client                      # 终端管理命令行中查询全球定位(gnss@nmea)中client属性的值
+	$ gnss@nmea:client                      # 终端管理命令行中查询全球定位(gnss@nmea)中client属性的值
 	{
 	    "status":"enable",
 	    "server":"192.168.8.251",
@@ -282,9 +282,9 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 	    "interval":"30",
 	    "id":"2232"
 	}
-	# gnss@nmea:client|{"status":"disable","server":"192.168.2.11","proto":"tcp"}  # 终端管理命令行中修改全球定位(gnss@nmea)中client属性的值, 不影响其它未给出的属性
+	$ gnss@nmea:client|{"status":"disable","server":"192.168.2.11","proto":"tcp"}  # 终端管理命令行中修改全球定位(gnss@nmea)中client属性的值, 不影响其它未给出的属性
 	ttrue
-	# gnss@nmea:client                      # 终端管理命令行中再次查询时指定的几项属性已改变, 未指定的属性未发生变化
+	$ gnss@nmea:client                      # 终端管理命令行中再次查询时指定的几项属性已改变, 未指定的属性未发生变化
 	{
         "status":"disable",                 # 已修改
         "server":"192.168.2.11",            # 已修改
@@ -293,7 +293,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
         "id":"2232",                        # 未变化
         "proto":"tcp"                       # 已添加
 	}
-	# 
+	$ 
     ```   
     > 具体全球定位的配置参数介绍参见 *[全球定位](../com/gnss/nmea.md)*   
  
@@ -303,7 +303,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
     ```   
     而返回值如果是 **ttrue** 表示清除成功, 或是 **tfalse** 表示清除失败,见以下示列   
     ```shell
-    # gnss@nmea                         # 终端管理命令行中查询全球定位(gnss@nmea)所有的配置
+    $ gnss@nmea                         # 终端管理命令行中查询全球定位(gnss@nmea)所有的配置
     {
         "status":"enable",
         "client":
@@ -340,9 +340,9 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
             "limit":"5"
         }
     }
-	# gnss@nmea:client=                 # 终端管理命令行中清除全球定位(gnss@nmea)中client属性
+	$ gnss@nmea:client=                 # 终端管理命令行中清除全球定位(gnss@nmea)中client属性
 	ttrue
-	# gnss@nmea                         # 终端管理命令行中再次查询全球定位(gnss@nmea)所有的配置时已无client属性
+	$ gnss@nmea                         # 终端管理命令行中再次查询全球定位(gnss@nmea)所有的配置时已无client属性
     {
         "status":"enable",
         "client2":
@@ -370,7 +370,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
             "limit":"5"
         }
     }
-	# 
+	$ 
     ```   
     > 具体全球定位的配置参数介绍参见 *[全球定位](../com/gnss/nmea.md)*   
 
@@ -381,7 +381,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
     组件名称.接口名称   
     ```   
     ```shell
-    # client@station.list                     # 终端管理命令行中调用终端管理(client@station)的list接口(API)获取当前客户端例表
+    $ client@station.list                     # 终端管理命令行中调用终端管理(client@station)的list接口(API)获取当前客户端例表
     {
         "B4:2E:99:3F:ED:12":
         {
@@ -389,7 +389,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
             "device":"lan"
         }
     }
-    # 
+    $ 
     ```   
     > 具体终端管理的API介绍参见 *[终端管理](../com/client/station.md)*   
  
@@ -398,9 +398,9 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
     组件名称.接口名称[ 参数 ]   
     ```   
     ```shell
-    # clock@date.ntpsync[ntp1.aliyun.com]       # 终端管理命令行中调用系统时间(clock@date)的ntpsync接口(API)实现与ntp1.aliyun.com的NTP对时
+    $ clock@date.ntpsync[ntp1.aliyun.com]       # 终端管理命令行中调用系统时间(clock@date)的ntpsync接口(API)实现与ntp1.aliyun.com的NTP对时
     ttrue
-    # 
+    $ 
     ```   
     > 具体时间管理的API介绍参见 *[系统时间](../com/clock/date.md)*   
 
@@ -409,9 +409,9 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
     组件名称.接口名称[ 参数1, 参数2, 参数3, … ]   
     ```   
     ```shell
-    # land@auth.add[,xiaomi,4431232]  # 终端管理命令行中调用帐号密码及权限(land@auth)的add接口(API)来添加帐号, 第一个参数域为空(无), 第二个参数帐号为xiaomi, 第三个参数密码为4431232
+    $ land@auth.add[,xiaomi,4431232]  # 终端管理命令行中调用帐号密码及权限(land@auth)的add接口(API)来添加帐号, 第一个参数域为空(无), 第二个参数帐号为xiaomi, 第三个参数密码为4431232
     ttrue
-    # land@auth.list                  # 终端管理命令行中调用帐号密码及权限(land@auth)的list接口(API)来获取当前所有的帐号
+    $ land@auth.list                  # 终端管理命令行中调用帐号密码及权限(land@auth)的list接口(API)来获取当前所有的帐号
     {
         "admin":
         {
@@ -430,7 +430,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
     组件名称.接口名称:属性路径   
     ```   
     ```shell
-    # ifname@lte.status                     # 终端管理命令行中调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态
+    $ ifname@lte.status                     # 终端管理命令行中调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态
     {
         "mode":"dhcpc",
         "ifname":"ifname@lte",
@@ -479,15 +479,15 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
         },
         "state":"connected"
     }
-    # ifname@lte.status:ip                   # 终端管理命令行中调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并只返回状态中的ip地址
+    $ ifname@lte.status:ip                   # 终端管理命令行中调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并只返回状态中的ip地址
     10.33.13.103
-    # ifname@lte.status:operator_advise      # 终端管理命令行中调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并只返回状态中有关运营商的建议配置
+    $ ifname@lte.status:operator_advise      # 终端管理命令行中调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并只返回状态中有关运营商的建议配置
     {
         "name":"中国联通",
         "dial":"*99#",
         "apn":"3gnet"
     }
-    # ifname@lte.status:operator_advise/apn  # 终端管理命令行中调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并只返回状态中有关运营商的建议的APN的配置
+    $ ifname@lte.status:operator_advise/apn  # 终端管理命令行中调用LTE/NR(4G/5G)网络(ifname@lte)的status接口获取状态, 并只返回状态中有关运营商的建议的APN的配置
     3gnet
     ```   
     > 具体LTE/NR网络管理的接口(API)介绍参见 *[LTE/NR(4G/5G)网络](../com/ifname/lte.md)*   
@@ -501,72 +501,72 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 
 **4G网关**: 通过3G/4G连接互联网的网关模式, 终端管理命令行中执行如下设置为此模式   
 ```shell
-# land@machine.mode[misp]          # 切换
+$ land@machine.mode[misp]          # 切换
 ttrue
-# land@machine.restart             # 重启, 需要重启后生效
+$ land@machine.restart             # 重启, 需要重启后生效
 ```   
 
 **4G/5G网关**: 通过4G/5G连接互联网的网关模式, 终端管理命令行中执行如下设置为此模式   
 ```shell
-# land@machine.mode[nmisp]          # 切换
+$ land@machine.mode[nmisp]          # 切换
 ttrue
-# land@machine.restart              # 重启, 需要重启后生效
+$ land@machine.restart              # 重启, 需要重启后生效
 ```   
 
 **4G5G猫**: 提供4G/5G猫的功能, 完成与4G/5G网络连接但不获取IP地址, 需要其它的客户端通过DHCP协议获取4G/5G的IP地址, 终端管理命令行中执行如下设置为此模式   
 ```shell
-# land@machine.mode[mbridge]          # 切换
+$ land@machine.mode[mbridge]          # 切换
 ttrue
-# land@machine.restart                # 重启, 需要重启后生效
+$ land@machine.restart                # 重启, 需要重启后生效
 ```   
 
 **双4G/5G网关**：通过两个4G/5G连接互联网的网关模式, 只有在有两个4G/5G基带的产品上才支持, 终端管理命令行中执行如下设置为此模式   
 ```shell
-# land@machine.mode[dmisp]          # 切换
+$ land@machine.mode[dmisp]          # 切换
 ttrue
-# land@machine.restart              # 重启, 需要重启后生效
+$ land@machine.restart              # 重启, 需要重启后生效
 ```   
 
 **有线网关**：通过有线WAN口连接互联网的网关模式, 终端管理命令行中执行如下设置为此模式    
 ```shell
-# land@machine.mode[gateway]          # 切换
+$ land@machine.mode[gateway]          # 切换
 ttrue
-# land@machine.restart                # 重启, 需要重启后生效
+$ land@machine.restart                # 重启, 需要重启后生效
 ```   
 
 **双WAN口网关**：通过两个有线WAN口连接互联网的网关模式, 终端管理命令行中执行如下设置为此模式   
 ```shell
-# land@machine.mode[dgateway]          # 切换
+$ land@machine.mode[dgateway]          # 切换
 ttrue
-# land@machine.restart                 # 重启, 需要重启后生效
+$ land@machine.restart                 # 重启, 需要重启后生效
 ```   
 
 **2.4G无线连网网关**：通过2.4G无线客户端连接其它WIFI网络的网关模式, 终端管理命令行中执行如下设置为此模式   
 ```shell
-# land@machine.mode[wisp]          # 切换
+$ land@machine.mode[wisp]          # 切换
 ttrue
-# land@machine.restart             # 重启, 需要重启后生效
+$ land@machine.restart             # 重启, 需要重启后生效
 ```   
 
 **5.8G无线连网网关**：通过5.8G无线客户端连接其它WIFI网络的网关模式, 终端管理命令行中执行如下设置为此模式   
 ```shell
-# land@machine.mode[nwisp]          # 切换
+$ land@machine.mode[nwisp]          # 切换
 ttrue
-# land@machine.restart              # 重启, 需要重启后生效
+$ land@machine.restart              # 重启, 需要重启后生效
 ```   
 
 **无线热点**：相当于带无线功能的交换机, 此模式下默认不会分配IP地址, 通常用于放置在路由器的下一级, 终端管理命令行中执行如下设置为此模式   
 ```shell
-# land@machine.mode[ap]          # 切换
+$ land@machine.mode[ap]          # 切换
 ttrue
-# land@machine.restart           # 重启, 需要重启后生效
+$ land@machine.restart           # 重启, 需要重启后生效
 ```   
 
 **混合**：此模式下可使用4G/5G、有线WAN口、无线连网三种模式中组合上网, 实现多种上网方式同时存在并相互备份或负载均衡, 终端管理命令行中执行如下设置为此模式   
 ```shell
-# land@machine.mode[mix]          # 切换
+$ land@machine.mode[mix]          # 切换
 ttrue
-# land@machine.restart            # 重启, 需要重启后生效
+$ land@machine.restart            # 重启, 需要重启后生效
 ```   
 
 

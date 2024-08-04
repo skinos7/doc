@@ -259,7 +259,7 @@
     }, 
     "cmd2":
     {
-        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+        "com":"land@machine.restart[3]"      // 三秒后重启系统
     }
 }
 ```   
@@ -272,7 +272,7 @@
     }, 
     "cmd2":
     {
-        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+        "com":"land@machine.restart[3]"      // 三秒后重启系统
     }
 }
 ```   
@@ -285,7 +285,7 @@
     }, 
     "cmd2":
     {
-        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+        "com":"land@machine.restart[3]"      // 三秒后重启系统
     }
 }
 ```   
@@ -298,7 +298,7 @@
     }, 
     "cmd2":
     {
-        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+        "com":"land@machine.restart[3]"      // 三秒后重启系统
     }
 }
 ```   
@@ -324,7 +324,7 @@
     }, 
     "cmd2":
     {
-        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+        "com":"land@machine.restart[3]"      // 三秒后重启系统
     }
 }
 ```   
@@ -350,7 +350,7 @@
     }, 
     "cmd2":
     {
-        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+        "com":"land@machine.restart[3]"      // 三秒后重启系统
     }
 }
 ```   
@@ -363,7 +363,7 @@
     }, 
     "cmd2":
     {
-        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+        "com":"land@machine.restart[3]"      // 三秒后重启系统
     }
 }
 ```   
@@ -376,7 +376,7 @@
     }, 
     "cmd2":
     {
-        "com":"lland@machine.restart[3]"      // 三秒后重启系统
+        "com":"land@machine.restart[3]"      // 三秒后重启系统
     }
 }
 ```     
@@ -392,7 +392,7 @@
     1. 网关插上SIM卡后    
     2. 将设备的 **工作模式** 设置为 **4G/5G网关**, 通常5G网关默认即为此模式     
     网关就会自动通过5G(NR)连上互联网, 不需要任何设置, 将终端设备或电脑通过有线或无线连接网关即可访问互联网   
-- **[4G/5G(LTE/NR)接入虚拟专用网络(VPDN/APN)](./lte/he_lte_apn_cn.md)** 介绍使用LTE/NR接入VPDN/APN网络   
+- **[4G/5G(LTE/NR)接入虚拟专用网络(VPDN/APN)](../../use/lte/json_lte_apn_cn.md)** 介绍使用LTE/NR接入VPDN/APN网络   
 - ***[4G/5G(LTE/NR)接入自建基站网络](./lte/lte_spec_cn.md)**(编写中)* 介绍使用LTE/NR接入自建基站网络   
 - ***[4G/5G(LTE/NR)双SIM卡](./lte/lte_bsim_cn.md)**(编写中)* 介绍LTE/NR双卡的使用   
 - ***[4G/5G(LTE/NR)短信功能](./lte/lte_sms_cn.md)**(编写中)* 介绍LTE/NR短信的使用   
