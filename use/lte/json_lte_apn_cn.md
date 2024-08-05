@@ -8,7 +8,7 @@
 这种情况按产品规格书中的要求插入SIM卡, 接上4G/5G天线后上电网关, 网关就会自动接入到虚拟专用网络   
 
 ### 第二种, 需要输入运营商指定的APN号才可接入虚拟专用网络   
-- 这种情况发送设置指令设置APN, 设置4G网络 **com** 值为 **ifname@lte**, 设置4G/5G网络 **com** 值为 **ifname@lte2**   
+- 这种情况发送JSON指令设置APN, 设置4G网络 **com** 值为 **ifname@lte**, 设置4G/5G网络 **com** 值为 **ifname@lte2**   
 ```json
 {
     "cmd1":
@@ -35,7 +35,7 @@
     "cmd1":"ttrue"
 }
 ```   
-- 设置完成后查询LTE上线后的IP地址   
+- 设置完成后查询LTE上线后的IP地址发送如下JSON   
 ```json
 {
     "cmd1":"ifname@lte.status:ip"
@@ -64,7 +64,7 @@
 
 ### ICMP, 即PING包检测   
 ICMP是所有可用性检测中最有效的机制, **强烈建议使用**, 但如APN专网中不能提供能PING通且稳定的服务器则无法使用些模式   
-- 发送设置指令设置ICMP检测, 设置4G网络 **com** 值为 **ifname@lte**, 设置4G/5G网络 **com** 值为 **ifname@lte2**   
+- 发送JSON指令设置ICMP检测, 设置4G网络 **com** 值为 **ifname@lte**, 设置4G/5G网络 **com** 值为 **ifname@lte2**   
 ```json
 {
     "cmd1":
@@ -105,7 +105,7 @@ ICMP是所有可用性检测中最有效的机制, **强烈建议使用**, 但�
 
 #### ICMP模式下, 网关出现不停的连接成功之后断开又重新连接的问题   
 - 在ICMP模式下, 这种问题一般是填写的三个 **检测地址** 都无法PING通造成的   
-- 出现这种问题时可以发送以下先 **禁用可用性检测**  
+- 出现这种问题时可以发送以下JSON指令先 **禁用可用性检测**  
 ```json
 {
     "cmd1":
@@ -128,7 +128,7 @@ ICMP是所有可用性检测中最有效的机制, **强烈建议使用**, 但�
 
 ### 接收包计数   
 专门为 **使用APN专网SIM卡接入虚拟专用网络(VPDN/APN)** 时 **无长期稳定可PING通的IP地址** 而设计的   
-- 发送设置指令设置接收包计数检测, 设置4G网络 **com** 值为 **ifname@lte**, 设置4G/5G网络 **com** 值为 **ifname@lte2**   
+- 发送JSON指令设置接收包计数检测, 设置4G网络 **com** 值为 **ifname@lte**, 设置4G/5G网络 **com** 值为 **ifname@lte2**   
 ```json
 {
     "cmd1":
@@ -171,7 +171,7 @@ ICMP是所有可用性检测中最有效的机制, **强烈建议使用**, 但�
 
 ### UDP&UDP   
 通过向LTE/NR网络上的DNS服务器发送DNS的查询包, 以是否能收到DNS的回应来确认连接是否有效   
-- 发送设置指令设置UDP&UDP检测, 设置4G网络 **com** 值为 **ifname@lte**, 设置4G/5G网络 **com** 值为 **ifname@lte2**   
+- 发送JSON指令设置UDP&UDP检测, 设置4G网络 **com** 值为 **ifname@lte**, 设置4G/5G网络 **com** 值为 **ifname@lte2**   
 ```json
 {
     "cmd1":
@@ -208,7 +208,7 @@ ICMP是所有可用性检测中最有效的机制, **强烈建议使用**, 但�
 
 ## 查看4G/5G(LTE/NR)网络的相关信息   
 ### 查看当前4G/5G(LTE/NR)网络的基本状态   
-发送查询指令, 查询4G网络 **com** 值为 **ifname@lte**, 查询4G/5G网络 **com** 值为 **ifname@lte2**   
+发送查询的JSON指令, 查询4G网络 **com** 值为 **ifname@lte**, 查询4G/5G网络 **com** 值为 **ifname@lte2**   
 ```json
 {
     "cmd1":
