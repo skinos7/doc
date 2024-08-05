@@ -184,10 +184,10 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 ## 定位功能使用   
 - **[4G/5G(LTE/NR)全球定位的使用](./lte/lte_gnss_cn.md)**   
 - **[串口外接GPS/BD模块全球定位的使用](./uart/uart_gnss_cn.md)**   
-- **[TCP/UDP协议发送GPS/BD定位数据(NMEA)](../gnss/gnss_tcpudp_cn.md)**   
-- **[MQTT协议上报GPS/BD定位信息](../gnss/gnss_mqtt_cn.md)**   
-- **[HTTP协议上报GPS/BD定位信息(支持无网时缓存定位数据)](../gnss/gnss_http_cn.md)**   
-- **[本地设备获取GPS/BD定位信息](../gnss/gnss_tcpjson_cn.md)**   
+- **[TCP/UDP协议发送GPS/BD定位数据(NMEA)](./gnss/gnss_tcpudp_cn.md)**   
+- **[MQTT协议上报GPS/BD定位信息](./gnss/gnss_mqtt_cn.md)**   
+- **[HTTP协议上报GPS/BD定位信息(支持无网时缓存定位数据)](./gnss/gnss_http_cn.md)**   
+- **[本地设备获取GPS/BD定位信息](./gnss/gnss_tcpjson_cn.md)**   
 
 ## I2C功能的使用   
 - ***[外接I2C显示屏](./lte/lte_apn_setup.md)**(编写中)*   
