@@ -77,7 +77,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - **[常用模块锁定频段](./lte/lte_lockband_cn.md)**   
 - **[自定义指定AT指令](./lte/lte_customat_cn.md)**   
 - **[AT指令网络透传使用](./lte/lte_atport_cn.md)**, 实现一个服务器或客户端透传来自网络的AT指令到4G/5G(LTE/NR)模组中   
-- ***[4G/5G(LTE/NR)定位功能及使用](./lte/lte_gnss_cn.md)**(编写中)*   
+- **[4G/5G(LTE/NR)定位功能及使用](./lte/lte_gnss_cn.md)**   
 ### 有线宽带联网设置   
 - **[PPPOE拨号联网](./wan/wan_pppoe_cn.md)**   
 - **[自动获取(DHCP)联网](./wan/wan_dhcp_cn.md)**   
