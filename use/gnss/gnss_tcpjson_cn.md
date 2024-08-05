@@ -1,4 +1,5 @@
 
+---
 ## 定位功能信号源的设置  
 
 ### 定位信号源分类   
@@ -45,39 +46,44 @@
 2. **红框6** 无显示, 这种情况通常是网关与定位模组的连接有问题, 网关无法正常获取到定位模组的定位信号源
 3. **红框5** 正确显示定位信号源并且 **红框6** 显示有日期(日期可能不正确但有显示日期)但无正确的经纬度 都表示网关可以正常获取到定位模块的数据, 只是定位模块无法定位, 此时应检查定位模块的天线是否直对天空或更换可定位的定位模块
 
-## 通过MQTT协议向MQTT服务器定时发送JSON格式的定位信息
+## 设备通过TCP(JSON)控制协议获取定位信息   
+- 首先通过依次点击 **红框1**, **红框2** 进入指定的 **本地管理设置界面** 打开 **TCP(JSON)控制协议** 允许设备连入网关查询网关的信息   
+![avatar](./gnss_tcp_json.png)   
+- 点击 **红框3** 打开JSON指令服务
+- 点击 **红框4** 应用即可
+- 然后在电脑上模拟设备连接, 打开 **TCP/UDP客户端** 工具,  **红框5** 设为客户端模式, **红框6** 填写网关的IP地址及服务端口, 点击 **红框7** 连接
+- 等连接上后在 **红框8** 中输入{"cmd":"gnss@nmea.info"}, 然后点击 **红框9** 手动发送
+- 就可以在 **红框10** 看到网关回复的定位信息, 此信息格式介绍如下
+```json
+{
+    "cmd"                                          // json command identify, depond on your send
+    {
+        "step":"step of location",                  // [ "setup", "search", "located" ]
+        "utc":"UTC date",                           // [ string ], format is hour:minute:second:month:day:year
+        "lon":"longitude",                          // [ float ], nmea format
+        "lat":"latitude",                           // [ float ], nmea format
+        "longitude":"longitude",                    // [ float ]
+        "latitude":"latitude",                      // [ float ]
+        "speed":"speed",                            // [ float ]
+        "direction":"direction",
+        "declination":"declination",
+        "elv":"Either altitude height",             // [ float ], the unit is meter
+        "inview":"Number of visible satellites",    // [ number ]
+        "inuse":"Number of satellites in use"       // [ nubmer ]     
+    }
+}
+```   
 
-1. 在有公网地址的Linux上安装MQTT服务器
-```
-ubuntu@VM-0-8-ubuntu:~$ sudo apt-get install mosquitto
-```
-2. 安装MQTT客户端工具用于模拟客户端订阅定位信息
-```
-ubuntu@VM-0-8-ubuntu:~$ sudo apt-get install mosquitto-clients
-```
-4. 手动运行MQTT服务器
-```
-ubuntu@VM-0-8-ubuntu:~$ sudo /etc/init.d/mosquitto stop
-Stopping mosquitto (via systemctl): mosquitto.service
+*进一步的信息可见 [GNSS NEMA Protocol Management](../../com/gnss/nmea.md) 有关info接口的返回的介绍*   
 
-ubuntu@VM-0-8-ubuntu:~$ sudo mosquitto -c /etc/mosquitto/mosquitto.conf -v
-[4396260.896039]~DLT~1887371~INFO     ~FIFO /tmp/dlt cannot be opened. Retrying later...
-```
-5. 新开一个命令行订阅网关向MQTT服务器发送的主题(该主题的信息为定位信息)
-```
-ubuntu@VM-0-8-ubuntu:~$ mosquitto_sub -v -t "gatewayGNNS" -h 222.248.230.163 -p 1883
-```
-![avatar](./gnss_tcp_mqtt.png) 
-
-- 首先 **红框7** 手动运行MQTT服务器
-- 再在 **红框8** 订阅网关向MQTT服务器发送的主题
-- 再在依次点击 **红框1**, **红框2** 进入指定的 **全球定位设置界面** 设置通过MQTT协议发布定位信息
-- 点击 **红框3** 打开客户端功能
-- 在 **红框4** 中选择协议, 此示例为MQTT协议
-- 在 **红框4** 中输入MQTT服务器及端口
-- 在 **红框5** 中输入发布的主题
+## 通过串口获取定位信息   
+- 首先通过依次点击 **红框1**, **红框2** 进入指定的 **对应的串口设置界面** 来设置串口为终端命令行模式, 允许通过串口查询网关的信息   
+![avatar](./gnss_serial.png) 
+- 点击 **红框3** 打开串口功能
+- 在 **红框4** 中选择终端命令行
+- 在 **红框5** 中选择要使用的波特率
 - 点击 **红框6** 应用即可
-- 然后就可以在 **红框9** 中看到网关发布的定位数据, 此数据为一个JSON格式的数据, 属性介绍如下
+- 然后用电脑模似设备连接好网关上对应的串口, 使用串口工具打开串口, **红框7** 输入 gnss@nmea.info 回车, 即可在 **红框8** 中看到一个JSON的定位信息, 此信息格式介绍如下
 ```json
 {
     "step":"step of location",                  // [ "setup", "search", "located" ]
@@ -95,3 +101,4 @@ ubuntu@VM-0-8-ubuntu:~$ mosquitto_sub -v -t "gatewayGNNS" -h 222.248.230.163 -p 
 }
 ```
 *进一步的信息可见 [GNSS NEMA Protocol Management](../../com/gnss/nmea.md) 有关info接口的返回的介绍*
+

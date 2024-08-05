@@ -46,6 +46,5 @@
 
 - **[TCP/UDP协议发送GPS/BD定位数据(NMEA)](../gnss/gnss_tcpudp_cn.md)**   
 - **[MQTT协议上报GPS/BD定位信息](../gnss/gnss_mqtt_cn.md)**   
-- **[GPS/BD定位信息HTTP协议上报](./gnss/gnss_http_cn.md)**   
-- **[GPS/BD定位信息JT/T808协议上报](./gnss/gnss_jt808_cn.md)**   
-- **[本地设备获取GPS/BD定位信息](./gnss/gnss_tcpjson_setup.md)**   
+- **[HTTP协议上报GPS/BD定位信息(支持无网时缓存定位数据)](../gnss/gnss_http_cn.md)**   
+- **[本地设备获取GPS/BD定位信息](../gnss/gnss_tcpjson_cn.md)**   

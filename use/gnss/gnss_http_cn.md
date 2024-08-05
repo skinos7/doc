@@ -45,39 +45,13 @@
 2. **红框6** 无显示, 这种情况通常是网关与定位模组的连接有问题, 网关无法正常获取到定位模组的定位信号源
 3. **红框5** 正确显示定位信号源并且 **红框6** 显示有日期(日期可能不正确但有显示日期)但无正确的经纬度 都表示网关可以正常获取到定位模块的数据, 只是定位模块无法定位, 此时应检查定位模块的天线是否直对天空或更换可定位的定位模块
 
-## 通过MQTT协议向MQTT服务器定时发送JSON格式的定位信息
-
-1. 在有公网地址的Linux上安装MQTT服务器
-```
-ubuntu@VM-0-8-ubuntu:~$ sudo apt-get install mosquitto
-```
-2. 安装MQTT客户端工具用于模拟客户端订阅定位信息
-```
-ubuntu@VM-0-8-ubuntu:~$ sudo apt-get install mosquitto-clients
-```
-4. 手动运行MQTT服务器
-```
-ubuntu@VM-0-8-ubuntu:~$ sudo /etc/init.d/mosquitto stop
-Stopping mosquitto (via systemctl): mosquitto.service
-
-ubuntu@VM-0-8-ubuntu:~$ sudo mosquitto -c /etc/mosquitto/mosquitto.conf -v
-[4396260.896039]~DLT~1887371~INFO     ~FIFO /tmp/dlt cannot be opened. Retrying later...
-```
-5. 新开一个命令行订阅网关向MQTT服务器发送的主题(该主题的信息为定位信息)
-```
-ubuntu@VM-0-8-ubuntu:~$ mosquitto_sub -v -t "gatewayGNNS" -h 222.248.230.163 -p 1883
-```
-![avatar](./gnss_tcp_mqtt.png) 
-
-- 首先 **红框7** 手动运行MQTT服务器
-- 再在 **红框8** 订阅网关向MQTT服务器发送的主题
-- 再在依次点击 **红框1**, **红框2** 进入指定的 **全球定位设置界面** 设置通过MQTT协议发布定位信息
-- 点击 **红框3** 打开客户端功能
-- 在 **红框4** 中选择协议, 此示例为MQTT协议
-- 在 **红框4** 中输入MQTT服务器及端口
-- 在 **红框5** 中输入发布的主题
-- 点击 **红框6** 应用即可
-- 然后就可以在 **红框9** 中看到网关发布的定位数据, 此数据为一个JSON格式的数据, 属性介绍如下
+## 通过HTTP协议向HTTP服务器定时POST JSON格式的定位信息   
+![avatar](./gnss_http_post.png)    
+- 首先在电脑上模拟设备相似的HTTP服务, 打开 **TCP/UDP服务器** 工具, **红框6** 设为TCP服务器模式, **红框7** 填写对应的服务端口, 然后点击 **红框8** 打开TCP服务器   
+- 然后依次点击网关管理界面 **红框1**, **红框2** 进入指定的 **全球定位设置界面** 设置让网关向电脑(模拟设备)指定的服务端口POST定位信息   
+- 点击 **红框3** 打开POST功能   
+- 在 **红框4** 中输入要POST的HTTP服务器及端口及网页位置   
+- 点击 **红框5** 应用即可看到 **红框9** 电脑上 **TCP/UDP服务器** 中有连接连入, 并在 **红框10** 中可以看到以HTTP协议POST一个JSON的定位信息, 此数据为一个JSON格式的数据, 属性介绍如下   
 ```json
 {
     "step":"step of location",                  // [ "setup", "search", "located" ]
@@ -93,5 +67,8 @@ ubuntu@VM-0-8-ubuntu:~$ mosquitto_sub -v -t "gatewayGNNS" -h 222.248.230.163 -p 
     "inview":"Number of visible satellites",    // [ number ]
     "inuse":"Number of satellites in use"       // [ nubmer ]     
 }
-```
-*进一步的信息可见 [GNSS NEMA Protocol Management](../../com/gnss/nmea.md) 有关info接口的返回的介绍*
+```   
+*进一步的信息可见 [GNSS NEMA Protocol Management](../../com/gnss/nmea.md) 有关info接口的返回的介绍*   
+**只有在设备定位后才会POST定位信息到HTTP服务器**   
+**此POST功能支持在无网络的情况下缓存定位信息的JSON, 等到设备上线后再一个一个POST到服务器上, 但如果有此需求请在售后工程师的指导下操作否则将损坏设备**   
+
