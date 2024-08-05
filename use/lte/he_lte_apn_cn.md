@@ -14,13 +14,13 @@ $ set ifname@lte            # 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               # 开始修改提示  
-$ ifname@lte: mode=ppp                                     # 修改IPv4模式为点对点
-$ ifname@lte: profile=enable                               # 修改APN自定义启用
-$ ifname@lte: profile_cfg/apn=xxxxxjj.vpdn.xj              # 修改APN为xxxxxjj.vpdn.xj
-$ ifname@lte: profile_cfg/user=22323232222@xxxxxjj.vpdn.xj # 修改APN的用户名为22323232222@xxxxxjj.vpdn.xj
-$ ifname@lte: profile_cfg/passwd=111111                    # 修改APN的密码为111111
-$ ifname@lte: s             # 设置以上所有的修改
+ifname@lte:               # 开始修改提示  
+ifname@lte: mode=ppp                                     # 修改IPv4模式为点对点
+ifname@lte: profile=enable                               # 修改APN自定义启用
+ifname@lte: profile_cfg/apn=xxxxxjj.vpdn.xj              # 修改APN为xxxxxjj.vpdn.xj
+ifname@lte: profile_cfg/user=22323232222@xxxxxjj.vpdn.xj # 修改APN的用户名为22323232222@xxxxxjj.vpdn.xj
+ifname@lte: profile_cfg/passwd=111111                    # 修改APN的密码为111111
+ifname@lte: s             # 设置以上所有的修改
 ttrue                       # 返回ttrue表示设置成功
 $ ifname@lte.status:ip      # 查询LTE上线后的IP地址
 10.83.1.27                  # 如果成功上线返回上线后的IP地址
@@ -54,15 +54,15 @@ $ set ifname@lte            # 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               # 开始修改提示  
-$ ifname@lte: keeplive/type=icmp                        # 修改可用性检测为 ICMP
-$ ifname@lte: keeplive/icmp/dest/test=114.114.114.114   # 修改ICMP 第一个检测地址 为114.114.114.114
-$ ifname@lte: keeplive/icmp/dest/test2=8.8.8.8          # 修改ICMP 第二个检测地址 为8.8.8.8
-$ ifname@lte: keeplive/icmp/dest/test3=8.8.4.4          # 修改ICMP 第三个检测地址 为8.8.4.4
-$ ifname@lte: keeplive/icmp/timeout=10                  # 修改ICMP 单次检测超时 为10秒 
-$ ifname@lte: keeplive/icmp/failed=6                    # 修改ICMP 检测次数 为6次
-$ ifname@lte: keeplive/icmp/interval=2                  # 修改ICMP 检测间隔 为2秒 
-$ ifname@lte: s            # 设置以上所有的修改 
+ifname@lte:               # 开始修改提示  
+ifname@lte: keeplive/type=icmp                        # 修改可用性检测为 ICMP
+ifname@lte: keeplive/icmp/dest/test=114.114.114.114   # 修改ICMP 第一个检测地址 为114.114.114.114
+ifname@lte: keeplive/icmp/dest/test2=8.8.8.8          # 修改ICMP 第二个检测地址 为8.8.8.8
+ifname@lte: keeplive/icmp/dest/test3=8.8.4.4          # 修改ICMP 第三个检测地址 为8.8.4.4
+ifname@lte: keeplive/icmp/timeout=10                  # 修改ICMP 单次检测超时 为10秒 
+ifname@lte: keeplive/icmp/failed=6                    # 修改ICMP 检测次数 为6次
+ifname@lte: keeplive/icmp/interval=2                  # 修改ICMP 检测间隔 为2秒 
+ifname@lte: s            # 设置以上所有的修改 
 ttrue                      # 返回ttrue表示设置成功
 $ 
 ```   
@@ -93,12 +93,12 @@ $ set ifname@lte            # 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               # 开始修改提示  
-$ ifname@lte: keeplive/type=recv        # 修改可用性检测为 接收包计数
-$ ifname@lte: keeplive/recv/timeout=20  # 修改接收包计数的 统计时间段 为20秒
-$ ifname@lte: keeplive/recv/packets=1   # 修改接收包计数统计时间段内 要求包数 为1个
-$ ifname@lte: keeplive/recv/failed=30   # 修改接收包计数的 检测次数 为30次
-$ ifname@lte: s            # 设置以上所有的修改 
+ifname@lte:               # 开始修改提示  
+ifname@lte: keeplive/type=recv        # 修改可用性检测为 接收包计数
+ifname@lte: keeplive/recv/timeout=20  # 修改接收包计数的 统计时间段 为20秒
+ifname@lte: keeplive/recv/packets=1   # 修改接收包计数统计时间段内 要求包数 为1个
+ifname@lte: keeplive/recv/failed=30   # 修改接收包计数的 检测次数 为30次
+ifname@lte: s            # 设置以上所有的修改 
 ttrue                      # 返回ttrue表示设置成功
 $ 
 ```   
@@ -127,12 +127,12 @@ $ set ifname@lte            # 要求修改4G网络
 { 
     ... # 显示当前4G网络的配置
 }
-$ ifname@lte:               # 开始修改提示  
-$ ifname@lte: keeplive/type=dns          # 修改可用性检测为 UDP&UDP
-$ ifname@lte: keeplive/recv/timeout=8    # 修改DNS查询的 单次检测超时 为8秒
-$ ifname@lte: keeplive/recv/failed=6     # 修改DNS 检测次数 为6次
-$ ifname@lte: keeplive/recv/interval=2   # 修改DNS 检测间隔 为2秒
-$ ifname@lte: s            # 设置以上所有的修改 
+ifname@lte:               # 开始修改提示  
+ifname@lte: keeplive/type=dns          # 修改可用性检测为 UDP&UDP
+ifname@lte: keeplive/recv/timeout=8    # 修改DNS查询的 单次检测超时 为8秒
+ifname@lte: keeplive/recv/failed=6     # 修改DNS 检测次数 为6次
+ifname@lte: keeplive/recv/interval=2   # 修改DNS 检测间隔 为2秒
+ifname@lte: s            # 设置以上所有的修改 
 ttrue                      # 返回ttrue表示设置成功
 $ 
 ```   

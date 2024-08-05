@@ -1,8 +1,8 @@
 ***
-## Accept heport management
-connect to heport server and accept administrative line from the that
+## Accept heport management   
+connect to heport server and accept administrative line from the that   
 
-#### Configuration( agent@heclient )
+#### Configuration( agent@heclient )   
 ```json
 {
     "status":"connect to heport server for he command",    // [ "disable", "enable" ]
@@ -20,8 +20,8 @@ connect to heport server and accept administrative line from the that
     "tcp_keepintvl":"keeplive interval",                   // [ number ], The unit is seconds
     "tcp_keepcnt":"keeplive failed time"                   // [ number ]
 }
-```
-Examples, show all the configure
+```   
+Example, show all the configure   
 ```shell
 agent@heclient
 {
@@ -41,20 +41,19 @@ agent@heclient
     "tcp_keepcnt":"3"
 }
 ```  
-Examples, disable the he client
+Example, disable the he client   
 ```shell
 agent@heclient:status=disable
 ttrue
 ```  
 
+#### **Methods**   
 
-#### **Methods**
++ `setup[]` **setup the he client**, *succeed return ttrue, failed return tfalse, error return terror*   
 
-+ `setup[]` **setup the he client**, *succeed return ttrue, failed return tfalse, error return terror*
++ `shut[]` **shutdown the he client**, *succeed return ttrue, failed return tfalse, error return terror*   
 
-+ `shut[]` **shutdown the he client**, *succeed return ttrue, failed return tfalse, error return terror*
-
-+ `status[]` **get the he client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `status[]` **get the he client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -66,18 +65,17 @@ ttrue
                                              // "vcodeerror" for username vcode wrong
         "server":"hepoprt server ip"      // [ ip address ]
     }
-    ```
+    ```   
+    Example, get the he client infomation   
     ```shell
-    # examples, get the he client infomation
     agent@heclient.status
     {
         "status":"online",                    // connect succeed
         "server":"114.132.219.158"            // heport server ip address
     }
-    ```
+    ```   
 
-
-+ `adjust[ {json} ]` **adjust the other client**, *succeed return ttrue, failed return tfalse, error return terror*
++ `adjust[ {json} ]` **adjust the other client**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```json
     // Attributes introduction of json pass to method
     {
@@ -97,40 +95,38 @@ ttrue
         "network_keepintval":"network keeplive interval",     // [ number ], the unit is second
         "network_keepfailed":"network keeplive failed"        // [ number ]
     }
-    ```
+    ```   
+    Example, adjust to run the port client, disable the network client   
     ```shell
-    # examples, adjust to run the port client, disable the network client
     agent@heclient.adjust[ { "portc":"enable", "network":"disable" } ]
     ttrue
-    ```
+    ```   
 
-+ `network[ {json} ]` **update all network status**, *succeed return ttrue, failed return tfalse, error return terror*
++ `network[ {json} ]` **update all network status**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```json
     // Attributes introduction of json pass to method
     {
         // same "agent@g2g" component "network" method
     }
-    ```
+    ```   
 
-+ `branch[ {json} ]` **branch attach to network**, *succeed return ttrue, failed return tfalse, error return terror*
++ `branch[ {json} ]` **branch attach to network**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```json
     // Attributes introduction of json pass to method
     {
         // same "agent@g2g" component "branch" method
     }
-    ```
+    ```   
 
-+ `leaf[ {json} ]` **leaf attach to network**, *succeed return ttrue, failed return tfalse, error return terror*
++ `leaf[ {json} ]` **leaf attach to network**, *succeed return ttrue, failed return tfalse, error return terror*    
     ```json
     // Attributes introduction of json pass to method
     {
         // same "agent@g2g" component "leaf" method
     }
-    ```
+    ```   
 
-
-
-+ `view_master[]` **get the network client master infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `view_master[]` **get the network client master infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -141,9 +137,9 @@ ttrue
         "nattype":"device nat type",                  // [ "8", "4", "2", "1" ], exist when device attach
         "delay":"device to master delay"              // [ number ], the unit is millisecond
     }
-    ```
+    ```   
+    Example, show current network client master infomation   
     ```shell
-    # examples, show current network client master infomation
     agent@heclient.view_master
     {
         "ip":"172.16.0.1",
@@ -153,9 +149,9 @@ ttrue
         "nattype":"2",
         "delay":"101"
     }
-    ```
+    ```   
 
-+ `view_self[]` **get the network client self infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `view_self[]` **get the network client self infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -165,9 +161,9 @@ ttrue
         "port":"device work port",                    // [ port ]
         "nattype":"device nat type"                   // [ "8", "4", "2", "1" ], exist when device attach
     }
-    ```
+    ```   
+    Example, show current network client master infomation   
     ```shell
-    # examples, show current network client master infomation
     agent@heclient.view_self
     {
         "ip":"172.16.0.3",
@@ -176,19 +172,19 @@ ttrue
         "port":"44232",
         "nattype":"8"
     }
-    ```
+    ```   
 
-+ `list_network[]` **get the network all endpoint infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `list_network[]` **get the network all endpoint infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
     }
-    ```
+    ```   
 
-+ `list_branch[]` **get the network all branch infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `list_branch[]` **get the network all branch infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
     }
-    ```
+    ```   
 

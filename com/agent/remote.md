@@ -1,8 +1,8 @@
 ***
-## Accept http management
+## Accept http management   
 connect to http server and accept administrative json from the that
 
-#### Configuration( agent@remote )
+### Configuration( agent@remote )   
 ```json
 {
     "status":"connect the http server",                    // [ "disable", "enable" ]
@@ -31,8 +31,8 @@ connect to http server and accept administrative json from the that
         "endnl":"end with a line"              // [ "disable", "enable" ]
     }
 }
-```
-Examples, show all the configure
+```   
+Example, show all the configure   
 ```shell
 agent@remote
 {
@@ -59,20 +59,19 @@ agent@remote
     }
 }
 ```  
-Examples, disable the http client
+Example, disable the http agent   
 ```shell
 agent@remote:status=disable
 ttrue
 ```  
 
+### **Methods**
 
-#### **Methods**
++ `setup[]` **setup the http client**, *succeed return ttrue, failed return tfalse, error return terror*   
 
-+ `setup[]` **setup the http client**, *succeed return ttrue, failed return tfalse, error return terror*
++ `shut[]` **shutdown the http client**, *succeed return ttrue, failed return tfalse, error return terror*   
 
-+ `shut[]` **shutdown the http client**, *succeed return ttrue, failed return tfalse, error return terror*
-
-+ `status[]` **get the http client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*
++ `status[]` **get the http client infomation**, *succeed return talk to describes infomation, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -84,21 +83,20 @@ ttrue
                                              // "vcodeerror" for username vcode wrong
         "server":"http server ip"         // [ ip address ]
     }
-    ```
+    ```   
+    Example, get the http client infomation   
     ```shell
-    # examples, get the http client infomation
     agent@remote.status
     {
         "status":"online",                    # connect succeed
         "server":"114.132.219.158"            # http server ip address
     }
-    ```
+    ```   
 
-
-+ `report[]` **show current http client report configure**, *succeed return json, failed return NULL, error return terror*
++ `report[]` **show current http client report configure**, *succeed return json, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
-
+    {
         "interval":"report interval",          // [number ], the unit is second
         "status":                              // There are which statuses are being reported
         {
@@ -107,9 +105,9 @@ ttrue
             // ...more he command
         }
     }
-    ```
+    ```   
+    Example, show current http client report configure   
     ```shell
-    # examples, show current http client report configure
     agent@remote.report
     {
         "interval":"30",                      # report interval 30 second
@@ -118,22 +116,23 @@ ttrue
             "gnss@nmea.info":""               # only report the GNSS location infomation
         }
     }
-    ```
+    ```   
 
-+ `interval[ report interval ]` **modify or show the http client report interval**, *succeed return netdev, failed return NULL, error return terror*
++ `interval[ report interval ]` **modify or show the http client report interval**, *succeed return netdev, failed return NULL, error return terror*   
+    Example, modify the http client report interval to 1 second   
     ```shell
-    # examples, modify the http client report interval to 1 second
     agent@remote.interval[ 1 ]
     ttrue
-    # examples, show the http client report interval
+    ```   
+    Example, show the http client report interval   
+    ```
     agent@remote.interval
     30
-    ```
+    ```   
 
-+ `cookie[]` **show current http client POST cookie**, *succeed return json, failed return NULL, error return terror*
++ `cookie[]` **show current http client POST cookie**, *succeed return json, failed return NULL, error return terror*   
 
-
-+ `adjust[ {json} ]` **adjust the other client**, *succeed return ttrue, failed return tfalse, error return terror*
++ `adjust[ {json} ]` **adjust the other client**, *succeed return ttrue, failed return tfalse, error return terror*   
     ```json
     // Attributes introduction of json pass to method
     {
@@ -152,23 +151,21 @@ ttrue
         "network_keepintval":"network keeplive interval",     // [ number ], the unit is second
         "network_keepfailed":"network keeplive failed"        // [ number ]
     }
-    ```
+    ```   
+    Example, adjust to run the port client, disable the network client   
     ```shell
-    # examples, adjust to run the port client, disable the network client
     agent@remote.adjust[ { "portc":"enable", "network":"disable" } ]
     ttrue
-    ```
+    ```   
 
-+ `reboot[]` **reboot after 5 second and modify the http client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*
++ `reboot[]` **reboot after 5 second and modify the http client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*   
 
-+ `default[]` **default and reboot after 5 second and modify the http client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*
++ `default[]` **default and reboot after 5 second and modify the http client report interval 1 second**, *succeed return ttrue, failed return tfalse, error return terror*   
 
-+ `upgrade[ file ]` **upgrade the firmware from http server**, *succeed return ttrue, failed return tfalse, error return terror*
++ `upgrade[ file ]` **upgrade the firmware from http server**, *succeed return ttrue, failed return tfalse, error return terror*   
 
++ `upload[]` **upload all configure to http server(Not supported yet)**, *succeed return ttrue, failed return tfalse, error return terror*   
 
-
-+ `upload[]` **upload all configure to http server(Not supported yet)**, *succeed return ttrue, failed return tfalse, error return terror*
-
-+ `config[]` **get all configure from http server(Not supported yet)**, *succeed return ttrue, failed return tfalse, error return terror*
++ `config[]` **get all configure from http server(Not supported yet)**, *succeed return ttrue, failed return tfalse, error return terror*   
 
 
