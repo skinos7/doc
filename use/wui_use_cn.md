@@ -167,7 +167,7 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 - ***[串口Modbus透传](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[串口HTTP透传](./lte/lte_apn_setup.md)**(编写中)*   
 - ***[串口终端命令行模式](./lte/lte_apn_setup.md)**(编写中)*, 此模式下可实现通过串口控制并管理网关   
-- ***[串口外接GPS/BD模块](./lte/lte_apn_setup.md)**(编写中)*, 此模式下让外接的GPS/BD模块提示定位数据源   
+- **[串口外接GPS/BD模块](./uart/uart_gnss_cn.md)**, 此模式下让外接的GPS/BD模块提示定位数据源   
 - ***[本地设备获取串口数据](./lte/lte_apn_setup.md)**(编写中)*   
 
 ## 串口外接Modbus传感器   
