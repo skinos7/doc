@@ -1,9 +1,8 @@
 ***
-## GNSS NEMA Protocol Management
-Manage and parse GNSS nmea data, nmea data can from UART or LTE
+## GNSS NEMA Protocol Management   
+Manage and parse GNSS nmea data, nmea data can from UART or LTE   
 
 #### Configuration( gnss@nmea )   
-
 ```json
 // Attribute introduction
 {
@@ -68,10 +67,8 @@ Manage and parse GNSS nmea data, nmea data can from UART or LTE
     "failed_timeout":"connect timeout"                                                 // [ number ], the unit is ms, default is 1800, it is 180sec
 
 }
-
-```
-
-Examples, show all the GNSS configure
+```   
+Example, show all the GNSS configure   
 ```shell
 gnss@nmea
 {
@@ -118,22 +115,18 @@ gnss@nmea
     }
 }
 ```  
-
-Examples, disable mqtt client
+Example, disable mqtt client   
 ```shell
 gnss@nmea:client2/status=disable
 ttrue
 ```  
-
-Examples, modify the server port to 8000
+Example, modify the server port to 8000   
 ```shell
 gnss@nmea:server/port=8000
 ttrue
 ```  
 
-
-
-#### **Methods**
+#### **Methods**   
 
 + `info[]` **get the nmea location infomation**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
@@ -152,10 +145,9 @@ ttrue
         "inview":"Number of visible satellites",    // [ number ]
         "inuse":"Number of satellites in use"       // [ nubmer ]     
     }
-    ```
-
+    ```   
+    Example, get the current location   
     ```shell
-    # examples, get the current location
     gnss@nmea.info
     {
         "step":"located",                           # already located
@@ -170,7 +162,7 @@ ttrue
         "declination":"",
         "inuse":"8"                                 # 8 sat in use
     }
-    ```
+    ```   
 
 + `status[]` **get the nmea service status**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
@@ -203,10 +195,9 @@ ttrue
         }
         // ... more client 
     }    
-    ```
-
+    ```   
+    Example, get the current nmea service status   
     ```shell
-    # examples, get the current nmea service status
     gnss@nmea.status
     {
         "gnss@nmea":                           # receive 24921 byte from source port
@@ -229,6 +220,6 @@ ttrue
             "connect":"ok"
         }
     }  
-    ```
+    ```   
 
 

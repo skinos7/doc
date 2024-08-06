@@ -22,8 +22,8 @@ $
 ## 常用的功能管理   
 
 ### 管理接入的网关   
-- ***[修改云管理上网关的名称](./cloud/gateway_name_cn.md)**(编写中)*   
-- ***[实时管理网关配置](./cloud/gateway_config_manage_cn.md)**(编写中)*   
+- **[修改云管理上网关的名称](./cloudtui/gateway_name_cn.md)**   
+- **[实时管理网关配置](./cloudtui/gateway_config_manage_cn.md)**   
 - ***[重启网关](./cloud/gateway_reboot_cn.md)**(编写中)*   
 - ***[远程访问网关的网页管理界面](./cloud/gateway_config_ui_cn.md)**(编写中)*   
 - ***[远程访问网关的终端命令行](./cloud/gateway_config_cmd_cn.md)**(编写中)*   
