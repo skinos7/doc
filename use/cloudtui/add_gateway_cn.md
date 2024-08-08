@@ -30,7 +30,7 @@ $
 ```   
 - 也可使用 **HE指令** 一次完成以上所有设置   
 ```shell
-$ agent@remote|{"server":"debug.ashyelf.com","user":"ashyelf","status":enable","reslove":enable"}
+$ agent@remote|{"server":"debug.ashyelf.com","user":"ashyelf","status":"enable","reslove":"enable"}
 ttrue
 ```   
 2. 设置网关启用 **远程HE代理**   
