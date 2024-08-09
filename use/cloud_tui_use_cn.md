@@ -25,8 +25,8 @@ $
 - **[修改云管理上网关的名称](./cloudtui/gateway_name_cn.md)**   
 - **[实时管理网关配置](./cloudtui/gateway_config_manage_cn.md)**   
 - **[重启网关](./cloudtui/gateway_reboot_cn.md)**   
-- ***[远程访问网关的网页管理界面](./cloud/gateway_config_ui_cn.md)**(编写中)*   
-- ***[远程访问网关的终端命令行](./cloud/gateway_config_cmd_cn.md)**(编写中)*   
+- **[远程访问网关的网页管理界面](./cloudtui/gateway_config_ui_cn.md)**   
+- **[远程访问网关的终端命令行](./cloudtui/gateway_config_cmd_cn.md)**   
 - ***[远程访问网关下设备的网页](./cloud/gateway_device_ui_cn.md)**(编写中)*   
     通过此操作可以直接访问网关下如摄象头或是PLC等各种设备的管理界面等   
 - ***[远程访问网关下设备的Telnet服务](./cloud/gateway_device_telnet_cn.md)**(编写中)*   
