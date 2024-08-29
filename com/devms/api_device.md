@@ -1,21 +1,20 @@
 
-***
-## device management API
-device management API, depend on devport and heport and pport
-*all methods need username*
+## device management API   
+device management API, depend on devport and heport and pport  
+*all methods need username*   
 
-#### **Methods**
+#### **Methods**   
 
-+ `device_list[ username, [device model] ]` **get all device list of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `device_list[ username, [device model] ]` **get all device list of username**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
         "device mac idenfify":{}                         // [ string ]:{}
         // ... more device
     }
-    ```
+    ```   
 
-+ `device_view[ username, device mac identify ]` **get the device infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `device_view[ username, device mac identify ]` **get the device infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -68,9 +67,9 @@ device management API, depend on devport and heport and pport
 
         "comment":"gateway comment string"              // [ string ]
     }
-    ```
+    ```   
 
-+ `device_listv[ username, [device model] ]` **get all device infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `device_listv[ username, [device model] ]` **get all device infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -82,15 +81,11 @@ device management API, depend on devport and heport and pport
     }
     ```
 
++ `device_add[ username, device mac identify, [comment] ]` **add a device**, *succeed return tture, failed return tfalse, error return terror*   
 
++ `device_delete[ username, device mac identify ]` **delete a device**, *succeed return tture, failed return tfalse, error return terror*   
 
-+ `device_add[ username, device mac identify, [comment] ]` **add a device**, *succeed return tture, failed return tfalse, error return terror*
-
-+ `device_delete[ username, device mac identify ]` **delete a device**, *succeed return tture, failed return tfalse, error return terror*
-
-
-
-+ `device_status[ username, device mac identify ]` **get the device status**, *succeed return talk to describes, failed return NULL, error return terror*
++ `device_status[ username, device mac identify ]` **get the device status**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     {
@@ -117,11 +112,9 @@ device management API, depend on devport and heport and pport
             "udp":"udp pond"                                     // [ number ]
         }
     }
-    ```
+    ```   
 
-
-
-+ `device_get[ username, device mac identify ]` **get the device configure**, *succeed return talk to describes, failed return NULL, error return terror*
++ `device_get[ username, device mac identify ]` **get the device configure**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     // that save at $user/dev/$macid/config.json
@@ -130,9 +123,9 @@ device management API, depend on devport and heport and pport
         "comment":"gateway comment string",             // [ string ]
         "netid":"network identify"                      // [ string ]
     }
-    ```
+    ```   
 
-+ `device_set[ username, device mac identify, {device configure} ]` **set the device configure**, *succeed return tture, failed return tfalse, error return terror*
++ `device_set[ username, device mac identify, {device configure} ]` **set the device configure**, *succeed return tture, failed return tfalse, error return terror*   
     ```json
     // Attributes introduction of talk by the method parameter of {device configure}
     {
@@ -141,6 +134,6 @@ device management API, depend on devport and heport and pport
         "netid":"network identify"                      // [ string ]
         // ... more configure, detail same device_get return
     }
-    ```
+    ```   
 
 

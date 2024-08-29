@@ -1,12 +1,11 @@
 
-***
-## device network management API
-device network management API, depend on heport
-*all methods need username*
+## device network management API   
+device network management API, depend on heport   
+*all methods need username*   
 
-#### **Methods**
+#### **Methods**   
 
-+ `network_list[ username  ]` **get the all network list of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `network_list[ username  ]` **get the all network list of username**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return  
     // that file save at $user/network.json
@@ -14,9 +13,9 @@ device network management API, depend on heport
         "network identify":{}                    // [ string ]: {}
         // more network...
     }
-    ```
+    ```   
 
-+ `network_get[ username, network identify ]` **get the network all configure**, *succeed return talk to describes, failed return NULL, error return terror*
++ `network_get[ username, network identify ]` **get the network all configure**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return
     // that save at $user/network.json:$netid
@@ -40,9 +39,9 @@ device network management API, depend on heport
             // more device...
         }
     }
-    ```
+    ```   
 
-+ `network_set[ username, network identify, {network configure} ]` **set the network configure**, *succeed return tture, failed return tfalse, error return terror*
++ `network_set[ username, network identify, {network configure} ]` **set the network configure**, *succeed return tture, failed return tfalse, error return terror*   
     ```json
     // Attributes introduction of talk by the method parameter of {network configure}
     // that save at $user/network.json:$netid
@@ -51,9 +50,9 @@ device network management API, depend on heport
         "mask":"network mask",                         // [ network mask  ]
         // ... more configure, detail same network_get return
     }
-    ```
+    ```   
 
-+ `network_modify[ username, network identify, {network configure} ]` **modify the network configure**, *succeed return tture, failed return tfalse, error return terror*
++ `network_modify[ username, network identify, {network configure} ]` **modify the network configure**, *succeed return tture, failed return tfalse, error return terror*    
     ```json
     // Attributes introduction of talk by the method parameter of {network configure}
     // that save at $user/network.json:$netid
@@ -62,11 +61,9 @@ device network management API, depend on heport
         "mask":"network mask",                         // [ network mask  ]
         // ... more configure, detail same network_get return
     }
-    ```
+    ```   
 
-
-
-+ `network_view[ username, network identify  ]` **get the network infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `network_view[ username, network identify  ]` **get the network infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return  
     {
@@ -82,9 +79,9 @@ device network management API, depend on heport
         "limit":"network limit client online number",     // [ number ]
         "dyn":"network dyn client online number"          // [ number ]
     }
-    ```
+    ```   
 
-+ `network_listv[ username  ]` **get the all network infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `network_listv[ username  ]` **get the all network infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return  
     {
@@ -104,15 +101,13 @@ device network management API, depend on heport
         }
         // ... more network
     }
-    ```
+    ```   
 
-+ `network_add[ username, network identify, [network], [netmask], [keepintval], [keepfailed]` **add a network**, *succeed return tture, failed return tfalse, error return terror*
++ `network_add[ username, network identify, [network], [netmask], [keepintval], [keepfailed]` **add a network**, *succeed return tture, failed return tfalse, error return terror*   
 
-+ `network_delete[ username, network identify ]` **delete a network**, *succeed return tture, failed return tfalse, error return terror*
++ `network_delete[ username, network identify ]` **delete a network**, *succeed return tture, failed return tfalse, error return terror*   
 
-
-
-+ `network_device_list[ username, network identify  ]` **get the network device list of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `network_device_list[ username, network identify  ]` **get the network device list of username**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return  
     {
@@ -121,9 +116,9 @@ device network management API, depend on heport
         }
         // more device...
     }
-    ```
+    ```   
 
-+ `network_device_view[ username, network identify, device mac identify  ]` **get the network device infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `network_device_view[ username, network identify, device mac identify  ]` **get the network device infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return  
     {
@@ -169,9 +164,9 @@ device network management API, depend on heport
         "key":"heport control key",                     // [ string ], exist when online on heport
         "comment":"gateway comment string"              // [ string ]
     }
-    ```
+    ```   
 
-+ `network_device_listv[ username, network identify  ]` **get the all network device infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*
++ `network_device_listv[ username, network identify  ]` **get the all network device infomation of username**, *succeed return talk to describes, failed return NULL, error return terror*   
     ```json
     // Attributes introduction of talk by the method return  
     {
@@ -181,9 +176,9 @@ device network management API, depend on heport
         }
         // more device...
     }
-    ```
+    ```   
 
-+ `network_device_add[ username, network identify, device mac identify, [endpoint ip], [endpoint network], [endpoint netmask], [gateway type ]` **add a device to network**, *succeed return tture, failed return tfalse, error return terror*
++ `network_device_add[ username, network identify, device mac identify, [endpoint ip], [endpoint network], [endpoint netmask], [gateway type ]` **add a device to network**, *succeed return tture, failed return tfalse, error return terror*   
 
-+ `network_device_delete[ username, network identify, device mac identify ]` **delete a device from network**, *succeed return tture, failed return tfalse, error return terror*
++ `network_device_delete[ username, network identify, device mac identify ]` **delete a device from network**, *succeed return tture, failed return tfalse, error return terror*   
 
