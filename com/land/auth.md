@@ -21,8 +21,13 @@ The configuration structure is divided into three layers
     {
         "user name":                  // [ string ], you can custom the username
         {
-            "id":"username identify",     // [ number ]
-            "key":"username password",         // [ string ]
+            "id":"username identify",                               // [ number ]
+
+            "key":"username password",                              // [ string ]
+            "key_check":"key need strength",                        // [ "disable", "enable" ]
+            "key_failed_time":"Number of consecutive failures",     // [ number ]
+            "key_failed_wait":"failures to block",                  // [ number ], the unit is second
+
             "group":                     // List of groups to which the username belongs
             {
                 "group name":"belongs state"  // [ string ]: [ "disable","enable" ], "enable" for belongs, "disable" for not

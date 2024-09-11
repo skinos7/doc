@@ -14,6 +14,7 @@ connect to network proxy for gateway to gatway
     "network_port":"network listen port",                         // [ number ]
     "network_hole":"network hole port for heport to keeplive",    // [ number ]
     "network_hole2":"network p2p port",                           // [ number ]
+    "network_holeout":"wait the test timeout",                    // [ number ]
     "network_id":"network identify",                              // [ string ]
     "network_net":"network address",                              // [ string ]
     "network_mask":"network mask",                                // [ string ]
@@ -28,6 +29,7 @@ agent@network
     "network_port":"10004",
     "network_hole":"10005",
     "network_hole2":"10006"
+    "network_holeout":"10"
 }
 ```  
 Examples, modify the network port to 7000

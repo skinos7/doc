@@ -34,6 +34,7 @@ device network management API, depend on heport
                 "ip":"gateway endpoint ip address",          // [ ip address ]
                 "net":"gateway endpoint network",            // [ network ]
                 "mask":"gateway endpoint netmask"            // [ netmask ]
+                "endport":"gateway wellkown port",           // [ network ]
                 // more configure you can custom
             }
             // more device...
