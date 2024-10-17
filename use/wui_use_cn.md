@@ -155,10 +155,10 @@ SkinOS为一个基于Linux的操作系统, 运行于 **网关** 或 **路由器*
 
 ## VPN功能使用   
 - **[设置两台网关Wireguard实现互通示例](./sdwan/wireguard_cn.md)**   
+- **[OpenVPN客户端的使用](./vpn/openvpn_cn.md)**   
 - ***[L2TP客户端的使用](./sdwan/wireguard.md)**(编写中)*   
 - ***[PPTP客户端的使用](./sdwan/wireguard.md)**(编写中)*   
 - ***[GRE隧道的使用](./sdwan/wireguard.md)**(编写中)*   
-- ***[OpenVPN客户端的使用](./sdwan/wireguard.md)**(编写中)*   
 - ***[IPSEC的使用](./sdwan/wireguard.md)**(编写中)*   
 
 ## 串口功能使用   
