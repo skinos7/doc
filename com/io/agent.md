@@ -20,6 +20,24 @@ manage IO
         // ... more io state init
     },
 
+    // IO trigger Configuration
+    "trigger":
+    {
+        "io number":
+        {
+            "0":
+            {
+                "io number":"IO state"
+                // ... more trigger
+            },
+            "1":
+            {
+                "io number":"IO state"
+                // ... more trigger
+            }
+        }
+    },
+
     // IO SMS Configuration
     "sms":
     {

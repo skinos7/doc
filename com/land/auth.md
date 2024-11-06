@@ -28,9 +28,6 @@ The configuration structure is divided into three layers
                                                                             "disable", disable the key tok when login
                                                                             "enable", generate the key tok when system boot
                                                                             string , the key tok need match when login
-            "key_modify":"key need modify at first login",          // [ "disable", "enable" ]
-                                                                            "disable", no to prompt
-                                                                            "enable", prompt to change password when key is default
             "key_check":"key need strength",                        // [ "disable", "enable" ], "enable" will check the key strength
             "key_failed_time":"Number of consecutive failures",     // [ number ], be greater than zero will work
             "key_failed_wait":"failures to block",                  // [ number ], the unit is second, delay second when consecutive login failures reach key_failed_time
@@ -276,8 +273,11 @@ land@auth
     # examples, get the admin infomation
     land@auth.status[ admin ]
     {
-        "key_tok":"need check the tok when auth",               // [ "disable", "enable" ]
-        "key_modify":"key need modify at first login",            // [ "disable", "enable" ]
+        "key_tok":"need check the tok when auth",               // [ "disable", "enable", string ]
+                                                                            "disable", disable the key tok when login
+                                                                            "enable", generate the key tok when system boot
+                                                                            string , the key tok need match when login
+        "key_state":"key is text or encode",                    // [ "text", "encode" ]
         "key_check":"key need strength"                         // [ "disable", "enable" ]
     }
     ```
