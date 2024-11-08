@@ -165,9 +165,33 @@ ttrue
             "ip":"192.168.31.9",
             "name":"",
             "livetime":"14:39:27:1"
+        },
+        "F6:F7:73:82:0A:FC":
+        {
+            "ip":"192.168.100.183",
+            "name":"Xiaomi-14-Ultra",
+            "ifdev":"wifi@assid",
+            "rssi":"-50",
+            "livetime":"00:00:36:0"
         }
     }
     ```
+
+    ```shell
+    # examples, list all client of ifname@lan2
+    client@station.list[ifname@lan2]
+    {
+        "F6:F7:73:82:0A:FC":
+        {
+            "ip":"192.168.100.183",
+            "name":"Xiaomi-14-Ultra",
+            "ifdev":"wifi@assid",
+            "rssi":"-50",
+            "livetime":"00:00:36:0"
+        }
+    }
+    ```
+
 
 
 

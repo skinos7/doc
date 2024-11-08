@@ -133,8 +133,9 @@ The network framework defines a three-tier concept to manage network interfaces:
     {
         "ifname object":
         {
-            "status":"Whether online",    // [ down, up ], up for online, down for offline
-            "inuse":"Whether used"       // [ disable, enable ], enable for in used, disable for not used
+            "status":"Whether online",    // [ "down", "up" ], up for online, down for offline
+            "inuse":"Whether used",       // [ "disable", "enable" ], enable for in used, disable for not used
+            "manual":"Whether setting"    // [ "disable", "enable" ], enable for force use it manual
         },
         //"ifname object":{ ... }     How many extern connections how many properties show
     }
@@ -408,42 +409,33 @@ The network framework defines a three-tier concept to manage network interfaces:
 
 
 
-+ `main[]` **new session immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
++ `main[]` **new session immediately uses the main connection, only vaild in dbdc/hot**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples
     network@frame.main
     ttrue
     ```
 
-+ `back[]` **new session immediately uses the backup connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
++ `back[]` **new session immediately uses the backup connection, only vaild in dbdc/hot**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples
     network@frame.back
     ttrue
     ```
 
-+ `back[]` **new session immediately load balance on main and back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
++ `both[]` **new session immediately load balance on main and back connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples
-    network@frame.back
+    network@frame.both
     ttrue
     ```
 
-+ `manual[]` **disable automatic load balance, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
-    ```shell
-    # examples
-    network@frame.manual
-    ttrue
-    ```
-
-+ `auto[]` **enable automatic load balance, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
++ `auto[]` **enable automatic scheduling by connect mode, only vaild in dbdc/hot**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
     # examples
     network@frame.auto
     ttrue
     ```
-
-
 
 + `src_main[ source ip address ]` **set new session of source ip address immediately uses the main connection, only vaild in dbdc**, *succeed return ttrue, failed return tfalse, error return terror*
     ```shell
