@@ -11,11 +11,12 @@
 - 网关基本信息, 节点名为land@machine.status
 - 联网状态, 节点名为network@frame.default
 - GPS定位信息, 节点名为gnss@nmea.info, GPS定位功能启用才上报
-- 各种网关上已接的传感器信息, 当对应的传感器功能启用才上报
+- 各种网关上已接的传感器信息, 当对应的传感器连接网关并启用功能才上报
     - 电池电量, 节点名为sensor@voltameter.status
     - 温湿度信息, 节点名为sensor@hygrometer.status
     - 甲烷仪读数信息, 节点名为sensor@methanometry.status
-    - 其它定制类的传感器状态, 节点名资询技术支持
+    - 噪声探测信息, 节点名为sensor@noisedetector.status
+    - 其它定制类的传感器状态, 每个传感器会使用不同节点名命名, 具体可资询技术支持
 
 ***节点名即为组件接口***
 
@@ -24,7 +25,7 @@
 
 交互协议为标准的HTTP协议, 网关POST一个JSON对象给服务器, 所有的状态信息以节点名封装在这个JSON对象的status节点中
 
-- 网关上报状态, 网关启动后会跟据 **初始上报信息(Report Context)** 来上报规定的项目, 可通过网页或是终端来修改
+- 网关上报状态, 网关启动后会跟据 **初始上报信息(Report Context)** 指定的节点来上报规定的项目, 可通过网页或是终端来修改
     网关向服务器发起POST请求, JSON中带有status节点, status节点下即是网关要上报的状态信息, 当 **初始上报信息(Report Context)** 为空时, 网关POST如下:
     ```javascript
     POST /dev HTTP/1.1
@@ -147,7 +148,7 @@
                 "inview":"Number of visible satellites",        // [ number ]
                 "inuse":"Number of satellites in use"           // [ nubmer ]     
             },
-            "sensor@voltameter.status":         // 传感器电量计信息, 其下节点属性具体见sensor@voltameter组件status接口描述
+            "sensor@voltameter.status":         // 电量计信息, 其下节点属性具体见sensor@voltameter组件status接口描述
             {
                 "state":"the battary state",                    // [ "noboard", "charge", "uncharge" ]
                                                                    // noboard: indicates cannot find the Voltameter
@@ -155,8 +156,21 @@
                                                                 // uncharge: indicates not charged
                 "voltage":"current voltage",                    // [ number ], unit is V
                 "percent":"current battary power"               // [ nubmer ], unit is %
+            },
+            "sensor@hygrometer.status":         // 温湿度传感器信息, 其下节点属性具体见sensor@hygrometer组件status接口描述
+            {
+                "humidity":"current humidity",                    // [ number ], unit is %
+                "temperature":"current temperature"               // [ number ], unit is ℃
+            },
+            "sensor@methanometry.status":       // 甲烷检测仪, 其下节点属性具体见sensor@methanometry组件status接口描述
+            {
+                "concentration":"concentration of methane"        // [ number ], unit is ppm·m
+            },
+            "sensor@noisedetector.status":      // 噪声检测器, 其下节点属性具体见sensor@noisedetector组件status接口描述
+            {
+                "noise":"noise level"                             // [ number ], unit is DB
             }
-            ...                                 // 更多传感器状态, 具体见对应传感器组件中的status接口描述
+            // ... 更多传感器状态可资源技术支持
         }
     }
     ```
