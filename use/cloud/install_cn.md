@@ -14,7 +14,7 @@ git clone https://github.com/skinos7/tiger7.git
 ### 安装开发工具   
 ```shell
 cd tiger7
-make ubuntu_preset
+make preset
 ```  
 *此指令会协助安装一些常用的开发工具, 也就是执行以下执行来安装开发要用的工具, 如出现安装异常请跟据Ubuntu当前的环境手动安装*   
 ```
@@ -50,13 +50,13 @@ make
 
 ### 安装云管理   
 ```shell
-make local
+make sdk_install
 ```   
 *此命令完成的工作是将 **./build/rootfs/usr/** 下的文件拷贝到系统的 **/usr** 下, 如果执行失败或对Ubuntu系统熟悉也可自行拷贝*   
 
 ### 运行云管理   
 ```shell
-make start
+make sdk_start
 ```   
 *此命令完成的工作是运行/usr/prj/setup.sh, 也可用户自已直接运行*   
 运行后云管理默认会启动两套WEB界面    
@@ -71,15 +71,13 @@ make start
 
 ### 停止云管理   
 ```shell
-make stop
+make sdk_stop
 ```   
 *此命令完成的工作是运行/usr/prj/shut.sh, 也可用户自已直接运行*   
 
 ### 让云管理开机运行   
-```shell
-make bootup
-```   
-*此命令完成的工作是向/etc/rc.local文件中添加运行/usr/prj/setup.sh的指令, 如果添加失败或对Ubuntu系统熟悉也可自行添加*   
+ 
+向/etc/rc.local文件中添加运行/usr/prj/setup.sh的指令即可
 
 
 # 云管理的结构及需要用到的端口   
