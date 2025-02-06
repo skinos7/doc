@@ -29,52 +29,6 @@ talk_t automatic_client_connect( const char *ifname, const char *ifdev, const ch
 
 
 /**
- * @brief switch the resolv config to ifname
- * @param[in] ifname ifname
- * @return succeed or failed
- *		@retval true for succeed
- *		@retval false for failed
- */
-boole resolv_switch( const char *ifname );
-/**
- * @brief switch the extern route rule
- * @param[in] tid route id
- * @param[in] dest dest ip address
- * @param[in] mask netmask
- * @param[in] metric
- * @param[in] v route infomation
- * @param[in] clear  true for delete first
- * @return succeed or failed
- *		@retval true for succeed
- *		@retval false for failed
- */
-boole routes_switch( const char *tid, const char *dest, const char *mask, const char *metric, talk_t v, boole clear );
-/**
- * @brief switch the extern route rule on two line
- * @param[in] tid route id
- * @param[in] dest dest ip address
- * @param[in] mask netmask
- * @param[in] metric
- * @param[in] v route infomation
- * @param[in] v2 route2 infomation
- * @param[in] clear  true for delete first
- * @return succeed or failed
- *		@retval true for succeed
- *		@retval false for failed
- */
-boole routes_switch2( const char *tid, const char *dest, const char *mask, const char *metric, talk_t v, talk_t v2, boole clear );
-boole routes_switch3( const char *tid, const char *dest, const char *mask, const char *metric, talk_t v, talk_t v2, talk_t v3, boole clear );
-boole routes_switch4( const char *tid, const char *dest, const char *mask, const char *metric, talk_t v, talk_t v2, talk_t v3, talk_t v4, boole clear );
-/**
- * @brief create the extern route
- * @param[in] tid route id
- * @param[in] ifnamest ifname status
- * @return succeed or failed
- *		@retval true for succeed
- *		@retval false for failed
- */
-boole routes_create_ifname( int tid, talk_t ifnamest );
-/**
  * @brief set the extern tx queue
  * @param[in] object extern object
  * @param[in] netdev interface name
