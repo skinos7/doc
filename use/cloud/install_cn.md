@@ -62,7 +62,8 @@ make sdk_install
 ```shell
 make sdk_start
 ```   
-*此命令完成的工作是运行/usr/prj/setup.sh, 也可用户自已直接运行*   
+*此命令完成的工作是运行/usr/prj/setup.sh, 也可用户自已直接运行此脚本*   
+
 运行后云管理默认会启动两套WEB界面    
 - **管理员网页界面**, 用于配置云管理及用户管理  
 - **用户网页界面**, 登录后用于管理其帐号下的网关   
@@ -77,13 +78,8 @@ make sdk_start
 ```shell
 make sdk_stop
 ```   
-*此命令完成的工作是运行/usr/prj/shut.sh, 也可用户自已直接运行*   
+*此命令完成的工作是运行/usr/prj/shut.sh, 也可用户自已直接运行此脚本*   
 
-### 让云管理开机运行   
-```shell
-make sdk_start
-```   
-*此命令完成的工作是运行/usr/prj/setup.sh, 也可用户自已直接运行*   
 
 
 # 云管理的结构及需要用到的端口   
