@@ -11,9 +11,18 @@ git clone https://gitee.com/tiger7/tiger7.git
 git clone https://github.com/skinos7/tiger7.git
 ```   
 
-### 安装开发工具   
+### 进入SDK目录   
 ```shell
 cd tiger7
+```  
+
+### 切换SDK为云管理   
+```shell
+make pid gBOARDID=host-x86-ubuntu
+```   
+
+### 安装开发工具   
+```shell
 make preset
 ```  
 *此指令会协助安装一些常用的开发工具, 也就是执行以下执行来安装开发要用的工具, 如出现安装异常请跟据Ubuntu当前的环境手动安装*   
@@ -27,11 +36,6 @@ sudo snap install ttyd --classic
 sudo apt-get install lib32ncurses5
 sudo apt-get install libncurses5-dev
 sudo apt-get install libncursesw5-dev
-```   
-
-### 切换SDK为云管理   
-```shell
-make pid gBOARDID=host-x86-ubuntu
 ```   
 
 ### 下载云管理对应的代码及库文件
@@ -76,8 +80,10 @@ make sdk_stop
 *此命令完成的工作是运行/usr/prj/shut.sh, 也可用户自已直接运行*   
 
 ### 让云管理开机运行   
- 
-向/etc/rc.local文件中添加运行/usr/prj/setup.sh的指令即可
+```shell
+make sdk_start
+```   
+*此命令完成的工作是运行/usr/prj/setup.sh, 也可用户自已直接运行*   
 
 
 # 云管理的结构及需要用到的端口   
@@ -92,8 +98,6 @@ make sdk_stop
  - **Dome Web Server** 将 **TCP端口9001-9999** 用于随机分配给ttyd使用, 方便用户通过网页直接打开Telnet或SSH   
 
 **在Ubuntu上安装完成后防火墙上需要打开以上提到的端口, 否则云管理对应的功能无法使用**
-
-
 
 
 
