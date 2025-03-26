@@ -36,8 +36,9 @@
 #define SYSLOG_GATHER         (1<<16)       /* gather and agent */
 #define SYSLOG_NETWORK        (1<<17)       /* network */
 #define SYSLOG_MODEM          (1<<18)       /* lte/nr modem */
-#define SYSLOG_UART           (1<<18)       /* UART */
-#define SYSLOG_DEFAULT        (1<<20)       /* default */
+#define SYSLOG_UART           (1<<19)       /* UART */
+#define SYSLOG_GNSS           (1<<20)       /* GNSS */
+#define SYSLOG_DEFAULT        (1<<21)       /* default */
 #define SYSLOG_TYPE_MASK     0xFFFFF000           /* 日志类型掩码 */
 
 /// syslog file name
@@ -150,6 +151,17 @@ void syslog_string( unsigned int flags, const char *filename, int line, const ch
 #define uwarn( ... )         syslog_string( (SYSLOG_UART|SYSLOG_WARN), (__FILE__), (__LINE__), __VA_ARGS__ )
 /* 串口交互警告的事件信息, 并附带errno变量的值*/
 #define uwarning( ... )      syslog_string( (SYSLOG_UART|SYSLOG_WARN|SYSLOG_ERRNO), (__FILE__), ( __LINE__ ), __VA_ARGS__ )
+
+/* GNSS交互调试最细节信息 */
+#define pverbose( ... )      syslog_string( (SYSLOG_GNSS|SYSLOG_VERBOSE), (__FILE__), (__LINE__), __VA_ARGS__ )
+/* GNSS交互调试信息 */
+#define pdebug( ... )        syslog_string( (SYSLOG_GNSS|SYSLOG_DEBUG), (__FILE__), (__LINE__), __VA_ARGS__ )
+/* GNSS交互提示信息 */
+#define pinfo( ... )         syslog_string( (SYSLOG_GNSS|SYSLOG_INFO), (__FILE__), (__LINE__), __VA_ARGS__ )
+/* GNSS交互警告信息 */
+#define pwarn( ... )         syslog_string( (SYSLOG_GNSS|SYSLOG_WARN), (__FILE__), (__LINE__), __VA_ARGS__ )
+/* GNSS交互警告的事件信息, 并附带errno变量的值*/
+#define pwarning( ... )      syslog_string( (SYSLOG_GNSS|SYSLOG_WARN|SYSLOG_ERRNO), (__FILE__), ( __LINE__ ), __VA_ARGS__ )
 
 
 

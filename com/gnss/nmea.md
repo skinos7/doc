@@ -9,6 +9,9 @@ Manage and parse GNSS nmea data, nmea data can from UART or LTE
     // UART configure
     "status":"GNSS status",         // [ "enable", "disable" ]
 
+    // avoid the GPS or other
+    "avoid":"NMEA head starting",   // [ string ], only DB set it be $GP
+
     // Client configure
     "client":                       // MQTT client example
     {
