@@ -644,6 +644,14 @@ boole gateway_info( char *gateway, char *netdev );
  */
 boole socket_reuse( int sock );
 /**
+ * @brief set the socket no checksum
+ * @param[in] fd file description handler
+ * @return opertion succeed or failed
+ *		@retval true for succeed
+ *		@retval false for failed, the errno code will be sets
+ */
+boole socket_nocheck( int sock );
+/**
  * @brief set the tcp socket keepalive
  * @param[in] fd file description handler
  * @return opertion succeed or failed

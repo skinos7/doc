@@ -17,40 +17,36 @@
 
     "osc":                                 // open source program list
     {
-        "open source program name":"open source program brief"    // [ string ]: [ string ]
+        "linux open source program name":"open source program brief"    // [ string ]: [ string ]
                                                                   // The "open source program name" is the corresponding directory where the source code is stored
         // ... more open source program
     },
     "ko":                                  // kernel module list
     {
-        "kernel module name":"kernel module brief"                // [ string ]: [ string ]
+        "linux kernel module name":"kernel module brief"                // [ string ]: [ string ]
                                                                   // The "kernel module name" is the corresponding directory where the source code is stored
         // ... more kernel module
     },
     "lib":                                  // share library list
     {
-        "share library name":"share library brief"                // [ string ]: [ string ]
+        "linux share library name":"share library brief"                // [ string ]: [ string ]
                                                                   // The "share library name" is the corresponding directory where the source code is stored
         // ... more share library
     },
-    "lib":                                  // share library list
-    {
-        "share library name":"share library brief"                // [ string ]: [ string ]
-                                                                  // The "share library name" is the corresponding directory where the source code is stored
-        // ... more share library
-    },
+
     "exe":                                  // list of executable program only use by current project
     {
-        "executable program name":"executable programy brief"     // [ string ]: [ string ]
+        "linux executable program name":"executable programy brief"     // [ string ]: [ string ]
                                                                   // The "executable program name" is the corresponding directory where the source code is stored
         // ... more executable program
     },
     "cmd":                                  // list of executable program for linux command, linux can execute this executable program in shell
     {
-        "executable program name":"executable programy brief"     // [ string ]: [ string ]
+        "linux command executable program name":"executable programy brief"     // [ string ]: [ string ], the executable program will be install to /usr/bin also
                                                                   // The "executable program name" is the corresponding directory where the source code is stored
-        // ... more executable program
+        // ... more command executable program
     },
+
 
     "com":                                  // list of component
     {
