@@ -136,10 +136,10 @@ dimmalex@HMS:~/tiger7$
 
 ###### 升级到产品中
 将portal-7.0.0-mt7621.fpk升级包安装到产品上
-![avatar](./porting_openwrt_upgrade.png)
+![avatar](./porting_openwrt_upgrade_cn.png)
 
 升级后可以在对应的软件列表中查看到
-![avatar](./porting_openwrt_upgrade2.png)
+![avatar](./porting_openwrt_upgrade2_cn.png)
 
 
 ## 移植SkinSDK中不存在的Openwrt应用

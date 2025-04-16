@@ -1106,10 +1106,10 @@ dimmalex@HMS:~/tiger7$
 
 #### 12. 升级到产品中
 将portal-7.0.0-mt7628.fpk升级包安装到产品上
-![avatar](./porting_openwrt_upgrade.png)
+![avatar](./porting_openwrt_upgrade_cn.png)
 
 升级后可以在对应的软件列表中查看到
-![avatar](./porting_openwrt_upgrade2.png)
+![avatar](./porting_openwrt_upgrade2_cn.png)
 
 
 
@@ -1219,35 +1219,6 @@ dimmalex@ubuntu18:~/tiger7$
 	// 更多日志信息
 	#
 	`
-
-
----
-
-## 开发中可能用到的API
-
-- ##### [调用组件接口](./call_component.md)
-	在程序中调用其它组件或自身的接口
-
-- ##### [管理组件配置](./component_config.md)
-	在程序中查询及修改其它组件的配置
-
-- ##### [直接操作配置](./project_config.md)
-	在程序中查询修改配置
-
-- ##### [获取项目信息](./project_info.md)
-	在程序中获取项目相关的信息
-
-- ##### [系统服务](./system_service.md)
-	在程序中通过系统服务API注册服务函数, 使服务函数可以一直运行
-
-- ##### [组件寄存器API](./register.md)
-	专门为组件设计的一种信息存储及交互方式， 相当于可以实时改变的环境变量
-
-- ##### [日志服务](./syslog.md)
-	用于程序记录日志
-
-
-
 
 
 ## 移植SkinSDK中不存在的Openwrt应用
